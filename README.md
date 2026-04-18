@@ -7,7 +7,6 @@
 <p>
   <img src="https://img.shields.io/badge/Curated-By%20Humans-0c84f3?style=for-the-badge&logo=bookstack&logoColor=white" />
   <img src="https://img.shields.io/badge/Privacy-First-0c84f3?style=for-the-badge&logo=protonmail&logoColor=white" />
-  <img src="https://img.shields.io/badge/No-SEO%20Spam-111111?style=for-the-badge&logo=ghost&logoColor=white" />
   <img src="https://img.shields.io/badge/Open-Source-111111?style=for-the-badge&logo=github&logoColor=white" />
   <img src="https://img.shields.io/badge/status-active-0c84f3?style=flat-square" />
   <img src="https://img.shields.io/badge/bookmarks.love-curated%20internet-0c84f3?style=flat-square" />
