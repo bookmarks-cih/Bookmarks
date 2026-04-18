@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Privacy-First-0c84f3?style=for-the-badge&logo=protonmail&logoColor=white" />
   <img src="https://img.shields.io/badge/Open-Source-111111?style=for-the-badge&logo=github&logoColor=white" />
   <img src="https://img.shields.io/badge/status-active-0c84f3?style=flat-square" />
+  <img src="https://img.shields.io/badge/human-index-true-111111?style=flat-square" />
 </p>
 
 ---
