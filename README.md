@@ -1,7 +1,7 @@
 # 🌐 bookmarks.love
 
 <p align="center">
-  <img src="https://bookmarks.love/preview.png" alt="bookmarks.love preview" width="100%" />
+  <img src="assets/preview.png" alt="bookmarks.love preview" width="100%" />
 </p>
 
 <p align="center">
