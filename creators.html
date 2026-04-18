@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Creators — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS from Hub (Theme, Header, Menu) --- */
+    :root {
+      /* Default Dark Theme */
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12,132,243,0.12);
+      --brand-glow: rgba(12,132,243,0.2);
+      
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --surface-3: rgba(255,255,255,0.12);
+      --surface-hover: rgba(255,255,255,0.1);
+      
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      --glass-border: rgba(255,255,255,0.1);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    /* Light Theme Overrides */
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-2: #ffffff;
+      --surface: rgba(0,0,0,0.03);
+      --surface-2: rgba(0,0,0,0.05);
+      --surface-3: rgba(0,0,0,0.08);
+      --surface-hover: rgba(0,0,0,0.05);
+      
+      --text: #0f172a;
+      --text-soft: #475569;
+      --text-dim: #94a3b8;
+      
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.12);
+      --shadow: 0 10px 40px rgba(0,0,0,0.05);
+      
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      --glass-border: rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background: linear-gradient(180deg, #07111f 0%, #09121d 50%, #050b14 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* --- Hub Background Elements --- */
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.06; z-index: 1;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+      background-size: 24px 24px, 36px 36px;
+    }
+    [data-theme="light"] .noise {
+      background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+    }
+
+    /* --- Hub Header Styles --- */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 18px 0;
+      margin-bottom: 0; /* Adjusted for creators page layout */
+      backdrop-filter: blur(14px); 
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+      border-bottom: 1px solid transparent;
+    }
+
+    [data-theme="light"] .header {
+      background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+    }
+
+    .header-inner {
+      width: min(100% - 32px, 1200px);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* Logo Section (Hub) */
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: transform 0.3s ease;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+    }
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+    .logo-icon svg { width: 20px; height: 20px; }
+
+    .logo-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .logo-text span { color: var(--brand-light); }
+
+    /* Header Center (Creators Search) - Adapted to fit Hub Layout */
+    .header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      min-width: 0;
+      max-width: 500px;
+    }
+
+    /* Search Wrapper (Hub Style) */
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 0 16px;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .search-wrapper:focus-within {
+      border-color: rgba(83,181,255,0.4);
+      box-shadow: 0 0 0 3px var(--brand-soft), var(--shadow);
+    }
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+      transition: color 0.3s ease;
+    }
+    .search-wrapper:focus-within .search-icon { color: var(--brand-light); }
+    .search-input {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 14px 14px;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      min-width: 0;
+      font-family: inherit;
+    }
+    .search-input::placeholder { color: var(--text-dim); }
+
+    /* Header Actions (Right Side) */
+    .header-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      flex-shrink: 0;
+    }
+
+    /* Header Stats (Creators) - Styled to fit */
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+    .stat-item { text-align: center; min-width: 56px; }
+    .stat-value {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--brand-light);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* Theme Toggle (Hub) */
+    .theme-toggle {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    .theme-toggle:hover { border-color: var(--brand); }
+    .theme-toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 50%;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+    /* Hamburger Button (Hub) */
+    .hamburger-btn {
+      display: flex;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+    .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+    .hamburger-btn svg { width: 20px; height: 20px; }
+
+    /* Hamburger Menu (Hub) */
+    .hamburger-menu {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      max-width: 320px;
+      width: 100%;
+    }
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hamburger-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .hamburger-close {
+      width: 32px;
+      height: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-soft);
+    }
+    .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+
+    .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .hamburger-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .hamburger-item:hover::before { opacity: 1; }
+
+    .hamburger-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      box-shadow: 0 4px 12px var(--brand-glow);
+    }
+    .hamburger-icon svg { width: 20px; height: 20px; }
+    .hamburger-content { flex: 1; position: relative; z-index: 1; }
+    .hamburger-item-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .hamburger-item { animation: slideInRight 0.4s ease forwards; opacity: 0; }
+    .hamburger-item:nth-child(1) { animation-delay: 0.05s; }
+    .hamburger-item:nth-child(2) { animation-delay: 0.1s; }
+    .hamburger-item:nth-child(3) { animation-delay: 0.15s; }
+    .hamburger-item:nth-child(4) { animation-delay: 0.2s; }
+    .hamburger-item:nth-child(5) { animation-delay: 0.25s; }
+    .hamburger-item:nth-child(6) { animation-delay: 0.3s; }
+    .hamburger-item:nth-child(7) { animation-delay: 0.35s; }
+
+    /* --- Creators Page Styles --- */
+    .bg-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      will-change: transform;
+    }
+
+    .bg-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(12,132,243,0.3), transparent 70%);
+      top: -200px;
+      left: -100px;
+      animation: orbFloat1 30s ease-in-out infinite;
+    }
+
+    .bg-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(83,181,255,0.2), transparent 70%);
+      bottom: -100px;
+      right: -100px;
+      animation: orbFloat2 35s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(50px, 30px); }
+    }
+
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-30px, -30px); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      width: min(100% - 32px, 1100px);
+      margin: 0 auto;
+      padding: 32px 0 100px;
+    }
+
+    .section-header { margin-bottom: 24px; }
+    .section-title-wrap { margin-bottom: 16px; }
+
+    .section-title-wrap h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .section-title-wrap p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .glass-container {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      border-radius: 24px;
+      padding: 20px;
+      max-height: 75vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .glass-container::-webkit-scrollbar { width: 6px; }
+    .glass-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+    .glass-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .glass-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    .creators-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .creator-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .creator-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .creator-card:hover {
+      border-color: rgba(83,181,255,0.3);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .card-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .creator-avatar {
+      position: relative;
+      flex-shrink: 0;
+      width: 58px;
+      height: 58px;
+    }
+
+    .avatar-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, #1a2744, #0d1a2d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--brand-light);
+      overflow: hidden;
+    }
+
+    .avatar-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand));
+      border: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-badge svg { width: 10px; height: 10px; color: white; }
+
+    .card-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .creator-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+
+    .creator-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .creator-card:hover .creator-name { color: var(--brand-light); }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-dim);
+      transition: background 0.2s;
+    }
+
+    .social-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    .social-link svg { width: 12px; height: 12px; }
+
+    .creator-handle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .creator-bio {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .creator-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .category-tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(12,132,243,0.15);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--brand-light);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    .meta-item svg { width: 12px; height: 12px; }
+    .meta-item strong { color: var(--text-soft); font-weight: 600; }
+
+    .card-actions {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin-left: auto;
+      padding-left: 16px;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .btn-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: rgba(12,132,243,0.15);
+      border: 1px solid rgba(12,132,243,0.3);
+      color: var(--brand-light);
+    }
+
+    .btn-primary:hover {
+      background: rgba(12,132,243,0.25);
+      color: white;
+    }
+
+    .btn-primary .arrow { transition: transform 0.2s; }
+    .creator-card:hover .btn-primary .arrow { transform: translateX(2px); }
+
+    .btn-secondary {
+      background: rgba(255, 204, 0, 0.05);
+      border: 1px solid rgba(255, 204, 0, 0.2);
+      color: rgba(255, 223, 100, 0.9);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 204, 0, 0.15);
+      border-color: rgba(255, 204, 0, 0.4);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary svg { width: 12px; height: 12px; }
+
+    .curating-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 36px;
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards 0.5s;
+    }
+
+    .curating-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse-dot {
+      position: relative;
+      width: 8px;
+      height: 8px;
+      background-color: var(--brand-light);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--brand);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid var(--brand-light);
+      animation: ripple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .curating-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+
+    .curating-text span {
+      color: var(--text-soft);
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--brand-light), var(--text-soft));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(3.5); opacity: 0; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover:not(.active):not(:disabled) { background: rgba(255,255,255,0.12); }
+
+    .page-btn.active {
+      background: var(--brand);
+      color: white;
+      border-color: transparent;
+    }
+
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-btn svg { width: 16px; height: 16px; }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--brand-light);
+      z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 40;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top svg { width: 20px; height: 20px; }
+
+    @media (max-width: 980px) {
+      .header-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .header-center {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        flex-basis: 100%;
+      }
+      .header-actions {
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+       .card-inner { flex-wrap: wrap; }
+       .card-actions {
+         width: 100%;
+         margin-left: 0;
+         padding-left: 0;
+         margin-top: 12px;
+         justify-content: flex-end;
+       }
+       .creator-bio {
+         -webkit-line-clamp: 2;
+       }
+       .hamburger-menu {
+        top: 70px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        width: auto;
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      html { font-size: 85%; }
+      .header-inner { gap: 10px; }
+      .logo-text { font-size: 1rem; }
+      .header-stats { display: none; } /* Hide stats on very small screens to save space */
+      .glass-container {
+        padding: 12px;
+        border-radius: 16px;
+        max-height: 65vh;
+      }
+      .creators-grid { gap: 10px; }
+      .card-inner { padding: 12px; gap: 12px; }
+      .creator-avatar { width: 48px; height: 48px; }
+      .creator-name { font-size: 0.95rem; }
+      .btn-action { padding: 8px 12px; }
+      .curating-section {
+        margin-top: 24px;
+        padding: 10px;
+      }
+      .curating-content {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .creator-card {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="noise"></div>
+  
+  <div class="bg-container">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <div class="page">
+    <!-- Hub Header Integration -->
+    <header class="header">
+      <div class="header-inner">
+        <!-- Hub Logo -->
+        <a href="index.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="logo-text">Book<span>marks</span></div>
+        </a>
+
+        <!-- Creators Search (Styled with Hub CSS) -->
+        <div class="header-center">
+          <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search creators..." aria-label="Search creators">
+          </div>
+        </div>
+
+        <!-- Header Actions (Right) -->
+        <div class="header-actions">
+          <!-- Creators Stats -->
+          <div class="header-stats">
+            <div class="stat-item">
+              <div class="stat-value" id="totalCreatorsHeader">0</div>
+              <div class="stat-label">Creators</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="totalLinksHeader">0</div>
+              <div class="stat-label">Resources</div>
+            </div>
+          </div>
+
+          <!-- Hub Theme Toggle -->
+          <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+            <div class="theme-toggle-knob">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Hub Hamburger Button -->
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hub Hamburger Menu -->
+    <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <div class="hamburger-header">
+        <div class="hamburger-title">Quick Access</div>
+        <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hamburger-grid">
+        <a href="docs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Docs</div>
+            <div class="hamburger-item-desc">Documentation & Resources</div>
+          </div>
+        </a>
+        <a href="files.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Files</div>
+            <div class="hamburger-item-desc">Downloads & Software</div>
+          </div>
+        </a>
+        <a href="jobs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Jobs</div>
+            <div class="hamburger-item-desc">Career Opportunities</div>
+          </div>
+        </a>
+        <a href="creators.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Creators</div>
+            <div class="hamburger-item-desc">Meet the Team</div>
+          </div>
+        </a>
+        <a href="news.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+              <path d="M18 14h-8"/>
+              <path d="M15 18h-5"/>
+              <path d="M10 6h8v4h-8V6Z"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">News</div>
+            <div class="hamburger-item-desc">Latest Updates</div>
+          </div>
+        </a>
+        <a href="privacy.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Privacy</div>
+            <div class="hamburger-item-desc">Privacy Policy</div>
+          </div>
+        </a>
+        <a href="terms.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Terms</div>
+            <div class="hamburger-item-desc">Terms of Service</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <main class="main-content">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h1>Featured Creators</h1>
+          <p>Discover curated collections from trusted voices across the internet</p>
+        </div>
+      </div>
+
+      <div class="glass-container" id="glassContainer">
+        <div class="creators-grid" id="creatorsGrid"></div>
+        
+        <div class="curating-section">
+            <div class="curating-content">
+                <span class="pulse-dot"></span>
+                <div class="curating-text">
+                    We are curating <span>more gems</span>...
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <script>
+    // --- Hub Logic: Theme & Menu ---
+    
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      const knob = document.getElementById('theme-toggle').querySelector('svg');
+      
+      function updateIcon(theme) {
+        if (theme === 'dark') {
+          knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+        } else {
+          knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+        }
+      }
+
+      updateIcon(savedTheme);
+
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+      });
+      
+      themeToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          themeToggle.click();
+        }
+      });
+    }
+
+    function showHamburgerMenu() {
+      document.getElementById('hamburger-menu').classList.add('show');
+      document.getElementById('hamburger-overlay').classList.add('show');
+    }
+
+    function hideHamburgerMenu() {
+      document.getElementById('hamburger-menu').classList.remove('show');
+      document.getElementById('hamburger-overlay').classList.remove('show');
+    }
+
+    document.getElementById('hamburger-btn').addEventListener('click', showHamburgerMenu);
+    document.getElementById('hamburger-close').addEventListener('click', hideHamburgerMenu);
+    document.getElementById('hamburger-overlay').addEventListener('click', hideHamburgerMenu);
+
+
+    // --- Creators Page Logic ---
+
+    const CREATORS_DATA = [
+      {
+        id: 1,
+        name: "Cyber Maddy",
+        handle: "@cybermaddy",
+        initials: "CM",
+        avatar: "/img/channels4_profile.jpg",
+        verified: true,
+        category: "Security",
+        bio: "Security researcher & content creator focused on cybersecurity education, threat intelligence, and career development resources.",
+        links: 21,
+        url: "/creators/cyb3rmaddy.html",
+        socials: {
+          x: "https://x.com/Cyb3rMaddy",
+          youtube: "https://www.youtube.com/channel/UCgd5-BWtbgOw5Hx2wP3qxzg",
+          github: "https://github.com/Cyb3rMaddy",
+          website: "https://linktr.ee/Cyb3rMaddy"
+        }
+      },
+      {
+        id: 2,
+        name: "John Hammond",
+        handle: "@johnhammond010",
+        initials: "JH",
+        avatar: "/creators/img/johnammond.jpg",
+        verified: true,
+        category: "Hacking",
+        bio: "JHT Co-Founder & Owner, John Hammond, is a cybersecurity researcher, educator and content creator. As part of the Research & Development Threat Operations team at Huntress",
+        links: 20,
+        url: "https://bookmarks.love/creators/johnhammond", 
+        socials: {
+          x: "https://x.com/JohnHammond010",
+          youtube: "https://www.youtube.com/c/JohnHammond010",
+          github: "https://github.com/JohnHammond",
+          website: "#"
+        }
+      },
+      {
+        id: 3,
+        name: "Ebolaman",
+        handle: "@ebolaman",
+        initials: "EM",
+        avatar: "/creators/img/ebolamanpic.jpg",
+        verified: true,
+        category: "Hacking",
+        bio: "I develop and showcase practical scripts—from UAC bypasses to SMB bruteforce and session hijacking—to teach people how modern systems can be tested, understood, and secured.",
+        links: 10,
+        url: "https://bookmarks.love/creators/ebolaman", 
+        socials: {
+          x: "#",
+          youtube: "https://www.youtube.com/@ebolaman_",
+          github: "https://github.com/EbolaMan-YT",
+          website: "#"
+        }
+      },
+      {
+        id: 4,
+        name: "Natalie Brunell",
+        handle: "@natbrunell",
+        initials: "NB",
+        avatar: "/creators/img/natpfp.jpg",
+        verified: true,
+        category: "Crypto",
+        bio: "Investing journalist, podcaster and Bitcoin educator who hosts the Coin Stories Podcast on YouTube, Rumble, Apple, Google Play and Spotify.",
+        links: 10,
+        url: "/creators/nataliebrunell.html", 
+        socials: {
+          x: "https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbEMydWRRMjdCMlRRZUY5djk5LTdsaXp3QXpHQXxBQ3Jtc0tsWllwcF92OENTSGlHSXhuM3ZWVjFPU19iWnVuamYtNnlsR050UnoyZDljb2xCY3JzYjBHTTFGOVVIeVg4STFkQVczYUFhb1NXMC1jMU41VW0tdERXN2dNSHNnektOX2E4SlkwdV9POW1NSlVtYUEtbw&q=http%3A%2F%2Fwww.x.com%2Fnatbrunell",
+          youtube: "https://www.youtube.com/@nataliebrunell",
+          spotify: "https://open.spotify.com/show/0YOEwxAR1uIx1a15QpqE0l",
+          apple_podcast: "https://podcasts.apple.com/us/podcast/coin-stories-with-natalie-brunell/id1569130932"
+        }
+      },
+    ];
+
+    const CONFIG = {
+      itemsPerPage: 8,
+      animationDelay: 0.05
+    };
+
+    let state = {
+      currentPage: 1,
+      filteredData: [...CREATORS_DATA],
+      searchQuery: ''
+    };
+
+    const elements = {
+      grid: document.getElementById('creatorsGrid'),
+      pagination: document.getElementById('pagination'),
+      searchInput: document.getElementById('searchInput'),
+      totalCreators: document.getElementById('totalCreatorsHeader'),
+      totalLinks: document.getElementById('totalLinksHeader'),
+      scrollProgress: document.getElementById('scrollProgress'),
+      backToTop: document.getElementById('backToTop'),
+      glassContainer: document.getElementById('glassContainer')
+    };
+
+    const ICONS = {
+      x: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+      youtube: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+      github: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>`,
+      spotify: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`,
+      apple_podcast: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`,
+      website: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+      pencil: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>`
+      
+    };
+
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    function createCreatorCard(creator, index) {
+      const card = document.createElement('article');
+      card.className = 'creator-card';
+      card.style.transitionDelay = `${index * CONFIG.animationDelay}s`;
+
+      if (creator.url && creator.url !== '#') {
+        card.onclick = () => window.location.href = creator.url;
+      }
+
+      const avatarContent = creator.avatar
+        ? `<img src="${creator.avatar}" alt="${creator.name}">`
+        : creator.initials;
+
+      const verifiedBadgeHtml = creator.verified
+        ? `<div class="avatar-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>`
+        : '';
+
+      let socialsHtml = '';
+      if (creator.socials) {
+        socialsHtml = '<div class="social-links">';
+        if (creator.socials.x && creator.socials.x !== '#') socialsHtml += `<a href="${creator.socials.x}" class="social-link" title="X" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.x}</a>`;
+        if (creator.socials.youtube && creator.socials.youtube !== '#') socialsHtml += `<a href="${creator.socials.youtube}" class="social-link" title="YouTube" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.youtube}</a>`;
+        if (creator.socials.github && creator.socials.github !== '#') socialsHtml += `<a href="${creator.socials.github}" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.github}</a>`;
+        if (creator.socials.spotify && creator.socials.spotify !== '#') socialsHtml += `<a href="${creator.socials.spotify}" class="social-link" title="Spotify" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.spotify}</a>`;
+        if (creator.socials.apple_podcast && creator.socials.apple_podcast !== '#') socialsHtml += `<a href="${creator.socials.apple_podcast}" class="social-link" title="Apple Podcasts" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.apple_podcast}</a>`;
+        if (creator.socials.website && creator.socials.website !== '#') socialsHtml += `<a href="${creator.socials.website}" class="social-link" title="Website" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${ICONS.website}</a>`;
+        socialsHtml += '</div>';
+      }
+
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="creator-avatar">
+            <div class="avatar-ring">
+              <div class="avatar-img">${avatarContent}</div>
+            </div>
+            ${verifiedBadgeHtml}
+          </div>
+
+          <div class="card-content">
+            <div class="creator-header">
+              <span class="creator-name">${creator.name}</span>
+              ${socialsHtml}
+            </div>
+
+            <div class="creator-handle">${creator.handle}</div>
+            <p class="creator-bio">${creator.bio}</p>
+
+            <div class="creator-meta">
+              <span class="category-tag">${creator.category}</span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                <strong>${creator.links}+</strong> links
+              </span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <a href="${creator.url || '#'}" class="btn-action btn-primary" onclick="event.stopPropagation()">
+              <span>View</span>
+              <span class="arrow">→</span>
+            </a>
+            <a href="https://bookmarks.love/edit" class="btn-action btn-secondary" onclick="event.stopPropagation()">
+              ${ICONS.pencil}
+              <span>Edit</span>
+            </a>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function renderPage() {
+      const { currentPage, filteredData } = state;
+      const totalPages = Math.ceil(filteredData.length / CONFIG.itemsPerPage);
+      const startIndex = (currentPage - 1) * CONFIG.itemsPerPage;
+      const endIndex = startIndex + CONFIG.itemsPerPage;
+      const pageData = filteredData.slice(startIndex, endIndex);
+
+      elements.grid.innerHTML = '';
+
+      if (pageData.length === 0) {
+        elements.grid.innerHTML = '<div style="text-align:center; padding: 40px; color: var(--text-dim);">No creators found.</div>';
+        elements.pagination.innerHTML = '';
+        updateStats();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, root: elements.glassContainer });
+
+      pageData.forEach((creator, index) => {
+        const card = createCreatorCard(creator, index);
+        elements.grid.appendChild(card);
+        observer.observe(card);
+      });
+
+      updateStats();
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      elements.pagination.innerHTML = '';
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'page-btn';
+      prevBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>`;
+      prevBtn.disabled = state.currentPage === 1;
+      prevBtn.onclick = () => changePage(state.currentPage - 1);
+      elements.pagination.appendChild(prevBtn);
+
+      for (let i = 1; i <= totalPages; i++) {
+        elements.pagination.appendChild(createPageButton(i));
+      }
+
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'page-btn';
+      nextBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>`;
+      nextBtn.disabled = state.currentPage === totalPages;
+      nextBtn.onclick = () => changePage(state.currentPage + 1);
+      elements.pagination.appendChild(nextBtn);
+    }
+
+    function createPageButton(pageNum) {
+      const btn = document.createElement('button');
+      btn.className = `page-btn ${pageNum === state.currentPage ? 'active' : ''}`;
+      btn.textContent = pageNum;
+      btn.onclick = () => changePage(pageNum);
+      return btn;
+    }
+
+    function changePage(newPage) {
+      const totalPages = Math.ceil(state.filteredData.length / CONFIG.itemsPerPage);
+      if (newPage < 1 || newPage > totalPages) return;
+      state.currentPage = newPage;
+      renderPage();
+      elements.glassContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStats() {
+      if (elements.totalCreators) {
+        animateCounter(elements.totalCreators, CREATORS_DATA.length);
+      }
+      if (elements.totalLinks) {
+        animateCounter(elements.totalLinks, CREATORS_DATA.reduce((sum, c) => sum + c.links, 0));
+      }
+    }
+
+    function animateCounter(element, target) {
+      const duration = 600;
+      const start = parseInt(element.textContent) || 0;
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        element.textContent = Math.round(start + (target - start) * progress);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    function handleSearch(query) {
+      state.searchQuery = query.toLowerCase().trim();
+      state.currentPage = 1;
+
+      state.filteredData = state.searchQuery === ''
+        ? [...CREATORS_DATA]
+        : CREATORS_DATA.filter(c =>
+            c.name.toLowerCase().includes(state.searchQuery) ||
+            c.category.toLowerCase().includes(state.searchQuery) ||
+            c.handle.toLowerCase().includes(state.searchQuery) ||
+            c.bio.toLowerCase().includes(state.searchQuery)
+          );
+
+      renderPage();
+    }
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      elements.scrollProgress.style.width = `${progress}%`;
+
+      if (scrollY > 200) {
+        elements.backToTop.classList.add('visible');
+      } else {
+        elements.backToTop.classList.remove('visible');
+      }
+    }
+
+    function init() {
+      initTheme(); // Hub theme initialization
+
+      elements.searchInput.addEventListener(
+        'input',
+        debounce((e) => handleSearch(e.target.value), 300)
+      );
+
+      window.addEventListener('scroll', debounce(handleScroll, 15));
+
+      elements.backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      renderPage();
+      handleScroll();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

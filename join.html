@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For Creators — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      --border: rgba(255,255,255,0.10);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-xl: 34px;
+      --max-width: 1100px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 85%; }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* --- ANIMATED BACKGROUND GLOW --- */
+    .bg-glow-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(12, 132, 243, 0.3), transparent 70%);
+      top: -20%;
+      left: -10%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .glow-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(83, 181, 255, 0.25), transparent 70%);
+      bottom: -15%;
+      right: -5%;
+      animation-delay: -5s;
+      animation-duration: 30s;
+    }
+
+    .glow-orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+      top: 40%;
+      left: 60%;
+      animation-delay: -10s;
+      animation-duration: 22s;
+    }
+
+    .glow-orb-4 {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
+      top: 20%;
+      right: 20%;
+      animation-delay: -15s;
+      animation-duration: 28s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(50px, -30px) scale(1.05); }
+      50% { transform: translate(-30px, 50px) scale(0.95); }
+      75% { transform: translate(-50px, -20px) scale(1.02); }
+    }
+
+    /* Noise overlay for texture */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* --- UTILITY --- */
+    .container { width: min(100% - 48px, var(--max-width)); margin: 0 auto; position: relative; z-index: 5; }
+    .section { padding: 100px 0; position: relative; z-index: 2; }
+    
+    .glass-panel {
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    }
+
+    /* --- TYPOGRAPHY --- */
+    h1, h2, h3 { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; }
+    .section-kicker {
+      display: inline-block; font-size: 0.75rem; color: var(--brand-light);
+      text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 600;
+      border: 1px solid rgba(83,181,255,0.3); padding: 6px 12px; border-radius: 999px;
+    }
+    .section-title { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 24px; line-height: 1.1; }
+    .section-desc { font-size: 1.1rem; color: var(--text-soft); max-width: 600px; line-height: 1.8; }
+
+    /* --- HEADER --- */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0;
+      background: rgba(7,17,31,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center; color: white;
+    }
+    .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.2rem; }
+
+    /* --- NEW NAV BUTTON STYLE --- */
+    .nav-btn-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Mobile Toggle (Hidden on Desktop) */
+    .mobile-menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      z-index: 110;
+    }
+
+    /* Desktop Pill Button */
+    .nav-pill-btn {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-pill-btn .nav-link {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      padding: 8px 20px;
+      border-radius: 999px;
+      transition: all 0.25s ease;
+      margin: 0;
+    }
+
+    .nav-pill-btn .nav-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 80vh; display: flex; align-items: center; justify-content: center;
+      position: relative; text-align: center;
+      padding-top: 100px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0; overflow: hidden;
+    }
+    .hero-bg::before {
+      content: ""; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
+      background: radial-gradient(circle, rgba(12,132,243,0.15), transparent 70%);
+      filter: blur(60px);
+    }
+    .hero-bg::after {
+      content: ""; position: absolute; bottom: -10%; right: -10%; width: 50%; height: 50%;
+      background: radial-gradient(circle, rgba(83,181,255,0.1), transparent 60%);
+      filter: blur(50px);
+    }
+    
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+    .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 24px; line-height: 1.05; }
+    .hero h1 span { color: var(--brand-light); }
+    .hero p { font-size: 1.25rem; color: var(--text-soft); max-width: 700px; margin: 0 auto 40px; line-height: 1.7; }
+    
+    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+      transition: all 0.25s ease; border: none; cursor: pointer;
+    }
+    .btn-primary { background: #fff; color: #000; box-shadow: 0 8px 24px rgba(255,255,255,0.15); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,255,255,0.2); }
+    .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.15); }
+
+    /* --- MISSION SECTION --- */
+    .mission-card {
+      position: relative;
+      width: 100%;
+      min-height: 500px; 
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; 
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .mission-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      opacity: 0.5; 
+      z-index: 1;
+      transition: transform 10s ease; 
+    }
+    
+    .mission-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,17,31,0.95) 10%, rgba(7,17,31,0.4) 50%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .mission-content {
+      position: relative;
+      z-index: 3;
+      padding: 60px;
+      max-width: 800px; 
+    }
+    
+    /* --- PROCESS --- */
+    .process-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;
+    }
+    .process-card {
+      padding: 32px; border-radius: var(--radius-xl); background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08); transition: 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .process-card:hover {
+      background: rgba(255,255,255,0.06); transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .step-num {
+      font-family: 'Space Grotesk'; font-size: 4rem; font-weight: 700; color: rgba(255,255,255,0.05);
+      position: absolute; top: 10px; right: 20px; line-height: 1;
+    }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 12px; background: rgba(12,132,243,0.15);
+      display: grid; place-items: center; color: var(--brand-light); margin-bottom: 24px;
+    }
+    .card-title { font-size: 1.25rem; margin-bottom: 12px; }
+    .card-text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* --- WHY SECTION (UPDATED FOR SLIDESHOW) --- */
+    .trust-section {
+      background: radial-gradient(circle at top right, rgba(12,132,243,0.1), transparent 50%);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .trust-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .trust-text h2 { margin-bottom: 32px; }
+    .trust-list { list-style: none; margin-top: 32px; }
+    .trust-list li {
+      display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start;
+    }
+    .check-icon {
+      width: 24px; height: 24px; border-radius: 50%; background: var(--brand);
+      display: grid; place-items: center; flex-shrink: 0; margin-top: 2px;
+    }
+    
+    .trust-visual {
+      position: relative;
+      /* Ensure it takes space */
+      min-height: 500px;
+      width: 100%;
+    }
+    
+    /* --- SLIDESHOW STYLES --- */
+    .slideshow-container {
+      position: absolute; /* Absolute to fill the parent grid cell */
+      inset: 0;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: blur(20px) grayscale(50%);
+      transform: scale(1.1);
+      transition: all 1.5s ease-in-out;
+      z-index: 1;
+    }
+
+    .slide.active {
+      opacity: 0.8; /* Opacity requested */
+      filter: blur(0) grayscale(0);
+      transform: scale(1);
+      z-index: 2;
+      transition: opacity 1.5s ease-in-out, filter 1.5s ease-in-out, transform 8s ease-in-out;
+    }
+
+    /* --- FORM SECTION --- */
+    .form-section {
+      background: linear-gradient(180deg, var(--bg) 0%, #050b14 100%);
+    }
+    .form-wrapper {
+      max-width: 800px; margin: 0 auto;
+      padding: 60px; border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;
+    }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .field input, .field textarea, .field select {
+      width: 100%; padding: 16px; border-radius: 12px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: white; font-family: inherit; font-size: 1rem; transition: all 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(247,251,255,0.56)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 48px;
+    }
+    
+    .field select:focus {
+      outline: none; 
+      border-color: var(--brand); 
+      background-color: rgba(255,255,255,0.08);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2353b5ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+    
+    .field select option {
+      background: var(--bg-2);
+      color: var(--text);
+      padding: 12px;
+    }
+    
+    .field input:focus, .field textarea:focus {
+      outline: none; border-color: var(--brand); background: rgba(255,255,255,0.08);
+    }
+    .submit-area { margin-top: 32px; text-align: center; }
+
+    /* --- FOOTER --- */
+    .footer {
+      padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; color: var(--text-dim); font-size: 0.9rem;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+      /* Mobile Navigation */
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .nav-pill-btn {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        flex-direction: column;
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        padding: 20px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        display: none; /* Hidden by default */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-pill-btn.show-menu {
+        display: flex;
+        opacity: 1;
+      }
+
+      .nav-pill-btn .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 1.1rem;
+      }
+
+      /* Layout adjustments */
+      .trust-layout { grid-template-columns: 1fr; gap: 40px; }
+      .process-cards { grid-template-columns: 1fr; }
+      
+      /* Make slideshow container relative height on mobile */
+      .trust-visual {
+        order: -1;
+        min-height: 350px; /* Taller on mobile */
+      }
+      
+      .form-grid { grid-template-columns: 1fr; }
+      .form-wrapper { padding: 32px; }
+      .section { padding: 60px 0; }
+      
+      .mission-card { min-height: 60vh; }
+      .mission-content { padding: 32px; }
+      .section-title { font-size: 1.8rem; }
+      
+      .glow-orb-1 { width: 400px; height: 400px; }
+      .glow-orb-2 { width: 350px; height: 350px; }
+      .glow-orb-3 { width: 300px; height: 300px; }
+      .glow-orb-4 { width: 250px; height: 250px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANIMATED BACKGROUND GLOW -->
+  <div class="bg-glow-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+    <div class="glow-orb glow-orb-4"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="brand-name">Bookmarks</div>
+      </a>
+      
+      <div class="nav-btn-wrapper">
+        <!-- Mobile Toggle Button -->
+        <button class="mobile-menu-toggle" id="menuToggle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- Navigation Pill Button -->
+        <nav class="nav-pill-btn" id="navMenu">
+          <a href="#mission" class="nav-link">Mission</a>
+          <a href="#process" class="nav-link">Process</a>
+          <a href="#join" class="nav-link">Join</a>
+          <a href="creators.html" class="nav-link">Creators</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <span class="section-kicker">Creator Collections</span>
+      <h1>The tools you trust,<br><span>curated by experts.</span></h1>
+      <p>
+        Go beyond following. Access the actual resources, tools, and libraries used by the creators you admire. Bookmarks democratizes expert knowledge.
+      </p>
+      <div class="btn-group">
+        <a href="#process" class="btn btn-primary">How It Works</a>
+        <a href="#join" class="btn btn-ghost">Become a Curator</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section" id="mission">
+    <div class="container">
+      <div class="mission-card glass-panel">
+        <img src="img/sCrKYeCi8C0_auto_thumbnail_3.jpg" alt="Curated Knowledge" class="mission-bg-img">
+        <div class="mission-content">
+          <span class="section-kicker">Our Mission</span>
+          <h2 class="section-title">Bridging the gap between audience and expertise.</h2>
+          <p class="section-desc" style="margin-bottom: 16px;">
+            In an ocean of content, valuable resources are often lost. Our mission is to structure the internet's best knowledge through trusted voices. We believe that curated links are the new currency of education.
+          </p>
+          <p class="section-desc">
+            We provide a clean, minimal, and permanent home for the digital tools that power the creator economy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process" style="background: rgba(0,0,0,0.2);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span class="section-kicker">How It Works</span>
+        <h2 class="section-title" style="margin: 0 auto;">From influence to utility.</h2>
+        <p class="section-desc" style="margin: 20px auto 0;">
+          Your audience trusts your taste. Now they can use your tools.
+        </p>
+      </div>
+
+      <div class="process-cards">
+        <div class="process-card glass-panel">
+          <span class="step-num">01</span>
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Curate Your Stack</h3>
+          <p class="card-text">
+            Compile the essential links, software, and resources you use daily. We handle the design and structure.
+          </p>
+        </div>
+
+        <div class="process-card glass-panel">
+          <span class="step-num">02</span>
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Share Your Path</h3>
+          <p class="card-text">
+            Publish your collection. Your followers get direct access to the exact tools you recommend, removing friction.
+          </p>
+        </div>
+
+        <div class="process-card glass-panel">
+          <span class="step-num">03</span>
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Empower Your Audience</h3>
+          <p class="card-text">
+            Monetize your knowledge or offer it for free. Your audience levels up using the same stack as you.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST / WHY (UPDATED) -->
+  <section class="section trust-section" id="why">
+    <div class="container">
+      <div class="trust-layout">
+        <div class="trust-text">
+          <span class="section-kicker">Why It Matters</span>
+          <h2 class="section-title">Trust is the ultimate filter.</h2>
+          <p class="section-desc">
+            People don't just follow creators for content; they follow them for competence. By sharing your resource stack, you provide a transparent roadmap for your community.
+          </p>
+          
+          <ul class="trust-list">
+            <li>
+              <div class="check-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Transparency</strong>
+                <p style="color: var(--text-dim); font-size: 0.95rem;">Show exactly what tools power your workflow.</p>
+              </div>
+            </li>
+            <li>
+              <div class="check-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Connection</strong>
+                <p style="color: var(--text-dim); font-size: 0.95rem;">Deepen the bond with your audience through shared utility.</p>
+              </div>
+            </li>
+            <li>
+              <div class="check-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Legacy</strong>
+                <p style="color: var(--text-dim); font-size: 0.95rem;">Create a permanent, structured library of your expertise.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- SLIDESHOW CONTAINER -->
+        <div class="trust-visual">
+          <div class="slideshow-container glass-panel">
+            <img src="img/trust1.jpg" class="slide active" alt="Slideshow Image 1">
+            <img src="img/trust2.jpg" class="slide" alt="Slideshow Image 2">
+            <img src="img/trust3.jpg" class="slide" alt="Slideshow Image 3">
+            <img src="img/trust4.jpg" class="slide" alt="Slideshow Image 4">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM / JOIN -->
+  <section class="section form-section" id="join">
+    <div class="container">
+      <div class="form-wrapper glass-panel">
+        <div style="text-align: center;">
+          <span class="section-kicker">Join The Program</span>
+          <h2 class="section-title" style="margin-bottom: 12px;">Submit your collection</h2>
+          <p class="section-desc" style="margin: 0 auto;">
+            Ready to structure your knowledge? Fill out the form below to apply for a Creator Collection.
+          </p>
+        </div>
+
+        <form action="https://formspree.io/f/mzdjovve" method="POST" class="form-grid">
+          
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+          </div>
+
+          <div class="field full">
+            <label for="role">Creator Category</label>
+            <select id="role" name="role">
+              <option value="dev">Developer / Engineer</option>
+              <option value="design">Designer</option>
+              <option value="creator">Content Creator</option>
+              <option value="researcher">Researcher / Academic</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="links">Proposed Stack / Links</label>
+            <textarea id="links" name="links" rows="4" placeholder="Paste a few key links or describe your collection idea..." required></textarea>
+          </div>
+
+          <div class="submit-area full">
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-dim);">
+              We review submissions weekly.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Bookmarks Creator Program. Crafted with precision.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show-menu');
+    });
+
+    // Close menu when clicking a link (for Single Page App feel)
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navMenu.classList.contains('show-menu')) {
+          navMenu.classList.remove('show-menu');
+        }
+      });
+    });
+
+    // Simple Automatic Slideshow
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      // Remove active from current
+      slides[currentSlide].classList.remove('active');
+      
+      // Calculate next index
+      currentSlide = (currentSlide + 1) % slides.length;
+      
+      // Add active to next
+      slides[currentSlide].classList.add('active');
+    }
+
+    // Change slide every 4 seconds
+    setInterval(nextSlide, 4000);
+
+  </script>
+
+</body>
+</html>

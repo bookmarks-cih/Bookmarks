@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover the story behind Bookmarks - A curated intelligence hub for the digital age.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12,132,243,0.12);
+      --brand-glow: rgba(12,132,243,0.2);
+      
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --surface-3: rgba(255,255,255,0.12);
+      --surface-hover: rgba(255,255,255,0.1);
+      
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      --glass-border: rgba(255,255,255,0.1);
+      --noise-opacity: 0.06;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-2: #ffffff;
+      --surface: rgba(0,0,0,0.03);
+      --surface-2: rgba(0,0,0,0.05);
+      --surface-3: rgba(0,0,0,0.08);
+      --surface-hover: rgba(0,0,0,0.05);
+      
+      --text: #0f172a;
+      --text-soft: #475569;
+      --text-dim: #94a3b8;
+      
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.12);
+      --shadow: 0 10px 40px rgba(0,0,0,0.05);
+      
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      --glass-border: rgba(0,0,0,0.08);
+      --noise-opacity: 0.03;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 1;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+      background-size: 24px 24px, 36px 36px;
+    }
+
+    [data-theme="light"] .noise {
+       background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+    }
+
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: floatOrb 20s ease-in-out infinite;
+    }
+
+    [data-theme="light"] .ambient-orb {
+      opacity: 0.2;
+      filter: blur(100px);
+    }
+
+    .orb-1 {
+      width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
+      background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+      top: -20%; left: -10%; animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+      bottom: -10%; right: -10%; animation-delay: -7s; animation-duration: 25s;
+    }
+    .orb-3 {
+      width: 40vw; height: 40vw; max-width: 500px; max-height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+      top: 40%; left: 40%; animation-delay: -14s; animation-duration: 30s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(5%, 10%) scale(1.05); }
+      50% { transform: translate(-5%, 5%) scale(0.95); }
+      75% { transform: translate(10%, -5%) scale(1.02); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    .tracer {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      height: 1px; width: 200%; left: -50%;
+      animation: driftTracer 15s linear infinite;
+      transform-origin: center;
+    }
+
+    [data-theme="light"] .tracer {
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+    }
+
+    .tracer-1 { top: 20%; transform: rotate(-15deg); animation-delay: 0s; opacity: 0.6; }
+    .tracer-2 { top: 50%; transform: rotate(10deg); animation-delay: -5s; animation-duration: 20s; opacity: 0.4; }
+    .tracer-3 { top: 80%; transform: rotate(-5deg); animation-delay: -10s; animation-duration: 25s; opacity: 0.5; }
+    .tracer-4 { top: 35%; transform: rotate(25deg); animation-delay: -3s; animation-duration: 18s; opacity: 0.3; }
+
+    @keyframes driftTracer {
+      0% { transform: translateX(-25%) rotate(inherit); }
+      100% { transform: translateX(25%) rotate(inherit); }
+    }
+
+    .page { position: relative; z-index: 2; }
+    .container { width: min(100% - 32px, 1100px); margin: 0 auto; }
+
+    h1, h2, h3, h4 { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      padding: 10px 0;
+      margin-bottom: 28px;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s;
+    }
+    [data-theme="light"] .header {
+       background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+    }
+
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; flex-shrink: 0; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center;
+      transition: all 0.3s ease;
+      color: white;
+    }
+    .brand-mark:hover { transform: rotate(-5deg) scale(1.05); }
+    .brand-mark svg { width: 19px; height: 19px; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+    .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--text); }
+    .brand-name span { color: var(--brand-light); }
+
+    .nav { display: none; align-items: center; gap: 22px; }
+    .nav-link {
+      color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+      transition: all 0.2s ease; position: relative; padding: 4px 0;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--brand-light); transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--brand-light); }
+    .nav-link.active::after { width: 100%; }
+
+    @media (min-width: 768px) {
+      .nav { display: flex; }
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+    .clock { text-align: right; font-family: "Space Grotesk", sans-serif; }
+    .clock-time { font-size: 1.05rem; font-weight: 700; color: var(--brand-light); letter-spacing: 0.02em; line-height: 1; }
+    .clock-date { font-size: 0.65rem; color: var(--text-dim); margin-top: 2px; font-weight: 400; }
+
+    .theme-toggle {
+      position: relative; width: 48px; height: 26px;
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 50px;
+      cursor: pointer; transition: all 0.3s ease; overflow: hidden;
+    }
+    .theme-toggle:hover { border-color: var(--brand-light); }
+    .theme-toggle-knob {
+      position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 50%; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 2;
+    }
+    .theme-toggle-knob svg { width: 10px; height: 10px; color: white; }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(22px); }
+
+    /* Hero */
+    .hero { text-align: center; margin-bottom: 36px; padding-top: 16px; }
+    .hero-badge {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--brand-light); margin-bottom: 18px; padding: 8px 16px;
+      background: var(--brand-soft); border: 1px solid rgba(83,181,255,0.15); border-radius: 50px;
+    }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; color: var(--text); }
+    .hero h1 span { color: var(--brand-light); }
+    .hero-subtitle { max-width: 600px; margin: 0 auto; color: var(--text-soft); font-size: 1.05rem; line-height: 1.7; }
+
+    /* Sections */
+    .section { padding: 36px 0; }
+    .section-head { margin-bottom: 32px; }
+    .section-kicker { display: inline-block; font-size: 0.75rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700; }
+    .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin-bottom: 0; }
+    .section-desc { color: var(--text-soft); max-width: 620px; line-height: 1.8; font-size: 1.05rem; margin-top: 16px; }
+
+    /* Glass Cards */
+    .glass-card {
+      position: relative; overflow: hidden; padding: 28px; border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow); transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .glass-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--brand-light), var(--brand-dark));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
+    }
+    .glass-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-3px); }
+    .glass-card:hover::before { transform: scaleX(1); }
+
+    .info-card { display: flex; flex-direction: column; gap: 16px; }
+    .info-icon {
+      width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px;
+      background: rgba(12,132,243,0.15); border: 1px solid rgba(83,181,255,0.2);
+    }
+    .info-icon svg { width: 22px; height: 22px; color: var(--brand-light); }
+    .info-card h3 { font-size: 1.3rem; line-height: 1.2; margin: 0; }
+    .info-card p { color: var(--text-soft); line-height: 1.7; font-size: 0.95rem; margin: 0; }
+
+    /* Grids */
+    .grid-values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .grid-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    /* Stats */
+    .stat-card {
+      padding: 24px; border-radius: var(--radius-md); text-align: center;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow); transition: 0.25s ease;
+    }
+    .stat-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-2px); }
+    .stat-number { font-family: "Space Grotesk"; font-size: 2.5rem; font-weight: 700; color: var(--brand-light); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 8px; }
+
+    /* Timeline */
+    .timeline { position: relative; margin: 40px 0; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--brand), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -28px; top: 6px;
+      width: 12px; height: 12px; background: var(--bg);
+      border: 2px solid var(--brand); border-radius: 50%;
+      box-shadow: 0 0 12px rgba(12,132,243,0.4);
+      transition: background 0.4s ease;
+    }
+    [data-theme="light"] .timeline-item::before { background: var(--bg); }
+    
+    .timeline-date { font-family: "Space Grotesk"; font-size: 0.9rem; font-weight: 600; color: var(--brand-light); margin-bottom: 8px; }
+    .timeline-content h4 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
+    .timeline-content p { font-size: 0.95rem; color: var(--text-soft); line-height: 1.7; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none; cursor: pointer; border-radius: 999px; font-weight: 700; font-size: 1rem; transition: 0.25s ease; text-decoration: none; font-family: inherit; }
+    .btn-primary { background: #fff; color: #081221; padding: 16px 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+    .btn-primary:hover { transform: translateY(-2px); background: #f1f8ff; }
+    .btn-secondary { background: rgba(255,255,255,0.10); color: #fff; padding: 16px 32px; border: 1px solid rgba(255,255,255,0.10); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+    [data-theme="light"] .btn-primary { color: #fff; background: linear-gradient(135deg, var(--brand-light), var(--brand-dark)); }
+    [data-theme="light"] .btn-secondary { background: rgba(12, 132, 243, 0.08); color: var(--brand); border-color: rgba(12, 132, 243, 0.2); }
+
+    .contact-link { color: var(--brand-light); text-decoration: none; font-weight: 600; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+    .contact-link:hover { border-bottom-color: var(--brand-light); }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding: 42px 0; margin-top: 60px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; }
+    .footer-logo {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center; color: white;
+      box-shadow: 0 8px 20px rgba(12,132,243,0.2);
+    }
+    .footer-logo svg { width: 14px; height: 14px; }
+
+    .footer-links { display: flex; align-items: center; gap: 4px; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.75rem; text-decoration: none; font-weight: 500; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+    [data-theme="light"] .footer-link:hover { background: rgba(0,0,0,0.05); }
+
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-status { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-version { font-size: 0.7rem; color: var(--text-dim); padding: 4px 10px; background: var(--surface); border-radius: 6px; border: 1px solid var(--border); font-family: "Space Grotesk", sans-serif; font-weight: 500; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; width: 100%; }
+      .header { padding: 10px 0; margin-bottom: 20px; }
+      .brand-name { font-size: 1.1rem; }
+      .clock { display: none; }
+      .grid-values, .grid-stats { grid-template-columns: 1fr; }
+      .nav { display: none; }
+      .header-inner { justify-content: center; }
+      .brand { margin-right: auto; }
+      .theme-toggle { margin-left: auto; }
+      .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
+      .footer-right { align-items: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .glass-card { animation: fadeSlideIn 0.4s ease backwards; }
+    .section:nth-child(1) .glass-card { animation-delay: 0s; }
+    .section:nth-child(2) .glass-card { animation-delay: 0.05s; }
+    .section:nth-child(2) .glass-card:nth-child(2) { animation-delay: 0.08s; }
+    .section:nth-child(3) .glass-card { animation-delay: 0.12s; }
+    .section:nth-child(4) .glass-card { animation-delay: 0.16s; }
+    .section:nth-child(5) .glass-card { animation-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <div class="noise"></div>
+
+  <div class="bg-ambient">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="tracer tracer-1"></div>
+    <div class="tracer tracer-2"></div>
+    <div class="tracer tracer-3"></div>
+    <div class="tracer tracer-4"></div>
+  </div>
+
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="Bookmarks Home">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Book<span>marks</span></div>
+          </div>
+        </a>
+
+        <nav class="nav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="hub.html">Hub</a>
+          <a class="nav-link" href="docs.html">Docs</a>
+          <a class="nav-link" href="files.html">Files</a>
+          <a class="nav-link" href="news.html">News</a>
+          <a class="nav-link" href="privacy.html">Privacy</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="clock">
+            <div class="clock-time" id="clock-time">--:--</div>
+            <div class="clock-date" id="clock-date">...</div>
+          </div>
+          <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+            <div class="theme-toggle-knob">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">About Us</div>
+          <h1>Curated Intelligence<br><span>for the Digital Age</span></h1>
+          <p class="hero-subtitle">
+            A meticulously crafted directory designed to counter AI-biased search results, promote digital privacy, and provide reliable access to high-quality resources.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="glass-card">
+            <div class="section-head">
+              <div class="section-kicker">01. Our Mission</div>
+              <h2 class="section-title">Navigating the Noise</h2>
+            </div>
+            <div class="section-desc">
+              <p>
+                In an era where search engines are increasingly influenced by artificial intelligence—often prioritizing commercial interests over relevance—<strong>Bookmarks</strong> emerges as a solution. This platform meticulously curates high-quality resources across diverse categories, offering a reliable alternative to AI-biased search results.
+              </p>
+              <p style="margin-top: 16px;">
+                As a personal initiative, <strong>Bookmarks</strong> is designed to help individuals navigate the digital landscape with confidence. We prioritize <strong>privacy</strong>, <strong>security</strong>, and <strong>anonymity</strong>, ensuring that every listed resource adheres to ethical standards. No gray-area promotions—just the best tools and services across a wide range of domains.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head" style="text-align: center; margin-bottom: 32px;">
+            <div class="section-kicker">02. Core Values</div>
+            <h2 class="section-title">What We Stand For</h2>
+          </div>
+
+          <div class="grid-values">
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Privacy First</h3>
+                <p>Every resource is evaluated for privacy compliance. We reject services that compromise user data or engage in surveillance practices.</p>
+              </div>
+            </article>
+
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Quality Over Quantity</h3>
+                <p>We curate selectively. Each entry is verified, tested, and evaluated before inclusion. No paid placements, no sponsored content.</p>
+              </div>
+            </article>
+
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Transparency</h3>
+                <p>Clear categorization, honest descriptions, and open methodology. Users deserve to know why resources are recommended.</p>
+              </div>
+            </article>
+
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Community Driven</h3>
+                <p>Built by enthusiasts, for enthusiasts. Community feedback shapes our curation decisions and platform evolution.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head" style="text-align: center;">
+            <div class="section-kicker">03. By The Numbers</div>
+            <h2 class="section-title">Platform Stats</h2>
+          </div>
+          <div class="grid-stats">
+            <div class="stat-card">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Curated Resources</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">24</div>
+              <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Privacy Verified</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="glass-card">
+            <div class="section-head">
+              <div class="section-kicker">04. Our Journey</div>
+              <h2 class="section-title">Timeline</h2>
+            </div>
+            
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                  <h4>Project Inception</h4>
+                  <p>Started as a personal collection of verified resources, growing from a simple bookmark file to a structured directory.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-content">
+                  <h4>Platform Development</h4>
+                  <p>Built public interface, established categorization methodology, and implemented privacy-first hosting infrastructure.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2025</div>
+                <div class="timeline-content">
+                  <h4>Community Expansion</h4>
+                  <p>Opened submission channels, integrated community feedback systems, and expanded to 500+ verified resources.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2026</div>
+                <div class="timeline-content">
+                  <h4>Continuous Evolution</h4>
+                  <p>Ongoing refinement, new categories, and enhanced verification processes. The journey continues.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="glass-card" style="text-align: center;">
+            <div class="section-kicker">05. Get In Touch</div>
+            <h2 class="section-title" style="margin-bottom: 16px;">Contact Us</h2>
+            <p class="section-desc" style="margin: 0 auto 32px;">
+              We welcome suggestions, corrections, and collaboration inquiries. Reach out via: <br>
+              <a href="mailto:idritteris@proton.me" class="contact-link">idritteris@proton.me</a>
+            </p>
+            
+            <div class="hero-actions" style="justify-content: center; gap: 16px;">
+              <a href="hub.html" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Visit Hub
+              </a>
+              <a href="mailto:idritteris@proton.me" class="btn btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="index.html">Home</a>
+          <a class="footer-link" href="about.html">About</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="https://ko-fi.com/bookmarks" target="_blank" rel="noopener noreferrer">Support</a>
+        </div>
+        
+        <div class="footer-right">
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            <span>All systems operational</span>
+          </div>
+          <span class="footer-version">v3.2 // About Module</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeEl = document.getElementById('clock-time');
+      const dateEl = document.getElementById('clock-date');
+      if(timeEl) timeEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+      if(dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      const toggle = document.getElementById('theme-toggle');
+
+      toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+
+      toggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTheme);
+    } else {
+      initTheme();
+    }
+  </script>
+</body>
+</html>
