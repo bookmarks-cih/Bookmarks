@@ -1,3 +1,38 @@
+<!--
+╔══════════════════════════════════════════════════════╗
+║                  BOOKMARKS DATA                     ║
+╚══════════════════════════════════════════════════════╝
+
+Author: Marvyn (@Marvyn)
+Project: bookmarks.love
+
+This bookmarks collection (bookmarks-data.js) is an original work,
+carefully curated, structured, and maintained by the author.
+
+All links included are the result of manual selection, research,
+and ongoing refinement to ensure quality, relevance, and usefulness.
+
+This dataset reflects a personal vision of the web:
+a cleaner, more intentional space beyond algorithmic noise.
+
+© Marvyn — All rights reserved.
+
+You are welcome to explore and learn from this project.
+However, redistribution, replication, or commercial use of this
+curated dataset without permission is not permitted.
+
+Stay curious. Stay independent.
+-->
+
+
+
+
+
+
+
+
+  
+
 window.BOOKMARKS_DATA = [
   /* -------------------- SEARCH -------------------- */
   { name: "Google", link: "https://google.com", desc: "The most widely used search engine.", cat: "Search" },
@@ -912,17 +947,27 @@ window.BOOKMARKS_DATA = [
   { name: "HackChat", link: "https://hack.chat", desc: "No description is currently available for this page.", cat: "Unverified" },
 
   /* -------------------- MISC -------------------- */
-  { name: "Speedtest", link: "https://speedtest.net", desc: "Internet speed test.", cat: "Misc" },
-  { name: "DownDetector", link: "https://downdetector.com", desc: "Service outage tracker.", cat: "Misc" },
-  { name: "Time.is", link: "https://time.is", desc: "Accurate world time.", cat: "Misc" },
-  { name: "AlternativeTo", link: "https://alternativeto.net", desc: "Find software alternatives.", cat: "Misc" },
-  { name: "JustDeleteMe", link: "https://justdeleteme.xyz", desc: "Guide to delete online accounts.", cat: "Misc" },
-  { name: "CamelCamelCamel", link: "https://camelcamelcamel.com", desc: "Amazon price history tracker.", cat: "Misc" },
-  { name: "Is It Down Right Now?", link: "https://isitdownrightnow.com", desc: "Check if a website is down.", cat: "Misc" },
-  { name: "WhatIsMyIP", link: "https://whatismyipaddress.com", desc: "Check your IP address and info.", cat: "Misc" },
-  { name: "Whois Lookup", link: "https://who.is", desc: "Domain ownership and WHOIS info.", cat: "Misc" },
+{ name: "Worldometers", link: "https://worldometers.info", desc: "Global statistics.", cat: "Misc" },
+{ name: "Internet Live Stats", link: "https://internetlivestats.com", desc: "Internet statistics.", cat: "Misc" },
+{ name: "Radio Garden", link: "https://radio.garden", desc: "3D global radio explorer.", cat: "Misc" },
+{ name: "EarthCam", link: "https://earthcam.com", desc: "Live webcams around the world.", cat: "Misc" },
+{ name: "Flightradar24", link: "https://flightradar24.com", desc: "Real-time flight tracker.", cat: "Misc" },
+{ name: "MarineTraffic", link: "https://marinetraffic.com", desc: "Real-time ship tracker.", cat: "Misc" },
+{ name: "ISS Tracker", link: "https://spotthestation.nasa.gov", desc: "Track the International Space Station.", cat: "Misc" },
+
+{ name: "Speedtest", link: "https://speedtest.net", desc: "Internet speed test.", cat: "Misc" },
+{ name: "DownDetector", link: "https://downdetector.com", desc: "Service outage tracker.", cat: "Misc" },
+{ name: "Time.is", link: "https://time.is", desc: "Accurate world time.", cat: "Misc" },
+{ name: "AlternativeTo", link: "https://alternativeto.net", desc: "Find software alternatives.", cat: "Misc" },
+{ name: "JustDeleteMe", link: "https://justdeleteme.xyz", desc: "Guide to delete online accounts.", cat: "Misc" },
+{ name: "CamelCamelCamel", link: "https://camelcamelcamel.com", desc: "Amazon price history tracker.", cat: "Misc" },
+{ name: "Is It Down Right Now?", link: "https://isitdownrightnow.com", desc: "Check if a website is down.", cat: "Misc" },
+{ name: "WhatIsMyIP", link: "https://whatismyipaddress.com", desc: "Check your IP address and info.", cat: "Misc" },
+{ name: "Whois Lookup", link: "https://who.is", desc: "Domain ownership and WHOIS info.", cat: "Misc" },
 { name: "VirusTotal", link: "https://virustotal.com", desc: "Scan files and URLs for malware.", cat: "Misc" },
 { name: "Have I Been Pwned", link: "https://haveibeenpwned.com", desc: "Check if your email was in a data breach.", cat: "Misc" },
+
+
 { name: "TempMail", link: "https://temp-mail.org", desc: "Disposable temporary email.", cat: "Misc" },
 { name: "10MinuteMail", link: "https://10minutemail.com", desc: "Self-destructing email address.", cat: "Misc" },
 { name: "PrivNote", link: "https://privnote.com", desc: "Self-destructing private notes.", cat: "Misc" },
@@ -958,18 +1003,6 @@ window.BOOKMARKS_DATA = [
   { name: "The Deep Sea", link: "https://neal.fun/deep-sea", desc: "Interactive deep-sea exploration.", cat: "Weird" },
   { name: "The Size of Space", link: "https://neal.fun/size-of-space", desc: "Visualization of the universe's scale.", cat: "Weird" },
   { name: "Galdrux", link: "https://galdrux.com", desc: "?.", cat: "Weird" },
-
-  /* -------------------- OTHERS -------------------- */
-  { name: "Worldometers", link: "https://worldometers.info", desc: "Global statistics.", cat: "Others" },
-  { name: "Internet Live Stats", link: "https://internetlivestats.com", desc: "Internet statistics.", cat: "Others" },
-  { name: "Radio Garden", link: "https://radio.garden", desc: "3D global radio explorer.", cat: "Others" },
-  { name: "EarthCam", link: "https://earthcam.com", desc: "Live webcams around the world.", cat: "Others" },
-  { name: "Flightradar24", link: "https://flightradar24.com", desc: "Real-time flight tracker.", cat: "Others" },
-  { name: "MarineTraffic", link: "https://marinetraffic.com", desc: "Real-time ship tracker.", cat: "Others" },
-  { name: "ISS Tracker", link: "https://spotthestation.nasa.gov", desc: "Track the International Space Station.", cat: "Others" },
-  { name: "Windytv", link: "https://windy.com", desc: "Interactive weather map.", cat: "Others" },
-  { name: "DeepL", link: "https://deepl.com", desc: "High-quality AI translation.", cat: "Others" },
-  { name: "Lingva Translate", link: "https://lingva.ml", desc: "Open-source private translation.", cat: "Others" },
 
   /* -------------------- GRAY ZONE -------------------- */
   { name: "Eldorado.gg", link: "https://eldorado.gg", desc: "Marketplace for in-game items and accounts.", cat: "Gray Zone" },
@@ -1540,7 +1573,48 @@ window.BOOKMARKS_DATA = [
 
   
   
-  
+  /* -------------------- OFF-GRID -------------------- */
+{ name: "Meshtastic", link: "https://meshtastic.org", desc: "LoRa mesh network for off-grid communication.", cat: "Off-grid" },
+{ name: "Reticulum Network", link: "https://reticulum.network", desc: "Cryptography-based mesh networking stack.", cat: "Off-grid" },
+{ name: "Briar", link: "https://briarproject.org", desc: "Peer-to-peer messaging via Bluetooth/Wi-Fi without internet.", cat: "Off-grid" },
+{ name: "Bridgefy", link: "https://bridgefy.me", desc: "Offline messaging app using Bluetooth mesh.", cat: "Off-grid" },
+
+{ name: "Serval Project", link: "https://servalproject.org", desc: "Mobile mesh network for voice, text, and data.", cat: "Off-grid" },
+{ name: "Manyverse (Scuttlebutt)", link: "https://manyver.se", desc: "Offline-first social network (P2P).", cat: "Off-grid" },
+{ name: "Secure Scuttlebutt", link: "https://scuttlebutt.nz", desc: "Decentralized social network protocol.", cat: "Off-grid" },
+
+{ name: "cjdns", link: "https://github.com/cjdelisle/cjdns", desc: "Encrypted IPv6 network over mesh.", cat: "Off-grid" },
+{ name: "Yggdrasil Network", link: "https://yggdrasil-network.github.io", desc: "Decentralized mesh network using end-to-end encryption.", cat: "Off-grid" },
+
+{ name: "Althea Network", link: "https://althea.net", desc: "Decentralized ISP infrastructure.", cat: "Off-grid" },
+{ name: "NYC Mesh", link: "https://nycmesh.net", desc: "Community-owned internet network.", cat: "Off-grid" },
+{ name: "Freifunk", link: "https://freifunk.net", desc: "Open grassroots wireless mesh networks.", cat: "Off-grid" },
+
+{ name: "GoTenna", link: "https://gotenna.com", desc: "Off-grid communication hardware devices.", cat: "Off-grid" },
+{ name: "Beartooth Radio", link: "https://beartooth.com", desc: "Peer-to-peer communication without cell service.", cat: "Off-grid" },
+
+{ name: "Amateur Radio (ARRL)", link: "https://arrl.org", desc: "Ham radio community and resources.", cat: "Off-grid" },
+{ name: "QRZ", link: "https://qrz.com", desc: "Amateur radio operator database and forums.", cat: "Off-grid" },
+
+{ name: "Winlink", link: "https://winlink.org", desc: "Global radio email system.", cat: "Off-grid" },
+{ name: "JS8Call", link: "http://js8call.com", desc: "Weak-signal digital communication over HF radio.", cat: "Off-grid" },
+
+{ name: "APRS", link: "https://aprs.org", desc: "Packet radio system for real-time data.", cat: "Off-grid" },
+{ name: "Direwolf", link: "https://github.com/wb2osz/direwolf", desc: "Software TNC for packet radio.", cat: "Off-grid" },
+
+{ name: "Fldigi", link: "http://www.w1hkj.com", desc: "Digital modem program for radio communication.", cat: "Off-grid" },
+
+{ name: "GNU Radio", link: "https://gnuradio.org", desc: "Toolkit for building software radios.", cat: "Off-grid" },
+{ name: "RTL-SDR", link: "https://rtl-sdr.com", desc: "Low-cost software-defined radio.", cat: "Off-grid" },
+
+{ name: "PirateBox", link: "https://piratebox.cc", desc: "Offline file sharing and communication system.", cat: "Off-grid" },
+{ name: "LibraryBox", link: "https://librarybox.us", desc: "Portable offline digital library.", cat: "Off-grid" },
+
+{ name: "BBS Corner", link: "https://bbscorner.com", desc: "Modern bulletin board systems directory.", cat: "Off-grid" },
+{ name: "Synchronet BBS", link: "https://synchro.net", desc: "Classic-style BBS software and network.", cat: "Off-grid" },
+
+{ name: "ZeroNet", link: "https://zeronet.io", desc: "Decentralized web using BitTorrent and crypto.", cat: "Off-grid" },
+{ name: "IPFS", link: "https://ipfs.tech", desc: "Distributed file system for decentralized web.", cat: "Off-grid" },
   
   
 
@@ -1684,3 +1758,15 @@ window.BOOKMARKS_DATA = [
   { name: "Freedom", link: "https://freedom.to", desc: "Distraction blocker for apps and websites.", cat: "Productivity" },
   { name: "NotebookLM", link: "https://notebooklm.google", desc: "AI that reasons over your documents.", cat: "Productivity" }
 ];
+
+
+
+   <!--
+ ____  __ __ _____  ____     _____  _   _  ____    __    __ ____ _____   
+/ (__`|  |  || () )| ===|   |_   _|| |_| || ===|   \ \/\/ /| ===|| () )  
+\____) \___/ |_|\_\|____|     |_|  |_| |_||____|    \_/\_/ |____||_()_)  
+
+Curated & maintained by Marvyn (@Marvyn)
+bookmarks.love — Independent web curation
+All rights reserved.
+-->
