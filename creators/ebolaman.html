@@ -11,11 +11,10 @@
 
   <style>
     :root {
-      /* Thème Ebola Man : Vert Biohazard / Cyan Cyber */
-      --brand: #00ff41; 
+      --brand: #00ff41;
       --brand-dark: #008f11;
       --brand-light: #5aff87;
-      --bg: #020804; /* Fond très sombre légèrement teinté vert */
+      --bg: #020804;
       --surface: rgba(255,255,255,0.04);
       --text: #f0fff4;
       --text-soft: rgba(240,255,244,0.75);
@@ -428,7 +427,7 @@
     }
 
     .link-tag.tag-community {
-      background: rgba(125, 243, 193, 0.8)
+      background: rgba(125, 243, 193, 0.8);
       color: var(--brand-light);
     }
 
@@ -446,15 +445,12 @@
       background: rgba(0,229,255,0.15);
       color: var(--accent-cyan);
     }
-    
-        .link-tag.tag-prog {
-  background: rgba(255, 230, 0, 0.18); /* jaune léger */
-  color: #ffe600; /* jaune vif */
-  border: 1px solid rgba(255, 230, 0, 0.5);
-}
 
-
-    
+    .link-tag.tag-prog {
+      background: rgba(255, 230, 0, 0.18);
+      color: #ffe600;
+      border: 1px solid rgba(255, 230, 0, 0.5);
+    }
 
     .link-tag.tag-framework {
       background: rgba(255,159,67,0.15);
@@ -716,7 +712,6 @@
   <div class="noise"></div>
 
   <div class="main-card">
-
     <div class="love-pattern" id="lovePattern"></div>
 
     <nav class="top-nav">
@@ -743,7 +738,7 @@
       </div>
 
       <h1 class="profile-name">Ebola Man</h1>
-      <span class="profile-handle">@EbolaMan_YT</span> 
+      <span class="profile-handle">@EbolaMan_YT</span>
 
       <div class="social-links">
         <a href="https://www.youtube.com/@ebolaman_" class="social-icon" title="YouTube">
@@ -770,20 +765,13 @@
       <div class="video-container">
         <div class="video-wrapper" id="videoWrapper">
           <div class="video-placeholder" id="videoPlaceholder">
-            <!-- Placeholder Image: Generic Hacker/Linux terminal vibe -->
-            <div class="video-placeholder-bg" style="background-image: url('/creators/img/ebolamanthumbnail.png');"></div>
+            <div class="video-placeholder-bg" style="background-image: url('https://img.youtube.com/vi/42WiPaiCyW8/maxresdefault.jpg');"></div>
             <div class="play-btn">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
             <span class="video-placeholder-text">Click to play video</span>
           </div>
-          <iframe width="560" height="315" 
-src="https://www.youtube.com/embed/42WiPaiCyW8" 
-title="YouTube video player" frameborder="0" 
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-allowfullscreen>
-</iframe>
-
+          <iframe id="videoIframe" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -791,13 +779,9 @@ allowfullscreen>
     <div class="card-footer">
       <p class="footer-text">Curated with care by <a href="https://bookmarks.love" target="_blank">bookmarks.love</a></p>
     </div>
-
   </div>
 
   <script>
-    /* ============================================================
-       DATA — Ebola Man Collection
-    ============================================================ */
     const collectionData = [
       {
         title: "About",
@@ -805,7 +789,7 @@ allowfullscreen>
           {
             name: "Skool Profile - @ebola-man-2077",
             desc: "ebola man's Skool profile",
-            img: "/creators/img/skool.jpg", 
+            img: "/creators/img/skool.jpg",
             url: "https://www.skool.com/anonymous2/about",
             tag: "community",
             tagClass: "tag-community"
@@ -813,7 +797,7 @@ allowfullscreen>
           {
             name: "Skool Community - Anonymous 2.0",
             desc: "ebola man's private community for ethical hacking and cybersecurity",
-            img: "/creators/img/skool.jpg", 
+            img: "/creators/img/skool.jpg",
             url: "https://www.skool.com/anonymous2/about",
             tag: "community",
             tagClass: "tag-community"
@@ -861,65 +845,53 @@ allowfullscreen>
         title: "Essential Tools",
         items: [
           { name: "Notion", desc: "Notion is an all‑in‑one workspace that lets you organize notes, tasks, databases, and projects in a flexible, customizable environment.", img: "/creators/img/notion.jpg", url: "https://www.kali.org/", tag: "PROGRAM", tagClass: "tag-prog" },
-          
           { name: "AutoHotkey", desc: "Security oriented OS for Anonimity.", img: "/creators/img/autohotkey.jpg", url: "https://www.parrotsec.org/", tag: "PROGRAM", tagClass: "tag-prog" },
           { name: "Process Hacker", desc: "Web application security testing.", img: "/creators/img/processhacker.png", url: "https://portswigger.net/burp", tag: "PROGRAM", tagClass: "tag-prog" },
         ]
       },
-      
-      
-      
       {
         title: "Useful guides",
-items: [
-  { 
-    name: "SS64 Windows Command Line Reference", 
-    desc: "A complete reference for Windows CMD commands, batch scripting, and system utilities.", 
-    img: "https://learn.microsoft.com/favicon.ico", 
-    url: "https://ss64.com/nt/", 
-    tag: "Guide", 
-    tagClass: "tag-prog" 
-  },
-
-  { 
-    name: "Microsoft Windows Commands Documentation", 
-    desc: "Official Microsoft documentation for CMD commands, batch scripting, and Windows administration.", 
-    img: "https://learn.microsoft.com/favicon.ico", 
-    url: "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands", 
-    tag: "Documentation", 
-    tagClass: "tag-prog" 
-  },
-
-  { 
-    name: "PowerShell Scripting Overview", 
-    desc: "A beginner-friendly guide to PowerShell scripting, automation, and Windows management.", 
-    img: "https://learn.microsoft.com/favicon.ico", 
-    url: "https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.4", 
-    tag: "Guide", 
-    tagClass: "tag-prog" 
-  },
-]
-
+        items: [
+          {
+            name: "SS64 Windows Command Line Reference",
+            desc: "A complete reference for Windows CMD commands, batch scripting, and system utilities.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://ss64.com/nt/",
+            tag: "Guide",
+            tagClass: "tag-prog"
+          },
+          {
+            name: "Microsoft Windows Commands Documentation",
+            desc: "Official Microsoft documentation for CMD commands, batch scripting, and Windows administration.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands",
+            tag: "Documentation",
+            tagClass: "tag-prog"
+          },
+          {
+            name: "PowerShell Scripting Overview",
+            desc: "A beginner-friendly guide to PowerShell scripting, automation, and Windows management.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.4",
+            tag: "Guide",
+            tagClass: "tag-prog"
+          },
+        ]
       },
-      
-      
       {
         title: "Repos Overview",
         items: [
           { name: "UAC-Bypass", desc: "3 ways of bypassing admin restrictions/uac.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/UAC-Bypass", tag: "Github", tagClass: "tag-git" },
-          
           { name: "IPTOOLKIT", desc: "just sum simple network stuff.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/IPTOOLKIT", tag: "Github", tagClass: "tag-git" },
-          
           { name: "ftp-exploit", desc: "vsftpd 2.3.4 exploit.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/ftp-exploit", tag: "Github", tagClass: "tag-git" },
         ]
       }
     ];
 
-    // --- FEATURED VIDEO ---
-    // Remplacez l'ID ci-dessous par votre propre vidéo
-    const featuredVideoId = "M7lc1UVf-VE"; 
+    // ID de la vidéo YouTube à afficher
+    const featuredVideoId = "42WiPaiCyW8";
 
-    // --- 1. GENERATE LOVE PATTERN ---
+    // Génération du motif de fond
     function generateLovePattern() {
       const container = document.getElementById('lovePattern');
       container.innerHTML = '';
@@ -934,7 +906,7 @@ items: [
       positions.forEach((pos, i) => {
         const el = document.createElement('div');
         el.className = 'love-text';
-        el.textContent = '#BioHazard'; 
+        el.textContent = '#BioHazard';
         Object.keys(pos).forEach(key => {
           if (key !== 'rotate') el.style[key] = pos[key];
         });
@@ -945,21 +917,18 @@ items: [
     }
     generateLovePattern();
 
-    // --- 2. VIDEO PLAYER FUNCTIONALITY ---
+    // Fonctionnalité du lecteur vidéo
     const videoPlaceholder = document.getElementById('videoPlaceholder');
     const videoIframe = document.getElementById('videoIframe');
 
     if (videoPlaceholder && videoIframe) {
       videoPlaceholder.addEventListener('click', function () {
-        // ICI : J'ai retiré 'mute=1' pour avoir le son.
-        // J'ai gardé 'autoplay=1' car l'utilisateur a cliqué.
-        // Si le navigateur bloque malgré tout, il faudra cliquer sur le lecteur YouTube direct pour activer le son.
         videoIframe.src = `https://www.youtube.com/embed/${featuredVideoId}?autoplay=1&rel=0&modestbranding=1`;
         this.style.display = 'none';
       });
     }
 
-    // --- 3. GENERATE UI ---
+    // Génération de l'interface utilisateur
     const contentArea = document.getElementById('contentArea');
 
     function createLinkItemInner(item) {

@@ -2,9 +2,9 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Terms of Service - Bookmarks</title>
+  <title>About Us - Bookmarks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Terms of service for Bookmarks - Your rights and responsibilities when using our platform.">
+  <meta name="description" content="Discover the story behind Bookmarks - A curated intelligence hub for the digital age.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,17 +12,18 @@
 
   <style>
     :root {
-      /* Default Dark Theme */
       --brand: #0c84f3;
       --brand-dark: #0066d9;
       --brand-light: #53b5ff;
       --brand-soft: rgba(12,132,243,0.12);
+      --brand-glow: rgba(12,132,243,0.2);
       
       --bg: #07111f;
       --bg-2: #0b1628;
       --surface: rgba(255,255,255,0.06);
       --surface-2: rgba(255,255,255,0.08);
       --surface-3: rgba(255,255,255,0.12);
+      --surface-hover: rgba(255,255,255,0.1);
       
       --text: #f7fbff;
       --text-soft: rgba(247,251,255,0.78);
@@ -35,15 +36,20 @@
       --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
       --glass-border: rgba(255,255,255,0.1);
       --noise-opacity: 0.06;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
     }
 
-    /* Light Theme Overrides */
     [data-theme="light"] {
       --bg: #f8fafc;
       --bg-2: #ffffff;
       --surface: rgba(0,0,0,0.03);
       --surface-2: rgba(0,0,0,0.05);
       --surface-3: rgba(0,0,0,0.08);
+      --surface-hover: rgba(0,0,0,0.05);
       
       --text: #0f172a;
       --text-soft: #475569;
@@ -58,91 +64,204 @@
       --noise-opacity: 0.03;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 100%;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
 
     body {
       font-family: "Inter", sans-serif;
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      min-height: 100dvh;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
 
-    /* Background Effects */
     .noise {
-      position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 0;
+      position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 1;
       background-image:
         radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
-        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
-        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0.7px, transparent 0.9px);
-      background-size: 24px 24px, 36px 36px, 42px 42px;
-      z-index: 1;
-    }
-    
-    [data-theme="light"] .noise {
-       background-image:
-        radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+      background-size: 24px 24px, 36px 36px;
     }
 
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: 
-        radial-gradient(circle at 15% 20%, rgba(12,132,243,0.15), transparent 30%),
-        radial-gradient(circle at 85% 0%, rgba(12,132,243,0.10), transparent 24%);
-      transition: opacity 0.4s ease;
+    [data-theme="light"] .noise {
+       background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
     }
-    
-    [data-theme="light"] .bg-mesh {
-       opacity: 0.5;
+
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: floatOrb 20s ease-in-out infinite;
+    }
+
+    [data-theme="light"] .ambient-orb {
+      opacity: 0.2;
+      filter: blur(100px);
+    }
+
+    .orb-1 {
+      width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
+      background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+      top: -20%; left: -10%; animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+      bottom: -10%; right: -10%; animation-delay: -7s; animation-duration: 25s;
+    }
+    .orb-3 {
+      width: 40vw; height: 40vw; max-width: 500px; max-height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+      top: 40%; left: 40%; animation-delay: -14s; animation-duration: 30s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(5%, 10%) scale(1.05); }
+      50% { transform: translate(-5%, 5%) scale(0.95); }
+      75% { transform: translate(10%, -5%) scale(1.02); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    .tracer {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      height: 1px; width: 200%; left: -50%;
+      animation: driftTracer 15s linear infinite;
+      transform-origin: center;
+    }
+
+    [data-theme="light"] .tracer {
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+    }
+
+    .tracer-1 { top: 20%; transform: rotate(-15deg); animation-delay: 0s; opacity: 0.6; }
+    .tracer-2 { top: 50%; transform: rotate(10deg); animation-delay: -5s; animation-duration: 20s; opacity: 0.4; }
+    .tracer-3 { top: 80%; transform: rotate(-5deg); animation-delay: -10s; animation-duration: 25s; opacity: 0.5; }
+    .tracer-4 { top: 35%; transform: rotate(25deg); animation-delay: -3s; animation-duration: 18s; opacity: 0.3; }
+
+    @keyframes driftTracer {
+      0% { transform: translateX(-25%) rotate(inherit); }
+      100% { transform: translateX(25%) rotate(inherit); }
     }
 
     .page { position: relative; z-index: 2; }
-    .container { width: min(100% - 32px, 1240px); margin: 0 auto; }
+    .container { width: min(100% - 32px, 1100px); margin: 0 auto; }
 
-    /* Typography */
     h1, h2, h3, h4 { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; }
-    
+
     /* Header */
     .header {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 18px 0;
+      margin-bottom: 32px;
+      backdrop-filter: blur(14px); 
+      -webkit-backdrop-filter: blur(14px);
       background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
       border-bottom: 1px solid transparent;
-      padding: 18px 0;
-      transition: background 0.3s;
     }
+
     [data-theme="light"] .header {
        background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
     }
-    
-    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .brand-mark {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
-      display: grid; place-items: center;
-      box-shadow: 0 12px 30px rgba(12,132,243,0.24); flex-shrink: 0;
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .brand-mark svg { width: 20px; height: 20px; color: white; }
-    .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
-    .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--text); }
-    .brand-name span { color: var(--brand-light); }
-    
-    .nav { display: flex; align-items: center; gap: 10px; }
-    .nav-link { padding: 10px 14px; border-radius: 999px; font-size: 0.88rem; color: var(--text-soft); transition: 0.25s ease; text-decoration: none; }
-    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.08); color: var(--text); }
-    [data-theme="light"] .nav-link:hover, [data-theme="light"] .nav-link.active { background: rgba(0,0,0,0.05); }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: transform 0.3s ease;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+    }
+
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+    .logo-icon svg { width: 20px; height: 20px; }
+
+    .logo-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .logo-text span { color: var(--brand-light); }
+
+    .nav { display: none; align-items: center; gap: 22px; }
+    .nav-link {
+      color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+      transition: all 0.2s ease; position: relative; padding: 4px 0;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--brand-light); transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--brand-light); }
+    .nav-link.active::after { width: 100%; }
+
+    @media (min-width: 768px) {
+      .nav { display: flex; }
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+    /* Clock */
+    .clock {
+      text-align: right;
+      font-family: "Space Grotesk", sans-serif;
+      margin-right: 16px;
+    }
+
+    .clock-time {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brand-light);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .clock-date {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+      font-weight: 400;
+    }
 
     /* Theme Toggle */
     .theme-toggle {
@@ -175,145 +294,372 @@
       z-index: 2;
     }
 
-    .theme-toggle-knob svg {
-      width: 11px;
-      height: 11px;
+    .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* Social Link */
+    .header-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .header-social-link:hover { background: var(--surface); color: var(--text); }
+    .header-social-link svg { width: 18px; height: 18px; }
+
+    /* Hamburger Button */
+    .hamburger-btn {
+      display: flex;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+
+    .hamburger-btn svg { width: 20px; height: 20px; }
+
+    /* Hamburger Menu */
+    .hamburger-menu {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hamburger-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hamburger-close {
+      width: 32px;
+      height: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-soft);
+    }
+
+    .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+
+    .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hamburger-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .hamburger-item:hover::before { opacity: 1; }
+
+    .hamburger-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
       color: white;
+      box-shadow: 0 4px 12px var(--brand-glow);
     }
 
-    [data-theme="light"] .theme-toggle-knob {
-      transform: translateX(24px);
+    .hamburger-icon svg { width: 20px; height: 20px; }
+
+    .hamburger-content { flex: 1; position: relative; z-index: 1; }
+
+    .hamburger-item-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
     }
 
-    /* Clock */
-    .clock { text-align: right; font-family: "Space Grotesk", sans-serif; margin-right: 16px; }
-    .clock-time { font-size: 1.1rem; font-weight: 700; color: var(--brand-light); letter-spacing: 0.02em; line-height: 1; }
-    .clock-date { font-size: 0.7rem; color: var(--text-dim); margin-top: 3px; font-weight: 400; }
+    .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
 
     /* Hero */
-    .hero { padding: 80px 0 60px; text-align: center; position: relative; }
-    
+    .hero { text-align: center; margin-bottom: 36px; padding-top: 16px; }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px; width: fit-content;
-      padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
-      color: var(--text-soft); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 24px;
+      display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--brand-light); margin-bottom: 18px; padding: 8px 16px;
+      background: var(--brand-soft); border: 1px solid rgba(83,181,255,0.15); border-radius: 50px;
     }
-    [data-theme="light"] .hero-badge { background: rgba(12, 132, 243, 0.08); border-color: rgba(12, 132, 243, 0.15); color: var(--brand); }
-
-    .hero h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; color: var(--text); }
     .hero h1 span { color: var(--brand-light); }
-    
-    .hero-subtitle { max-width: 700px; margin: 0 auto; color: var(--text-soft); font-size: 1.15rem; line-height: 1.75; }
+    .hero-subtitle { max-width: 600px; margin: 0 auto; color: var(--text-soft); font-size: 1.05rem; line-height: 1.7; }
 
-    /* Section Styling */
-    .section { padding: 60px 0; }
+    /* Sections */
+    .section { padding: 36px 0; }
     .section-head { margin-bottom: 32px; }
-    
     .section-kicker { display: inline-block; font-size: 0.75rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700; }
     .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin-bottom: 0; }
     .section-desc { color: var(--text-soft); max-width: 620px; line-height: 1.8; font-size: 1.05rem; margin-top: 16px; }
 
     /* Glass Cards */
     .glass-card {
-      position: relative; overflow: hidden; padding: 28px; border-radius: 28px;
+      position: relative; overflow: hidden; padding: 28px; border-radius: var(--radius-lg);
       border: 1px solid var(--glass-border);
       background: var(--glass-bg);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       box-shadow: var(--shadow); transition: transform 0.3s ease, border-color 0.3s ease;
-      margin-bottom: 32px;
+    }
+    .glass-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--brand-light), var(--brand-dark));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
     }
     .glass-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-3px); }
-    
+    .glass-card:hover::before { transform: scaleX(1); }
+
     .info-card { display: flex; flex-direction: column; gap: 16px; }
     .info-icon {
       width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px;
       background: rgba(12,132,243,0.15); border: 1px solid rgba(83,181,255,0.2);
-      margin-bottom: 16px;
     }
     .info-icon svg { width: 22px; height: 22px; color: var(--brand-light); }
-    
-    .glass-card h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; }
-    .glass-card h3 { font-size: 1.2rem; margin: 24px 0 12px 0; color: var(--text); }
-    .glass-card p { color: var(--text-soft); line-height: 1.7; font-size: 0.95rem; margin: 0 0 16px 0; }
-    .glass-card ul { list-style: none; margin: 16px 0; }
-    .glass-card li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--text-soft); line-height: 1.6; }
-    .glass-card li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 8px;
-      height: 8px;
-      background: var(--brand);
-      border-radius: 50%;
-    }
-    .glass-card strong { color: var(--text); font-weight: 600; }
-    .glass-card a { color: var(--brand-light); text-decoration: none; transition: all 0.3s ease; }
-    .glass-card a:hover { text-decoration: underline; }
+    .info-card h3 { font-size: 1.3rem; line-height: 1.2; margin: 0; }
+    .info-card p { color: var(--text-soft); line-height: 1.7; font-size: 0.95rem; margin: 0; }
 
-    .highlight { color: var(--brand-light); font-weight: 500; }
+    /* Grids */
+    .grid-values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .grid-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    /* Stats */
+    .stat-card {
+      padding: 24px; border-radius: var(--radius-md); text-align: center;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow); transition: 0.25s ease;
+    }
+    .stat-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-2px); }
+    .stat-number { font-family: "Space Grotesk"; font-size: 2.5rem; font-weight: 700; color: var(--brand-light); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 8px; }
+
+    /* Timeline */
+    .timeline { position: relative; margin: 40px 0; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--brand), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -28px; top: 6px;
+      width: 12px; height: 12px; background: var(--bg);
+      border: 2px solid var(--brand); border-radius: 50%;
+      box-shadow: 0 0 12px rgba(12,132,243,0.4);
+      transition: background 0.4s ease;
+    }
+    [data-theme="light"] .timeline-item::before { background: var(--bg); }
+    
+    .timeline-date { font-family: "Space Grotesk"; font-size: 0.9rem; font-weight: 600; color: var(--brand-light); margin-bottom: 8px; }
+    .timeline-content h4 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
+    .timeline-content p { font-size: 0.95rem; color: var(--text-soft); line-height: 1.7; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none; cursor: pointer; border-radius: 999px; font-weight: 700; font-size: 1rem; transition: 0.25s ease; text-decoration: none; font-family: inherit; }
+    .btn-primary { background: #fff; color: #081221; padding: 16px 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+    .btn-primary:hover { transform: translateY(-2px); background: #f1f8ff; }
+    .btn-secondary { background: rgba(255,255,255,0.10); color: #fff; padding: 16px 32px; border: 1px solid rgba(255,255,255,0.10); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+    [data-theme="light"] .btn-primary { color: #fff; background: linear-gradient(135deg, var(--brand-light), var(--brand-dark)); }
+    [data-theme="light"] .btn-secondary { background: rgba(12, 132, 243, 0.08); color: var(--brand); border-color: rgba(12, 132, 243, 0.2); }
+
+    .contact-link { color: var(--brand-light); text-decoration: none; font-weight: 600; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+    .contact-link:hover { border-bottom-color: var(--brand-light); }
 
     /* Footer */
-    .footer { padding: 42px 0 56px; border-top: 1px solid var(--border); margin-top: 60px; }
+    .footer { border-top: 1px solid var(--border); padding: 42px 0; margin-top: 60px; }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; }
-    
-    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
-    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
-    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
-
-    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .nav { display: none; } 
-      .clock { display: none; }
-      .header-inner { justify-content: center; }
-      .brand { margin-right: auto; }
-      .theme-toggle { margin-left: auto; }
-      
-      .footer-inner { flex-direction: column; text-align: center; gap: 24px; }
-      .footer-links { justify-content: center; }
+    .footer-logo {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center; color: white;
+      box-shadow: 0 8px 20px rgba(12,132,243,0.2);
     }
+    .footer-logo svg { width: 14px; height: 14px; }
+
+    .footer-links { display: flex; align-items: center; gap: 4px; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.75rem; text-decoration: none; font-weight: 500; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+    [data-theme="light"] .footer-link:hover { background: rgba(0,0,0,0.05); }
+
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-status { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-version { font-size: 0.7rem; color: var(--text-dim); padding: 4px 10px; background: var(--surface); border-radius: 6px; border: 1px solid var(--border); font-family: "Space Grotesk", sans-serif; font-weight: 500; }
+
+    /* Desktop - show hamburger elements */
+    @media (min-width: 769px) {
+      .hamburger-btn { display: flex; }
+      .hamburger-menu { display: block; }
+      .hamburger-menu-overlay { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; width: 100%; }
+      .header { padding: 14px 0; margin-bottom: 24px; }
+      .logo-text { font-size: 1.2rem; }
+      .clock { display: none; }
+      .grid-values, .grid-stats { grid-template-columns: 1fr; }
+      
+      .hamburger-menu {
+        top: 70px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        width: auto;
+        padding: 16px;
+      }
+      
+      .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
+      .hamburger-item { padding: 12px 14px; }
+      .hamburger-icon { width: 38px; height: 38px; }
+      .hamburger-icon svg { width: 18px; height: 18px; }
+      .hamburger-item-title { font-size: 0.9rem; }
+      .hamburger-item-desc { font-size: 0.7rem; }
+      .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
+      .footer-right { align-items: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
     @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .glass-card { animation: fadeSlideIn 0.4s ease backwards; }
+    .section:nth-child(1) .glass-card { animation-delay: 0s; }
+    .section:nth-child(2) .glass-card { animation-delay: 0.05s; }
+    .section:nth-child(2) .glass-card:nth-child(2) { animation-delay: 0.08s; }
+    .section:nth-child(3) .glass-card { animation-delay: 0.12s; }
+    .section:nth-child(4) .glass-card { animation-delay: 0.16s; }
+    .section:nth-child(5) .glass-card { animation-delay: 0.2s; }
   </style>
 </head>
 <body>
 
   <div class="noise"></div>
-  <div class="bg-mesh"></div>
+
+  <div class="bg-ambient">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="tracer tracer-1"></div>
+    <div class="tracer tracer-2"></div>
+    <div class="tracer tracer-3"></div>
+    <div class="tracer tracer-4"></div>
+  </div>
 
   <div class="page">
     <header class="header">
       <div class="container header-inner">
-        <a href="index.html" class="brand" aria-label="Bookmarks Home">
-          <div class="brand-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <a href="index.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
-          <div class="brand-text">
-            <div class="brand-name">Book<span>marks</span></div>
-          </div>
+          <div class="logo-text">Book<span>marks</span></div>
         </a>
-
-        <nav class="nav">
-          <a class="nav-link" href="index.html">Home</a>
-          <a class="nav-link" href="about.html">About</a>
-          <a class="nav-link" href="hub.html">Hub</a>
-          <a class="nav-link active" href="terms.html">Terms</a>
-          <a class="nav-link" href="privacy.html">Privacy</a>
-        </nav>
-
-        <div style="display: flex; align-items: center;">
+        
+        <div class="header-actions">
+          <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
           <div class="clock">
             <div class="clock-time" id="clock-time">--:--</div>
             <div class="clock-date" id="clock-date">...</div>
           </div>
-          
           <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
             <div class="theme-toggle-knob">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -321,218 +667,315 @@
               </svg>
             </div>
           </div>
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
         </div>
       </div>
     </header>
 
+    <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <div class="hamburger-header">
+        <div class="hamburger-title">Quick Access</div>
+        <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hamburger-grid">
+      <a href="docs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Docs</div>
+          <div class="hamburger-item-desc">Documentation & Resources</div>
+        </div>
+      </a>
+      <a href="files.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Files</div>
+          <div class="hamburger-item-desc">Downloads & Software</div>
+        </div>
+      </a>
+      <a href="jobs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Jobs</div>
+          <div class="hamburger-item-desc">Career Opportunities</div>
+        </div>
+      </a>
+      <a href="creators.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Creators</div>
+          <div class="hamburger-item-desc">Meet the Team</div>
+        </div>
+      </a>
+      <a href="news.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+            <path d="M18 14h-8"/>
+            <path d="M15 18h-5"/>
+            <path d="M10 6h8v4h-8V6Z"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">News</div>
+          <div class="hamburger-item-desc">Latest Updates</div>
+        </div>
+      </a>
+      
+      
+      <a href="privacy.html" class="hamburger-item">
+  <div class="hamburger-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  </div>
+  <div class="hamburger-content">
+    <div class="hamburger-item-title">Privacy</div>
+    <div class="hamburger-item-desc">Privacy Policy</div>
+  </div>
+</a>
+      
+      <a href="terms.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Terms</div>
+          <div class="hamburger-item-desc">Terms of Service</div>
+        </div>
+      </a>
+    </div>
+    </div>
+
     <main>
-      <!-- Hero -->
       <section class="hero">
         <div class="container">
-          <div class="hero-badge">Terms of Service</div>
-          <h1>Terms & <span>Conditions</span></h1>
+          <div class="hero-badge">About Us</div>
+          <h1>Curated Intelligence<br><span>for the Digital Age</span></h1>
           <p class="hero-subtitle">
-            Please read these terms carefully before using Bookmarks. Your use of our services constitutes acceptance of these terms.
+            A meticulously crafted directory designed to counter AI-biased search results, promote digital privacy, and provide reliable access to high-quality resources.
           </p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          
-          <!-- Introduction -->
           <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
+            <div class="section-head">
+              <div class="section-kicker">01. Our Mission</div>
+              <h2 class="section-title">Navigating the Noise</h2>
             </div>
-            <h2>Introduction</h2>
-            <p>
-              Welcome to <strong class="highlight">Bookmarks</strong>. These Terms of Service ("Terms") govern your use of our website, services, and platform (collectively, the "Service"). By accessing or using Bookmarks, you agree to be bound by these Terms.
-            </p>
-            <p>
-              If you do not agree to these Terms, please do not use our Service. We reserve the right to modify these Terms at any time, and your continued use of the Service constitutes acceptance of any changes.
-            </p>
+            <div class="section-desc">
+              <p>
+                In an era where search engines are increasingly influenced by artificial intelligence—often prioritizing commercial interests over relevance—<strong>Bookmarks</strong> emerges as a solution. This platform meticulously curates high-quality resources across diverse categories, offering a reliable alternative to AI-biased search results.
+              </p>
+              <p style="margin-top: 16px;">
+                As a personal initiative, <strong>Bookmarks</strong> is designed to help individuals navigate the digital landscape with confidence. We prioritize <strong>privacy</strong>, <strong>security</strong>, and <strong>anonymity</strong>, ensuring that every listed resource adheres to ethical standards. No gray-area promotions—just the best tools and services across a wide range of domains.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head" style="text-align: center; margin-bottom: 32px;">
+            <div class="section-kicker">02. Core Values</div>
+            <h2 class="section-title">What We Stand For</h2>
           </div>
 
-          <!-- Acceptance of Terms -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 11l3 3L22 4"/>
-                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-              </svg>
-            </div>
-            <h2>Acceptance of Terms</h2>
-            <p>
-              By accessing and using Bookmarks, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you are using the Service on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.
-            </p>
-            <p>
-              These Terms apply to all users of the Service, including without limitation users who are browsers, vendors, customers, merchants, and/or contributors of content.
-            </p>
-          </div>
+          <div class="grid-values">
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Privacy First</h3>
+                <p>Every resource is evaluated for privacy compliance. We reject services that compromise user data or engage in surveillance practices.</p>
+              </div>
+            </article>
 
-          <!-- Description of Service -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <h2>Description of Service</h2>
-            <p>
-              Bookmarks is a curated directory platform that provides:
-            </p>
-            <ul>
-              <li>Curated collections of high-quality resources and links</li>
-              <li>Organized categories for various types of content</li>
-              <li>Search and filtering capabilities</li>
-              <li>Community-driven recommendations and reviews</li>
-              <li>Educational and informational content</li>
-            </ul>
-            <p>
-              We strive to provide accurate and up-to-date information, but we make no warranties about the completeness, reliability, or accuracy of any content.
-            </p>
-          </div>
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Quality Over Quantity</h3>
+                <p>We curate selectively. Each entry is verified, tested, and evaluated before inclusion. No paid placements, no sponsored content.</p>
+              </div>
+            </article>
 
-          <!-- User Responsibilities -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-            </div>
-            <h2>User Responsibilities</h2>
-            <p>
-              As a user of Bookmarks, you agree to:
-            </p>
-            <ul>
-              <li><strong>Use the Service Lawfully:</strong> Comply with all applicable laws and regulations</li>
-              <li><strong>Respect Intellectual Property:</strong> Not infringe on copyrights, trademarks, or other intellectual property rights</li>
-              <li><strong>No Misuse:</strong> Not use the Service for illegal, harmful, or unauthorized purposes</li>
-              <li><strong>Account Security:</strong> Maintain the confidentiality of your account credentials</li>
-              <li><strong>Accurate Information:</strong> Provide truthful and accurate information when required</li>
-              <li><strong>No Spam:</strong> Not engage in spamming, phishing, or other malicious activities</li>
-            </ul>
-          </div>
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Transparency</h3>
+                <p>Clear categorization, honest descriptions, and open methodology. Users deserve to know why resources are recommended.</p>
+              </div>
+            </article>
 
-          <!-- Intellectual Property -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
-            </div>
-            <h2>Intellectual Property Rights</h2>
-            <p>
-              The content, design, and functionality of Bookmarks are owned by us and are protected by copyright, trademark, and other intellectual property laws. You may not:
-            </p>
-            <ul>
-              <li>Copy, modify, distribute, or create derivative works of our content</li>
-              <li>Use our trademarks or service marks without prior written consent</li>
-              <li>Reverse engineer, decompile, or attempt to extract our source code</li>
-              <li>Use automated tools to access our Service without permission</li>
-            </ul>
-            <p>
-              When you submit content to Bookmarks, you grant us a non-exclusive, worldwide, royalty-free license to use, display, and distribute that content for the purpose of operating and improving our Service.
-            </p>
+            <article class="glass-card info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Community Driven</h3>
+                <p>Built by enthusiasts, for enthusiasts. Community feedback shapes our curation decisions and platform evolution.</p>
+              </div>
+            </article>
           </div>
+        </div>
+      </section>
 
-          <!-- Privacy -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <h2>Privacy and Data Protection</h2>
-            <p>
-              Your privacy is important to us. Our collection and use of personal information is governed by our Privacy Policy, which is incorporated into these Terms by reference. By using our Service, you consent to the collection and use of your information as described in our Privacy Policy.
-            </p>
-            <p>
-              We implement appropriate security measures to protect your personal information, but we cannot guarantee absolute security. You use our Service at your own risk.
-            </p>
+      <section class="section">
+        <div class="container">
+          <div class="section-head" style="text-align: center;">
+            <div class="section-kicker">03. By The Numbers</div>
+            <h2 class="section-title">Platform Stats</h2>
           </div>
-
-          <!-- Disclaimers -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                <line x1="12" y1="9" x2="12" y2="13"/>
-              </svg>
+          <div class="grid-stats">
+            <div class="stat-card">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Curated Resources</div>
             </div>
-            <h2>Disclaimers and Limitations</h2>
-            <p>
-              Bookmarks is provided on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, including but not limited to:
-            </p>
-            <ul>
-              <li>The accuracy, reliability, or completeness of any content</li>
-              <li>The availability or functionality of the Service</li>
-              <li>The security or absence of viruses or harmful components</li>
-              <li>The compatibility with your specific devices or software</li>
-            </ul>
-            <p>
-              We shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service.
-            </p>
-          </div>
-
-          <!-- Termination -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 6h18"/>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-              </svg>
+            <div class="stat-card">
+              <div class="stat-number">24</div>
+              <div class="stat-label">Categories</div>
             </div>
-            <h2>Termination</h2>
-            <p>
-              We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever, including without limitation if you breach the Terms.
-            </p>
-            <p>
-              Upon termination, your right to use the Service will cease immediately. All provisions of the Terms which by their nature should survive termination shall survive, including but not limited to ownership provisions, warranty disclaimers, and limitations of liability.
-            </p>
-          </div>
-
-          <!-- Governing Law -->
-          <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 3h18v18H3zM12 8v8m-4-4h8"/>
-              </svg>
+            <div class="stat-card">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Privacy Verified</div>
             </div>
-            <h2>Governing Law</h2>
-            <p>
-              These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which we operate, without regard to its conflict of law provisions. Any disputes arising from these Terms shall be resolved through arbitration in accordance with applicable rules.
-            </p>
-            <p>
-              If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
-            </p>
           </div>
+        </div>
+      </section>
 
-          <!-- Contact Information -->
+      <section class="section">
+        <div class="container">
           <div class="glass-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
+            <div class="section-head">
+              <div class="section-kicker">04. Our Journey</div>
+              <h2 class="section-title">Timeline</h2>
             </div>
-            <h2>Contact Information</h2>
-            <p>
-              If you have any questions about these Terms of Service, please contact us:
-            </p>
-            <ul>
-              <li><strong>Email:</strong> <a href="mailto:idritteris@proton.me">idritteris@proton.me</a></li>
-              <li><strong>Response Time:</strong> We will respond to your inquiry within 48-72 hours</li>
-              <li><strong>Language:</strong> We communicate in English and French</li>
-            </ul>
+            
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                  <h4>Project Inception</h4>
+                  <p>Started as a personal collection of verified resources, growing from a simple bookmark file to a structured directory.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-content">
+                  <h4>Platform Development</h4>
+                  <p>Built public interface, established categorization methodology, and implemented privacy-first hosting infrastructure.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2025</div>
+                <div class="timeline-content">
+                  <h4>Community Expansion</h4>
+                  <p>Opened submission channels, integrated community feedback systems, and expanded to 500+ verified resources.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">2026</div>
+                <div class="timeline-content">
+                  <h4>Continuous Evolution</h4>
+                  <p>Ongoing refinement, new categories, and enhanced verification processes. The journey continues.</p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
+      <section class="section">
+        <div class="container">
+          <div class="glass-card" style="text-align: center;">
+            <div class="section-kicker">05. Get In Touch</div>
+            <h2 class="section-title" style="margin-bottom: 16px;">Contact Us</h2>
+            <p class="section-desc" style="margin: 0 auto 32px;">
+              We welcome suggestions, corrections, and collaboration inquiries. Reach out via: <br>
+              <a href="mailto:idritteris@proton.me" class="contact-link">idritteris@proton.me</a>
+            </p>
+            
+            <div class="hero-actions" style="justify-content: center; gap: 16px;">
+              <a href="hub.html" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Visit Hub
+              </a>
+              <a href="mailto:idritteris@proton.me" class="btn btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Contact Us
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -540,8 +983,8 @@
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand">
-          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <div class="footer-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
@@ -551,24 +994,42 @@
         <div class="footer-links">
           <a class="footer-link" href="index.html">Home</a>
           <a class="footer-link" href="about.html">About</a>
-          <a class="footer-link" href="hub.html">Hub</a>
           <a class="footer-link" href="privacy.html">Privacy</a>
-          <a class="footer-link" href="terms.html">Terms</a>
           <a class="footer-link" href="https://ko-fi.com/bookmarks" target="_blank" rel="noopener noreferrer">Support</a>
         </div>
         
-        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
-           <div style="display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim);">
-             <span class="status-dot"></span> All systems operational
-           </div>
-           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
+        <div class="footer-right">
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            <span>All systems operational</span>
+          </div>
+          <span class="footer-version">v3.2 // About Module</span>
         </div>
       </div>
     </footer>
   </div>
 
   <script>
-    // Clock Logic
+    // Hamburger menu elements
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const hamburgerOverlay = document.getElementById('hamburger-overlay');
+    const hamburgerClose = document.getElementById('hamburger-close');
+
+    function showHamburgerMenu() {
+      hamburgerMenu.classList.add('show');
+      hamburgerOverlay.classList.add('show');
+    }
+
+    function hideHamburgerMenu() {
+      hamburgerMenu.classList.remove('show');
+      hamburgerOverlay.classList.remove('show');
+    }
+
+    hamburgerBtn.addEventListener('click', showHamburgerMenu);
+    hamburgerClose.addEventListener('click', hideHamburgerMenu);
+    hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
+
     function updateClock() {
       const now = new Date();
       const timeEl = document.getElementById('clock-time');
@@ -579,31 +1040,17 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Theme Toggle Logic
     function initTheme() {
       const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
 
       const toggle = document.getElementById('theme-toggle');
-      const knob = toggle.querySelector('svg');
-      
-      function updateIcon(theme) {
-        if (theme === 'dark') {
-          knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-        } else {
-          knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-        }
-      }
-
-      updateIcon(savedTheme);
 
       toggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        updateIcon(newTheme);
       });
 
       toggle.addEventListener('keydown', (e) => {
@@ -614,7 +1061,11 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', initTheme);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTheme);
+    } else {
+      initTheme();
+    }
   </script>
 </body>
 </html>

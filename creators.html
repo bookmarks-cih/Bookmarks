@@ -10,40 +10,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- CSS from Hub (Theme, Header, Menu) --- */
     :root {
-      /* Default Dark Theme */
       --brand: #0c84f3;
       --brand-dark: #0066d9;
       --brand-light: #53b5ff;
       --brand-soft: rgba(12,132,243,0.12);
       --brand-glow: rgba(12,132,243,0.2);
-      
       --bg: #07111f;
       --bg-2: #0b1628;
       --surface: rgba(255,255,255,0.06);
       --surface-2: rgba(255,255,255,0.08);
       --surface-3: rgba(255,255,255,0.12);
       --surface-hover: rgba(255,255,255,0.1);
-      
       --text: #f7fbff;
       --text-soft: rgba(247,251,255,0.78);
       --text-dim: rgba(247,251,255,0.56);
-      
       --border: rgba(255,255,255,0.10);
       --border-strong: rgba(255,255,255,0.16);
       --shadow: 0 20px 60px rgba(0,0,0,0.35);
-      
       --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
       --glass-border: rgba(255,255,255,0.1);
-      
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-xl: 20px;
     }
 
-    /* Light Theme Overrides */
     [data-theme="light"] {
       --bg: #f8fafc;
       --bg-2: #ffffff;
@@ -51,22 +43,18 @@
       --surface-2: rgba(0,0,0,0.05);
       --surface-3: rgba(0,0,0,0.08);
       --surface-hover: rgba(0,0,0,0.05);
-      
       --text: #0f172a;
       --text-soft: #475569;
       --text-dim: #94a3b8;
-      
       --border: rgba(0,0,0,0.08);
       --border-strong: rgba(0,0,0,0.12);
       --shadow: 0 10px 40px rgba(0,0,0,0.05);
-      
       --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
       --glass-border: rgba(0,0,0,0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 100%; }
-
     body {
       font-family: "Inter", sans-serif;
       color: var(--text);
@@ -75,7 +63,6 @@
       -webkit-font-smoothing: antialiased;
       background: linear-gradient(180deg, #07111f 0%, #09121d 50%, #050b14 100%);
     }
-
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
@@ -97,17 +84,15 @@
       top: 0;
       z-index: 50;
       padding: 18px 0;
-      margin-bottom: 0; /* Adjusted for creators page layout */
-      backdrop-filter: blur(14px); 
+      margin-bottom: 0;
+      backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
       border-bottom: 1px solid transparent;
     }
-
     [data-theme="light"] .header {
       background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
     }
-
     .header-inner {
       width: min(100% - 32px, 1200px);
       margin: 0 auto;
@@ -116,8 +101,6 @@
       justify-content: space-between;
       gap: 16px;
     }
-
-    /* Logo Section (Hub) */
     .logo-section {
       display: flex;
       align-items: center;
@@ -126,7 +109,6 @@
       color: inherit;
       flex-shrink: 0;
     }
-
     .logo-icon {
       width: 42px;
       height: 42px;
@@ -141,7 +123,6 @@
     }
     .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
     .logo-icon svg { width: 20px; height: 20px; }
-
     .logo-text {
       font-family: "Space Grotesk", sans-serif;
       font-size: 1.35rem;
@@ -150,8 +131,6 @@
       color: var(--text);
     }
     .logo-text span { color: var(--brand-light); }
-
-    /* Header Center (Creators Search) - Adapted to fit Hub Layout */
     .header-center {
       flex: 1;
       display: flex;
@@ -159,8 +138,6 @@
       min-width: 0;
       max-width: 500px;
     }
-
-    /* Search Wrapper (Hub Style) */
     .search-wrapper {
       position: relative;
       flex: 1;
@@ -172,7 +149,7 @@
       padding: 0 16px;
       transition: all 0.3s ease;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(20px); 
+      backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
     .search-wrapper:focus-within {
@@ -199,16 +176,12 @@
       font-family: inherit;
     }
     .search-input::placeholder { color: var(--text-dim); }
-
-    /* Header Actions (Right Side) */
-    .header-actions { 
-      display: flex; 
-      align-items: center; 
-      gap: 10px; 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       flex-shrink: 0;
     }
-
-    /* Header Stats (Creators) - Styled to fit */
     .header-stats {
       display: flex;
       align-items: center;
@@ -233,8 +206,6 @@
       letter-spacing: 0.06em;
       margin-top: 4px;
     }
-
-    /* Theme Toggle (Hub) */
     .theme-toggle {
       position: relative;
       width: 52px;
@@ -264,8 +235,6 @@
     }
     .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
     [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
-
-    /* Hamburger Button (Hub) */
     .hamburger-btn {
       display: flex;
       background: none;
@@ -278,14 +247,12 @@
     }
     .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
     .hamburger-btn svg { width: 20px; height: 20px; }
-
-    /* Hamburger Menu (Hub) */
     .hamburger-menu {
       position: fixed;
       top: 80px;
       right: 20px;
       background: var(--glass-bg);
-      backdrop-filter: blur(20px); 
+      backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 16px;
@@ -309,7 +276,6 @@
       transition: all 0.3s ease;
     }
     .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
-
     .hamburger-header {
       display: flex;
       align-items: center;
@@ -339,7 +305,6 @@
     }
     .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
     .hamburger-close svg { width: 16px; height: 16px; }
-
     .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
     .hamburger-item {
       display: flex;
@@ -365,7 +330,6 @@
     }
     .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
     .hamburger-item:hover::before { opacity: 1; }
-
     .hamburger-icon {
       width: 42px;
       height: 42px;
@@ -388,7 +352,6 @@
       margin-bottom: 2px;
     }
     .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
-
     @keyframes slideInRight {
       from { opacity: 0; transform: translateX(20px); }
       to { opacity: 1; transform: translateX(0); }
@@ -402,7 +365,7 @@
     .hamburger-item:nth-child(6) { animation-delay: 0.3s; }
     .hamburger-item:nth-child(7) { animation-delay: 0.35s; }
 
-    /* --- Creators Page Styles --- */
+    /* --- Background Orbs --- */
     .bg-container {
       position: fixed;
       inset: 0;
@@ -410,7 +373,6 @@
       overflow: hidden;
       pointer-events: none;
     }
-
     .bg-orb {
       position: absolute;
       border-radius: 50%;
@@ -418,7 +380,6 @@
       opacity: 0.4;
       will-change: transform;
     }
-
     .bg-orb-1 {
       width: 600px;
       height: 600px;
@@ -427,7 +388,6 @@
       left: -100px;
       animation: orbFloat1 30s ease-in-out infinite;
     }
-
     .bg-orb-2 {
       width: 500px;
       height: 500px;
@@ -436,32 +396,20 @@
       right: -100px;
       animation: orbFloat2 35s ease-in-out infinite;
     }
-
     @keyframes orbFloat1 {
       0%, 100% { transform: translate(0, 0); }
       50% { transform: translate(50px, 30px); }
     }
-
     @keyframes orbFloat2 {
       0%, 100% { transform: translate(0, 0); }
       50% { transform: translate(-30px, -30px); }
     }
 
-    .page {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-    }
-
-    .main-content {
-      width: min(100% - 32px, 1100px);
-      margin: 0 auto;
-      padding: 32px 0 100px;
-    }
-
+    /* --- Main Content --- */
+    .page { position: relative; z-index: 2; min-height: 100vh; }
+    .main-content { width: min(100% - 32px, 1100px); margin: 0 auto; padding: 32px 0 100px; }
     .section-header { margin-bottom: 24px; }
     .section-title-wrap { margin-bottom: 16px; }
-
     .section-title-wrap h1 {
       font-family: "Space Grotesk", sans-serif;
       font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -470,76 +418,65 @@
       margin-bottom: 8px;
       line-height: 1.1;
     }
-
     .section-title-wrap p {
       color: var(--text-soft);
       font-size: 0.95rem;
       line-height: 1.5;
     }
-
     .glass-container {
       background: transparent;
       border: none;
       box-shadow: none;
       backdrop-filter: none;
       border-radius: 24px;
-      padding: 20px;
+      padding: 24px;
       max-height: 75vh;
       overflow-y: auto;
       position: relative;
     }
-
     .glass-container::-webkit-scrollbar { width: 6px; }
     .glass-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
     .glass-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     .glass-container::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    .creators-grid { display: flex; flex-direction: column; gap: 16px; }
 
-    .creators-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
+    /* --- Creator Card (Amélioré) --- */
     .creator-card {
       position: relative;
       border-radius: 16px;
       overflow: hidden;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.08);
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.25s ease, box-shadow 0.25s ease;
       cursor: pointer;
       opacity: 0;
       transform: translateY(15px);
+      padding: 20px;
     }
-
     .creator-card.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
     .creator-card:hover {
       border-color: rgba(83,181,255,0.3);
       background: rgba(255,255,255,0.08);
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-
     .card-inner {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
       padding: 16px;
       position: relative;
       z-index: 1;
     }
-
     .creator-avatar {
       position: relative;
       flex-shrink: 0;
-      width: 58px;
-      height: 58px;
+      width: 72px;
+      height: 72px;
     }
-
     .avatar-ring {
       width: 100%;
       height: 100%;
@@ -547,7 +484,6 @@
       padding: 2px;
       background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
     }
-
     .avatar-img {
       width: 100%;
       height: 100%;
@@ -559,17 +495,15 @@
       justify-content: center;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--brand-light);
       overflow: hidden;
     }
-
     .avatar-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
     .avatar-badge {
       position: absolute;
       bottom: -1px;
@@ -583,9 +517,7 @@
       align-items: center;
       justify-content: center;
     }
-
     .avatar-badge svg { width: 10px; height: 10px; color: white; }
-
     .card-content {
       flex: 1;
       min-width: 0;
@@ -593,32 +525,28 @@
       flex-direction: column;
       justify-content: center;
     }
-
     .creator-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 2px;
+      margin-bottom: 6px;
     }
-
     .creator-name {
       font-family: "Space Grotesk", sans-serif;
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 600;
       letter-spacing: -0.01em;
       white-space: nowrap;
       transition: color 0.2s ease;
+      margin-bottom: 4px;
     }
-
     .creator-card:hover .creator-name { color: var(--brand-light); }
-
     .social-links {
       display: flex;
       align-items: center;
       gap: 4px;
       flex-shrink: 0;
     }
-
     .social-link {
       display: flex;
       align-items: center;
@@ -630,113 +558,100 @@
       color: var(--text-dim);
       transition: background 0.2s;
     }
-
     .social-link:hover {
       background: rgba(255,255,255,0.1);
       color: var(--text);
     }
-
     .social-link svg { width: 12px; height: 12px; }
-
     .creator-handle {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-
     .creator-bio {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--text-soft);
-      line-height: 1.4;
+      line-height: 1.6;
       display: -webkit-box;
-      -webkit-line-clamp: 1;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
-
     .creator-meta {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-bottom: 12px;
     }
-
     .category-tag {
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(12,132,243,0.15);
-      font-size: 0.65rem;
+      background: rgba(12,132,243,0.1);
+      font-size: 0.7rem;
       font-weight: 600;
       color: var(--brand-light);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-
     .meta-item {
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
     }
     .meta-item svg { width: 12px; height: 12px; }
     .meta-item strong { color: var(--text-soft); font-weight: 600; }
-
     .card-actions {
       display: flex;
       flex-direction: row;
-      gap: 8px;
+      gap: 10px;
       margin-left: auto;
       padding-left: 16px;
       flex-shrink: 0;
       align-items: center;
     }
-
     .btn-action {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      transition: background 0.2s, transform 0.1s;
+      transition: all 0.2s ease;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
       border: 1px solid transparent;
     }
-
     .btn-primary {
-      background: rgba(12,132,243,0.15);
+      background: rgba(12,132,243,0.1);
       border: 1px solid rgba(12,132,243,0.3);
       color: var(--brand-light);
     }
-
     .btn-primary:hover {
-      background: rgba(12,132,243,0.25);
+      background: rgba(12,132,243,0.2);
       color: white;
     }
-
     .btn-primary .arrow { transition: transform 0.2s; }
     .creator-card:hover .btn-primary .arrow { transform: translateX(2px); }
-
     .btn-secondary {
       background: rgba(255, 204, 0, 0.05);
       border: 1px solid rgba(255, 204, 0, 0.2);
       color: rgba(255, 223, 100, 0.9);
     }
-
     .btn-secondary:hover {
-      background: rgba(255, 204, 0, 0.15);
-      border-color: rgba(255, 204, 0, 0.4);
+      background: rgba(255, 204, 0, 0.1);
+      border-color: rgba(255, 204, 0, 0.3);
       transform: scale(1.02);
     }
-
     .btn-secondary svg { width: 12px; height: 12px; }
 
+    /* --- Curating Section --- */
     .curating-section {
       display: flex;
       flex-direction: column;
@@ -749,13 +664,11 @@
       opacity: 0;
       animation: fadeInUp 0.8s ease forwards 0.5s;
     }
-
     .curating-content {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-
     .pulse-dot {
       position: relative;
       width: 8px;
@@ -765,7 +678,6 @@
       box-shadow: 0 0 10px var(--brand);
       animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-
     .pulse-dot::after {
       content: '';
       position: absolute;
@@ -774,7 +686,6 @@
       border: 1px solid var(--brand-light);
       animation: ripple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
-
     .curating-text {
       font-family: "Space Grotesk", sans-serif;
       font-size: 0.95rem;
@@ -782,7 +693,6 @@
       letter-spacing: 0.02em;
       font-weight: 500;
     }
-
     .curating-text span {
       color: var(--text-soft);
       font-weight: 600;
@@ -790,22 +700,20 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.2); opacity: 0.7; }
     }
-
     @keyframes ripple {
       0% { transform: scale(1); opacity: 0.8; }
       100% { transform: scale(3.5); opacity: 0; }
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* --- Pagination --- */
     .pagination {
       display: flex;
       justify-content: center;
@@ -814,7 +722,6 @@
       margin-top: 24px;
       flex-wrap: wrap;
     }
-
     .page-btn {
       display: flex;
       align-items: center;
@@ -831,18 +738,16 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-
     .page-btn:hover:not(.active):not(:disabled) { background: rgba(255,255,255,0.12); }
-
     .page-btn.active {
       background: var(--brand);
       color: white;
       border-color: transparent;
     }
-
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .page-btn svg { width: 16px; height: 16px; }
 
+    /* --- Scroll Progress & Back to Top --- */
     .scroll-progress {
       position: fixed;
       top: 0;
@@ -853,7 +758,6 @@
       z-index: 100;
       transition: width 0.1s linear;
     }
-
     .back-to-top {
       position: fixed;
       bottom: 24px;
@@ -875,15 +779,14 @@
       transition: all 0.3s ease;
       z-index: 40;
     }
-
     .back-to-top.visible {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-
     .back-to-top svg { width: 20px; height: 20px; }
 
+    /* --- Responsive --- */
     @media (max-width: 980px) {
       .header-inner {
         flex-wrap: wrap;
@@ -899,20 +802,19 @@
         margin-left: auto;
       }
     }
-
     @media (max-width: 768px) {
-       .card-inner { flex-wrap: wrap; }
-       .card-actions {
-         width: 100%;
-         margin-left: 0;
-         padding-left: 0;
-         margin-top: 12px;
-         justify-content: flex-end;
-       }
-       .creator-bio {
-         -webkit-line-clamp: 2;
-       }
-       .hamburger-menu {
+      .card-inner { flex-wrap: wrap; }
+      .card-actions {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 12px;
+        justify-content: flex-end;
+      }
+      .creator-bio {
+        -webkit-line-clamp: 2;
+      }
+      .hamburger-menu {
         top: 70px;
         right: 16px;
         left: 16px;
@@ -921,12 +823,11 @@
         padding: 16px;
       }
     }
-
     @media (max-width: 600px) {
       html { font-size: 85%; }
       .header-inner { gap: 10px; }
       .logo-text { font-size: 1rem; }
-      .header-stats { display: none; } /* Hide stats on very small screens to save space */
+      .header-stats { display: none; }
       .glass-container {
         padding: 12px;
         border-radius: 16px;
@@ -946,7 +847,6 @@
         gap: 8px;
       }
     }
-
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -961,19 +861,15 @@
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
-
   <div class="noise"></div>
-  
   <div class="bg-container">
     <div class="bg-orb bg-orb-1"></div>
     <div class="bg-orb bg-orb-2"></div>
   </div>
 
   <div class="page">
-    <!-- Hub Header Integration -->
     <header class="header">
       <div class="header-inner">
-        <!-- Hub Logo -->
         <a href="index.html" class="logo-section">
           <div class="logo-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -982,8 +878,6 @@
           </div>
           <div class="logo-text">Book<span>marks</span></div>
         </a>
-
-        <!-- Creators Search (Styled with Hub CSS) -->
         <div class="header-center">
           <div class="search-wrapper">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -993,10 +887,7 @@
             <input type="text" class="search-input" id="searchInput" placeholder="Search creators..." aria-label="Search creators">
           </div>
         </div>
-
-        <!-- Header Actions (Right) -->
         <div class="header-actions">
-          <!-- Creators Stats -->
           <div class="header-stats">
             <div class="stat-item">
               <div class="stat-value" id="totalCreatorsHeader">0</div>
@@ -1007,8 +898,6 @@
               <div class="stat-label">Resources</div>
             </div>
           </div>
-
-          <!-- Hub Theme Toggle -->
           <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
             <div class="theme-toggle-knob">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1016,8 +905,6 @@
               </svg>
             </div>
           </div>
-
-          <!-- Hub Hamburger Button -->
           <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="3" y1="12" x2="21" y2="12"/>
@@ -1029,7 +916,6 @@
       </div>
     </header>
 
-    <!-- Hub Hamburger Menu -->
     <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
     <div class="hamburger-menu" id="hamburger-menu">
       <div class="hamburger-header">
@@ -1148,19 +1034,18 @@
 
       <div class="glass-container" id="glassContainer">
         <div class="creators-grid" id="creatorsGrid"></div>
-        
+
         <div class="curating-section">
-            <div class="curating-content">
-                <span class="pulse-dot"></span>
-                <div class="curating-text">
-                    We are curating <span>more gems</span>...
-                </div>
+          <div class="curating-content">
+            <span class="pulse-dot"></span>
+            <div class="curating-text">
+              We are curating <span>more gems</span>...
             </div>
+          </div>
         </div>
 
         <div class="pagination" id="pagination"></div>
       </div>
-
     </main>
   </div>
 
@@ -1172,13 +1057,12 @@
 
   <script>
     // --- Hub Logic: Theme & Menu ---
-    
     function initTheme() {
       const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
-      
+
       const knob = document.getElementById('theme-toggle').querySelector('svg');
-      
+
       function updateIcon(theme) {
         if (theme === 'dark') {
           knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
@@ -1193,12 +1077,12 @@
       themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
+
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateIcon(newTheme);
       });
-      
+
       themeToggle.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -1221,9 +1105,7 @@
     document.getElementById('hamburger-close').addEventListener('click', hideHamburgerMenu);
     document.getElementById('hamburger-overlay').addEventListener('click', hideHamburgerMenu);
 
-
     // --- Creators Page Logic ---
-
     const CREATORS_DATA = [
       {
         id: 1,
@@ -1253,7 +1135,7 @@
         category: "Hacking",
         bio: "JHT Co-Founder & Owner, John Hammond, is a cybersecurity researcher, educator and content creator. As part of the Research & Development Threat Operations team at Huntress",
         links: 20,
-        url: "https://bookmarks.love/creators/johnhammond", 
+        url: "https://bookmarks.love/creators/johnhammond",
         socials: {
           x: "https://x.com/JohnHammond010",
           youtube: "https://www.youtube.com/c/JohnHammond010",
@@ -1271,7 +1153,7 @@
         category: "Hacking",
         bio: "I develop and showcase practical scripts—from UAC bypasses to SMB bruteforce and session hijacking—to teach people how modern systems can be tested, understood, and secured.",
         links: 10,
-        url: "https://bookmarks.love/creators/ebolaman", 
+        url: "https://bookmarks.love/creators/ebolaman",
         socials: {
           x: "#",
           youtube: "https://www.youtube.com/@ebolaman_",
@@ -1289,7 +1171,7 @@
         category: "Crypto",
         bio: "Investing journalist, podcaster and Bitcoin educator who hosts the Coin Stories Podcast on YouTube, Rumble, Apple, Google Play and Spotify.",
         links: 10,
-        url: "/creators/nataliebrunell.html", 
+        url: "/creators/nataliebrunell.html",
         socials: {
           x: "https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbEMydWRRMjdCMlRRZUY5djk5LTdsaXp3QXpHQXxBQ3Jtc0tsWllwcF92OENTSGlHSXhuM3ZWVjFPU19iWnVuamYtNnlsR050UnoyZDljb2xCY3JzYjBHTTFGOVVIeVg4STFkQVczYUFhb1NXMC1jMU41VW0tdERXN2dNSHNnektOX2E4SlkwdV9POW1NSlVtYUEtbw&q=http%3A%2F%2Fwww.x.com%2Fnatbrunell",
           youtube: "https://www.youtube.com/@nataliebrunell",
@@ -1329,7 +1211,6 @@
       apple_podcast: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`,
       website: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
       pencil: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>`
-      
     };
 
     function debounce(func, wait) {
@@ -1543,7 +1424,7 @@
     }
 
     function init() {
-      initTheme(); // Hub theme initialization
+      initTheme();
 
       elements.searchInput.addEventListener(
         'input',

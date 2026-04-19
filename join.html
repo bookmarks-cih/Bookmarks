@@ -325,14 +325,13 @@
     
     .trust-visual {
       position: relative;
-      /* Ensure it takes space */
       min-height: 500px;
       width: 100%;
     }
     
     /* --- SLIDESHOW STYLES --- */
     .slideshow-container {
-      position: absolute; /* Absolute to fill the parent grid cell */
+      position: absolute;
       inset: 0;
       border-radius: var(--radius-xl);
       overflow: hidden;
@@ -354,7 +353,7 @@
     }
 
     .slide.active {
-      opacity: 0.8; /* Opacity requested */
+      opacity: 0.8;
       filter: blur(0) grayscale(0);
       transform: scale(1);
       z-index: 2;
@@ -419,7 +418,6 @@
 
     /* --- RESPONSIVE --- */
     @media (max-width: 900px) {
-      /* Mobile Navigation */
       .mobile-menu-toggle {
         display: block;
       }
@@ -436,7 +434,7 @@
         padding: 20px;
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow);
-        display: none; /* Hidden by default */
+        display: none;
         opacity: 0;
         transition: opacity 0.3s ease;
       }
@@ -453,14 +451,12 @@
         font-size: 1.1rem;
       }
 
-      /* Layout adjustments */
       .trust-layout { grid-template-columns: 1fr; gap: 40px; }
       .process-cards { grid-template-columns: 1fr; }
       
-      /* Make slideshow container relative height on mobile */
       .trust-visual {
         order: -1;
-        min-height: 350px; /* Taller on mobile */
+        min-height: 350px;
       }
       
       .form-grid { grid-template-columns: 1fr; }
@@ -502,7 +498,6 @@
       </a>
       
       <div class="nav-btn-wrapper">
-        <!-- Mobile Toggle Button -->
         <button class="mobile-menu-toggle" id="menuToggle">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -511,7 +506,6 @@
           </svg>
         </button>
 
-        <!-- Navigation Pill Button -->
         <nav class="nav-pill-btn" id="navMenu">
           <a href="#mission" class="nav-link">Mission</a>
           <a href="#process" class="nav-link">Process</a>
@@ -689,7 +683,7 @@
           </p>
         </div>
 
-        <form action="https://formspree.io/f/mzdjovve" method="POST" class="form-grid">
+        <form action="https://formspree.io/f/xaqajkaw" method="POST" class="form-grid">
           
           <div class="field">
             <label for="name">Full Name</label>
@@ -714,7 +708,7 @@
 
           <div class="field full">
             <label for="links">Proposed Stack / Links</label>
-            <textarea id="links" name="links" rows="4" placeholder="Paste a few key links or describe your collection idea..." required></textarea>
+            <textarea id="links" name="message" rows="4" placeholder="Paste a few key links or describe your collection idea..." required></textarea>
           </div>
 
           <div class="submit-area full">

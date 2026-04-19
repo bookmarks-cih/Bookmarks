@@ -115,34 +115,244 @@
     
     /* Header */
     .header {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 18px 0;
+      margin-bottom: 32px;
+      backdrop-filter: blur(14px); 
+      -webkit-backdrop-filter: blur(14px);
       background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
       border-bottom: 1px solid transparent;
-      padding: 18px 0;
-      transition: background 0.3s;
     }
+
     [data-theme="light"] .header {
        background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
     }
-    
-    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .brand-mark {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
-      display: grid; place-items: center;
-      box-shadow: 0 12px 30px rgba(12,132,243,0.24); flex-shrink: 0;
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .brand-mark svg { width: 20px; height: 20px; color: white; }
-    .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
-    .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--text); }
-    .brand-name span { color: var(--brand-light); }
-    
-    .nav { display: flex; align-items: center; gap: 10px; }
-    .nav-link { padding: 10px 14px; border-radius: 999px; font-size: 0.88rem; color: var(--text-soft); transition: 0.25s ease; text-decoration: none; }
-    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.08); color: var(--text); }
-    [data-theme="light"] .nav-link:hover, [data-theme="light"] .nav-link.active { background: rgba(0,0,0,0.05); }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: transform 0.3s ease;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+    }
+
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+    .logo-icon svg { width: 20px; height: 20px; }
+
+    .logo-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .logo-text span { color: var(--brand-light); }
+
+    .nav { display: none; align-items: center; gap: 22px; }
+    .nav-link {
+      color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+      transition: all 0.2s ease; position: relative; padding: 4px 0;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--brand-light); transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--brand-light); }
+    .nav-link.active::after { width: 100%; }
+
+    @media (min-width: 768px) {
+      .nav { display: flex; }
+    }
+
+    /* Desktop - show hamburger elements */
+    @media (min-width: 769px) {
+      .hamburger-btn { display: flex; }
+      .hamburger-menu { display: block; }
+      .hamburger-menu-overlay { display: block; }
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* Social Link */
+    .header-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .header-social-link:hover { background: var(--surface); color: var(--text); }
+    .header-social-link svg { width: 18px; height: 18px; }
+
+    /* Hamburger Button */
+    .hamburger-btn {
+      display: flex;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+
+    .hamburger-btn svg { width: 20px; height: 20px; }
+
+    /* Hamburger Menu */
+    .hamburger-menu {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hamburger-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hamburger-close {
+      width: 32px;
+      height: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-soft);
+    }
+
+    .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+
+    .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hamburger-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .hamburger-item:hover::before { opacity: 1; }
+
+    .hamburger-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      box-shadow: 0 4px 12px var(--brand-glow);
+    }
+
+    .hamburger-icon svg { width: 20px; height: 20px; }
+
+    .hamburger-content { flex: 1; position: relative; z-index: 1; }
+
+    .hamburger-item-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
 
     /* Theme Toggle */
     .theme-toggle {
@@ -186,9 +396,26 @@
     }
 
     /* Clock */
-    .clock { text-align: right; font-family: "Space Grotesk", sans-serif; margin-right: 16px; }
-    .clock-time { font-size: 1.1rem; font-weight: 700; color: var(--brand-light); letter-spacing: 0.02em; line-height: 1; }
-    .clock-date { font-size: 0.7rem; color: var(--text-dim); margin-top: 3px; font-weight: 400; }
+    .clock {
+      text-align: right;
+      font-family: "Space Grotesk", sans-serif;
+      margin-right: 16px;
+    }
+
+    .clock-time {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brand-light);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .clock-date {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+      font-weight: 400;
+    }
 
     /* Hero */
     .hero { padding: 80px 0 60px; text-align: center; position: relative; }
@@ -265,13 +492,28 @@
     .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
 
     /* Responsive */
-    @media (max-width: 900px) {
-      .nav { display: none; } 
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      .header { padding: 14px 0; margin-bottom: 24px; }
+      .logo-text { font-size: 1.2rem; }
       .clock { display: none; }
-      .header-inner { justify-content: center; }
-      .brand { margin-right: auto; }
-      .theme-toggle { margin-left: auto; }
       
+      .hamburger-menu {
+        top: 70px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        width: auto;
+        padding: 16px;
+      }
+      
+      .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
+      .hamburger-item { padding: 12px 14px; }
+      .hamburger-icon { width: 38px; height: 38px; }
+      .hamburger-icon svg { width: 18px; height: 18px; }
+      .hamburger-item-title { font-size: 0.9rem; }
+      .hamburger-item-desc { font-size: 0.7rem; }
+          
       .footer-inner { flex-direction: column; text-align: center; gap: 24px; }
       .footer-links { justify-content: center; }
     }
@@ -289,33 +531,25 @@
   <div class="page">
     <header class="header">
       <div class="container header-inner">
-        <a href="index.html" class="brand" aria-label="Bookmarks Home">
-          <div class="brand-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <a href="index.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
-          <div class="brand-text">
-            <div class="brand-name">Book<span>marks</span></div>
-          </div>
+          <div class="logo-text">Book<span>marks</span></div>
         </a>
-
-        <nav class="nav">
-          <a class="nav-link" href="index.html">Home</a>
-          <a class="nav-link" href="hub.html">Hub</a>
-          <a class="nav-link" href="docs.html">Docs</a>
-          <a class="nav-link" href="files.html">Files</a>
-          <a class="nav-link" href="about.html">About</a>
-          <a class="nav-link" href="news.html">News</a>
-          <a class="nav-link active" href="privacy.html">Privacy</a>
-        </nav>
-
-        <div style="display: flex; align-items: center;">
+        
+        <div class="header-actions">
+          <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
           <div class="clock">
             <div class="clock-time" id="clock-time">--:--</div>
             <div class="clock-date" id="clock-date">...</div>
           </div>
-          
           <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
             <div class="theme-toggle-knob">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -323,9 +557,122 @@
               </svg>
             </div>
           </div>
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
         </div>
       </div>
     </header>
+
+    <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <div class="hamburger-header">
+        <div class="hamburger-title">Quick Access</div>
+        <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hamburger-grid">
+        <a href="index.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Home</div>
+            <div class="hamburger-item-desc">Main dashboard</div>
+          </div>
+        </a>
+        <a href="docs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Docs</div>
+            <div class="hamburger-item-desc">Documentation & Resources</div>
+          </div>
+        </a>
+        <a href="files.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Files</div>
+            <div class="hamburger-item-desc">Downloads & Software</div>
+          </div>
+        </a>
+        <a href="news.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+              <path d="M18 14h-8"/>
+              <path d="M15 18h-5"/>
+              <path d="M10 6h8v4h-8V6Z"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">News</div>
+            <div class="hamburger-item-desc">Latest Updates</div>
+          </div>
+        </a>
+        <a href="jobs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Jobs</div>
+            <div class="hamburger-item-desc">Career Opportunities</div>
+          </div>
+        </a>
+        <a href="privacy.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Privacy</div>
+            <div class="hamburger-item-desc">Privacy Policy</div>
+          </div>
+        </a>
+        <a href="terms.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Terms</div>
+            <div class="hamburger-item-desc">Terms & Conditions</div>
+          </div>
+        </a>
+      </div>
+    </div>
 
     <main>
       <!-- Hero -->
@@ -592,6 +939,28 @@
           toggle.click();
         }
       });
+    }
+
+    // Hamburger menu elements
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const hamburgerOverlay = document.getElementById('hamburger-overlay');
+    const hamburgerClose = document.getElementById('hamburger-close');
+
+    function showHamburgerMenu() {
+      hamburgerMenu.classList.add('show');
+      hamburgerOverlay.classList.add('show');
+    }
+
+    function hideHamburgerMenu() {
+      hamburgerMenu.classList.remove('show');
+      hamburgerOverlay.classList.remove('show');
+    }
+
+    if (hamburgerBtn && hamburgerMenu && hamburgerOverlay && hamburgerClose) {
+      hamburgerBtn.addEventListener('click', showHamburgerMenu);
+      hamburgerClose.addEventListener('click', hideHamburgerMenu);
+      hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
     }
 
     document.addEventListener('DOMContentLoaded', initTheme);

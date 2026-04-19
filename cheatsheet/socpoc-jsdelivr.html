@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Cheatsheet - 50 APIs Statiques</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-secondary: #12121a;
+      --fg: #e8e8ed;
+      --muted: #6b6b7a;
+      --accent: #00ff88;
+      --accent-dim: #00cc6a;
+      --card: #16161f;
+      --border: #2a2a3a;
+      --glow: rgba(0, 255, 136, 0.15);
+      --category-data: #ff6b6b;
+      --category-media: #4ecdc4;
+      --category-fun: #ffe66d;
+      --category-util: #a855f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      animation: floatGlow 20s ease-in-out infinite;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translate(-50%, -50%); }
+      25% { transform: translate(-30%, -60%); }
+      50% { transform: translate(-60%, -40%); }
+      75% { transform: translate(-40%, -55%); }
+    }
+
+    .api-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .api-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 136, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .api-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(0, 255, 136, 0.3);
+    }
+
+    .api-card:hover::before { opacity: 1; }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-data { background: rgba(255, 107, 107, 0.15); color: var(--category-data); }
+    .badge-media { background: rgba(78, 205, 196, 0.15); color: var(--category-media); }
+    .badge-fun { background: rgba(255, 230, 109, 0.15); color: var(--category-fun); }
+    .badge-util { background: rgba(168, 85, 247, 0.15); color: var(--category-util); }
+
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block code { color: var(--accent); }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--border);
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--fg);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .search-input {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px 12px 44px;
+      color: var(--fg);
+      width: 100%;
+      max-width: 400px;
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    .search-input::placeholder { color: var(--muted); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow" style="top: 20%; left: 30%;"></div>
+  <div class="bg-glow" style="top: 70%; left: 70%; animation-delay: -10s;"></div>
+
+  <div class="relative z-10">
+    <!-- Header -->
+    <header class="pt-12 pb-8 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="reveal">
+          <p class="font-mono text-sm text-[var(--accent)] mb-2">// CHEATSHEET POC - V2.0</p>
+          <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+            50 APIs Gratuites
+            <span class="block text-[var(--muted)] text-2xl md:text-3xl font-normal mt-2">
+              pour Neocities & GitHub Pages
+            </span>
+          </h1>
+          <p class="text-[var(--muted)] max-w-2xl text-lg">
+            Collection d'APIs publiques, gratuites et compatibles CORS pour vos projets statiques.
+            Aucune clé API requise, fonctionne directement depuis le navigateur.
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 reveal" style="transition-delay: 0.1s;">
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-center">
+            <div class="stat-number" data-count="50">0</div>
+            <p class="text-[var(--muted)] text-sm">APIs</p>
+          </div>
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-center">
+            <div class="stat-number" data-count="100">0</div>
+            <p class="text-[var(--muted)] text-sm">% Gratuit</p>
+          </div>
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-center">
+            <div class="stat-number" data-count="0">0</div>
+            <p class="text-[var(--muted)] text-sm">Cle Requise</p>
+          </div>
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 text-center">
+            <div class="stat-number" data-count="4">0</div>
+            <p class="text-[var(--muted)] text-sm">Categories</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filters -->
+    <section class="px-4 py-6 sticky top-0 bg-[var(--bg)]/80 backdrop-blur-lg z-20 border-b border-[var(--border)]">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="relative w-full md:w-auto">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" class="search-input" placeholder="Rechercher une API..." id="searchInput">
+        </div>
+        <div class="flex gap-2 flex-wrap justify-center">
+          <button class="filter-btn active" data-filter="all">Toutes</button>
+          <button class="filter-btn" data-filter="data">Data</button>
+          <button class="filter-btn" data-filter="media">Media</button>
+          <button class="filter-btn" data-filter="fun">Fun</button>
+          <button class="filter-btn" data-filter="util">Utilitaire</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Grid -->
+    <main class="px-4 py-8">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4" id="apiGrid">
+        <!-- Cards injected here -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-4 py-12 border-t border-[var(--border)]">
+      <div class="max-w-6xl mx-auto text-center">
+        <p class="font-mono text-[var(--muted)] text-sm">
+          <span class="text-[var(--accent)]">$</span> curl -X GET "https://your-site.neocities.org"<span class="cursor"></span>
+        </p>
+        <p class="text-[var(--muted)] mt-4 text-sm">
+          Heberge gratuitement sur Neocities ou GitHub Pages. Aucun backend requis.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // API Data (50 items)
+    const apis = [
+      // --- DATA (18) ---
+      { id: 1, name: "JSONPlaceholder", category: "data", description: "API de test avec posts, commentaires, utilisateurs. Parfaite pour prototyper.", endpoint: "https://jsonplaceholder.typicode.com/posts", method: "GET", features: ["Posts", "Commentaires", "Utilisateurs", "Albums"] },
+      { id: 2, name: "PokeAPI", category: "data", description: "Donnees completes sur Pokemon, attaques, objets.", endpoint: "https://pokeapi.co/api/v2/pokemon/ditto", method: "GET", features: ["151+ Pokemon", "Attaques", "Objets", "Types"] },
+      { id: 3, name: "Rick and Morty", category: "data", description: "Personnages, episodes et lieux de la serie.", endpoint: "https://rickandmortyapi.com/api/character", method: "GET", features: ["Personnages", "Episodes", "Lieux", "Filtres"] },
+      { id: 4, name: "Rest Countries", category: "data", description: "Informations sur tous les pays du monde.", endpoint: "https://restcountries.com/v3.1/name/france", method: "GET", features: ["Drapeaux", "Population", "Capitales", "Monnaies"] },
+      { id: 5, name: "CoinGecko", category: "data", description: "Donnees crypto en temps reel, taux et market cap.", endpoint: "https://api.coingecko.com/api/v3/ping", method: "GET", features: ["Prix crypto", "Market cap", "Historique"] },
+      { id: 6, name: "Hacker News", category: "data", description: "Articles et commentaires de la communaute tech.", endpoint: "https://hn.algolia.com/api/v1/search?query=javascript", method: "GET", features: ["Articles", "Commentaires", "Trending"] },
+      { id: 7, name: "SpaceX API", category: "data", description: "Donnees sur les fusees, lancements et histoire de SpaceX.", endpoint: "https://api.spacexdata.com/v4/launches/latest", method: "GET", features: ["Lancements", "Fusees", "Historique"] },
+      { id: 8, name: "Dungeons & Dragons", category: "data", description: "Base de donnees complete pour D&D 5e.", endpoint: "https://www.dnd5eapi.co/api/spells", method: "GET", features: ["Sorts", "Classes", "Races", "Equipement"] },
+      { id: 9, name: "The Meal DB", category: "data", description: "Recettes du monde entier avec ingredients et instructions.", endpoint: "https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata", method: "GET", features: ["Recettes", "Ingredients", "Categories"] },
+      { id: 10, name: "The Cocktail DB", category: "data", description: "Recettes de cocktails et ingredients.", endpoint: "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita", method: "GET", features: ["Cocktails", "Ingredients", "Verres"] },
+      { id: 11, name: "Harry Potter", category: "data", description: "Personnages et infos de l'univers Harry Potter.", endpoint: "https://hp-api.onrender.com/api/characters", method: "GET", features: ["Personnages", "Maisons", "Sorts"] },
+      { id: 12, name: "Game of Thrones", category: "data", description: "Donnees sur les personnages et maisons de GoT.", endpoint: "https://anapioficeandfire.com/api/characters/583", method: "GET", features: ["Personnages", "Maisons", "Livres"] },
+      { id: 13, name: "Superhero API", category: "data", description: "Fiches completes de super-heros avec stats.", endpoint: "https://akabab.github.io/superhero-api/api/all.json", method: "GET", features: ["Stats", "Biographie", "Apparition"] },
+      { id: 14, name: "Star Wars (SWAPI)", category: "data", description: "L'API definitive pour l'univers Star Wars.", endpoint: "https://swapi.dev/api/people/", method: "GET", features: ["Personnages", "Planetes", "Vaisseaux"] },
+      { id: 15, name: "Fake Store API", category: "data", description: "Donnees fictives d'e-commerce pour prototypage.", endpoint: "https://fakestoreapi.com/products", method: "GET", features: ["Produits", "Panier", "Utilisateurs"] },
+      { id: 16, name: "Random User", category: "data", description: "Generation aleatoire de profils utilisateurs realistes.", endpoint: "https://randomuser.me/api/", method: "GET", features: ["Photos", "Adresses", "Coordonnees"] },
+      { id: 17, name: "Frankfurter", category: "data", description: "Taux de change de devises actualises.", endpoint: "https://api.frankfurter.app/latest?from=USD", method: "GET", features: ["Devises", "Historique", "Conversion"] },
+      { id: 18, name: "Public APIs", category: "data", description: "Annuaire d'APIs publiques avec categories.", endpoint: "https://api.publicapis.org/random", method: "GET", features: ["Annuaire", "Recherche", "Categories"] },
+
+      // --- MEDIA (10) ---
+      { id: 19, name: "Dog CEO", category: "media", description: "Images de chiens par race. Ideal pour les galeries.", endpoint: "https://dog.ceo/api/breeds/image/random", method: "GET", features: ["Images par race", "Random", "Liste races"] },
+      { id: 20, name: "Jikan (Anime)", category: "media", description: "Donnees MyAnimeList sans authentification.", endpoint: "https://api.jikan.moe/v4/anime?q=cowboy", method: "GET", features: ["Animes", "Mangas", "Personnages", "Saisons"] },
+      { id: 21, name: "Studio Ghibli", category: "media", description: "Films, personnages et lieux du Studio Ghibli.", endpoint: "https://ghibliapi.vercel.app/films", method: "GET", features: ["Films", "Personnages", "Lieux", "Vehicules"] },
+      { id: 22, name: "Open Library", category: "media", description: "Base de donnees de livres avec couvertures.", endpoint: "https://openlibrary.org/api/books?bibkeys=ISBN:0201558025&format=json", method: "GET", features: ["Recherche", "Couvertures", "Auteurs"] },
+      { id: 23, name: "Lorem Picsum", category: "media", description: "Images placeholder aleatoires avec dimensions.", endpoint: "https://picsum.photos/800/600", method: "GET", features: ["Dimensions custom", "Grayscale", "Blur"] },
+      { id: 24, name: "TVMaze", category: "media", description: "Infos sur les series TV, episodes et casting.", endpoint: "https://api.tvmaze.com/search/shows?q=girls", method: "GET", features: ["Series", "Episodes", "Casting"] },
+      { id: 25, name: "Met Museum", category: "media", description: "Collection d'art du Metropolitan Museum.", endpoint: "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=sunflowers", method: "GET", features: ["Art", "Peinture", "Histoire"] },
+      { id: 26, name: "Art Institute Chicago", category: "media", description: "Catalogue du musee d'art de Chicago.", endpoint: "https://api.artic.edu/api/v1/artworks?limit=1", method: "GET", features: ["Art moderne", "Images HD"] },
+      { id: 27, name: "Robohash", category: "media", description: "Generateur d'avatars robots, monstres, aliens.", endpoint: "https://robohash.org/myrobot.png", method: "GET", features: ["Robots", "Aliens", "Avatars"] },
+      { id: 28, name: "DiceBear", category: "media", description: "Generateur d'avatars stylises en SVG.", endpoint: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix", method: "GET", features: ["SVG", "Styles variés", "Personnalisable"] },
+
+      // --- FUN (14) ---
+      { id: 29, name: "Cat Facts", category: "fun", description: "Faits aleatoires sur les chats. Simple et amusant.", endpoint: "https://catfact.ninja/fact", method: "GET", features: ["Faits aleatoires", "Aucune limite"] },
+      { id: 30, name: "Chuck Norris", category: "fun", description: "Blagues sur Chuck Norris avec categories.", endpoint: "https://api.chucknorris.io/jokes/random", method: "GET", features: ["Categories", "Recherche", "Random"] },
+      { id: 31, name: "Advice Slip", category: "fun", description: "Conseils aleatoires en anglais.", endpoint: "https://api.adviceslip.com/advice", method: "GET", features: ["Conseils random", "Par ID", "Recherche"] },
+      { id: 32, name: "Bored API", category: "fun", description: "Suggestions d'activites quand on s'ennuie.", endpoint: "https://www.boredapi.com/api/activity", method: "GET", features: ["Par type", "Par participants", "Par prix"] },
+      { id: 33, name: "Official Joke", category: "fun", description: "Blagues avec setup et punchline.", endpoint: "https://official-joke-api.appspot.com/random_joke", method: "GET", features: ["Random", "Par type", "10 blagues"] },
+      { id: 34, name: "Quote Garden", category: "fun", description: "Citations celebres avec recherche par auteur.", endpoint: "https://quote-garden.onrender.com/api/v3/quotes/random", method: "GET", features: ["Random", "Par auteur", "Par genre"] },
+      { id: 35, name: "Useless Facts", category: "fun", description: "Faits divers inutiles mais interessants.", endpoint: "https://uselessfacts.jsph.pl/random.json?language=en", method: "GET", features: ["Anglais", "Francais", "Random"] },
+      { id: 36, name: "Kanye Rest", category: "fun", description: "Citations aleatoires de Kanye West.", endpoint: "https://api.kanye.rest/", method: "GET", features: ["Quotes", "Musique", "Culture pop"] },
+      { id: 37, name: "Bacon Ipsum", category: "fun", description: "Generateur de texte filler theme viande.", endpoint: "https://baconipsum.com/api/?type=meat-and-filler", method: "GET", features: ["Paragraphes", "Mots cles"] },
+      { id: 38, name: "Excuser", category: "fun", description: "Generateur d'excuses aleatoires.", endpoint: "https://excuser.herokuapp.com/v1/excuse", method: "GET", features: ["Excuses", "Categories"] },
+      { id: 39, name: "Dad Jokes", category: "fun", description: "Blagues de papa classiques.", endpoint: "https://icanhazdadjoke.com/", method: "GET", features: ["Blagues", "Recherche", "Images"] },
+      { id: 40, name: "Open Trivia", category: "fun", description: "Questions de culture generale pour quiz.", endpoint: "https://opentdb.com/api.php?amount=10", method: "GET", features: ["Categories", "Difficulte", "Type"] },
+      { id: 41, name: "Avatar (Last Airbender)", category: "fun", description: "Infos sur l'univers Avatar.", endpoint: "https://last-airbender-api.fly.dev/api/v1/characters", method: "GET", features: ["Personnages", "Nations"] },
+      { id: 42, name: "Fun Translations", category: "fun", description: "Traduisez du texte en langage marrant (Yoda, Pirate...).", endpoint: "https://api.funtranslations.com/translate/yoda.json?text=Hello", method: "GET", features: ["Yoda", "Pirate", "Minion"] },
+
+      // --- UTIL (8) ---
+      { id: 43, name: "Open-Meteo", category: "util", description: "Meteo gratuite sans cle API. Donnees horaires et journalieres.", endpoint: "https://api.open-meteo.com/v1/forecast?latitude=48.85&longitude=2.35&current_weather=true", method: "GET", features: ["Meteo actuelle", "Previsions", "Historique"] },
+      { id: 44, name: "IP API", category: "util", description: "Geolocalisation par adresse IP.", endpoint: "https://ipapi.co/json/", method: "GET", features: ["Localisation", "FAI", "Fuseau horaire"] },
+      { id: 45, name: "Dictionary API", category: "util", description: "Definitions, prononciations et exemples.", endpoint: "https://api.dictionaryapi.dev/api/v2/entries/en/hello", method: "GET", features: ["Definitions", "Phonetique", "Exemples"] },
+      { id: 46, name: "Agify", category: "util", description: "Predire l'age moyen d'un prenom.", endpoint: "https://api.agify.io?name=michael", method: "GET", features: ["Prediction age", "Par pays"] },
+      { id: 47, name: "Genderize", category: "util", description: "Predire le genre associe a un prenom.", endpoint: "https://api.genderize.io?name=peter", method: "GET", features: ["Prediction genre", "Probabilite"] },
+      { id: 48, name: "Nationalize", category: "util", description: "Predire la nationalite d'un prenom.", endpoint: "https://api.nationalize.io?name=john", method: "GET", features: ["Pays", "Probabilite"] },
+      { id: 49, name: "QR Server", category: "util", description: "Generer des QR codes a la volee.", endpoint: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Hello", method: "GET", features: ["Taille custom", "Encodage"] },
+      { id: 50, name: "Where the ISS at", category: "util", description: "Position en temps reel de la Station Spatiale.", endpoint: "https://api.wheretheiss.at/v1/satellites/25544", method: "GET", features: ["Latitude", "Longitude", "Vitesse"] }
+    ];
+
+    // DOM Elements
+    const apiGrid = document.getElementById('apiGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    let currentFilter = 'all';
+    let searchTerm = '';
+
+    function createCard(api) {
+      const categoryClass = `badge-${api.category}`;
+      const categoryLabel = { data: 'Data', media: 'Media', fun: 'Fun', util: 'Utilitaire' }[api.category];
+      const categoryColorVar = `var(--category-${api.category === 'data' ? 'data' : api.category === 'media' ? 'media' : api.category === 'fun' ? 'fun' : 'util'})`;
+
+      return `
+        <article class="api-card reveal" data-id="${api.id}" data-category="${api.category}">
+          <div class="p-5 relative z-10">
+            <div class="flex items-start justify-between mb-3">
+              <span class="badge ${categoryClass}">${categoryLabel}</span>
+              <span class="font-mono text-xs text-[var(--muted)]">#${String(api.id).padStart(2, '0')}</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">${api.name}</h3>
+            <p class="text-[var(--muted)] text-sm mb-4">${api.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              ${api.features.map(f => `<span class="text-xs px-2 py-1 rounded bg-[var(--bg)] text-[var(--muted)]">${f}</span>`).join('')}
+            </div>
+            <div class="code-block font-mono relative group">
+              <div class="flex items-center gap-2 mb-1">
+                <span style="color: ${categoryColorVar}" class="text-xs font-semibold">${api.method}</span>
+                <span class="text-[var(--muted)] text-xs">Endpoint</span>
+              </div>
+              <code class="text-xs break-all">${api.endpoint}</code>
+              <button class="copy-btn opacity-0 group-hover:opacity-100" onclick="copyEndpoint('${api.endpoint}', this)">Copier</button>
+            </div>
+            <button class="expand-btn mt-4 text-sm text-[var(--accent)] hover:text-[var(--accent-dim)] transition-colors flex items-center gap-2" onclick="toggleExpand(${api.id})">
+              <span>Voir le code</span>
+              <svg class="w-4 h-4 transition-transform expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="code-example mt-4 hidden">
+              <pre class="code-block font-mono text-xs"><code>fetch('${api.endpoint}')
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));</code></pre>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCards() {
+      const filtered = apis.filter(api => {
+        const matchesFilter = currentFilter === 'all' || api.category === currentFilter;
+        const matchesSearch = api.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             api.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             api.features.some(f => f.toLowerCase().includes(searchTerm.toLowerCase()));
+        return matchesFilter && matchesSearch;
+      });
+      apiGrid.innerHTML = filtered.map(createCard).join('');
+      setTimeout(() => {
+        document.querySelectorAll('.api-card.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 30);
+        });
+      }, 50);
+    }
+
+    function copyEndpoint(endpoint, btn) {
+      navigator.clipboard.writeText(endpoint).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copie !';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+
+    function toggleExpand(id) {
+      const card = document.querySelector(`.api-card[data-id="${id}"]`);
+      const codeExample = card.querySelector('.code-example');
+      const icon = card.querySelector('.expand-icon');
+      if (codeExample.classList.contains('hidden')) {
+        codeExample.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        codeExample.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderCards();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value;
+      renderCards();
+    });
+
+    function animateCounters() {
+      document.querySelectorAll('.stat-number').forEach(el => {
+        const target = parseInt(el.dataset.count);
+        let current = 0;
+        const increment = target / 30;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(current);
+          }
+        }, 30);
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCards();
+      animateCounters();
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+      if (e.key === 'Escape') {
+        searchInput.blur();
+        searchInput.value = '';
+        searchTerm = '';
+        renderCards();
+      }
+    });
+  </script>
+</body>
+</html>
