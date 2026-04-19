@@ -93,6 +93,6 @@ If you like the project:
 
 ---
 
-Créé avec ❤️ par @morneface  
+Créé avec ❤️ par @Marvyn  
 Projet Open Source - Tous droits réservés à l'auteur
 
