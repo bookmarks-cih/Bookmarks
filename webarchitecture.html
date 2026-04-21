@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PenTesterLab - Web Application Security Training</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #9fe870;
+      --brand-dark: #7fd657;
+      --brand-light: #b8f29d;
+      --accent: #9fe870;
+      --bg: #0a0d14;
+      --surface: rgba(255,255,255,0.04);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.75);
+      --text-dim: rgba(247,251,255,0.45);
+      --border: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* Background Effects */
+    .bg-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, #0f1a1f 0%, #0a0d14 70%);
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      animation: orbPulse 12s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(159, 232, 112, 0.25), transparent 70%);
+      top: -100px;
+      right: 10%;
+    }
+
+    .glow-orb-2 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(159, 232, 112, 0.15), transparent 70%);
+      bottom: -50px;
+      left: 5%;
+      animation-delay: -4s;
+    }
+
+    .glow-orb-3 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(159, 232, 112, 0.2), transparent 70%);
+      top: 40%;
+      left: 60%;
+      animation-delay: -8s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.15); }
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(159, 232, 112, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159, 232, 112, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Main Card */
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 52rem;
+      padding: 2rem;
+      background: linear-gradient(160deg, rgba(159, 232, 112, 0.06), rgba(10,13,20,0.9), rgba(10,13,20,0.95));
+      border: 1px solid rgba(159, 232, 112, 0.15);
+      border-radius: 2rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow:
+        0 25px 80px rgba(0,0,0,0.5),
+        0 0 120px rgba(159, 232, 112, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    /* Navigation */
+    .top-nav {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(10, 13, 20, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(159, 232, 112, 0.15);
+      color: var(--brand-light);
+      border-color: rgba(159, 232, 112, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn svg {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    /* Banner */
+    .post-banner {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .banner-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .banner-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(159, 232, 112, 0.3);
+    }
+
+    .banner-icon svg {
+      width: 28px;
+      height: 28px;
+      color: #0a0d14;
+    }
+
+    .banner-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    /* Post Header */
+    .post-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .post-tag {
+      padding: 0.25rem 0.6rem;
+      background: rgba(159, 232, 112, 0.15);
+      border: 1px solid rgba(159, 232, 112, 0.25);
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--brand-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .post-date {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .post-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.5rem, 4vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .post-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(159, 232, 112, 0.2), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* Content Sections */
+    .section {
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.1s; }
+    .section:nth-child(2) { animation-delay: 0.2s; }
+    .section:nth-child(3) { animation-delay: 0.3s; }
+    .section:nth-child(4) { animation-delay: 0.4s; }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 3px;
+      height: 16px;
+      background: linear-gradient(180deg, var(--brand-light), var(--brand-dark));
+      border-radius: 2px;
+    }
+
+    .post-content p {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    /* List */
+    .resource-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .resource-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      transition: all 0.25s ease;
+    }
+
+    .resource-list li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--brand);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Links */
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      margin-bottom: 0.5rem;
+    }
+
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(159, 232, 112, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-desc {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-item {
+      flex: 1 1 calc(33% - 1rem);
+      min-width: 100px;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .stat-value {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brand-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      html {
+        font-size: 100%;
+      }
+
+      body {
+        padding: 1rem;
+      }
+
+      .main-card {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+      }
+
+      .post-banner {
+        height: 140px;
+      }
+
+      .banner-text {
+        font-size: 1rem;
+      }
+
+      .nav-btn span {
+        display: none;
+      }
+
+      .nav-btn {
+        padding: 0.5rem;
+      }
+
+      .stats-row {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .stat-item {
+        flex: 1 1 calc(50% - 0.75rem);
+        min-width: 120px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stat-item {
+        flex: 1 1 100%;
+      }
+
+      .post-title {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <div class="noise"></div>
+
+  <div class="main-card">
+    <nav class="top-nav">
+      <a href="/creators.html" class="nav-btn" title="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <div class="post-banner">
+      <div class="banner-logo">
+        <div class="banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3c0 1.5-1.5 3-3 3s-3-1.5-3-3a3 3 0 0 0-3 3c0 1.5 1.5 3 3 3s3 1.5 3 3a3 3 0 0 0 3 3c1.5 0 3-1.5 3-3s1.5-3 3-3a3 3 0 0 0 3-3c0-1.5-1.5-3-3-3zm0 18a3 3 0 0 0 3-3c0-1.5 1.5-3 3-3s3 1.5 3 3a3 3 0 0 0-3 3c-1.5 0-3 1.5-3 3s-1.5 3-3 3a3 3 0 0 0-3-3z"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <span class="banner-text">PenTesterLab</span>
+      </div>
+    </div>
+
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Training</span>
+        <span class="post-date">Hands-on Web Security Exercises</span>
+      </div>
+      <h1 class="post-title">PenTesterLab</h1>
+      <p class="post-subtitle">Sharpen your penetration testing skills with practical, real-world exercises and challenges.</p>
+    </header>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title">About</h2>
+      <div class="post-content">
+        <p>PenTesterLab provides a hands-on learning platform for web application security. It offers a collection of practical exercises and challenges designed to help security professionals and enthusiasts improve their penetration testing skills.</p>
+        <p>The platform covers a wide range of topics, from basic vulnerabilities to advanced exploitation techniques, all in a safe and legal environment. Whether you're a beginner or an experienced professional, PenTesterLab has something for everyone.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Key Features</h2>
+      <ul class="resource-list">
+        <li>Practical, hands-on exercises</li>
+        <li>Real-world web application challenges</li>
+        <li>Detailed solutions and explanations</li>
+        <li>Self-paced learning environment</li>
+        <li>Regularly updated content</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Stats</h2>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value">100+</div>
+          <div class="stat-label">Exercises</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Self-Paced</div>
+          <div class="stat-label">Learning</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">20+</div>
+          <div class="stat-label">Categories</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Links</h2>
+      <a href="https://pentesterlab.com/" class="link-item" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon">🔗</div>
+        <div class="link-content">
+          <div class="link-name">PenTesterLab</div>
+          <p class="link-desc">pentesterlab.com</p>
+        </div>
+        <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+        </svg>
+      </a>
+      <a href="https://pentesterlab.com/exercises" class="link-item" target="_blank" rel="noopener noreferrer">
+        <div class="link-icon">📚</div>
+        <div class="link-content">
+          <div class="link-name">Exercises</div>
+          <p class="link-desc">Browse all available exercises</p>
+        </div>
+        <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

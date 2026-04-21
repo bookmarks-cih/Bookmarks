@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collection — Dr. Chengdiao Fan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #8b5cf6;
+      --brand-dark: #7c3aed;
+      --brand-light: #c4b5fd;
+      --bg: #050a12;
+      --surface: rgba(255,255,255,0.04);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.75);
+      --text-dim: rgba(247,251,255,0.45);
+      --border: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --accent-red: #ff4757;
+      --accent-green: #2ed573;
+      --accent-purple: #a855f7;
+      --accent-orange: #ff9f43;
+      --accent-cyan: #00d4aa;
+      --accent-gold: #f7931a;
+      --accent-blue: #53b5ff;
+      --accent-teal: #2dd4bf;
+      --accent-pink: #f472b6;
+      --accent-amber: #fbbf24;
+      --accent-slate: #94a3b8;
+      --accent-coral: #fb7185;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { 
+      scroll-behavior: smooth; 
+      font-size: 125%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 100%; }
+      body { padding: 16px; }
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    .bg-container {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: radial-gradient(circle at 50% 0%, #140a22 0%, #050a12 60%);
+    }
+
+    .glow-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.4;
+      animation: orbPulse 15s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
+      top: -200px; left: 20%;
+    }
+
+    .glow-orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 70%);
+      bottom: -100px; right: 10%; animation-delay: -5s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    .noise { position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+
+    /* ===== MAIN CARD CONTAINER ===== */
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 42.5rem;
+      padding: 2.5rem 1.875rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    /* ===== NAVIGATION BUTTONS ===== */
+    .top-nav {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(5, 10, 18, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn svg { width: 0.875rem; height: 0.875rem; }
+
+    /* ===== LOVE PATTERN WATERMARK ===== */
+    .love-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .love-text {
+      position: absolute;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 5.85rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+      opacity: 0.04;
+      transform: rotate(-10deg);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* ===== PROFILE SECTION ===== */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .avatar-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      box-shadow: 0 0 40px rgba(139,92,246,0.4);
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(139,92,246,0.4); }
+      50% { box-shadow: 0 0 50px rgba(139,92,246,0.6); }
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #0f1c2e;
+      overflow: hidden;
+    }
+
+    .avatar-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: 3px solid #0d111a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .avatar-badge svg { width: 12px; height: 12px; color: white; }
+
+    .profile-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--brand-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+
+    .profile-category svg { width: 12px; height: 12px; }
+
+    .profile-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff, #d8b4fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-handle {
+      color: var(--brand-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-bio {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      max-width: 28rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.625rem;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(139,92,246,0.3);
+    }
+
+    .social-icon svg { width: 16px; height: 16px; }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 1.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .content-area {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.2s; }
+    .section:nth-child(2) { animation-delay: 0.3s; }
+    .section:nth-child(3) { animation-delay: 0.4s; }
+    .section:nth-child(4) { animation-delay: 0.5s; }
+    .section:nth-child(5) { animation-delay: 0.6s; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 3px;
+      height: 16px;
+      background: var(--brand);
+      border-radius: 2px;
+    }
+
+    .section-count {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: var(--surface);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* ===== LINK ITEMS ===== */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(139,92,246,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .link-item:hover {
+      border-color: rgba(196,181,253,0.3);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .link-item:hover::before { opacity: 1; }
+
+    .link-item.is-favorite {
+      border-color: rgba(251, 191, 36, 0.15);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.04), rgba(255,255,255,0.03));
+    }
+
+    .link-item.is-favorite::before {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), transparent);
+    }
+
+    .link-item.is-favorite:hover {
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+
+    .link-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1a2744, #0d1a2d);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .link-img svg {
+      width: 20px;
+      height: 20px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      overflow: hidden;
+    }
+
+    .link-name-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .link-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ===== FAVORITE STAR ===== */
+    .favorite-star {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .favorite-star svg {
+      width: 13px;
+      height: 13px;
+      color: var(--accent-amber);
+      filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
+      animation: starGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes starGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.35)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 9px rgba(251, 191, 36, 0.7)); transform: scale(1.12); }
+    }
+
+    .favorite-star-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+      white-space: nowrap;
+    }
+
+    /* ===== SECTION EXPLORE LINK ===== */
+    .section-explore-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      padding: 0.5rem;
+      margin-top: 0.375rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .section-explore-link:hover {
+      color: var(--brand-light);
+      background: rgba(139, 92, 246, 0.06);
+    }
+
+    .section-explore-link svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.25s ease;
+    }
+
+    .section-explore-link:hover svg {
+      transform: translate(2px, -2px);
+    }
+
+    /* ===== TAG STYLES ===== */
+    .link-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .link-tag.tag-website {
+      background: rgba(139,92,246,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-tag.tag-podcast {
+      background: rgba(168,85,247,0.15);
+      color: var(--accent-purple);
+    }
+
+    .link-tag.tag-newsletter {
+      background: rgba(45,212,191,0.15);
+      color: var(--accent-teal);
+    }
+
+    .link-tag.tag-video {
+      background: rgba(255,71,87,0.15);
+      color: var(--accent-red);
+    }
+
+    .link-tag.tag-paper {
+      background: rgba(148,163,184,0.15);
+      color: var(--accent-slate);
+    }
+
+    .link-tag.tag-book {
+      background: rgba(0,212,170,0.15);
+      color: var(--accent-cyan);
+    }
+
+    .link-tag.tag-guide {
+      background: rgba(83,181,255,0.15);
+      color: var(--accent-blue);
+    }
+
+    .link-tag.tag-education {
+      background: rgba(251,113,133,0.15);
+      color: var(--accent-coral);
+    }
+
+    .link-tag.tag-platform {
+      background: rgba(46,213,115,0.15);
+      color: var(--accent-green);
+    }
+
+    .link-tag.tag-explorer {
+      background: rgba(0,212,170,0.15);
+      color: var(--accent-cyan);
+    }
+
+    .link-tag.tag-charts {
+      background: rgba(251,191,36,0.15);
+      color: var(--accent-amber);
+    }
+
+    .link-tag.tag-show {
+      background: rgba(244,114,182,0.15);
+      color: var(--accent-pink);
+    }
+
+    .link-tag.tag-research {
+      background: rgba(139,92,246,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-tag.tag-whitepaper {
+      background: rgba(148,163,184,0.15);
+      color: var(--accent-slate);
+    }
+
+    .link-tag.tag-app {
+      background: rgba(46,213,115,0.15);
+      color: var(--accent-green);
+    }
+
+    .link-tag.tag-community {
+      background: rgba(244,114,182,0.15);
+      color: var(--accent-pink);
+    }
+
+    .link-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .link-item:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--brand-light);
+    }
+
+    .link-item.is-favorite:hover .link-arrow {
+      color: var(--accent-amber);
+    }
+
+    /* ===== SHOW MORE BUTTON ===== */
+    .show-more-btn {
+      width: 100%;
+      padding: 0.625rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed var(--border);
+      border-radius: 0.625rem;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.25rem;
+    }
+
+    .show-more-btn:hover {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-soft);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.7s;
+    }
+
+    .video-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .video-title::before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 16px;
+      background: var(--accent-red);
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .video-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+
+    .video-subtitle a {
+      color: var(--brand-light);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .video-subtitle a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-placeholder-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px) brightness(0.4);
+      transition: filter 0.3s ease;
+    }
+
+    .video-placeholder:hover .video-placeholder-bg {
+      filter: blur(1px) brightness(0.5);
+    }
+
+    .video-placeholder:hover .play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(255,0,0,0.5);
+    }
+
+    .play-btn {
+      position: relative;
+      z-index: 2;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 24px rgba(255,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    .video-placeholder-text {
+      position: relative;
+      z-index: 2;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* ===== FOOTER ===== */
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .footer-text a {
+      color: var(--brand-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 480px) {
+      .main-card { padding: 2rem 1.25rem; border-radius: 1.5rem; }
+      .nav-btn span { display: none; }
+      .nav-btn { padding: 0.5rem; }
+      .avatar-wrapper { width: 80px; height: 80px; }
+      .social-icon { width: 32px; height: 32px; }
+      .link-item { padding: 0.625rem; }
+      .link-img { width: 38px; height: 38px; }
+      .love-text { font-size: 4rem; }
+      .video-title { font-size: 0.9rem; }
+      .video-subtitle { display: none; }
+      .play-btn { width: 56px; height: 56px; }
+      .play-btn svg { width: 24px; height: 24px; }
+      .link-tag { font-size: 0.6rem; padding: 2px 6px; }
+      .profile-name { font-size: 1.5rem; }
+      .favorite-star svg { width: 11px; height: 11px; }
+      .favorite-star-label { font-size: 0.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+  <div class="noise"></div>
+
+  <!-- MAIN CARD -->
+  <div class="main-card">
+    
+    <!-- Love Pattern Background -->
+    <div class="love-pattern" id="lovePattern"></div>
+
+    <!-- Navigation Buttons -->
+    <nav class="top-nav">
+      <a href="/creators.html" class="nav-btn" title="Back to Creators">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Go to Hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring">
+          <div class="avatar-img">
+            <img src="https://cdn-ilehkna.nitrocdn.com/HWkhaRwUyufobGYsEqsSlFCDqvvZeqjw/assets/images/optimized/rev-a54c932/minepi.com/wp-content/uploads/2022/09/Dr.-Chengdiao-Fan-1-1.jpg" alt="Dr. Chengdiao Fan">
+          </div>
+        </div>
+        <div class="avatar-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        </div>
+      </div>
+
+      <div class="profile-category">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Anthropological Sciences
+      </div>
+
+      <h1 class="profile-name">Dr. Chengdiao Fan</h1>
+      <span class="profile-handle">@chengdiaofan</span>
+      <p class="profile-bio">Stanford‑trained PhD in Anthropological Sciences and co‑founder & Head of Product of Pi Network. Her work focuses on human behavior, group dynamics, and social computing — applying these principles to human‑computer interaction and blockchain technology to design accessible, people‑centered digital ecosystems.</p>
+
+      <div class="social-links">
+        <a href="https://x.com/Chengdiao" class="social-icon" title="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/hashtag/drchengdiaofan" class="social-icon" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://minepi.com" class="social-icon" title="Pi Network">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Content Area -->
+    <div class="content-area" id="contentArea"></div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <div class="video-header">
+        <span class="video-title">Featured Talk</span>
+        <span class="video-subtitle">More from <a href="https://www.youtube.com/hashtag/drchengdiaofan" target="_blank">@chengdiaofan</a></span>
+      </div>
+      <div class="video-container">
+        <div class="video-wrapper" id="videoWrapper">
+          <div class="video-placeholder" id="videoPlaceholder">
+            <div class="video-placeholder-bg" style="background-image: url('https://i.ytimg.com/vi/tWn1irrGlaM/hqdefault.jpg');"></div>
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="video-placeholder-text">Dr. Chengdiao Fan — Click to play</span>
+          </div>
+          <iframe id="videoIframe" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <p class="footer-text">Curated with care by <a href="https://bookmarks.love" target="_blank">bookmarks.love</a></p>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       DATA
+    ============================================================ */
+    const collectionData = [
+      {
+        title: "About",
+        items: [
+          {
+            name: "Pi Network — Official Website",
+            desc: "The decentralized cryptocurrency you can mine on your phone",
+            url: "https://minepi.com/",
+            tag: "Website",
+            tagClass: "tag-website",
+            img: "/creators/img/pinetwork2.jpg",
+          },
+          {
+            name: "Dr. Chengdiao Fan — Pi Network Profile",
+            desc: "Co‑founder & Head of Product at Pi Network",
+            url: "https://minepi.com/dr-chengdiao-fan",
+            tag: "Website",
+            tagClass: "tag-website",
+            img: "/creators/img/pinetwork2.jpg",
+          },
+          {
+            name: "Pi Network Whitepaper",
+            desc: "Original technical document outlining the Pi blockchain vision",
+            url: "https://minepi.com/white-paper",
+            tag: "Whitepaper",
+            tagClass: "tag-whitepaper",
+            img: "/creators/img/pinetwork2.jpg",
+          }
+        ]
+      },
+      {
+        title: "Pi Network Ecosystem",
+        items: [
+          {
+            name: "Pi Mining App",
+            desc: "Mine Pi from your phone — available on iOS & Android",
+            url: "https://minepi.com/download",
+            tag: "App",
+            tagClass: "tag-app",
+            img: "/creators/img/pinetwork.png",
+          },
+          {
+            name: "Pi Browser",
+            desc: "Built‑in browser for decentralized Pi applications",
+            url: "https://browser.pi",
+            tag: "Platform",
+            tagClass: "tag-platform",
+            img: "/creators/img/pinetwork.png",
+          },
+          {
+            name: "Pi Developer Portal",
+            desc: "Build decentralized apps on the Pi blockchain",
+            url: "https://developers.pi",
+            tag: "Guide",
+            tagClass: "tag-guide",
+            img: "/creators/img/pinetwork.png",
+          },
+          {
+            name: "Pi Chat & Community",
+            desc: "Connect with Pioneers worldwide in the Pi community",
+            url: "https://chat.pi",
+            tag: "Community",
+            tagClass: "tag-community",
+            img: "/creators/img/pinetwork.png",
+          }
+        ]
+      },
+      {
+        title: "Research & Academia",
+        items: [
+          {
+            name: "Computer Science Bibliography",
+            desc: "Dplb - Chenglin Fan",
+            url: "https://dblp.org/",
+            tag: "Research",
+            tagClass: "tag-research",
+            img: "/creators/img/dplbico.png",
+          },
+          {
+            name: "Stanford Anthropological Sciences",
+            desc: "Department where Dr. Fan earned her PhD",
+            url: "https://anthropology.stanford.edu/",
+            tag: "Education",
+            tagClass: "tag-education",
+            img: "/creators/img/anthropology_stanford.png",
+          },
+          {
+            name: "Social Computing — Stanford HCI Group",
+            desc: "Research at the intersection of social behavior and computing",
+            url: "https://hci.stanford.edu/",
+            tag: "Research",
+            tagClass: "tag-research",
+            img: "/creators/img/stanford_hci.png",
+          },
+          {
+            name: "Human Behavior & Group Dynamics",
+            desc: "Understanding collective decision-making and social networks",
+            url: "https://plato.stanford.edu/entries/social-choice/",
+            tag: "Research",
+            tagClass: "tag-research",
+            img: "/creators/img/sep-man-red.png",
+          }
+        ]
+      },
+      {
+        title: "Publications",
+        exploreLink: {
+          text: "Explore all publications on ResearchGate",
+          url: "https://www.researchgate.net/scientific-contributions/Chenglin-Fan-2137202056"
+        },
+        items: [
+          {
+            name: "Classification Acceleration via Merging Decision Trees",
+            desc: "Dr. Chengdiao Fan & Ping Li — SIGIR 2020",
+            url: "https://dl.acm.org/doi/10.1145/3412815.3416886",
+            tag: "Paper",
+            tagClass: "tag-paper",
+            img: "/creators/img/acm.jpg",
+            favorite: true
+          },
+          {
+            name: "ResearchGate — Chenglin Fan",
+            desc: "Full list of scientific contributions, citations & co-authors",
+            url: "https://www.researchgate.net/scientific-contributions/Chenglin-Fan-2137202056",
+            tag: "Research",
+            tagClass: "tag-research",
+            img: "/creators/img/researchgate.png",
+          }
+        ]
+      },
+      {
+        title: "Blockchain & Social Computing",
+        items: [
+          {
+            name: "MIT Digital Currency Initiative",
+            desc: "Recherche de pointe sur la sécurité, la gouvernance et les dynamiques sociales des systèmes blockchain — une base solide pour comprendre comment les réseaux distribués influencent les comportements humains.",
+            url: "https://dci.mit.edu/",
+            tag: "Research",
+            tagClass: "tag-research",
+            img: "/creators/img/dci.png",
+          },
+          {
+            name: "Stanford HCI Group — Human‑Centered Web3",
+            desc: "Approches centrées humain pour concevoir des systèmes décentralisés réellement utilisables, en étudiant cognition, adoption et interactions sociales dans les environnements Web3.",
+            url: "https://hci.stanford.edu/research/",
+            tag: "Guide",
+            tagClass: "tag-guide",
+            img: "/creators/img/hci-stanford.png",
+          },
+          {
+            name: "W3C Decentralized Identifiers (DID)",
+            desc: "Standard clé pour l'identité auto‑souveraine, fondation technique et sociale de la confiance dans les réseaux décentralisés — essentiel pour comprendre les mécanismes de réputation et de légitimité.",
+            url: "https://www.w3.org/TR/did-core/",
+            tag: "Paper",
+            tagClass: "tag-paper",
+            img: "/creators/img/web3.png",
+          }
+        ]
+      }
+    ];
+
+
+    /* ============================================================
+       FEATURED VIDEO
+    ============================================================ */
+    const featuredVideoId = "tWn1irrGlaM";
+
+    /* ============================================================
+       LOVE PATTERN
+    ============================================================ */
+    function generateLovePattern() {
+      const container = document.getElementById('lovePattern');
+      container.innerHTML = '';
+
+      const positions = [
+        { top: '10%', left: '5%', rotate: -12 },
+        { top: '25%', right: '8%', rotate: 8 },
+        { top: '50%', left: '12%', rotate: -8 },
+        { top: '65%', right: '5%', rotate: 12 },
+        { top: '80%', left: '8%', rotate: -15 },
+        { bottom: '5%', right: '15%', rotate: 6 },
+      ];
+
+      positions.forEach((pos, i) => {
+        const el = document.createElement('div');
+        el.className = 'love-text';
+        el.textContent = '#love';
+
+        Object.keys(pos).forEach(key => {
+          if (key !== 'rotate') {
+            el.style[key] = pos[key];
+          }
+        });
+
+        el.style.opacity = 0.02 + (i % 3) * 0.015;
+        el.style.transform = `rotate(${pos.rotate}deg)`;
+        container.appendChild(el);
+      });
+    }
+
+    generateLovePattern();
+
+    /* ============================================================
+       VIDEO PLACEHOLDER → IFRAME LAZY LOAD
+    ============================================================ */
+    const videoPlaceholder = document.getElementById('videoPlaceholder');
+    const videoIframe = document.getElementById('videoIframe');
+
+    videoPlaceholder.addEventListener('click', function () {
+      videoIframe.src = `https://www.youtube.com/embed/${featuredVideoId}?autoplay=1&rel=0`;
+      this.style.display = 'none';
+    });
+
+    /* ============================================================
+       GENERATE UI
+    ============================================================ */
+    const contentArea = document.getElementById('contentArea');
+
+    function createLinkItemInner(item) {
+      const imgContent = item.img
+        ? `<img src="${item.img}" alt="${item.name}" loading="lazy">`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+             <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+             <circle cx="8.5" cy="8.5" r="1.5"/>
+             <path d="M21 15l-5-5L5 21"/>
+           </svg>`;
+
+      const tagClass = item.tagClass || 'tag-website';
+      const tagHtml = item.tag ? `<span class="link-tag ${tagClass}">${item.tag}</span>` : '';
+
+      const favoriteHtml = item.favorite
+        ? `<span class="favorite-star">
+             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+             <span class="favorite-star-label">Team Pick</span>
+           </span>`
+        : '';
+
+      return `
+        <div class="link-img">${imgContent}</div>
+        <div class="link-content">
+          <div class="link-name">
+            <span class="link-name-text">${item.name}</span>
+            ${favoriteHtml}
+          </div>
+          <div class="link-desc">${item.desc}</div>
+        </div>
+        ${tagHtml}
+        <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      `;
+    }
+
+    function generateUI() {
+      contentArea.innerHTML = '';
+
+      collectionData.forEach(section => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'section';
+
+        const visibleItems = section.items.slice(0, 3);
+        const hiddenItems = section.items.slice(3);
+        const hasMore = hiddenItems.length > 0;
+
+        let itemsHtml = visibleItems.map(item => {
+          const favClass = item.favorite ? ' is-favorite' : '';
+          return `<a href="${item.url}" class="link-item${favClass}" target="_blank" rel="noopener noreferrer">${createLinkItemInner(item)}</a>`;
+        }).join('');
+
+        if (hasMore) {
+          const hiddenItemsHtml = hiddenItems.map(item =>
+            `<a href="${item.url}" class="link-item hidden-item" style="display: none;" target="_blank" rel="noopener noreferrer">
+              ${createLinkItemInner(item)}
+            </a>`
+          ).join('');
+          itemsHtml += hiddenItemsHtml;
+        }
+
+        const exploreHtml = section.exploreLink
+          ? `<a href="${section.exploreLink.url}" class="section-explore-link" target="_blank" rel="noopener noreferrer">
+               ${section.exploreLink.text}
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+             </a>`
+          : '';
+
+        sectionEl.innerHTML = `
+          <div class="section-header">
+            <div class="section-title">${section.title}</div>
+            <div class="section-count">${section.items.length} resources</div>
+          </div>
+          <div class="links-list">
+            ${itemsHtml}
+            ${hasMore ? `<button class="show-more-btn" onclick="toggleItems(this)">Show ${hiddenItems.length} more</button>` : ''}
+            ${exploreHtml}
+          </div>
+        `;
+
+        contentArea.appendChild(sectionEl);
+      });
+    }
+
+    function toggleItems(btn) {
+      const section = btn.parentElement;
+      const hiddenItems = section.querySelectorAll('.hidden-item');
+      const isVisible = hiddenItems[0] && hiddenItems[0].style.display !== 'none';
+
+      hiddenItems.forEach(item => {
+        item.style.display = isVisible ? 'none' : 'flex';
+      });
+
+      btn.textContent = isVisible
+        ? `Show ${hiddenItems.length} more`
+        : 'Show less';
+    }
+
+    generateUI();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collection — Ebola Man</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #00ff41;
+      --brand-dark: #008f11;
+      --brand-light: #5aff87;
+      --bg: #020804;
+      --surface: rgba(255,255,255,0.04);
+      --text: #f0fff4;
+      --text-soft: rgba(240,255,244,0.75);
+      --text-dim: rgba(240,255,244,0.45);
+      --border: rgba(0, 255, 65, 0.1);
+      --glass-border: rgba(0, 255, 65, 0.15);
+      --accent-red: #ff3b3b;
+      --accent-green: #00ff41;
+      --accent-purple: #bd00ff;
+      --accent-orange: #ff9f43;
+      --accent-cyan: #00e5ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 125%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 100%; }
+      body { padding: 16px; }
+    }
+
+    .bg-container {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: radial-gradient(circle at 50% 0%, #0a2e12 0%, #020804 60%);
+    }
+
+    .glow-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.4;
+      animation: orbPulse 15s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,255,65,0.15), transparent 70%);
+      top: -200px; left: 20%;
+    }
+
+    .glow-orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,229,255,0.1), transparent 70%);
+      bottom: -100px; right: 10%; animation-delay: -5s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    .noise { position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 42.5rem;
+      padding: 2.5rem 1.875rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,20,0,0.02));
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,255,65,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(2, 8, 4, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0, 255, 65, 0.1);
+      color: var(--text);
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+    
+    
+    
+
+    .nav-btn svg { width: 0.875rem; height: 0.875rem; }
+
+    .love-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .love-text {
+      position: absolute;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 5.85rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--brand);
+      opacity: 0.04;
+      transform: rotate(-10deg);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .avatar-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      box-shadow: 0 0 40px rgba(0,255,65,0.3);
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(0,255,65,0.3); }
+      50% { box-shadow: 0 0 50px rgba(0,255,65,0.5); }
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #051a0d;
+      overflow: hidden;
+    }
+
+    .avatar-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: 3px solid #020804;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .avatar-badge svg { width: 12px; height: 12px; color: black; }
+
+    .profile-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff, #90ff90);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-handle {
+      color: var(--brand-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.625rem;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: black;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,255,65,0.3);
+    }
+
+    .social-icon svg { width: 16px; height: 16px; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 1.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-area {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.2s; }
+    .section:nth-child(2) { animation-delay: 0.3s; }
+    .section:nth-child(3) { animation-delay: 0.4s; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 3px;
+      height: 16px;
+      background: var(--brand);
+      border-radius: 2px;
+    }
+
+    .section-count {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: var(--surface);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,255,65,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .link-item:hover {
+      border-color: var(--brand-light);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .link-item:hover::before { opacity: 1; }
+
+    .link-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0a2e12, #051a0d);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .link-img svg {
+      width: 20px;
+      height: 20px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .link-tag.tag-default {
+      background: rgba(0,255,65,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-tag.tag-community {
+  background: rgba(125, 243, 193, 0.8);
+  color: #ffffff;
+}
+
+    .link-tag.tag-about {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-soft);
+    }
+
+    .link-tag.tag-web {
+      background: rgba(189,0,255,0.15);
+      color: var(--accent-purple);
+    }
+
+    .link-tag.tag-network {
+      background: rgba(0,229,255,0.15);
+      color: var(--accent-cyan);
+    }
+
+    .link-tag.tag-prog {
+      background: rgba(255, 230, 0, 0.18);
+      color: #ffe600;
+      border: 1px solid rgba(255, 230, 0, 0.5);
+    }
+
+    .link-tag.tag-framework {
+      background: rgba(255,159,67,0.15);
+      color: var(--accent-orange);
+    }
+
+    .link-tag.tag-platform {
+      background: rgba(46,213,115,0.15);
+      color: var(--accent-green);
+    }
+
+    .link-tag.tag-git {
+      background: rgba(255,255,255,0.15);
+      color: #ffffff;
+    }
+
+    .link-tag.tag-course {
+      background: rgba(255,71,87,0.15);
+      color: var(--accent-red);
+    }
+
+    .link-tag.tag-guide {
+      background: rgba(0,255,65,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-tag.tag-yt {
+      background: rgba(255,0,0,0.15);
+      color: #ff4d4d;
+    }
+
+    .link-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .link-item:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--brand-light);
+    }
+
+    .show-more-btn {
+      width: 100%;
+      padding: 0.625rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed var(--border);
+      border-radius: 0.625rem;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.25rem;
+    }
+
+    .show-more-btn:hover {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-soft);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .video-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .video-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .video-title::before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 16px;
+      background: var(--brand);
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .video-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+
+    .video-subtitle a {
+      color: var(--brand-light);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .video-subtitle a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-placeholder:hover .play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(0,255,65,0.5);
+    }
+
+    .video-placeholder-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px) brightness(0.4);
+      transition: filter 0.3s ease;
+    }
+
+    .play-btn {
+      position: relative;
+      z-index: 2;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 24px rgba(0,255,65,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: black;
+      margin-left: 4px;
+    }
+
+    .video-placeholder-text {
+      position: relative;
+      z-index: 2;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .footer-text a {
+      color: var(--brand-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .main-card { padding: 2rem 1.25rem; border-radius: 1.5rem; }
+      .nav-btn span { display: none; }
+      .nav-btn { padding: 0.5rem; }
+      .avatar-wrapper { width: 80px; height: 80px; }
+      .social-icon { width: 32px; height: 32px; }
+      .link-item { padding: 0.625rem; }
+      .link-img { width: 38px; height: 38px; }
+      .love-text { font-size: 4rem; }
+      .video-title { font-size: 0.9rem; }
+      .video-subtitle { display: none; }
+      .play-btn { width: 56px; height: 56px; }
+      .play-btn svg { width: 24px; height: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+  <div class="noise"></div>
+
+  <div class="main-card">
+    <div class="love-pattern" id="lovePattern"></div>
+
+    <nav class="top-nav">
+      <a href="/creators.html" class="nav-btn" title="Back to Creators">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Go to Hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring">
+          <div class="avatar-img">
+            <img src="/creators/img/ebolamanpic.jpg" alt="Ebola Man">
+          </div>
+        </div>
+        <div class="avatar-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+      </div>
+
+      <h1 class="profile-name">Ebola Man</h1>
+      <span class="profile-handle">@EbolaMan_YT</span>
+
+      <div class="social-links">
+        <a href="https://www.youtube.com/@ebolaman_" class="social-icon" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://github.com/EbolaMan-YT" class="social-icon" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://twitter.com/EbolaMan_YT" class="social-icon" title="Twitter (X)">
+           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content-area" id="contentArea"></div>
+
+    <div class="video-section">
+      <div class="video-header">
+        <span class="video-title">Featured Content</span>
+        <span class="video-subtitle">More from <a href="https://www.youtube.com/@ebolaman_" target="_blank">@EbolaMan_YT</a></span>
+      </div>
+      <div class="video-container">
+        <div class="video-wrapper" id="videoWrapper">
+          <div class="video-placeholder" id="videoPlaceholder">
+            <div class="video-placeholder-bg" style="background-image: url('https://img.youtube.com/vi/42WiPaiCyW8/maxresdefault.jpg');"></div>
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="video-placeholder-text">Click to play video</span>
+          </div>
+          <iframe id="videoIframe" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <p class="footer-text">Curated with care by <a href="https://bookmarks.love" target="_blank">bookmarks.love</a></p>
+    </div>
+  </div>
+
+  <script>
+    const collectionData = [
+      {
+        title: "About",
+        items: [
+          {
+            name: "Skool Profile - @ebola-man-2077",
+            desc: "ebola man's Skool profile",
+            img: "/creators/img/skool.jpg",
+            url: "https://www.skool.com/anonymous2/about",
+            tag: "community",
+            tagClass: "tag-community"
+          },
+          {
+            name: "Skool Community - Anonymous 2.0",
+            desc: "ebola man's private community for ethical hacking and cybersecurity",
+            img: "/creators/img/skool.jpg",
+            url: "https://www.skool.com/anonymous2/about",
+            tag: "community",
+            tagClass: "tag-community"
+          },
+        ]
+      },
+      {
+        title: "Getting Started",
+        items: [
+          {
+            name: "Cybersecurity For Beginners!",
+            desc: "An easy, beginner‑friendly introduction to the core concepts and tools of modern cybersecurity.",
+            img: "/creators/img/ebolamanthumbnail.png",
+            url: "https://www.youtube.com/watch?v=42WiPaiCyW8",
+            tag: "YouTube",
+            tagClass: "tag-yt"
+          },
+          {
+            name: "Batch File 0-Day Exploit…",
+            desc: "A breakdown of a newly discovered batch‑file 0‑day vulnerability and its security implications..",
+            img: "/creators/img/ebolathumbnail2.jpg",
+            url: "https://youtube.com/watch?v=_kc7LSf-dGQ",
+            tag: "YouTube",
+            tagClass: "tag-yt"
+          },
+          {
+            name: "How To Scan IP's!",
+            desc: "A simple overview of safe, legal methods for performing basic IP scanning to understand network structure.",
+            img: "/creators/img/ebolamanthumbnail3.jpg",
+            url: "https://www.youtube.com/watch?v=YDp3Np4suO4",
+            tag: "YouTube",
+            tagClass: "tag-yt"
+          },
+           {
+            name: "Pull IP's with Command Prompt!",
+            desc: "A beginner‑friendly explanation of how to view network‑related IP information using Command Prompt in a safe and legal way..",
+            img: "/creators/img/ebolamanthumbnail4.jpg",
+            url: "https://www.youtube.com/watch?v=VzMLCIwKTQo",
+            tag: "YouTube",
+            tagClass: "tag-yt"
+          }
+        ]
+      },
+      {
+        title: "Essential Tools",
+        items: [
+          { name: "Notion", desc: "Notion is an all‑in‑one workspace that lets you organize notes, tasks, databases, and projects in a flexible, customizable environment.", img: "/creators/img/notion.jpg", url: "https://www.kali.org/", tag: "PROGRAM", tagClass: "tag-prog" },
+          { name: "AutoHotkey", desc: "Security oriented OS for Anonimity.", img: "/creators/img/autohotkey.jpg", url: "https://www.parrotsec.org/", tag: "PROGRAM", tagClass: "tag-prog" },
+          { name: "Process Hacker", desc: "Web application security testing.", img: "/creators/img/processhacker.png", url: "https://portswigger.net/burp", tag: "PROGRAM", tagClass: "tag-prog" },
+        ]
+      },
+      {
+        title: "Useful guides",
+        items: [
+          {
+            name: "SS64 Windows Command Line Reference",
+            desc: "A complete reference for Windows CMD commands, batch scripting, and system utilities.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://ss64.com/nt/",
+            tag: "Guide",
+            tagClass: "tag-prog"
+          },
+          {
+            name: "Microsoft Windows Commands Documentation",
+            desc: "Official Microsoft documentation for CMD commands, batch scripting, and Windows administration.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands",
+            tag: "Documentation",
+            tagClass: "tag-prog"
+          },
+          {
+            name: "PowerShell Scripting Overview",
+            desc: "A beginner-friendly guide to PowerShell scripting, automation, and Windows management.",
+            img: "https://learn.microsoft.com/favicon.ico",
+            url: "https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.4",
+            tag: "Guide",
+            tagClass: "tag-prog"
+          },
+        ]
+      },
+      {
+        title: "Repos Overview",
+        items: [
+          { name: "UAC-Bypass", desc: "3 ways of bypassing admin restrictions/uac.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/UAC-Bypass", tag: "Github", tagClass: "tag-git" },
+          { name: "IPTOOLKIT", desc: "just sum simple network stuff.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/IPTOOLKIT", tag: "Github", tagClass: "tag-git" },
+          { name: "ftp-exploit", desc: "vsftpd 2.3.4 exploit.", img: "https://avatars.githubusercontent.com/u/78039580?v=4", url: "https://github.com/EbolaMan-YT/ftp-exploit", tag: "Github", tagClass: "tag-git" },
+        ]
+      }
+    ];
+
+    // ID de la vidéo YouTube à afficher
+    const featuredVideoId = "42WiPaiCyW8";
+
+    // Génération du motif de fond
+    function generateLovePattern() {
+      const container = document.getElementById('lovePattern');
+      container.innerHTML = '';
+      const positions = [
+        { top: '10%', left: '5%', rotate: -12 },
+        { top: '25%', right: '8%', rotate: 8 },
+        { top: '50%', left: '12%', rotate: -8 },
+        { top: '65%', right: '5%', rotate: 12 },
+        { top: '80%', left: '8%', rotate: -15 },
+        { bottom: '5%', right: '15%', rotate: 6 },
+      ];
+      positions.forEach((pos, i) => {
+        const el = document.createElement('div');
+        el.className = 'love-text';
+        el.textContent = '#BioHazard';
+        Object.keys(pos).forEach(key => {
+          if (key !== 'rotate') el.style[key] = pos[key];
+        });
+        el.style.opacity = 0.02 + (i % 3) * 0.015;
+        el.style.transform = `rotate(${pos.rotate}deg)`;
+        container.appendChild(el);
+      });
+    }
+    generateLovePattern();
+
+    // Fonctionnalité du lecteur vidéo
+    const videoPlaceholder = document.getElementById('videoPlaceholder');
+    const videoIframe = document.getElementById('videoIframe');
+
+    if (videoPlaceholder && videoIframe) {
+      videoPlaceholder.addEventListener('click', function () {
+        videoIframe.src = `https://www.youtube.com/embed/${featuredVideoId}?autoplay=1&rel=0&modestbranding=1`;
+        this.style.display = 'none';
+      });
+    }
+
+    // Génération de l'interface utilisateur
+    const contentArea = document.getElementById('contentArea');
+
+    function createLinkItemInner(item) {
+      const imgContent = item.img
+        ? `<img src="${item.img}" alt="${item.name}" loading="lazy">`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+             <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+             <circle cx="8.5" cy="8.5" r="1.5"/>
+             <path d="M21 15l-5-5L5 21"/>
+           </svg>`;
+
+      const tagClass = item.tagClass || 'tag-default';
+      const tagHtml = item.tag ? `<span class="link-tag ${tagClass}">${item.tag}</span>` : '';
+
+      return `
+        <div class="link-img">${imgContent}</div>
+        <div class="link-content">
+          <div class="link-name">${item.name}</div>
+          <div class="link-desc">${item.desc}</div>
+        </div>
+        ${tagHtml}
+        <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      `;
+    }
+
+    function generateUI() {
+      contentArea.innerHTML = '';
+
+      collectionData.forEach(section => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'section';
+
+        const visibleItems = section.items.slice(0, 3);
+        const hiddenItems = section.items.slice(3);
+        const hasMore = hiddenItems.length > 0;
+
+        let itemsHtml = visibleItems.map(item =>
+          `<a href="${item.url}" class="link-item">${createLinkItemInner(item)}</a>`
+        ).join('');
+
+        if (hasMore) {
+          const hiddenItemsHtml = hiddenItems.map(item =>
+            `<a href="${item.url}" class="link-item hidden-item" style="display: none;">
+              ${createLinkItemInner(item)}
+            </a>`
+          ).join('');
+          itemsHtml += hiddenItemsHtml;
+        }
+
+        sectionEl.innerHTML = `
+          <div class="section-header">
+            <div class="section-title">${section.title}</div>
+            <div class="section-count">${section.items.length} resources</div>
+          </div>
+          <div class="links-list">
+            ${itemsHtml}
+            ${hasMore ? `<button class="show-more-btn" onclick="toggleItems(this)">Show ${hiddenItems.length} more</button>` : ''}
+          </div>
+        `;
+
+        contentArea.appendChild(sectionEl);
+      });
+    }
+
+    function toggleItems(btn) {
+      const section = btn.parentElement;
+      const hiddenItems = section.querySelectorAll('.hidden-item');
+      const isVisible = hiddenItems[0] && hiddenItems[0].style.display !== 'none';
+
+      hiddenItems.forEach(item => {
+        item.style.display = isVisible ? 'none' : 'flex';
+      });
+
+      btn.textContent = isVisible
+        ? `Show ${hiddenItems.length} more`
+        : 'Show less';
+    }
+
+    generateUI();
+  </script>
+</body>
+</html>

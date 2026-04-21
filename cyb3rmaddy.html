@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Principles - CIA Triad and Threats Modeling Basics (2026)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255, 255, 255, 0.06);
+      --surface-2: rgba(255, 255, 255, 0.08);
+      --surface-hover: rgba(255, 255, 255, 0.1);
+      --text: #f7fbff;
+      --text-soft: rgba(247, 251, 255, 0.78);
+      --text-dim: rgba(247, 251, 255, 0.56);
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-glow: rgba(12, 132, 243, 0.2);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.06;
+      z-index: 1;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.08) 0.6px, transparent 0.8px);
+      background-size: 24px 24px, 36px 36px;
+    }
+
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: floatOrb 20s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 60vw;
+      height: 60vw;
+      max-width: 800px;
+      max-height: 800px;
+      background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+      top: -20%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 50vw;
+      height: 50vw;
+      max-width: 600px;
+      max-height: 600px;
+      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -7s;
+      animation-duration: 25s;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(5%, 10%) scale(1.05); }
+      50% { transform: translate(-5%, 5%) scale(0.95); }
+      75% { transform: translate(10%, -5%) scale(1.02); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 8px 20px var(--brand-glow);
+    }
+
+    .logo-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .logo-text span {
+      color: var(--brand-light);
+    }
+
+    .title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--text), var(--brand-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      max-width: 800px;
+      margin: 0 auto 30px;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--brand-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title i {
+      color: var(--brand);
+      font-size: 1.4rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .pillar-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border-top: 3px solid var(--brand);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: var(--brand-light);
+    }
+
+    .pillar-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    .pillar-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .pillar-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .threats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .threats-table th {
+      background: linear-gradient(135deg, var(--brand-dark), var(--brand));
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+    }
+
+    .threats-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-soft);
+    }
+
+    .threats-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .threats-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .tool-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: var(--brand-light);
+    }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .tool-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .tool-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--brand-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .tool-link:hover {
+      color: var(--brand);
+      transform: translateX(3px);
+    }
+
+    .code-block {
+      background: #1a1a2e;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: "Monaco", "Menlo", monospace;
+      font-size: 0.85rem;
+      color: #e0e0e0;
+      overflow-x: auto;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: "$";
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: var(--brand-light);
+      font-weight: bold;
+    }
+
+    .code-block code {
+      display: block;
+      padding-left: 20px;
+    }
+
+    .highlight {
+      color: var(--brand-light);
+      font-weight: bold;
+    }
+
+    .cheat-sheet {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .cheat-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.85rem;
+    }
+
+    .cheat-item .cmd {
+      color: var(--brand-light);
+      font-family: monospace;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .cheat-item .desc {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    .conclusion {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      margin: 40px 0;
+      border: 1px solid var(--border);
+    }
+
+    .conclusion h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--brand-light);
+    }
+
+    .conclusion p {
+      font-size: 1rem;
+      color: var(--text-soft);
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      margin: 10px;
+      box-shadow: 0 8px 20px var(--brand-glow);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px var(--brand-glow);
+    }
+
+    .cta-button i {
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    .footer a {
+      color: var(--brand-light);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 10px;
+      }
+      .title {
+        font-size: 2rem;
+      }
+      .pillars-grid, .tools-grid {
+        grid-template-columns: 1fr;
+      }
+      .threats-table {
+        font-size: 0.8rem;
+      }
+      .threats-table th, .threats-table td {
+        padding: 8px 12px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      .section, .conclusion {
+        background: white;
+        border: 1px solid #eee;
+        box-shadow: none;
+      }
+      .noise, .bg-ambient {
+        display: none;
+      }
+      .code-block {
+        background: #f8f9fa;
+        color: #212529;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="bg-ambient">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-bookmark"></i>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </div>
+      <h1 class="title">Security Principles - 2026</h1>
+      <p class="subtitle">
+        CIA Triad and Threats Modeling Basics – Discover the foundational principles of information security and how to model threats in today’s evolving digital landscape.
+      </p>
+    </header>
+
+    <!-- Section 1: CIA Triad -->
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-shield-alt"></i>
+        The CIA Triad: Core Security Principles (2026)
+      </h2>
+      <p>
+        The <strong>CIA Triad</strong> remains the cornerstone of information security, but its application has evolved to address modern threats like AI-assisted attacks, cloud vulnerabilities, and identity-first security models. Here’s how each principle is applied today:
+      </p>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fas fa-lock"></i></div>
+          <div class="pillar-title">Confidentiality</div>
+          <div class="pillar-desc">
+            Ensures only <strong>authorized users</strong> can access data.
+            <br><br>
+            <strong>2026 Best Practices:</strong>
+            <br>Zero Trust Architecture, AI-driven access control, end-to-end encryption, and adaptive permissions.
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fas fa-fingerprint"></i></div>
+          <div class="pillar-title">Integrity</div>
+          <div class="pillar-desc">
+            Guarantees data is <strong>accurate and unaltered</strong>.
+            <br><br>
+            <strong>2026 Best Practices:</strong>
+            <br>Immutable ledgers, blockchain-based hashing, real-time integrity monitoring, and AI anomaly detection.
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fas fa-globe"></i></div>
+          <div class="pillar-title">Availability</div>
+          <div class="pillar-desc">
+            Ensures systems are <strong>accessible when needed</strong>.
+            <br><br>
+            <strong>2026 Best Practices:</strong>
+            <br>Multi-cloud redundancy, AI-driven load balancing, and automated disaster recovery.
+          </div>
+        </div>
+      </div>
+      <div class="section-note">
+        <p>
+          <strong>Note:</strong> In 2026, the CIA Triad is no longer static. It’s integrated with AI, Zero Trust, and identity-first models to create adaptive, predictive defenses. Organizations must continuously assess and balance these principles to address evolving threats like AI phishing, insider risks, and cloud misconfigurations:refs[2-5,6].
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: Threats Modeling -->
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-exclamation-triangle"></i>
+        Threats Modeling: Modern Approaches (2026)
+      </h2>
+      <p>
+        Threat modeling is now a dynamic, iterative process that integrates with DevSecOps and AI. The goal is to identify, assess, and mitigate risks before they materialize. Here’s how it’s done today:
+      </p>
+      <table class="threats-table">
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>2026 Focus</th>
+            <th>Tools/Methods</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Identify Assets</strong></td>
+            <td>Map all digital assets, including cloud, IoT, and AI models.</td>
+            <td>Automated asset discovery, cloud security posture management (CSPM).</td>
+          </tr>
+          <tr>
+            <td><strong>2. Identify Threats</strong></td>
+            <td>Use AI to predict and simulate attack paths.</td>
+            <td>Threat intelligence platforms, AI-driven attack surface management.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Identify Vulnerabilities</strong></td>
+            <td>Continuous scanning for misconfigurations and zero-days.</td>
+            <td>Vulnerability scanners, static/dynamic application security testing (SAST/DAST).</td>
+          </tr>
+          <tr>
+            <td><strong>4. Assess Risks</strong></td>
+            <td>Quantify risk in real-time using AI and threat feeds.</td>
+            <td>Risk quantification platforms, AI risk scoring.</td>
+          </tr>
+          <tr>
+            <td><strong>5. Mitigate Risks</strong></td>
+            <td>Automate responses and enforce least-privilege access.</td>
+            <td>Security orchestration (SOAR), Zero Trust policy engines.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="section-note">
+        <p>
+          <strong>Key Framework:</strong>
+          <a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" style="color: var(--brand-light);">STRIDE</a> (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege) remains a gold standard, now enhanced by AI for deeper threat analysis:refs[4-2].
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 3: Practical Examples -->
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-laptop-code"></i>
+        Practical Examples (2026)
+      </h2>
+      <p>
+        Let’s apply the CIA Triad and modern threat modeling to a real-world scenario:
+      </p>
+      <div class="code-block">
+        <code>
+# Scenario: Cloud-Native SaaS Platform (2026)<br><br>
+
+<span class="highlight">Confidentiality:</span><br>
+- Zero Trust Network Access (ZTNA) for all users.<br>
+- AI-driven behavioral analytics for anomaly detection.<br>
+- End-to-end encryption with quantum-resistant algorithms.<br><br>
+
+<span class="highlight">Integrity:</span><br>
+- Immutable logs stored in blockchain.<br>
+- AI-powered integrity monitoring for data and code.<br>
+- Digital signatures for all critical transactions.<br><br>
+
+<span class="highlight">Availability:</span><br>
+- Multi-cloud deployment with AI-driven failover.<br>
+- Automated DDoS mitigation using AI threat detection.<br>
+- Continuous backup with instant recovery points.<br><br>
+
+<span class="highlight">Threat Modeling:</span><br>
+1. Asset: User identity and access management (IAM) system.<br>
+2. Threat: AI-assisted credential stuffing attack.<br>
+3. Vulnerability: Weak or reused passwords, lack of MFA.<br>
+4. Risk: High (account takeover, data breach).<br>
+5. Mitigation: Enforce phishing-resistant MFA, AI-driven password policy, continuous authentication.
+        </code>
+      </div>
+      <div class="cheat-sheet">
+        <div class="cheat-item">
+          <div class="cmd">STRIDE + AI</div>
+          <div class="desc">Microsoft’s framework, now enhanced with AI to predict and simulate advanced threats.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cmd">DREAD 2.0</div>
+          <div class="desc">Updated risk assessment: Damage, Reproducibility, Exploitability, Affected Users, Discoverability – with AI scoring.</div>
+        </div>
+        <div class="cheat-item">
+          <div class="cmd">Zero Trust + CIA</div>
+          <div class="desc">Zero Trust Architecture (ZTA) enforces CIA principles at every access point, using AI for adaptive policies.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Tools & Resources -->
+    <section class="section">
+      <h2 class="section-title">
+        <i class="fas fa-toolbox"></i>
+        Modern Security Toolkit (2026)
+      </h2>
+      <p>
+        These tools and frameworks are essential for implementing the CIA Triad and threat modeling in 2026:
+      </p>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-network-wired"></i></div>
+          <div class="tool-title">Microsoft Threat Modeling Tool</div>
+          <div class="tool-desc">
+            AI-enhanced threat modeling for developers and security teams, supporting STRIDE and DREAD.
+          </div>
+          <a href="https://aka.ms/threatmodelingtool" class="tool-link" target="_blank" rel="noopener">
+            Visit <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-key"></i></div>
+          <div class="tool-title">OWASP Cornucopia</div>
+          <div class="tool-desc">
+            Card game for threat modeling, updated for cloud and AI risks, aligned with the CIA Triad.
+          </div>
+          <a href="https://owasp.org/www-project-cornucopia" class="tool-link" target="_blank" rel="noopener">
+            Visit <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-shopping-cart"></i></div>
+          <div class="tool-title">MITRE ATT&CK</div>
+          <div class="tool-desc">
+            Knowledge base of adversary tactics and techniques, mapped to CIA Triad impacts.
+          </div>
+          <a href="https://attack.mitre.org" class="tool-link" target="_blank" rel="noopener">
+            Visit <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-utensils"></i></div>
+          <div class="tool-title">OpenCRE</div>
+          <div class="tool-desc">
+            OWASP’s Common Risk Enumeration, standardizing risk assessment for modern threats.
+          </div>
+          <a href="https://owasp.org/www-project-open-cre" class="tool-link" target="_blank" rel="noopener">
+            Visit <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="tool-title">NIST Cybersecurity Framework 2.0</div>
+          <div class="tool-desc">
+            Updated framework integrating CIA Triad, Zero Trust, and AI risk management.
+          </div>
+          <a href="https://www.nist.gov/cyberframework" class="tool-link" target="_blank" rel="noopener">
+            Visit <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon"><i class="fas fa-book"></i></div>
+          <div class="tool-title">ISO/IEC 27001:2026</div>
+          <div class="tool-desc">
+            Latest revision of the international standard for information security management, with new controls for AI and cloud.
+          </div>
+          <a href="https://www.iso.org/standard/27001" class="tool-link" target="_blank" rel="noopener">
+            View <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <div class="conclusion">
+      <h2>Next Steps in Security (2026)</h2>
+      <p>
+        You now understand the modern application of the CIA Triad and threat modeling. Here’s how to deepen your knowledge and stay ahead:
+      </p>
+      <ul style="text-align: left; max-width: 600px; margin: 0 auto 20px; font-size: 0.95rem;">
+        <li><strong>Practice:</strong> Use AI-enhanced threat modeling tools like Microsoft Threat Modeling Tool or OWASP Cornucopia.</li>
+        <li><strong>Read:</strong> Follow NIST, OWASP, and MITRE for the latest guidance on CIA Triad and threat modeling.</li>
+        <li><strong>Community:</strong> Join security forums, attend conferences like Black Hat or DEF CON, and participate in capture-the-flag (CTF) events.</li>
+        <li><strong>Certifications:</strong> Pursue certifications like CISSP, CCSP, or CISM to validate your expertise in modern security principles.</li>
+      </ul>
+      <p>
+        Security in 2026 is about <strong>adaptability, prediction, and resilience</strong>.
+        <strong>Stay curious, test continuously, and always question assumptions!</strong>
+      </p>
+      <div style="margin-top: 30px;">
+        <a href="resources.html" class="cta-button">
+          <i class="fas fa-book"></i>
+          Recommended Reading
+        </a>
+        <a href="labs.html" class="cta-button">
+          <i class="fas fa-flask"></i>
+          Hands-on Labs
+        </a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>
+        Created by <a href="index.html">Bookmarks</a> –
+        Last updated: March 2026 –
+        <a href="https://github.com/bookmarks-cih" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i> Contribute
+        </a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

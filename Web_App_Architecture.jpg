@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Collection — Cyber Maddy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --bg: #050a12;
+      --surface: rgba(255,255,255,0.04);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.75);
+      --text-dim: rgba(247,251,255,0.45);
+      --border: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --accent-red: #ff4757;
+      --accent-green: #2ed573;
+      --accent-purple: #a855f7;
+      --accent-orange: #ff9f43;
+      --accent-cyan: #00d4aa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { 
+      scroll-behavior: smooth; 
+      font-size: 125%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 100%; }
+      body { padding: 16px; }
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    .bg-container {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: radial-gradient(circle at 50% 0%, #0c1a2e 0%, #050a12 60%);
+    }
+
+    .glow-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.4;
+      animation: orbPulse 15s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(12,132,243,0.3), transparent 70%);
+      top: -200px; left: 20%;
+    }
+
+    .glow-orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(83,181,255,0.2), transparent 70%);
+      bottom: -100px; right: 10%; animation-delay: -5s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    .noise { position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+
+    /* ===== MAIN CARD CONTAINER ===== */
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 42.5rem;
+      padding: 2.5rem 1.875rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    /* ===== NAVIGATION BUTTONS ===== */
+    .top-nav {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(5, 10, 18, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn svg { width: 0.875rem; height: 0.875rem; }
+
+    /* ===== LOVE PATTERN WATERMARK ===== */
+    .love-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .love-text {
+      position: absolute;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 5.85rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+      opacity: 0.04;
+      transform: rotate(-10deg);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* ===== PROFILE SECTION ===== */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .avatar-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      box-shadow: 0 0 40px rgba(12,132,243,0.4);
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(12,132,243,0.4); }
+      50% { box-shadow: 0 0 50px rgba(12,132,243,0.6); }
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #0f1c2e;
+      overflow: hidden;
+    }
+
+    .avatar-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: 3px solid #0d111a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .avatar-badge svg { width: 12px; height: 12px; color: white; }
+
+    .profile-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff, #b8d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-handle {
+      color: var(--brand-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.625rem;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(12,132,243,0.3);
+    }
+
+    .social-icon svg { width: 16px; height: 16px; }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 1.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .content-area {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.2s; }
+    .section:nth-child(2) { animation-delay: 0.3s; }
+    .section:nth-child(3) { animation-delay: 0.4s; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 3px;
+      height: 16px;
+      background: var(--brand);
+      border-radius: 2px;
+    }
+
+    .section-count {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: var(--surface);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* ===== LINK ITEMS ===== */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12,132,243,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .link-item:hover {
+      border-color: rgba(83,181,255,0.3);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .link-item:hover::before { opacity: 1; }
+
+    .link-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1a2744, #0d1a2d);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .link-img svg {
+      width: 20px;
+      height: 20px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .link-tag.tag-default {
+      background: rgba(12,132,243,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-tag.tag-web {
+      background: rgba(168,85,247,0.15);
+      color: var(--accent-purple);
+    }
+
+    .link-tag.tag-network {
+      background: rgba(0,212,170,0.15);
+      color: var(--accent-cyan);
+    }
+
+    .link-tag.tag-framework {
+      background: rgba(255,159,67,0.15);
+      color: var(--accent-orange);
+    }
+
+    .link-tag.tag-platform {
+      background: rgba(46,213,115,0.15);
+      color: var(--accent-green);
+    }
+
+    .link-tag.tag-course {
+      background: rgba(255,71,87,0.15);
+      color: var(--accent-red);
+    }
+
+    .link-tag.tag-guide {
+      background: rgba(12,132,243,0.15);
+      color: var(--brand-light);
+    }
+
+    .link-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .link-item:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--brand-light);
+    }
+
+    /* ===== SHOW MORE BUTTON ===== */
+    .show-more-btn {
+      width: 100%;
+      padding: 0.625rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed var(--border);
+      border-radius: 0.625rem;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.25rem;
+    }
+
+    .show-more-btn:hover {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-soft);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .video-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .video-title::before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 16px;
+      background: var(--accent-red);
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .video-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+
+    .video-subtitle a {
+      color: var(--brand-light);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .video-subtitle a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(12,132,243,0.05), rgba(0,0,0,0.4));
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-placeholder:hover {
+      background: linear-gradient(135deg, rgba(12,132,243,0.1), rgba(0,0,0,0.5));
+    }
+
+    .video-placeholder:hover .play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(255,0,0,0.4);
+    }
+
+    .play-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 24px rgba(255,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    .video-placeholder-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* ===== FOOTER ===== */
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .footer-text a {
+      color: var(--brand-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 480px) {
+      .main-card { padding: 2rem 1.25rem; border-radius: 1.5rem; }
+      .nav-btn span { display: none; }
+      .nav-btn { padding: 0.5rem; }
+      .avatar-wrapper { width: 80px; height: 80px; }
+      .social-icon { width: 32px; height: 32px; }
+      .link-item { padding: 0.625rem; }
+      .link-img { width: 38px; height: 38px; }
+      .love-text { font-size: 4rem; }
+      .video-title { font-size: 0.9rem; }
+      .video-subtitle { display: none; }
+      .play-btn { width: 56px; height: 56px; }
+      .play-btn svg { width: 24px; height: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+  <div class="noise"></div>
+
+  <!-- MAIN CARD -->
+  <div class="main-card">
+    
+    <!-- Love Pattern Background -->
+    <div class="love-pattern" id="lovePattern"></div>
+
+    <!-- Navigation Buttons -->
+    <nav class="top-nav">
+      <a href="/creators.html" class="nav-btn" title="Back to Creators">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Go to Hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring">
+          <div class="avatar-img">
+            <img src="/creators/img/channels4_profile.jpg" alt="Cyber Maddy">
+          </div>
+        </div>
+        <div class="avatar-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        </div>
+      </div>
+
+      <h1 class="profile-name">Cyber Maddy</h1>
+      <span class="profile-handle">@cyb3rmaddy</span>
+
+      <div class="social-links">
+        <a href="https://x.com/Cyb3rMaddy" class="social-icon" title="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Cyb3rMaddy" class="social-icon" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://github.com/Cyb3rMaddy" class="social-icon" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Content Area -->
+    <div class="content-area" id="contentArea"></div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <div class="video-header">
+        <span class="video-title">Featured Content</span>
+        <span class="video-subtitle">More from <a href="https://www.youtube.com/@Cyb3rMaddy" target="_blank">@cyb3rmaddy</a></span>
+      </div>
+      <div class="video-container">
+        <div class="video-wrapper" id="videoWrapper">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/3OV6D1BMHow" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+          
+          <!-- Placeholder until video is added -->
+          <div class="video-placeholder" onclick="this.style.display='none'">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="video-placeholder-text">Click to play featured video</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <p class="footer-text">Curated with care by <a href="https://bookmarks.love" target="_blank">bookmarks.love</a></p>
+    </div>
+
+  </div>
+
+  <script>
+    /* ============================================================
+       DATA - All items now have tags with color-coded categories
+    ============================================================ */
+    const collectionData = [
+      
+      
+      {
+    title: "About",
+    items: [
+      
+      {
+        name: "HiveMind Security",
+        desc: "Founder of HiveMind Security",
+        img: "/creators/img/hiveminds.png",
+        url: "https://www.hivemindsecurity.org/",
+        tag: "About",
+        tagClass: "tag-about"
+      },
+      
+      {
+        name: "Hivemind Media",
+        desc: "Co‑Founder – HiveMind Media",
+        img: "/creators/img/hivemindmedia.png",
+        url: "https://www.hivemindsmedia.io/",
+        tag: "About",
+        tagClass: "tag-about"
+      },
+      
+      {
+        name: "LinkTree",
+        desc: "Join Cyb3rMaddy on Linktree today",
+        img: "/creators/img/linktree.png",
+        url: "https://linktr.ee/Cyb3rMaddy",
+        tag: "About",
+        tagClass: "tag-about"
+      },
+      
+      ]
+      },
+      
+      
+      
+      
+      {
+        title: "Getting Started",
+        items: [
+          { name: "Intro to Security", desc: "Foundational concepts for beginners.", img: "/creators/img/introduction-to-cybersecurity.jpg", url: "https://bookmarks.love/creators/bookmarks-pages/introductiontosec", tag: "Course", tagClass: "tag-course" },
+          { name: "Linux Basics", desc: "Command line essentials for hackers.", img: "/creators/img/Linux-Basic-course-image.jpg", url: "/creators/bookmarks-pages/linuxbasics.html", tag: "Guide", tagClass: "tag-guide" },
+          { name: "Networking 101", desc: "TCP/IP and OSI model explained.", img: "/creators/img/networking101.png", url: "https://bookmarks.love/creators/bookmarks-pages/network101", tag: "Course", tagClass: "tag-course" },
+          { name: "Web Architecture", desc: "How the internet works under the hood.", img: "/creators/img/Web_App_Architecture.jpg", url: "https://bookmarks.love/creators/bookmarks-pages/webarchitecture", tag: "Guide", tagClass: "tag-guide" },
+          { name: "Security Principles", desc: "CIA triad and threat modeling basics.", img: "/creators/img/securityprinciples.jpg", url: "https://bookmarks.love/creators/bookmarks-pages/securityprinciples", tag: "Course", tagClass: "tag-course" },
+        ]
+      },
+      {
+        title: "Essential Tools",
+        items: [
+          { name: "Burp Suite", desc: "Industry standard web testing.", img: "/links/BurpSuite.png", url: "https://bookmarks.love/links/burpsuite", tag: "Web", tagClass: "tag-web" },
+          { name: "Nmap", desc: "Network discovery and scanning.", img: "/links/nmap.png", url: "https://bookmarks.love/links/nmap", tag: "Network", tagClass: "tag-network" },
+          { name: "Metasploit", desc: "Penetration testing framework.", img: "/links/metasploit.jpg", url: "https://bookmarks.love/links/metasploit", tag: "Framework", tagClass: "tag-framework" },
+          { name: "Wireshark", desc: "Network protocol analyzer.", img: "/links/wireshark.png", url: "https://bookmarks.love/links/wireshark", tag: "Network", tagClass: "tag-network" },
+          { name: "VS Code", desc: "Code editor for scripting.", img: "/links/vscode.png", url: "https://bookmarks.love/links/vscode", tag: "Tool", tagClass: "tag-default" },
+          { name: "Nuclei", desc: "Fast vulnerability scanner.", img: "/links/nuclei.png", url: "https://bookmarks.love/links/nuclei", tag: "Web", tagClass: "tag-web" },
+        ]
+      },
+      {
+        title: "Practice Labs",
+        items: [
+          { name: "TryHackMe", desc: "Gamified learning platform.", img: "/creators/img/tryhackme.png", url: "https://bookmarks.love/creators/bookmarks-pages/tryhackme", tag: "Platform", tagClass: "tag-platform" },
+          { name: "Hack The Box", desc: "Real world challenges.", img: "/creators/img/Hack-The-Box-logo.png", url: "https://bookmarks.love/creators/bookmarks-pages/hackthebox", tag: "Platform", tagClass: "tag-platform" },
+          { name: "PortSwigger", desc: "Web security academy.", img: "/creators/img/portswigger.png", url: "https://bookmarks.love/creators/bookmarks-pages/portswigger", tag: "Web", tagClass: "tag-web" },
+          { name: "PentesterLab", desc: "Hands-on exercises.", img: "/creators/img/pentesterlab.png", url: "https://bookmarks.love/creators/bookmarks-pages/pentesterlab", tag: "Platform", tagClass: "tag-platform" },
+          { name: "OverTheWire", desc: "Wargames for Linux skills.", img: "/creators/img/overthewire0pp.png", url: "https://bookmarks.love/creators/bookmarks-pages/overthewire", tag: "Platform", tagClass: "tag-platform" },
+        ]
+      }
+    ];
+
+    // --- 1. GENERATE LOVE PATTERN ---
+    function generateLovePattern() {
+      const container = document.getElementById('lovePattern');
+      container.innerHTML = '';
+      
+      const positions = [
+        { top: '10%', left: '5%', rotate: -12 },
+        { top: '25%', right: '8%', rotate: 8 },
+        { top: '50%', left: '12%', rotate: -8 },
+        { top: '65%', right: '5%', rotate: 12 },
+        { top: '80%', left: '8%', rotate: -15 },
+        { bottom: '5%', right: '15%', rotate: 6 },
+      ];
+
+      positions.forEach((pos, i) => {
+        const el = document.createElement('div');
+        el.className = 'love-text';
+        el.textContent = '#love';
+        
+        Object.keys(pos).forEach(key => {
+          if (key !== 'rotate') {
+            el.style[key] = pos[key];
+          }
+        });
+        
+        el.style.opacity = 0.02 + (i % 3) * 0.015;
+        el.style.transform = `rotate(${pos.rotate}deg)`;
+        container.appendChild(el);
+      });
+    }
+
+    generateLovePattern();
+
+    // --- 2. GENERATE UI ---
+    const contentArea = document.getElementById('contentArea');
+
+    function generateUI() {
+      contentArea.innerHTML = '';
+
+      collectionData.forEach(section => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'section';
+
+        const visibleItems = section.items.slice(0, 3);
+        const hiddenItems = section.items.slice(3);
+        const hasMore = hiddenItems.length > 0;
+
+        let itemsHtml = visibleItems.map(item => createLinkItem(item)).join('');
+        
+        if (hasMore) {
+          const hiddenItemsHtml = hiddenItems.map(item => 
+            `<a href="${item.url}" class="link-item hidden-item" style="display: none;">
+              ${createLinkItemInner(item)}
+            </a>`
+          ).join('');
+          
+          itemsHtml += hiddenItemsHtml;
+        }
+
+        sectionEl.innerHTML = `
+          <div class="section-header">
+            <div class="section-title">${section.title}</div>
+            <div class="section-count">${section.items.length} resources</div>
+          </div>
+          <div class="links-list">
+            ${itemsHtml}
+            ${hasMore ? `<button class="show-more-btn" onclick="toggleItems(this)">Show ${hiddenItems.length} more</button>` : ''}
+          </div>
+        `;
+
+        contentArea.appendChild(sectionEl);
+      });
+    }
+
+    function createLinkItemInner(item) {
+      const imgContent = item.img 
+        ? `<img src="${item.img}" alt="${item.name}">` 
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+             <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+             <circle cx="8.5" cy="8.5" r="1.5"/>
+             <path d="M21 15l-5-5L5 21"/>
+           </svg>`;
+
+      // Now all items have tags, so always show them
+      const tagClass = item.tagClass || 'tag-default';
+      const tagHtml = item.tag ? `<span class="link-tag ${tagClass}">${item.tag}</span>` : '';
+
+      return `
+        <div class="link-img">${imgContent}</div>
+        <div class="link-content">
+          <div class="link-name">${item.name}</div>
+          <div class="link-desc">${item.desc}</div>
+        </div>
+        ${tagHtml}
+        <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      `;
+    }
+
+    function createLinkItem(item) {
+      return `
+        <a href="${item.url}" class="link-item">
+          ${createLinkItemInner(item)}
+        </a>
+      `;
+    }
+
+    function toggleItems(btn) {
+      const section = btn.parentElement;
+      const hiddenItems = section.querySelectorAll('.hidden-item');
+      const isVisible = hiddenItems[0].style.display !== 'none';
+      
+      hiddenItems.forEach(item => {
+        item.style.display = isVisible ? 'none' : 'flex';
+      });
+      
+      btn.textContent = isVisible 
+        ? `Show ${hiddenItems.length} more` 
+        : 'Show less';
+    }
+
+    generateUI();
+  </script>
+</body>
+</html>
