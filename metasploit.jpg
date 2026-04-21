@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Burp Suite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #ff6b35;
+      --brand-dark: #e55a2b;
+      --brand-light: #ff8c5a;
+      --accent: #ff6b35;
+      --bg: #0a0d14;
+      --surface: rgba(255,255,255,0.04);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.75);
+      --text-dim: rgba(247,251,255,0.45);
+      --border: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { 
+      scroll-behavior: smooth; 
+      font-size: 125%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 100%; }
+      body { padding: 16px; }
+    }
+
+    .bg-container {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, #1a0f0a 0%, #0a0d14 70%);
+    }
+
+    .glow-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.5;
+      animation: orbPulse 12s ease-in-out infinite;
+    }
+
+    .glow-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,107,53,0.25), transparent 70%);
+      top: -150px; right: 10%;
+    }
+
+    .glow-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,140,90,0.15), transparent 70%);
+      bottom: -100px; left: 5%; animation-delay: -4s;
+    }
+
+    .glow-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,107,53,0.2), transparent 70%);
+      top: 40%; left: 60%; animation-delay: -8s;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.15); }
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image: 
+        linear-gradient(rgba(255,107,53,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,107,53,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    }
+
+    .noise { 
+      position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: 0.025; 
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); 
+    }
+
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 52rem;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(160deg, rgba(255,107,53,0.06), rgba(10,13,20,0.9), rgba(10,13,20,0.95));
+      border: 1px solid rgba(255,107,53,0.15);
+      border-radius: 2rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 
+        0 25px 80px rgba(0,0,0,0.5),
+        0 0 120px rgba(255,107,53,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(10, 13, 20, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--brand-light);
+      border-color: rgba(255,107,53,0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn svg { width: 0.875rem; height: 0.875rem; }
+
+    .tool-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .pattern-text {
+      position: absolute;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 6rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--brand);
+      opacity: 0.025;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      background: rgba(255,107,53,0.1);
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--brand-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .tool-badge svg { width: 12px; height: 12px; }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 1.25rem;
+    }
+
+    .avatar-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 1.25rem;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      box-shadow: 0 0 50px rgba(255,107,53,0.35);
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(255,107,53,0.3); }
+      50% { box-shadow: 0 0 60px rgba(255,107,53,0.5); }
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #1a1410, #0d0f14);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .status-badge {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--success);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .profile-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff, #ffd0b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.375rem;
+    }
+
+    .profile-subtitle {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      max-width: 380px;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .tag-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-primary {
+      background: rgba(255,107,53,0.12);
+      color: var(--brand-light);
+      border: 1px solid rgba(255,107,53,0.2);
+    }
+
+    .tag-secondary {
+      background: rgba(59,130,246,0.12);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,107,53,0.2), transparent);
+      margin: 1.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-area {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.15s; }
+    .section:nth-child(2) { animation-delay: 0.25s; }
+    .section:nth-child(3) { animation-delay: 0.35s; }
+    .section:nth-child(4) { animation-delay: 0.45s; }
+    .section:nth-child(5) { animation-delay: 0.55s; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 3px;
+      height: 18px;
+      background: linear-gradient(180deg, var(--brand-light), var(--brand-dark));
+      border-radius: 2px;
+    }
+
+    .section-count {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: var(--surface);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    /* ===== FEATURE GRID ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .feature-card {
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.875rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255,107,53,0.2);
+      background: rgba(255,107,53,0.04);
+      transform: translateY(-2px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .feature-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .feature-tag {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Tag colors */
+    .tag-proxy { background: rgba(16,185,129,0.15); color: #34d399; }
+    .tag-scanner { background: rgba(239,68,68,0.15); color: #f87171; }
+    .tag-intruder { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .tag-repeater { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .tag-tool { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .tag-setup { background: rgba(20,184,166,0.15); color: #2dd4bf; }
+    .tag-attack { background: rgba(239,68,68,0.15); color: #f87171; }
+    .tag-recon { background: rgba(99,102,241,0.15); color: #818cf8; }
+
+    /* ===== DOCS SECTIONS (No Cards) ===== */
+    .docs-section {
+      padding: 0 0.25rem;
+    }
+
+    .docs-intro {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed rgba(255,255,255,0.06);
+    }
+
+    .step-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      flex: 1;
+      padding-top: 3px;
+    }
+
+    .step-text strong {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .step-text p {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .step-text code {
+      padding: 0.15rem 0.4rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.7rem;
+      color: var(--brand-light);
+    }
+
+    /* Use case list - clean */
+    .usecase-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      align-items: flex-start;
+    }
+
+    .usecase-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .usecase-marker {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .marker-attack { background: #f87171; }
+    .marker-recon { background: #818cf8; }
+
+    .usecase-content {
+      flex: 1;
+    }
+
+    .usecase-content strong {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+
+    .usecase-label {
+      display: inline-block;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .usecase-content p {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin: 0.3rem 0 0 0;
+    }
+
+    /* ===== SHORTCUT GRID ===== */
+    .shortcut-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.85rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      transition: all 0.25s ease;
+    }
+
+    .shortcut-item:hover {
+      background: rgba(255,107,53,0.05);
+      border-color: rgba(255,107,53,0.15);
+    }
+
+    .shortcut-action {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .shortcut-keys {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .key {
+      padding: 0.2rem 0.45rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+    }
+
+    /* ===== LINKS LIST ===== */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,107,53,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .link-item:hover {
+      border-color: rgba(255,107,53,0.25);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .link-item:hover::before { opacity: 1; }
+
+    .link-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1a1410, #0d0f14);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .link-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+
+    .link-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .link-tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      background: rgba(255,107,53,0.12);
+      color: var(--brand-light);
+    }
+
+    .link-arrow {
+      width: 16px;
+      height: 16px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .link-item:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--brand-light);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .main-card { padding: 2rem 1.25rem; border-radius: 1.5rem; }
+      .nav-btn span { display: none; }
+      .nav-btn { padding: 0.5rem; }
+      .avatar-wrapper { width: 90px; height: 90px; }
+      .profile-name { font-size: 1.6rem; }
+      .shortcut-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .pattern-text { font-size: 4rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-container">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <div class="noise"></div>
+
+  <div class="main-card">
+    
+    <div class="tool-pattern" id="toolPattern"></div>
+
+    <nav class="top-nav">
+      <a href="/creators.html" class="nav-btn" title="Back to Tools">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Go to Hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <div class="profile-section">
+      <div class="tool-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Security Tool
+      </div>
+      
+      <div class="avatar-wrapper">
+        <div class="avatar-ring">
+          <div class="avatar-img">
+            <img src="/links/BurpSuite.png" alt="Burp Suite">
+          </div>
+        </div>
+      </div>
+
+      <h1 class="profile-name">Burp Suite</h1>
+      <p class="profile-subtitle">The Swiss Army Knife for web application security testing. Intercept, analyze, and exploit HTTP traffic like a pro.</p>
+
+      <div class="tag-row">
+        <span class="tag tag-primary">Web Pentest</span>
+        <span class="tag tag-secondary">PortSwigger</span>
+        <span class="tag tag-primary">Proxy</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content-area" id="contentArea"></div>
+
+  </div>
+
+  <script>
+    const collectionData = [
+      {
+        title: "Core Features",
+        type: "features",
+        items: [
+          { name: "Proxy", desc: "Intercept and modify HTTP(S) traffic between your browser and the target server in real-time. The heart of Burp's workflow.", tag: "proxy", icon: "↔️" },
+          { name: "Scanner", desc: "Automated vulnerability scanner with intelligent crawling and audit capabilities. Finds SQLi, XSS, and more.", tag: "scanner", icon: "🔍" },
+          { name: "Intruder", desc: "Powerful fuzzer for brute force attacks, parameter discovery, and injection testing with custom payloads.", tag: "intruder", icon: "⚔️" },
+          { name: "Repeater", desc: "Craft, modify, and resend individual HTTP requests manually with full control over headers and body.", tag: "repeater", icon: "🔄" },
+          { name: "Decoder", desc: "Encode and decode data in URL, Base64, HTML, Hex, and many more formats. Essential for payload crafting.", tag: "tool", icon: "🔐" },
+          { name: "Comparer", desc: "Compare two pieces of data (requests, responses) to quickly spot differences visually.", tag: "tool", icon: "⚖️" },
+          { name: "Sequencer", desc: "Analyze the randomness quality of session tokens to assess predictability vulnerabilities.", tag: "tool", icon: "📊" },
+          { name: "Extensions", desc: "BApp Store with 100+ community plugins. Add custom features, integrations, and workflows.", tag: "tool", icon: "🧩" },
+        ]
+      },
+      {
+        title: "Quick Start Guide",
+        type: "docs",
+        intro: "Get up and running in minutes. Follow these essential steps to start intercepting and testing web traffic.",
+        items: [
+          { title: "Configure Browser Proxy", desc: "Set your browser proxy to <code>127.0.0.1:8080</code>. Install Burp's CA certificate to intercept HTTPS traffic." },
+          { title: "Enable Interception", desc: "Go to Proxy tab and toggle \"Intercept is on\". Requests will pause before reaching the server." },
+          { title: "Send to Other Tools", desc: "Right-click any request in Proxy history. Send to Repeater (<code>Ctrl+R</code>) or Intruder (<code>Ctrl+I</code>)." },
+          { title: "Define Target Scope", desc: "In Target → Site map, right-click your target and \"Add to scope\". This prevents accidental scanning of unintended hosts." },
+        ]
+      },
+      {
+        title: "Common Use Cases",
+        type: "usecases",
+        intro: "Practical workflows for real-world security testing scenarios.",
+        items: [
+          { title: "SQL Injection Testing", desc: "Intercept login or search request → Send to Intruder → Mark parameters → Load SQL payloads → Analyze responses for DB errors or time delays.", tag: "attack" },
+          { title: "XSS Vulnerability Hunt", desc: "Use Repeater to test reflected input. Try different contexts (attribute, script, URL). Check encoding and filter bypasses.", tag: "attack" },
+          { title: "Authentication Bypass", desc: "Capture login request → Send to Intruder → Cluster bomb mode → Load username/password lists → Monitor for status/length changes.", tag: "attack" },
+          { title: "API Endpoint Discovery", desc: "Browse the app with Proxy enabled → Check Target → Site map for hidden endpoints, parameters, and interesting paths.", tag: "recon" },
+          { title: "Session Token Analysis", desc: "Capture a session token → Sequencer → Start live capture → Assess entropy, character distribution, and predictability.", tag: "recon" },
+          { title: "IDOR / Access Control", desc: "Modify ID parameters in Repeater. Test if you can access other users' data by changing numeric or GUID identifiers.", tag: "attack" },
+        ]
+      },
+      {
+        title: "Keyboard Shortcuts",
+        type: "shortcuts",
+        items: [
+          { action: "Send to Repeater", keys: ["Ctrl", "R"] },
+          { action: "Send to Intruder", keys: ["Ctrl", "I"] },
+          { action: "Send to Scanner", keys: ["Ctrl", "Shift", "S"] },
+          { action: "Forward Request", keys: ["Ctrl", "F"] },
+          { action: "Toggle Intercept", keys: ["Ctrl", "T"] },
+          { action: "Search History", keys: ["Ctrl", "Shift", "F"] },
+          { action: "Send to Decoder", keys: ["Ctrl", "D"] },
+          { action: "Send to Comparer", keys: ["Ctrl", "="] },
+        ]
+      },
+      {
+        title: "Official Resources",
+        type: "links",
+        items: [
+          { name: "PortSwigger Website", desc: "Download Burp Suite (Community, Professional, Enterprise)", url: "https://portswigger.net/burp" },
+          { name: "Web Security Academy", desc: "Free hands-on labs — the best way to learn web exploitation", url: "https://portswigger.net/web-security" },
+          { name: "Official Documentation", desc: "Complete reference for all features, configurations, and APIs", url: "https://portswigger.net/burp/documentation" },
+          { name: "BApp Store", desc: "Community extensions to enhance your testing workflow", url: "https://portswigger.net/bappstore" },
+        ]
+      }
+    ];
+
+    function generateToolPattern() {
+      const container = document.getElementById('toolPattern');
+      container.innerHTML = '';
+      
+      const positions = [
+        { top: '5%', right: '-5%', rotate: 12 },
+        { top: '35%', left: '-8%', rotate: -8 },
+        { bottom: '15%', right: '-3%', rotate: 6 },
+      ];
+
+      positions.forEach((pos, i) => {
+        const el = document.createElement('div');
+        el.className = 'pattern-text';
+        el.textContent = 'BURP';
+        
+        Object.keys(pos).forEach(key => {
+          if (key !== 'rotate') {
+            el.style[key] = pos[key];
+          }
+        });
+        
+        el.style.transform = `rotate(${pos.rotate}deg)`;
+        container.appendChild(el);
+      });
+    }
+
+    generateToolPattern();
+
+    const contentArea = document.getElementById('contentArea');
+
+    function generateUI() {
+      contentArea.innerHTML = '';
+
+      collectionData.forEach(section => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'section';
+
+        let itemsHtml = '';
+
+        switch(section.type) {
+          case 'features':
+            itemsHtml = `<div class="feature-grid">
+              ${section.items.map(item => `
+                <div class="feature-card">
+                  <span class="feature-tag tag-${item.tag}">${item.tag}</span>
+                  <div class="feature-header">
+                    <div class="feature-icon">${item.icon}</div>
+                    <span class="feature-name">${item.name}</span>
+                  </div>
+                  <p class="feature-desc">${item.desc}</p>
+                </div>
+              `).join('')}
+            </div>`;
+            break;
+
+          case 'docs':
+            itemsHtml = `
+              <div class="docs-section">
+                ${section.intro ? `<p class="docs-intro">${section.intro}</p>` : ''}
+                ${section.items.map((item, i) => `
+                  <div class="step-row">
+                    <div class="step-num">${i + 1}</div>
+                    <div class="step-text">
+                      <strong>${item.title}</strong>
+                      <p>${item.desc}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>`;
+            break;
+
+          case 'usecases':
+            itemsHtml = `
+              <div class="docs-section">
+                ${section.intro ? `<p class="docs-intro">${section.intro}</p>` : ''}
+                ${section.items.map(item => `
+                  <div class="usecase-row">
+                    <div class="usecase-marker marker-${item.tag}"></div>
+                    <div class="usecase-content">
+                      <strong>${item.title}<span class="usecase-label tag-${item.tag}">${item.tag}</span></strong>
+                      <p>${item.desc}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>`;
+            break;
+
+          case 'shortcuts':
+            itemsHtml = `<div class="shortcut-grid">
+              ${section.items.map(item => `
+                <div class="shortcut-item">
+                  <span class="shortcut-action">${item.action}</span>
+                  <div class="shortcut-keys">
+                    ${item.keys.map(k => `<span class="key">${k}</span>`).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>`;
+            break;
+
+          case 'links':
+            itemsHtml = `<div class="links-list">
+              ${section.items.map(item => `
+                <a href="${item.url}" class="link-item" target="_blank" rel="noopener noreferrer">
+                  <div class="link-img">🔗</div>
+                  <div class="link-content">
+                    <div class="link-name">${item.name}</div>
+                    <p class="link-desc">${item.desc}</p>
+                  </div>
+                  <span class="link-tag">External</span>
+                  <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                  </svg>
+                </a>
+              `).join('')}
+            </div>`;
+            break;
+        }
+
+        const countText = section.type === 'links' 
+          ? section.items.length + " links"
+          : section.items.length + " items";
+
+        sectionEl.innerHTML = `
+          <div class="section-header">
+            <div class="section-title">${section.title}</div>
+            <div class="section-count">${countText}</div>
+          </div>
+          ${itemsHtml}
+        `;
+
+        contentArea.appendChild(sectionEl);
+      });
+    }
+
+    generateUI();
+  </script>
+</body>
+</html>

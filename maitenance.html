@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookmarks - Curated Intelligence Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A curated directory of high-quality resources, designed to counter AI-biased search results and promote digital privacy.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12,132,243,0.12);
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(12,132,243,0.20), transparent 30%),
+        radial-gradient(circle at 85% 0%, rgba(12,132,243,0.14), transparent 24%),
+        linear-gradient(180deg, #081221 0%, #09111c 35%, #050b14 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Noise Overlay */
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.06;
+      z-index: 1;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0.7px, transparent 0.9px);
+      background-size: 24px 24px, 36px 36px, 42px 42px;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.92), rgba(5,11,20,0.55), transparent);
+      border-bottom: 1px solid transparent;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    @media (min-width: 640px) {
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+      }
+    }
+
+    .brand-mark:hover {
+      transform: rotate(-5deg) scale(1.05);
+    }
+
+    .brand-mark svg {
+      width: 18px;
+      height: 18px;
+      color: white;
+    }
+
+    @media (min-width: 640px) {
+      .brand-mark svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .nav-link {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      transition: 0.25s ease;
+      text-decoration: none;
+    }
+
+    @media (min-width: 640px) {
+      .nav-link {
+        padding: 10px 14px;
+        font-size: 0.88rem;
+      }
+    }
+
+    .nav-link:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .nav-cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.82rem;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    @media (min-width: 640px) {
+      .nav-cta {
+        padding: 12px 18px;
+        font-size: 0.88rem;
+        gap: 8px;
+      }
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 34px rgba(12,132,243,0.32);
+    }
+
+    /* Hero */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-soft);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .hero-badge {
+        gap: 8px;
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        margin-bottom: 18px;
+      }
+    }
+
+    .hero-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.8rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .hero-title {
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+        margin-bottom: 18px;
+      }
+    }
+
+    .hero-title .accent {
+      color: var(--brand-light);
+    }
+
+    .hero-subtitle {
+      max-width: 62ch;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .hero-subtitle {
+        font-size: 1.02rem;
+        line-height: 1.75;
+        margin-bottom: 28px;
+      }
+    }
+
+    /* Cards */
+    .glass-card {
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      transition: 0.25s ease;
+    }
+
+    @media (min-width: 640px) {
+      .glass-card {
+        padding: 24px;
+        border-radius: 28px;
+      }
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(83,181,255,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 640px) {
+      .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+      }
+    }
+
+    .icon-box svg {
+      width: 18px;
+      height: 18px;
+      color: var(--brand-light);
+    }
+
+    @media (min-width: 640px) {
+      .icon-box svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .text-highlight {
+      color: var(--brand-light);
+      font-weight: 500;
+    }
+
+    /* Stats */
+    .stat-card {
+      padding: 14px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      transition: 0.25s ease;
+    }
+
+    @media (min-width: 640px) {
+      .stat-card {
+        padding: 20px;
+        border-radius: 18px;
+      }
+    }
+
+    .stat-card:hover {
+      border-color: var(--brand);
+      background: rgba(12,132,243,0.06);
+    }
+
+    .stat-number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    @media (min-width: 640px) {
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    @media (min-width: 640px) {
+      .stat-label {
+        font-size: 0.72rem;
+        margin-top: 6px;
+      }
+    }
+
+    /* Buttons */
+    .btn-primary-enhanced {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      background: #fff;
+      color: #081221;
+      padding: 14px 24px;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      text-decoration: none;
+    }
+
+    @media (min-width: 640px) {
+      .btn-primary-enhanced {
+        gap: 12px;
+        padding: 18px 32px;
+        font-size: 1rem;
+      }
+    }
+
+    .btn-primary-enhanced:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .btn-primary-enhanced svg {
+      transition: transform 0.2s ease;
+    }
+    
+    .btn-primary-enhanced:hover svg {
+      transform: translateX(3px);
+    }
+
+    .btn-secondary-enhanced {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 14px 24px;
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+    }
+
+    @media (min-width: 640px) {
+      .btn-secondary-enhanced {
+        gap: 12px;
+        padding: 18px 32px;
+        font-size: 1rem;
+      }
+    }
+
+    .btn-secondary-enhanced:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--brand-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* Footer */
+    .footer-card {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      padding: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .footer-card {
+        border-radius: 28px;
+        padding: 24px;
+      }
+    }
+
+    .contact-link {
+      color: var(--brand-light);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .contact-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand-light);
+      transition: width 0.3s ease;
+    }
+
+    .contact-link:hover::after {
+      width: 100%;
+    }
+
+    /* Partner Tool Link */
+    .partner-tool-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .partner-tool-link img {
+      height: 24px;
+      width: auto;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (min-width: 640px) {
+      .partner-tool-link img {
+        height: 28px;
+      }
+    }
+
+    .partner-tool-label {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 640px) {
+      .partner-tool-label {
+        font-size: 0.65rem;
+      }
+    }
+
+    /* Click animation overlay */
+    .click-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 17, 31, 0.9);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .click-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .click-overlay .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-top-color: var(--brand-light);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @media (min-width: 640px) {
+      .click-overlay .spinner {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .click-overlay .redirect-text {
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    @media (min-width: 640px) {
+      .click-overlay .redirect-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-panel {
+      background: linear-gradient(180deg, rgba(8,18,33,0.98), rgba(5,11,20,0.95));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Footer responsive layout */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr auto 1fr;
+        gap: 24px;
+        text-align: left;
+      }
+    }
+
+    .footer-left {
+      order: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-left {
+        order: 1;
+        justify-content: flex-start;
+      }
+    }
+
+    .footer-center {
+      order: 2;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-right {
+      order: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer-right {
+        order: 3;
+        align-items: flex-end;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    [x-cloak] { display: none !important; }
+  </style>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+
+<body x-data="{ loaded: false, mobileMenu: false }" x-init="loaded = true" class="min-h-screen flex flex-col">
+
+  <!-- Noise Texture -->
+  <div class="noise"></div>
+  
+  <!-- Click Animation Overlay -->
+  <div class="click-overlay" id="click-overlay">
+    <div class="spinner"></div>
+    <span class="redirect-text">Redirecting to YTScraper...</span>
+  </div>
+  
+  <!-- Three.js Canvas -->
+  <div class="fixed inset-0 pointer-events-none z-0" id="canvas-container">
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-wrapper relative z-10 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="header w-full py-3 sm:py-4 lg:py-5 px-4 sm:px-6 lg:px-8" x-show="loaded" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+      <div class="max-w-6xl mx-auto">
+        <nav class="flex justify-between items-center">
+          <!-- Logo -->
+          <a href="/" class="flex items-center gap-2 sm:gap-3 group" id="main-logo">
+            <div class="brand-mark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-display text-base sm:text-lg lg:text-xl font-bold text-[var(--text)] tracking-tight">Bookmarks</span>
+              <span class="text-[0.55rem] sm:text-[0.65rem] text-[var(--text-dim)] uppercase tracking-widest hidden sm:block">Intelligence Hub</span>
+            </div>
+          </a>
+
+          <!-- Desktop Nav -->
+          <div class="hidden md:flex items-center gap-2">
+            <a href="https://bookmarks.love/about" class="nav-link">About</a>
+            <a href="https://bookmarks.love/hub" class="nav-link">Hub</a>
+            <a href="https://bookmarks.love/join" class="nav-link">Curators</a>
+            <a href="https://bookmarks.love/hub" class="nav-cta ml-2">
+              Explore
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Mobile Menu Toggle -->
+          <button 
+            @click="mobileMenu = !mobileMenu" 
+            class="md:hidden p-2 rounded-lg border border-[var(--border)] bg-[var(--surface)]"
+            aria-label="Toggle menu"
+          >
+            <svg x-show="!mobileMenu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-[var(--text)]">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg x-show="mobileMenu" x-cloak width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-[var(--text)]">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div 
+          x-show="mobileMenu" 
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 -translate-y-3"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 -translate-y-3"
+          x-cloak
+          class="md:hidden mt-4 mobile-menu-panel p-4"
+        >
+          <div class="flex flex-col gap-3">
+            <a href="about.html" class="nav-link text-center">About</a>
+            <a href="https://bookmarks.love/hub" class="nav-link text-center">Hub</a>
+            <a href="join.html" class="nav-link text-center">Curators</a>
+            <div class="h-px bg-[var(--border)] my-1"></div>
+            <a href="https://bookmarks.love/hub" class="nav-cta text-center justify-center">
+              Explore Hub
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+      <div class="max-w-4xl w-full">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-8 sm:mb-10 lg:mb-14" id="hero-section">
+          <div class="mb-4 sm:mb-5 reveal" id="hero-badge">
+            <span class="hero-badge">
+              <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              Cure the Web
+            </span>
+          </div>
+          
+          <h2 class="hero-title reveal" id="hero-title">
+            Navigate the Digital<br class="hidden sm:block">
+            <span class="accent">Landscape with Confidence</span>
+          </h2>
+          
+          <p class="hero-subtitle mx-auto reveal" id="hero-subtitle">
+            A meticulously curated directory of high-quality resources, designed to counter AI-biased search results and restore relevance.
+          </p>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid gap-4 sm:gap-5 mb-6 sm:mb-8 lg:mb-10">
+          
+          <!-- Card 1 -->
+          <div class="glass-card p-4 sm:p-5 lg:p-6 reveal" id="card-1">
+            <div class="flex gap-3 sm:gap-4">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[var(--text-soft)] leading-relaxed text-sm sm:text-base">
+                  In an era where search engines are increasingly influenced by artificial intelligence—often prioritizing commercial interests over relevance—<span class="text-highlight">Bookmarks</span> emerges as a solution. We help <strong class="text-[var(--text)]">Cure the Web</strong> by curating high-quality resources, offering a reliable alternative to AI-biased results.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card p-4 sm:p-5 lg:p-6 reveal" id="card-2">
+            <div class="flex gap-3 sm:gap-4">
+              <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-[var(--text-soft)] leading-relaxed text-sm sm:text-base">
+                  As a personal initiative, <span class="text-highlight">Bookmarks</span> helps individuals navigate the digital landscape with confidence. We prioritize <strong class="text-[var(--text)]">privacy</strong>, <strong class="text-[var(--text)]">security</strong>, and <strong class="text-[var(--text)]">anonymity</strong>, ensuring every listed resource adheres to ethical standards.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 - Contact -->
+          <div class="glass-card p-4 sm:p-5 lg:p-6 reveal" id="card-3">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--brand-soft)] flex items-center justify-center flex-shrink-0">
+                  <svg width="16" height="16" class="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="var(--brand-light)" stroke-width="2" stroke-linecap="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <span class="text-[var(--text-dim)] text-xs sm:text-sm sm:text-base">For inquiries or suggestions:</span>
+              </div>
+              <a href="mailto:idritteris@proton.me" class="contact-link text-sm sm:text-base lg:text-lg font-display ml-0 sm:ml-auto">idritteris@proton.me</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3 lg:gap-4 mb-8 sm:mb-10 lg:mb-12 reveal" id="stats-row">
+          <div class="stat-card">
+            <div class="stat-number" data-target="500">0</div>
+            <div class="stat-label">Resources</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="50">0</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="100">0</div>
+            <div class="stat-label">Verified</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 reveal" id="cta-section">
+          
+          <button 
+  class="btn-primary-enhanced group w-full sm:w-auto" 
+  onclick="window.location.href='https://bookmarks.love/hub'"
+  aria-label="Visit the Bookmarks Hub"
+>
+  <span>Visit Hub</span>
+  <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+    <polyline points="12 5 19 12 12 19"></polyline>
+  </svg>
+</button>
+          
+          <a href="https://bookmarks.love/join" class="btn-secondary-enhanced group w-full sm:w-auto">
+            <span>Become a Curator</span>
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-5 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8 reveal" id="footer">
+      <div class="max-w-4xl mx-auto">
+        <div class="footer-card">
+          <div class="footer-grid">
+            <!-- Left - About Link -->
+            <div class="footer-left">
+              <a href="about.html" class="text-[var(--brand-light)] hover:text-[var(--text)] font-medium text-xs sm:text-sm transition-colors flex items-center gap-2">
+                More About Us
+                <svg class="w-3 h-3 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+            
+            <!-- Center - Partner Tool Link -->
+            <div class="footer-center">
+              <a 
+                href="https://asset-manager--idritteris.replit.app" 
+                class="partner-tool-link"
+                id="partner-link"
+                aria-label="Visit YTScraper - Another tool by Bookmarks Team"
+              >
+                <img src="/img/ytscraper.png" alt="YTScraper" />
+                <span class="partner-tool-label">By Bookmarks Team</span>
+              </a>
+            </div>
+            
+            <!-- Right - Copyright -->
+            <div class="footer-right">
+              <p class="text-[var(--text-dim)] text-[0.65rem] sm:text-xs">2026 Bookmarks - Curated Intelligence Hub</p>
+              <p class="text-[var(--text-dim)] text-[0.6rem] sm:text-xs mt-0.5 sm:mt-1 opacity-60">Designed by <span class="text-[var(--text-dim)]">@morneface</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Three.js Background -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    const canvas = document.getElementById('bg-canvas');
+    const container = document.getElementById('canvas-container');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvas, 
+      alpha: true, 
+      antialias: true 
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Soft floating particles matching the dark theme
+    const particleCount = 60;
+    const positions = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      positions[i3] = (Math.random() - 0.5) * 100;
+      positions[i3 + 1] = (Math.random() - 0.5) * 100;
+      positions[i3 + 2] = (Math.random() - 0.5) * 50 - 20;
+      sizes[i] = Math.random() * 2.5 + 0.5;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color('#53b5ff') }, 
+        uPixelRatio: { value: renderer.getPixelRatio() }
+      },
+      vertexShader: `
+        attribute float aSize;
+        varying float vAlpha;
+        uniform float uTime;
+        uniform float uPixelRatio;
+        
+        void main() {
+          vec3 pos = position;
+          pos.x += sin(uTime * 0.3 + position.y * 0.05) * 3.0;
+          pos.y += cos(uTime * 0.2 + position.x * 0.05) * 3.0;
+          
+          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+          gl_PointSize = aSize * uPixelRatio * (200.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+          
+          vAlpha = 0.12 + sin(uTime + position.x * 0.5) * 0.08;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying float vAlpha;
+        
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+          
+          float alpha = (1.0 - smoothstep(0.0, 0.5, dist)) * vAlpha;
+          gl_FragColor = vec4(uColor, alpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    camera.position.z = 40;
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      const time = performance.now() * 0.001;
+      material.uniforms.uTime.value = time;
+      
+      camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+      camera.position.y += (mouseY * 3 - camera.position.y) * 0.02;
+      camera.lookAt(scene.position);
+      
+      particles.rotation.y = time * 0.02;
+      
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
+    });
+  </script>
+
+  <!-- GSAP Animations -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (!prefersReducedMotion) {
+        gsap.set('.reveal', { opacity: 0, y: 24 });
+        gsap.set('#main-logo', { opacity: 0, x: -20 });
+        gsap.set('.stat-number', { scale: 0.8 });
+        
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        
+        tl.to('#main-logo', {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          delay: 0.2
+        })
+        .to('#hero-badge', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.3')
+        .to('#hero-title', {
+          opacity: 1,
+          y: 0,
+          duration: 0.6
+        }, '-=0.2')
+        .to('#hero-subtitle', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.3')
+        .to('#card-1', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.2')
+        .to('#card-2', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.3')
+        .to('#card-3', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.3')
+        .to('#stats-row', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.2')
+        .to('#cta-section', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.2')
+        .to('#footer', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5
+        }, '-=0.2');
+        
+        document.querySelectorAll('.stat-number').forEach((el) => {
+          const target = parseInt(el.dataset.target);
+          gsap.to(el, {
+            textContent: target,
+            duration: 1.8,
+            ease: 'power1.out',
+            snap: { textContent: 1 },
+            delay: 1.2,
+            onStart: () => {
+              gsap.to(el, { scale: 1, duration: 0.4, ease: 'back.out(1.7)' });
+            }
+          });
+        });
+      } else {
+        gsap.set('.reveal', { opacity: 1, y: 0 });
+        gsap.set('#main-logo', { opacity: 1, x: 0 });
+        document.querySelectorAll('.stat-number').forEach((el) => {
+          el.textContent = el.dataset.target;
+        });
+      }
+      
+      const visitBtn = document.querySelector('.btn-primary-enhanced');
+      if (visitBtn && !prefersReducedMotion) {
+        visitBtn.addEventListener('mouseenter', () => {
+          gsap.to(visitBtn, { scale: 1.03, duration: 0.2 });
+        });
+        visitBtn.addEventListener('mouseleave', () => {
+          gsap.to(visitBtn, { scale: 1, duration: 0.3, ease: 'elastic.out(1, 0.5)' });
+        });
+      }
+
+      // Partner link click animation with 1s delay
+      const partnerLink = document.getElementById('partner-link');
+      const clickOverlay = document.getElementById('click-overlay');
+      
+      if (partnerLink) {
+        partnerLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetUrl = partnerLink.href;
+          
+          // Show overlay with animation
+          clickOverlay.classList.add('active');
+          
+          // Animate the partner link image
+          if (!prefersReducedMotion) {
+            gsap.to(partnerLink.querySelector('img'), {
+              scale: 1.2,
+              opacity: 1,
+              duration: 0.3,
+              ease: 'power2.out'
+            });
+            gsap.to(partnerLink.querySelector('.partner-tool-label'), {
+              color: 'var(--brand-light)',
+              opacity: 1,
+              duration: 0.3
+            });
+          }
+          
+          // Redirect after 1 second
+          setTimeout(() => {
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            clickOverlay.classList.remove('active');
+            
+            // Reset styles
+            if (!prefersReducedMotion) {
+              gsap.to(partnerLink.querySelector('img'), {
+                scale: 1,
+                opacity: 0.7,
+                duration: 0.3
+              });
+              gsap.to(partnerLink.querySelector('.partner-tool-label'), {
+                color: 'var(--text-dim)',
+                opacity: 0.7,
+                duration: 0.3
+              });
+            }
+          }, 1000);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
