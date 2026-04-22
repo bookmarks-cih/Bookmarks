@@ -1,38 +1,3 @@
-<!--
-╔══════════════════════════════════════════════════════╗
-║                  BOOKMARKS DATA                     ║
-╚══════════════════════════════════════════════════════╝
-
-Author: Marvyn (@Marvyn)
-Project: bookmarks.love
-
-This bookmarks collection (bookmarks-data.js) is an original work,
-carefully curated, structured, and maintained by the author.
-
-All links included are the result of manual selection, research,
-and ongoing refinement to ensure quality, relevance, and usefulness.
-
-This dataset reflects a personal vision of the web:
-a cleaner, more intentional space beyond algorithmic noise.
-
-© Marvyn — All rights reserved.
-
-You are welcome to explore and learn from this project.
-However, redistribution, replication, or commercial use of this
-curated dataset without permission is not permitted.
-
-Stay curious. Stay independent.
--->
-
-
-
-
-
-
-
-
-  
-
 window.BOOKMARKS_DATA = [
   /* -------------------- SEARCH -------------------- */
   { name: "Google", link: "https://google.com", desc: "The most widely used search engine.", cat: "Search" },
@@ -947,27 +912,17 @@ window.BOOKMARKS_DATA = [
   { name: "HackChat", link: "https://hack.chat", desc: "No description is currently available for this page.", cat: "Unverified" },
 
   /* -------------------- MISC -------------------- */
-{ name: "Worldometers", link: "https://worldometers.info", desc: "Global statistics.", cat: "Misc" },
-{ name: "Internet Live Stats", link: "https://internetlivestats.com", desc: "Internet statistics.", cat: "Misc" },
-{ name: "Radio Garden", link: "https://radio.garden", desc: "3D global radio explorer.", cat: "Misc" },
-{ name: "EarthCam", link: "https://earthcam.com", desc: "Live webcams around the world.", cat: "Misc" },
-{ name: "Flightradar24", link: "https://flightradar24.com", desc: "Real-time flight tracker.", cat: "Misc" },
-{ name: "MarineTraffic", link: "https://marinetraffic.com", desc: "Real-time ship tracker.", cat: "Misc" },
-{ name: "ISS Tracker", link: "https://spotthestation.nasa.gov", desc: "Track the International Space Station.", cat: "Misc" },
-
-{ name: "Speedtest", link: "https://speedtest.net", desc: "Internet speed test.", cat: "Misc" },
-{ name: "DownDetector", link: "https://downdetector.com", desc: "Service outage tracker.", cat: "Misc" },
-{ name: "Time.is", link: "https://time.is", desc: "Accurate world time.", cat: "Misc" },
-{ name: "AlternativeTo", link: "https://alternativeto.net", desc: "Find software alternatives.", cat: "Misc" },
-{ name: "JustDeleteMe", link: "https://justdeleteme.xyz", desc: "Guide to delete online accounts.", cat: "Misc" },
-{ name: "CamelCamelCamel", link: "https://camelcamelcamel.com", desc: "Amazon price history tracker.", cat: "Misc" },
-{ name: "Is It Down Right Now?", link: "https://isitdownrightnow.com", desc: "Check if a website is down.", cat: "Misc" },
-{ name: "WhatIsMyIP", link: "https://whatismyipaddress.com", desc: "Check your IP address and info.", cat: "Misc" },
-{ name: "Whois Lookup", link: "https://who.is", desc: "Domain ownership and WHOIS info.", cat: "Misc" },
+  { name: "Speedtest", link: "https://speedtest.net", desc: "Internet speed test.", cat: "Misc" },
+  { name: "DownDetector", link: "https://downdetector.com", desc: "Service outage tracker.", cat: "Misc" },
+  { name: "Time.is", link: "https://time.is", desc: "Accurate world time.", cat: "Misc" },
+  { name: "AlternativeTo", link: "https://alternativeto.net", desc: "Find software alternatives.", cat: "Misc" },
+  { name: "JustDeleteMe", link: "https://justdeleteme.xyz", desc: "Guide to delete online accounts.", cat: "Misc" },
+  { name: "CamelCamelCamel", link: "https://camelcamelcamel.com", desc: "Amazon price history tracker.", cat: "Misc" },
+  { name: "Is It Down Right Now?", link: "https://isitdownrightnow.com", desc: "Check if a website is down.", cat: "Misc" },
+  { name: "WhatIsMyIP", link: "https://whatismyipaddress.com", desc: "Check your IP address and info.", cat: "Misc" },
+  { name: "Whois Lookup", link: "https://who.is", desc: "Domain ownership and WHOIS info.", cat: "Misc" },
 { name: "VirusTotal", link: "https://virustotal.com", desc: "Scan files and URLs for malware.", cat: "Misc" },
 { name: "Have I Been Pwned", link: "https://haveibeenpwned.com", desc: "Check if your email was in a data breach.", cat: "Misc" },
-
-
 { name: "TempMail", link: "https://temp-mail.org", desc: "Disposable temporary email.", cat: "Misc" },
 { name: "10MinuteMail", link: "https://10minutemail.com", desc: "Self-destructing email address.", cat: "Misc" },
 { name: "PrivNote", link: "https://privnote.com", desc: "Self-destructing private notes.", cat: "Misc" },
@@ -988,6 +943,16 @@ window.BOOKMARKS_DATA = [
 { name: "Random.org", link: "https://random.org", desc: "True random number generator.", cat: "Misc" },
 { name: "Trello Inspiration", link: "https://trello.com/inspiration", desc: "Boards for productivity ideas.", cat: "Misc" },
 { name: "ScribbleMaps", link: "https://scribblemaps.com", desc: "Create custom maps.", cat: "Misc" },
+ { name: "Worldometers", link: "https://worldometers.info", desc: "Global statistics.", cat: "Misc" },
+  { name: "Internet Live Stats", link: "https://internetlivestats.com", desc: "Internet statistics.", cat: "Misc" },
+  { name: "Radio Garden", link: "https://radio.garden", desc: "3D global radio explorer.", cat: "Misc" },
+  { name: "EarthCam", link: "https://earthcam.com", desc: "Live webcams around the world.", cat: "Misc" },
+  { name: "Flightradar24", link: "https://flightradar24.com", desc: "Real-time flight tracker.", cat: "Misc" },
+  { name: "MarineTraffic", link: "https://marinetraffic.com", desc: "Real-time ship tracker.", cat: "Misc" },
+  { name: "ISS Tracker", link: "https://spotthestation.nasa.gov", desc: "Track the International Space Station.", cat: "Misc" },
+  { name: "Windytv", link: "https://windy.com", desc: "Interactive weather map.", cat: "Misc" },
+  { name: "DeepL", link: "https://deepl.com", desc: "High-quality AI translation.", cat: "Misc" },
+  { name: "Lingva Translate", link: "https://lingva.ml", desc: "Open-source private translation.", cat: "Misc" },
 
 
   /* -------------------- WEIRD -------------------- */
@@ -1003,6 +968,7 @@ window.BOOKMARKS_DATA = [
   { name: "The Deep Sea", link: "https://neal.fun/deep-sea", desc: "Interactive deep-sea exploration.", cat: "Weird" },
   { name: "The Size of Space", link: "https://neal.fun/size-of-space", desc: "Visualization of the universe's scale.", cat: "Weird" },
   { name: "Galdrux", link: "https://galdrux.com", desc: "?.", cat: "Weird" },
+ 
 
   /* -------------------- GRAY ZONE -------------------- */
   { name: "Eldorado.gg", link: "https://eldorado.gg", desc: "Marketplace for in-game items and accounts.", cat: "Gray Zone" },
@@ -1572,8 +1538,7 @@ window.BOOKMARKS_DATA = [
 { name: "Replit", link: "https://replit.com", desc: "Online IDE for coding in the browser.", cat: "Coding" },
 
   
-  
-  /* -------------------- OFF-GRID -------------------- */
+    /* -------------------- OFF-GRID -------------------- */
 { name: "Meshtastic", link: "https://meshtastic.org", desc: "LoRa mesh network for off-grid communication.", cat: "Off-grid" },
 { name: "Reticulum Network", link: "https://reticulum.network", desc: "Cryptography-based mesh networking stack.", cat: "Off-grid" },
 { name: "Briar", link: "https://briarproject.org", desc: "Peer-to-peer messaging via Bluetooth/Wi-Fi without internet.", cat: "Off-grid" },
@@ -1615,6 +1580,117 @@ window.BOOKMARKS_DATA = [
 
 { name: "ZeroNet", link: "https://zeronet.io", desc: "Decentralized web using BitTorrent and crypto.", cat: "Off-grid" },
 { name: "IPFS", link: "https://ipfs.tech", desc: "Distributed file system for decentralized web.", cat: "Off-grid" },
+  
+  
+  /* -------------------- DIGITAL IDENTITY -------------------- */
+  // Email & Messaging Privacy
+  { name: "ProtonMail", link: "https://proton.me/mail", desc: "End-to-end encrypted email service.", cat: "Digital Identity" },
+  { name: "Tutanota", link: "https://tutanota.com", desc: "Secure and encrypted email provider.", cat: "Digital Identity" },
+  { name: "Skiff", link: "https://skiff.com", desc: "Encrypted, decentralized email and storage.", cat: "Digital Identity" },
+  { name: "CTemplar", link: "https://ctemplar.com", desc: "Secure email with encryption and anonymity.", cat: "Digital Identity" },
+  { name: "Signal", link: "https://signal.org", desc: "End-to-end encrypted messaging app.", cat: "Digital Identity" },
+  { name: "Session", link: "https://getsession.org", desc: "Decentralized, anonymous messaging.", cat: "Digital Identity" },
+  { name: "Element", link: "https://element.io", desc: "Secure messaging based on Matrix protocol.", cat: "Digital Identity" },
+  { name: "Threema", link: "https://threema.ch", desc: "Encrypted messaging without phone number requirement.", cat: "Digital Identity" },
+
+  // Password Managers
+  { name: "Bitwarden", link: "https://bitwarden.com", desc: "Open-source password manager.", cat: "Digital Identity" },
+  { name: "KeePassXC", link: "https://keepassxc.org", desc: "Offline, open-source password manager.", cat: "Digital Identity" },
+  { name: "1Password", link: "https://1password.com", desc: "Password manager and digital vault.", cat: "Digital Identity" },
+
+  // VPN & Anonymity
+  { name: "Proton VPN", link: "https://protonvpn.com", desc: "Privacy-focused VPN with no logs.", cat: "Digital Identity" },
+  { name: "Mullvad VPN", link: "https://mullvad.net", desc: "Anonymous VPN with crypto payment option.", cat: "Digital Identity" },
+  { name: "Tor Project", link: "https://www.torproject.org", desc: "Anonymous browsing via the Tor network.", cat: "Digital Identity" },
+
+  // Data Breach Monitoring
+  { name: "Have I Been Pwned", link: "https://haveibeenpwned.com", desc: "Check if your data has been exposed in breaches.", cat: "Digital Identity" },
+  { name: "Dehashed", link: "https://www.dehashed.com", desc: "Search for exposed credentials in data breaches.", cat: "Digital Identity" },
+  { name: "Firefox Monitor", link: "https://monitor.firefox.com", desc: "Alerts you if your data is found in known breaches.", cat: "Digital Identity" },
+
+  // Unsubscribe & Anti-Spam
+  { name: "Unroll.Me", link: "https://unroll.me", desc: "Easily unsubscribe from newsletters and promotional emails.", cat: "Digital Identity" },
+  { name: "Clean Email", link: "https://clean.email", desc: "Bulk unsubscribe and manage your inbox.", cat: "Digital Identity" },
+  { name: "Mailstrom", link: "https://mailstrom.co", desc: "Quickly clean and unsubscribe from unwanted emails.", cat: "Digital Identity" },
+  { name: "SaneBox", link: "https://www.sanebox.com", desc: "Smart email filtering and unsubscribe tool.", cat: "Digital Identity" },
+  { name: "Leave Me Alone", link: "https://leavemealone.xyz", desc: "Unsubscribe and block unwanted emails.", cat: "Digital Identity" },
+  { name: "SpamCop", link: "https://www.spamcop.net", desc: "Report and block spam emails.", cat: "Digital Identity" },
+  { name: "MXToolbox", link: "https://mxtoolbox.com/blacklists.aspx", desc: "Check if your email is blacklisted.", cat: "Digital Identity" },
+
+  // Data Removal & Privacy Requests
+  { name: "SimpleOptOut", link: "https://simpleoptout.com", desc: "Guide to opt out from marketing databases.", cat: "Digital Identity" },
+  { name: "JustDeleteMe", link: "https://justdeleteme.xyz", desc: "Direct links to delete your online accounts.", cat: "Digital Identity" },
+  { name: "PrivacyDuck", link: "https://privacyduck.com", desc: "Request removal of your personal data from websites.", cat: "Digital Identity" },
+  { name: "DeleteMe", link: "https://joindeleteme.com", desc: "Paid service to remove your info from data brokers.", cat: "Digital Identity" },
+  { name: "Kanary", link: "https://kanary.com", desc: "Monitors and removes your personal data online.", cat: "Digital Identity" },
+  { name: "OneRep", link: "https://onerep.com", desc: "Automatically removes your info from data broker sites.", cat: "Digital Identity" },
+  { name: "Jumbo Privacy", link: "https://jumbo.io", desc: "Manages and deletes your data, stops tracking.", cat: "Digital Identity" },
+  { name: "Deseat.me", link: "https://deseat.me", desc: "Find and delete old online accounts.", cat: "Digital Identity" },
+  { name: "AccountKiller", link: "https://www.accountkiller.com", desc: "Guide to permanently delete your accounts.", cat: "Digital Identity" },
+  { name: "GDPR.eu", link: "https://gdpr.eu", desc: "Resources to exercise your GDPR rights.", cat: "Digital Identity" },
+
+  // Browser Privacy Tools
+  { name: "uBlock Origin", link: "https://github.com/gorhill/uBlock", desc: "Efficient ad and tracker blocker.", cat: "Digital Identity" },
+  { name: "Privacy Badger", link: "https://privacybadger.org", desc: "Automatic tracker blocker.", cat: "Digital Identity" },
+  { name: "HTTPS Everywhere", link: "https://www.eff.org/https-everywhere", desc: "Forces HTTPS encryption on websites.", cat: "Digital Identity" },
+  { name: "ClearURLs", link: "https://gitlab.com/Kukks/ClearURLs", desc: "Removes tracking parameters from URLs.", cat: "Digital Identity" },
+
+  // Encryption & Secure Storage
+  { name: "Veracrypt", link: "https://www.veracrypt.fr", desc: "Open-source disk encryption tool.", cat: "Digital Identity" },
+  { name: "Cryptomator", link: "https://cryptomator.org", desc: "Encrypts files in the cloud.", cat: "Digital Identity" },
+  { name: "Proton Drive", link: "https://proton.me/drive", desc: "End-to-end encrypted cloud storage.", cat: "Digital Identity" },
+  { name: "GnuPG", link: "https://gnupg.org", desc: "OpenPGP encryption tool.", cat: "Digital Identity" },
+
+  // Payment & Digital Identity Protection
+  { name: "Privacy.com", link: "https://privacy.com", desc: "Virtual cards for secure online payments.", cat: "Digital Identity" },
+  { name: "SimpleLogin", link: "https://simplelogin.io", desc: "Email aliases to protect your primary address.", cat: "Digital Identity" },
+  { name: "Firefox Relay", link: "https://relay.firefox.com", desc: "Email masking to avoid spam.", cat: "Digital Identity" },
+  
+  
+  /* -------------------- [HARDCORE PRIVACY] NUCLEAR DATA ERASURE -------------------- */
+
+  // --- Aggressive Spam & Tracker Annihilation ---
+  { name: "MailRoute", link: "https://mailroute.net", desc: "Aggressive spam filtering with custom blacklists, auto-deletion, and domain blocking.", cat: "Hardcore Privacy" },
+  { name: "Spike.sh", link: "https://spike.sh", desc: "Temporary email with auto-destruct; use for sign-ups you want to vanish.", cat: "Hardcore Privacy" },
+  { name: "Mail7", link: "https://mail7.io", desc: "Disposable email with API for automation; delete inboxes on demand.", cat: "Hardcore Privacy" },
+  { name: "Blackbox", link: "https://blackbox.zero", desc: "Encrypted, self-destructing email for sensitive communications.", cat: "Hardcore Privacy" },
+
+  // --- Data Broker & People Search Site Purge ---
+  { name: "Optery", link: "https://optery.com", desc: "Free scan for exposed data; paid removal from 200+ broker sites.", cat: "Hardcore Privacy" },
+  { name: "Removify", link: "https://removify.com", desc: "Automated opt-out from 150+ data brokers; tracks removal status.", cat: "Hardcore Privacy" },
+  { name: "BrandYourself", link: "https://brandyourself.com", desc: "Scans and suppresses personal info from search engines and brokers.", cat: "Hardcore Privacy" },
+  { name: "DeleteMe (Enterprise)", link: "https://joindeleteme.com/enterprise", desc: "Enterprise-grade data removal; targets deep web and dark web exposures.", cat: "Hardcore Privacy" },
+
+  // --- Legal & Takedown Enforcement ---
+  { name: "NOYB (GDPR Complaints)", link: "https://noyb.eu", desc: "File GDPR complaints against non-compliant companies; legal escalation.", cat: "Hardcore Privacy" },
+  { name: "DMCA.com", link: "https://www.dmca.com", desc: "Send DMCA takedowns for personal data removal from websites and search engines.", cat: "Hardcore Privacy" },
+  { name: "Privacy Rights Clearinghouse", link: "https://privacyrights.org", desc: "Guides for filing complaints with regulators and enforcing privacy rights.", cat: "Hardcore Privacy" },
+  { name: "EFF’s Surveillance Self-Defense", link: "https://ssd.eff.org", desc: "Legal and technical guides to fight unwarranted data collection.", cat: "Hardcore Privacy" },
+
+  // --- Self-Destruct & Anti-Forensics ---
+  { name: "ShredOS", link: "https://github.com/PartialVolume/shredos", desc: "Bootable OS to securely wipe drives (DoD 5220.22-M standard).", cat: "Hardcore Privacy" },
+  { name: "BleachBit", link: "https://www.bleachbit.org", desc: "Deep clean files, cache, and metadata; prevents forensic recovery.", cat: "Hardcore Privacy" },
+  { name: "VeraCrypt (Hidden Volumes)", link: "https://www.veracrypt.fr", desc: "Create encrypted hidden volumes with plausible deniability.", cat: "Hardcore Privacy" },
+  { name: "Tails OS (Amnesic Mode)", link: "https://tails.boum.org", desc: "Live OS that leaves no trace; routes all traffic through Tor.", cat: "Hardcore Privacy" },
+  { name: "Qubes OS (Whonix Integration)", link: "https://www.qubes-os.org", desc: "Isolate activities in disposable VMs; integrate Whonix for anonymity.", cat: "Hardcore Privacy" },
+
+  // --- Extreme Anonymity & Identity Cloaking ---
+  { name: "Mullvad VPN (Cash Payment)", link: "https://mullvad.net", desc: "Anonymous VPN with cash/bitcoin payment; no email required.", cat: "Hardcore Privacy" },
+  { name: "IVPN (Multi-Hop)", link: "https://www.ivpn.net", desc: "Multi-hop VPN with anti-tracking and port forwarding for obfuscation.", cat: "Hardcore Privacy" },
+  { name: "Tor + Bridges", link: "https://bridges.torproject.org", desc: "Access Tor in censored regions using obfs4 bridges; evade deep packet inspection.", cat: "Hardcore Privacy" },
+  { name: "Session (Onion Routing)", link: "https://getsession.org", desc: "Messenger with onion routing; no phone number or email needed.", cat: "Hardcore Privacy" },
+  { name: "Nym Mixnet", link: "https://nymtech.net", desc: "Privacy-focused mixnet to obscure metadata and resist traffic analysis.", cat: "Hardcore Privacy" },
+
+  // --- DIY & Self-Hosted Privacy Stack ---
+  { name: "Vaultwarden", link: "https://github.com/dani-garcia/vaultwarden", desc: "Self-hosted Bitwarden; full control over password storage and encryption.", cat: "Hardcore Privacy" },
+  { name: "Nextcloud + Collabora", link: "https://nextcloud.com", desc: "Self-hosted, encrypted alternative to Google Workspace; integrate OnlyOffice for docs.", cat: "Hardcore Privacy" },
+  { name: "ProtonMail Bridge (Self-Hosted)", link: "https://proton.me/mail/bridge", desc: "Locally encrypt/decrypt ProtonMail; use with Thunderbird for air-gapped security.", cat: "Hardcore Privacy" },
+  { name: "Matrix (Synapse + Element)", link: "https://matrix.org", desc: "Self-hosted, E2E encrypted messaging; bridge to IRC, Signal, etc.", cat: "Hardcore Privacy" },
+  { name: "WireGuard (Self-Hosted)", link: "https://www.wireguard.com", desc: "Deploy your own VPN on a rented server; no logs, no third-party access.", cat: "Hardcore Privacy" },
+  
+  
+  
+  
   
   
 
@@ -1758,15 +1834,3 @@ window.BOOKMARKS_DATA = [
   { name: "Freedom", link: "https://freedom.to", desc: "Distraction blocker for apps and websites.", cat: "Productivity" },
   { name: "NotebookLM", link: "https://notebooklm.google", desc: "AI that reasons over your documents.", cat: "Productivity" }
 ];
-
-
-
-   <!--
- ____  __ __ _____  ____     _____  _   _  ____    __    __ ____ _____   
-/ (__`|  |  || () )| ===|   |_   _|| |_| || ===|   \ \/\/ /| ===|| () )  
-\____) \___/ |_|\_\|____|     |_|  |_| |_||____|    \_/\_/ |____||_()_)  
-
-Curated & maintained by Marvyn (@Marvyn)
-bookmarks.love — Independent web curation
-All rights reserved.
--->
