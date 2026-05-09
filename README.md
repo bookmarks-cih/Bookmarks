@@ -1,98 +1,47 @@
-<p align="center">
-  <img src="assets/preview.png" alt="bookmarks.love preview" width="45%" />
-</p>
+# Bookmarks
 
-<br>
-<center>
-<p>
-  <img src="https://img.shields.io/badge/Curated-By%20Humans-0c84f3?style=for-the-badge&logo=bookstack&logoColor=white" />
-  <img src="https://img.shields.io/badge/Privacy-First-0c84f3?style=for-the-badge&logo=protonmail&logoColor=white" />
-  <img src="https://img.shields.io/badge/bookmarks.love-curated%20internet-0c84f3?style=flat-square" />
-  <br>
-  <img src="https://img.shields.io/badge/Open-Source-111111?style=for-the-badge&logo=github&logoColor=white" />
-</p>
-</center>
----
+Static website for **bookmarks.love** and the **Curated Intelligence Hub**.
 
-## ✨ About
+## What this repo contains
 
-**bookmarks.love** is a curated hub of high-quality resources across the internet.
+- Main landing page: `index.html`
+- Supporting pages: `about.html`, `news.html`, `privacy.html`, `terms.html`
+- Hub pages: `hub.html`, `docs.html`, `files.html`, `jobs.html`, `join.html`, `creators.html`
+- Data source: `data/bookmarks-data.js`
+- Static assets: `img/`, `assets/`, `favicon.svg`
 
-Built to fight:
-- algorithmic bias  
-- SEO spam  
-- low-value AI-generated content  
+## Project structure
 
-Instead, it focuses on **intentional discovery** and **real signal**.
+```text
+/
+├─ index.html
+├─ about.html
+├─ creators.html
+├─ docs.html
+├─ files.html
+├─ hub.html
+├─ jobs.html
+├─ join.html
+├─ news.html
+├─ privacy.html
+├─ terms.html
+├─ data/
+├─ img/
+├─ assets/
+├─ creators/
+└─ scripts/
+```
 
----
+## Notes
 
-## 🧠 Philosophy
+- This is a static front-end project: HTML, CSS and JavaScript.
+- Keep the folder structure intact when updating files.
+- Only update the assets that are actually used by the pages.
 
-- 🔍 Curated over indexed  
-- 🧠 Human over algorithm  
-- 🔒 Privacy over tracking  
-- ⚖️ Ethics over growth hacks  
+## Local preview
 
-> This is not a search engine.  
-> This is a **curated signal layer**.
+Open `index.html` directly in a browser, or serve the folder with a simple static server.
 
----
+## Website
 
-## 🧩 Categories
-
-- 🛠 Tools  
-- 🌍 Services  
-- 🧠 Knowledge  
-- 🔐 Privacy  
-- 🎨 Creative  
-- 🧬 Experimental  
-
-Each link is manually reviewed.
-
----
-
-## 🚀 Stack
-
-- Static site (Neocities)
-- HTML / CSS / JavaScript
-- Fast, minimal, no bloat
-
----
-
-## 📸 Preview
-
-<p align="center">
-  <img src="https://i.pinimg.com/736x/ce/52/5a/ce525a8983ab0ec1be6daefc945026bc.jpg" width="70%" />
-</p>
-
----
-
-## 🤝 Contribute
-
-Want to add something valuable?
-
-- Open an issue  
-- Submit a PR  
-
-Quality > quantity.
-
----
-
-## ☕ Support
-
-If you like the project:
-
-👉  [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N81VG1DL)
-
----
-
-## 🔗 Website
-
-👉 https://bookmarks.love
-
----
-
-Créé avec ❤️ par @Marvyn  
-Projet Open Source - Tous droits réservés à l'auteur
-
+https://bookmarks.love

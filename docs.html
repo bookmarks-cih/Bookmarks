@@ -5,7 +5,7 @@
 <title>Docs - Bookmarks</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Curated collection of official documentation resources across web, frontend, backend, cloud, databases, DevOps, security, AI, mobile, systems, APIs, and design.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -724,86 +724,25 @@ body {
 }
 
 .bookmark-card:hover .card-domain { color: var(--text-soft); }
+        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
+    .footer .container {
+      min-height: auto;
+      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
+    .footer-brand span { display: block; }
+    
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
 
-.footer {
-  border-top: 1px solid var(--border);
-  padding: 42px 0;
-  margin-top: 60px;
-}
-
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-soft);
-  font-size: 0.9rem;
-}
-
-.footer-logo {
-  width: 34px;
-  height: 34px;
-  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 0 8px 20px rgba(12,132,243,0.2);
-}
-
-.footer-logo svg { width: 14px; height: 14px; }
-.footer-name { font-family: "Space Grotesk", sans-serif; font-weight: 600; }
-
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.footer-link {
-  padding: 10px 14px;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  text-decoration: none;
-  border-radius: 999px;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-
-.footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
-[data-theme="light"] .footer-link:hover { background: rgba(0,0,0,0.05); }
-
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.footer-status {
-  display: flex;
-  align-items: center;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #22c55e;
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
-  display: inline-block;
-  margin-right: 8px;
-}
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
 
 .footer-version {
   font-size: 0.7rem;
@@ -839,8 +778,11 @@ body {
   .hamburger-item-desc { font-size: 0.7rem; }
 
   .bookmarks-grid { grid-template-columns: 1fr; gap: 10px; }
-  .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
+    .footer .container { width: min(100% - 24px, var(--max-width)); }
+    .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
   .footer-right { align-items: center; }
+  .footer-brand { justify-content: center; }
+  .footer-status { align-items: center; justify-self: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
   .card-arrow { opacity: 1; }
 
@@ -903,7 +845,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo-section">
+<a href="hub.html" class="logo-section">
         <div class="logo-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
@@ -1010,7 +952,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
         </div>
         <div class="hamburger-content">
           <div class="hamburger-item-title">Creators</div>
-          <div class="hamburger-item-desc">Meet the Team</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
         </div>
       </a>
 
@@ -1085,35 +1027,33 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
   <main class="bookmarks-grid" id="docs-grid"></main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-          </svg>
+      <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
         </div>
-        <span class="footer-name">Bookmarks</span>
-      </div>
 
-      <nav class="footer-links">
-        <a href="index.html" class="footer-link">Home</a>
-        <a href="about.html" class="footer-link">About</a>
-        <a href="hub.html" class="footer-link">Hub</a>
-        <a href="docs.html" class="footer-link">Docs</a>
-        <a href="privacy.html" class="footer-link">Privacy</a>
-        <a href="https://ko-fi.com/bookmarks" class="footer-link">Support</a>
-      </nav>
-
-      <div class="footer-right">
+        <div class="footer-links">
+          <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        
         <div class="footer-status">
-          <span class="status-dot"></span>
-          <span>All systems operational</span>
+           <div class="footer-status-meta">
+             <span class="status-dot"></span> All systems operational
+           </div>
+           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
         </div>
-        <span class="footer-version">v3.2 // Docs Module</span>
       </div>
-    </div>
-  </footer>
+    </footer>
 
 </div>
 
@@ -1580,3 +1520,5 @@ if (document.readyState === 'loading') {
 
 </body>
 </html>
+
+

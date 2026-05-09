@@ -18,21 +18,21 @@
     --brand-dark: #0066d9;
     --brand-light: #53b5ff;
     --brand-soft: rgba(12,132,243,0.12);
-    
+
     --bg: #07111f;
     --bg-2: #0b1628;
     --surface: rgba(255,255,255,0.06);
     --surface-2: rgba(255,255,255,0.08);
     --surface-3: rgba(255,255,255,0.12);
-    
+
     --text: #f7fbff;
     --text-soft: rgba(247,251,255,0.78);
     --text-dim: rgba(247,251,255,0.56);
-    
+
     --border: rgba(255,255,255,0.10);
     --border-strong: rgba(255,255,255,0.16);
     --shadow: 0 20px 60px rgba(0,0,0,0.35);
-    
+
     --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
     --glass-border: rgba(255,255,255,0.1);
     --noise-opacity: 0.06;
@@ -45,15 +45,15 @@
     --surface: rgba(0,0,0,0.03);
     --surface-2: rgba(0,0,0,0.05);
     --surface-3: rgba(0,0,0,0.08);
-    
+
     --text: #0f172a;
     --text-soft: #475569;
     --text-dim: #94a3b8;
-    
+
     --border: rgba(0,0,0,0.08);
     --border-strong: rgba(0,0,0,0.12);
     --shadow: 0 10px 40px rgba(0,0,0,0.05);
-    
+
     --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
     --glass-border: rgba(0,0,0,0.08);
     --noise-opacity: 0.03;
@@ -75,6 +75,7 @@
     background-color: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    zoom: 75%;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     transition: background-color 0.4s ease, color 0.4s ease;
@@ -90,7 +91,7 @@
     background-size: 24px 24px, 36px 36px, 42px 42px;
     z-index: 1;
   }
-  
+
   [data-theme="light"] .noise {
      background-image:
       radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
@@ -98,12 +99,12 @@
 
   .bg-mesh {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: 
+    background-image:
       radial-gradient(circle at 15% 20%, rgba(12,132,243,0.15), transparent 30%),
       radial-gradient(circle at 85% 0%, rgba(12,132,243,0.10), transparent 24%);
     transition: opacity 0.4s ease;
   }
-  
+
   [data-theme="light"] .bg-mesh {
      opacity: 0.5;
   }
@@ -113,7 +114,7 @@
 
   /* Typography */
   h1, h2, h3, h4 { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; }
-  
+
   /* Header */
   .header {
     position: sticky;
@@ -121,7 +122,7 @@
     z-index: 50;
     padding: 18px 0;
     margin-bottom: 32px;
-    backdrop-filter: blur(14px); 
+    backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
     border-bottom: 1px solid transparent;
@@ -238,7 +239,7 @@
     top: 80px;
     right: 20px;
     background: var(--glass-bg);
-    backdrop-filter: blur(20px); 
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
@@ -420,7 +421,7 @@
 
   /* Hero */
   .hero { padding: 80px 0 60px; text-align: center; position: relative; }
-  
+
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px; width: fit-content;
     padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
@@ -430,13 +431,13 @@
 
   .hero h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; }
   .hero h1 span { color: var(--brand-light); }
-  
+
   .hero-subtitle { max-width: 700px; margin: 0 auto; color: var(--text-soft); font-size: 1.15rem; line-height: 1.75; }
 
   /* Section Styling */
   .section { padding: 60px 0; }
   .section-head { margin-bottom: 32px; }
-  
+
   .section-kicker { display: inline-block; font-size: 0.75rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700; }
   .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin-bottom: 0; }
   .section-desc { color: var(--text-soft); max-width: 620px; line-height: 1.8; font-size: 1.05rem; margin-top: 16px; }
@@ -454,14 +455,14 @@
     display: block;
   }
   .glass-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-3px); }
-  
+
   .info-icon {
     width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px;
     background: rgba(12,132,243,0.15); border: 1px solid rgba(83,181,255,0.2);
     margin-bottom: 16px;
   }
   .info-icon svg { width: 22px; height: 22px; color: var(--brand-light); }
-  
+
   .glass-card h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; }
   .glass-card h3 { font-size: 1.2rem; margin: 24px 0 12px 0; color: var(--text); }
   .glass-card p { color: var(--text-soft); line-height: 1.7; font-size: 0.95rem; margin: 0 0 16px 0; }
@@ -489,7 +490,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
   }
-  
+
   .news-grid .glass-card {
     display: flex;
     flex-direction: column;
@@ -510,26 +511,39 @@
   }
 
   /* Footer */
-  .footer { padding: 42px 0 56px; border-top: 1px solid var(--border); margin-top: 60px; }
-  .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; }
-  
-  .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
-  .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
-  .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
+    .footer .container {
+      min-height: auto;
+      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
+    .footer-brand span { display: block; }
+    
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
 
-  .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
 
   /* Responsive */
   @media (max-width: 900px) {
-    .nav { display: none; } 
+    .nav { display: none; }
     .clock { display: none; }
     .header-inner { justify-content: center; }
     .brand { margin-right: auto; }
     .theme-toggle { margin-left: auto; }
-    
-    .footer-inner { flex-direction: column; text-align: center; gap: 24px; }
-    .footer-links { justify-content: center; }
+
+      .footer .container { width: min(100% - 24px, var(--max-width)); }
+          .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-brand { justify-content: center; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
   }
 
   @media (max-width: 768px) {
@@ -537,7 +551,7 @@
     .header { padding: 14px 0; margin-bottom: 24px; }
     .logo-text { font-size: 1.2rem; }
     .clock { display: none; }
-  
+
     .hamburger-menu {
       top: 70px;
       right: 16px;
@@ -546,16 +560,18 @@
       width: auto;
       padding: 16px;
     }
-  
+
     .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
     .hamburger-item { padding: 12px 14px; }
     .hamburger-icon { width: 38px; height: 38px; }
     .hamburger-icon svg { width: 18px; height: 18px; }
     .hamburger-item-title { font-size: 0.9rem; }
     .hamburger-item-desc { font-size: 0.7rem; }
-    
-    .footer-inner { flex-direction: column; text-align: center; gap: 24px; }
-    .footer-links { justify-content: center; }
+
+          .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-brand { justify-content: center; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -571,7 +587,7 @@
   <div class="page">
     <header class="header">
       <div class="container header-inner">
-        <a href="index.html" class="logo-section">
+<a href="hub.html" class="logo-section">
           <div class="logo-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
@@ -579,7 +595,7 @@
           </div>
           <div class="logo-text">Book<span>marks</span></div>
         </a>
-        
+
         <div class="header-actions">
           <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -670,7 +686,7 @@
           </div>
           <div class="hamburger-content">
             <div class="hamburger-item-title">Creators</div>
-            <div class="hamburger-item-desc">Meet Team</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
           </div>
         </a>
         <a href="news.html" class="hamburger-item">
@@ -739,135 +755,179 @@
             </p>
           </div>
 
-          <!-- Update Item 1 -->
           <div class="glass-card">
             <span class="badge-date">March 9, 2026</span>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <h3>New Sections: Civil Rights & Psychology</h3>
-            </div>
+            <h3>Civil Rights and Psychology Went Live</h3>
             <p>
-              We are excited to announce the addition of two new sections to the Docs area of Bookmarks: "Civil Rights" and "Psychology". These categories have been carefully curated to provide valuable resources and documentation on important social justice and mental health topics. This update reflects our ongoing commitment to expanding access to knowledge.
+              Two new documentation lanes were added to Bookmarks: Civil Rights and Psychology. This release expands the platform beyond pure tooling and research by making room for social, legal, and mental-health oriented reading paths.
             </p>
           </div>
 
-          <!-- Update Item 2 -->
           <div class="glass-card">
             <span class="badge-date">March 8, 2026</span>
-            <h3>Performance Overhaul & Special Wishes</h3>
+            <h3>Homepage Performance Pass Completed</h3>
             <p>
-              We have significantly improved the homepage and the hub by reducing animation lag and simplifying navigation on mobile. To support these enhancements, we have integrated new libraries such as AlpineJS, ThreeJS, GSAP, and AnimeJS.
-            </p>
-            <p>
-              Additionally, we have completed the graphic redesign of our HTTPing, however this service will be paused for the foreseeable future due to a lack of support. On a lighter note, we wish a joyful International Women's Day 2026 to all the women in our community.
+              We reworked the homepage and hub interactions to feel lighter, cleaner, and less noisy on slower devices. Animation timing, navigation flow, and general visual balance were refined to make browsing smoother across the site.
             </p>
           </div>
 
-          <!-- Update Item 3 -->
           <div class="glass-card">
             <span class="badge-date">March 6, 2026</span>
-            <h3>Dump Status Dashboard & CSV Access</h3>
+            <h3>Dump Status Dashboard Published</h3>
             <p>
-              We are excited to announce the launch of our new <strong>Dump Status</strong> page, a dedicated dashboard designed to provide full transparency on the health of the Bookmarks repository. You can now monitor the status of thousands of links in real-time.
-            </p>
-            <p>
-              For developers, we have also made the entire archive accessible via CSV files on <a href="https://github.com/bookmarks-cih/statusdump-csv" target="_blank">GitHub</a>.
+              The new Dump Status page is now part of the ecosystem, giving visitors a clearer view of archive health and link maintenance. We also opened a CSV-oriented workflow for users who want a more raw, data-first view of the collection.
             </p>
           </div>
 
-          <!-- Update Item 4 -->
           <div class="glass-card">
-            <span class="badge-date">May 22, 2025</span>
-            <h3>Wellness & Visual Identity Update</h3>
+            <span class="badge-date">February 25, 2026</span>
+            <h3>News Page Reframed as a Product Log</h3>
             <p>
-              The Bookmarks team is excited to announce the addition of the Safety & Prevention category, designed to provide curated resources on mental health, well-being, and personal safety.
+              The News area was repositioned to work as a readable timeline for Bookmarks itself. Instead of acting like a generic feed, it now better reflects product changes, section launches, and archive milestones.
             </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 18, 2026</span>
+            <h3>Creator Profiles Expanded Into a Real Directory</h3>
             <p>
-              We’ve also rolled out significant visual updates to the main dashboard, refining the atmosphere with layered gradients and improving the "glassmorphism" effects on cards for better readability.
+              We moved beyond a placeholder creator concept and pushed a more complete profile system with dedicated pages, curated resource cards, and clearer attribution. The goal was to make each featured profile feel like a navigable knowledge space instead of a simple shoutout.
             </p>
           </div>
 
-        </div>
-      </section>
-
-      <!-- Section 2: Curated News Sources -->
-      <section class="section">
-        <div class="container">
-          <div class="section-head">
-            <span class="section-kicker">02. External Sources</span>
-            <h2 class="section-title">Curated News Directory</h2>
-            <p class="section-desc">
-              Explore our hand-picked directory of reliable news sources covering tech, security, privacy, and industry insights.
+          <div class="glass-card">
+            <span class="badge-date">February 10, 2026</span>
+            <h3>Bookmark Detail Pages Added for Key Resources</h3>
+            <p>
+              Several direct resource pages were introduced so visitors can land on a single bookmark and immediately understand why it matters. This helped the archive feel less like a raw list and more like a guided reference system.
             </p>
           </div>
 
-          <div class="news-grid">
-            
-            <!-- Tech -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(12,132,243,0.15); border-color: rgba(12,132,243,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              </div>
-              <h3>Tech Industry</h3>
-              <p>Latest developments, startup news, and industry trends from reliable sources.</p>
-              <div style="margin-top: auto; color: var(--brand-light); font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">50+ Sources</div>
-            </a>
-
-            <!-- Security -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #f87171;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <h3>Cybersecurity</h3>
-              <p>Security breaches, vulnerabilities, and threat intelligence from trusted researchers.</p>
-              <div style="margin-top: auto; color: #f87171; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">25+ Sources</div>
-            </a>
-
-            <!-- Dev -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(168,85,247,0.15); border-color: rgba(168,85,247,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #c084fc;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              </div>
-              <h3>Developer News</h3>
-              <p>Programming updates, new frameworks, and developer community highlights.</p>
-              <div style="margin-top: auto; color: #c084fc; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">30+ Sources</div>
-            </a>
-
-            <!-- Open Source -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(249,115,22,0.15); border-color: rgba(249,115,22,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #fb923c;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-              </div>
-              <h3>Open Source</h3>
-              <p>Latest updates from open source projects, releases, and community contributions.</p>
-              <div style="margin-top: auto; color: #fb923c; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">100+ Projects</div>
-            </a>
-
-            <!-- Privacy -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(20,184,166,0.15); border-color: rgba(20,184,166,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #2dd4bf;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <h3>Privacy Rights</h3>
-              <p>Privacy legislation, surveillance news, and digital rights developments worldwide.</p>
-              <div style="margin-top: auto; color: #2dd4bf; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">20+ Sources</div>
-            </a>
-
-            <!-- Market -->
-            <a href="#" class="glass-card">
-              <div class="info-icon" style="background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.2);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #60a5fa;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-              </div>
-              <h3>Market Analysis</h3>
-              <p>In-depth market analysis, investment trends, and economic indicators.</p>
-              <div style="margin-top: auto; color: #60a5fa; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Professional Analysis</div>
-            </a>
-
+          <div class="glass-card">
+            <span class="badge-date">January 28, 2026</span>
+            <h3>Hub Layout Became the Main Navigation Layer</h3>
+            <p>
+              The hub was upgraded into a central routing surface for the project. Larger cards, stronger hierarchy, and a more visual tile system made it easier to jump between docs, files, creators, jobs, and support pages.
+            </p>
           </div>
+
+          <div class="glass-card">
+            <span class="badge-date">January 14, 2026</span>
+            <h3>Docs Page Structure Was Reorganized</h3>
+            <p>
+              We cleaned up the Docs experience so categories feel more intentional and easier to scan. This pass focused on improving the way long-term knowledge collections are presented, especially for users exploring multiple subjects in one session.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">December 19, 2025</span>
+            <h3>Files Space Introduced for Shared Assets</h3>
+            <p>
+              A dedicated Files section was added to support downloadable resources, packaged material, and structured asset access. This gave Bookmarks a more practical layer for users who need more than just external links.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">December 3, 2025</span>
+            <h3>Edit Workflow Entered the Interface</h3>
+            <p>
+              We introduced a visible edit pathway to support future curation updates and content management actions. Even in its early form, the edit area marked a shift toward Bookmarks as a living system rather than a static gallery.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">November 21, 2025</span>
+            <h3>Jobs Section Joined the Platform Map</h3>
+            <p>
+              The Jobs page was added as part of a broader effort to connect discovery with opportunity. It gives the project a more career-oriented angle and helps extend the platform from research and reading into practical next steps.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">November 8, 2025</span>
+            <h3>Theme Switching Was Polished Across Core Pages</h3>
+            <p>
+              We improved the dark and light theme behavior so the site feels more consistent from page to page. Small visual mismatches were reduced, and the overall interface now carries a stronger product identity regardless of theme.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">October 26, 2025</span>
+            <h3>Footer and Global Navigation Were Unified</h3>
+            <p>
+              Navigation patterns were normalized across the site to reduce friction and repetition. This included updates to footer links, menu structure, and the way supporting pages connect back to the main archive.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">October 12, 2025</span>
+            <h3>Support and Trust Pages Were Filled Out</h3>
+            <p>
+              Pages covering privacy, terms, support, and public-facing project framing were expanded so the platform feels more complete and credible. This was an important step in turning Bookmarks into a publishable product instead of a private prototype.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">September 28, 2025</span>
+            <h3>Safety and Prevention Category Added</h3>
+            <p>
+              We added a Safety and Prevention lane to make room for resources focused on well-being, awareness, and personal resilience. That update broadened the editorial scope of Bookmarks while staying aligned with the idea of useful, structured internet.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">September 10, 2025</span>
+            <h3>Public Messaging for Creators Was Clarified</h3>
+            <p>
+              We refined how the project speaks to contributors, creators, and experts interested in being featured. The messaging now better explains attribution, editorial control, and how public resource pages can benefit both visitors and contributors.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">August 22, 2025</span>
+            <h3>Prototype Concepts Became Production Directions</h3>
+            <p>
+              Several ideas that originally lived inside prototype pages were promoted into the main product direction. This included clearer language around curation, audience value, and the role of themed knowledge pathways inside the site.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">July 30, 2025</span>
+            <h3>Data Library Continued to Grow</h3>
+            <p>
+              The main bookmarks dataset was expanded with more categories, more references, and better thematic spread. This work is less visible than a homepage redesign, but it remains the foundation of what makes the platform useful.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">June 18, 2025</span>
+            <h3>Card Styling and Glass UI Were Refined</h3>
+            <p>
+              We tightened spacing, softened contrast, and improved the layered glass treatment used across key panels. These changes were made to keep the interface expressive without sacrificing readability.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">April 27, 2025</span>
+            <h3>Archive Positioning Became More Curatorial</h3>
+            <p>
+              Bookmarks started leaning more clearly into curation rather than simple aggregation. The writing, structure, and page relationships were updated to make it obvious that selection quality matters as much as quantity.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 2, 2025</span>
+            <h3>Foundations for the Public Bookmarks Hub Were Set</h3>
+            <p>
+              Early layout work established the core direction of the project: a curated internet hub with sections, profiles, expandable knowledge areas, and a visual identity strong enough to support long-term growth.
+            </p>
+          </div>
+
         </div>
       </section>
     </main>
 
-    <footer class="footer">
+        <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand">
           <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
@@ -879,16 +939,15 @@
         </div>
 
         <div class="footer-links">
-          <a class="footer-link" href="index.html">Home</a>
-          <a class="footer-link" href="about.html">About</a>
-          <a class="footer-link" href="hub.html">Hub</a>
           <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
           <a class="footer-link" href="privacy.html">Privacy</a>
-          <a class="footer-link" href="https://ko-fi.com/bookmarks" target="_blank" rel="noopener noreferrer">Support</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
         
-        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
-           <div style="display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim);">
+        <div class="footer-status">
+           <div class="footer-status-meta">
              <span class="status-dot"></span> All systems operational
            </div>
            <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
@@ -916,7 +975,7 @@
 
       const toggle = document.getElementById('theme-toggle');
       const knob = toggle.querySelector('svg');
-      
+
       function updateIcon(theme) {
         if (theme === 'dark') {
           knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
@@ -930,7 +989,7 @@
       toggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
+
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateIcon(newTheme);
@@ -970,3 +1029,5 @@
   </script>
 </body>
 </html>
+
+
