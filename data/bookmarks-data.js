@@ -427,7 +427,7 @@ window.BOOKMARKS_DATA = [
   { name: "The Duck Webcomics", link: "https://theduckwebcomics.com", desc: "Free indie comics.", cat: "Webtoon" },
   { name: "Webtoon XYZ (legal originals)", link: "https://webtoonxyz.com", desc: "User-uploaded comics.", cat: "Webtoon" },
 
-  /* -------------------- COMICS -------------------- */
+/* -------------------- COMICS -------------------- */
   { name: "Marvel Unlimited Free", link: "https://marvel.com/comics/unlimited", desc: "Free sample comics.", cat: "Comics" },
   { name: "DC Universe Infinite Free", link: "https://dcuniverseinfinite.com", desc: "Free issues.", cat: "Comics" },
   { name: "Dark Horse Free", link: "https://digital.darkhorse.com", desc: "Free issues.", cat: "Comics" },
@@ -437,6 +437,12 @@ window.BOOKMARKS_DATA = [
   { name: "Digital Comic Museum", link: "https://digitalcomicmuseum.com", desc: "Golden Age comics.", cat: "Comics" },
   { name: "ReadComicOnline (legal free)", link: "https://readcomicsonline.ru", desc: "Free indie comics.", cat: "Comics" },
   { name: "IndyPlanet", link: "https://indyplanet.com", desc: "Free indie comics.", cat: "Comics" },
+  { name: "Webtoon", link: "https://www.webtoons.com", desc: "Plateforme de bandes dessinées numériques gratuites.", cat: "Comics" },
+  { name: "Tapas", link: "https://tapas.io", desc: "Bandes dessinées et romans graphiques gratuits.", cat: "Comics" },
+  { name: "GlobalComix", link: "https://globalcomix.com", desc: "Bandes dessinées indépendantes et internationales.", cat: "Comics" },
+  { name: "ComicFury", link: "https://comicfury.com", desc: "Hébergement gratuit de webcomics.", cat: "Comics" },
+  { name: "Smack Jeeves", link: "https://www.smackjeeves.com", desc: "Communauté de créateurs de webcomics.", cat: "Comics" },
+  { name: "The Duck Webcomics", link: "https://www.theduckwebcomics.com", desc: "Plateforme pour créer et partager des webcomics.", cat: "Comics" },
 
   /* -------------------- STORE -------------------- */
   { name: "Amazon Kindle Store", link: "https://amazon.com/kindle", desc: "Paid ebooks.", cat: "Store" },
@@ -611,7 +617,37 @@ window.BOOKMARKS_DATA = [
   { name: "Radiooooo", link: "https://radiooooo.com", desc: "Musical time travel by country/decade.", cat: "Audio" },
   { name: "A Soft Murmur", link: "https://asoftmurmur.com", desc: "Customizable ambient sounds.", cat: "Audio" },
   { name: "MyNoise", link: "https://mynoise.net", desc: "Ambient sound generator.", cat: "Audio" },
-  { name: "Vocaroo", link: "https://vocaroo.com/", desc: "Vocaroo is a quick and easy way to share voice messages over the interwebs..", cat: "Audio" },
+  { name: "Vocaroo", link: "https://vocaroo.com/", desc: "Quick and easy way to share voice messages online.", cat: "Audio" },
+
+  // --- Niche & Experimental Audio ---
+  { name: "Clyp", link: "https://clyp.it", desc: "Simple audio hosting and sharing.", cat: "Audio" },
+  { name: "HearThis", link: "https://hearthis.at", desc: "Audio hosting for musicians and podcasters.", cat: "Audio" },
+  { name: "SoundGym", link: "https://www.soundgym.co", desc: "Ear training and audio production exercises.", cat: "Audio" },
+  { name: "Splice", link: "https://splice.com", desc: "Cloud-based music production and sample library.", cat: "Audio" },
+  { name: "Freesound", link: "https://freesound.org", desc: "Collaborative database of Creative Commons sounds.", cat: "Audio" },
+  { name: "AudioJungle", link: "https://audiojungle.net", desc: "Marketplace for royalty-free music and sound effects.", cat: "Audio" },
+  { name: "Epidemic Sound", link: "https://www.epidemicsound.com", desc: "Royalty-free music for content creators.", cat: "Audio" },
+  { name: "Artlist", link: "https://artlist.io", desc: "High-quality, royalty-free music for videos.", cat: "Audio" },
+
+  // --- Podcasts & Spoken Word ---
+  { name: "Anchor", link: "https://anchor.fm", desc: "Free podcast hosting and distribution.", cat: "Audio" },
+  { name: "Spreaker", link: "https://www.spreaker.com", desc: "Live podcasting and audio streaming.", cat: "Audio" },
+  { name: "Podbean", link: "https://www.podbean.com", desc: "Podcast hosting with monetization options.", cat: "Audio" },
+  { name: "Castbox", link: "https://castbox.fm", desc: "Podcast player with discovery features.", cat: "Audio" },
+  { name: "Pocket Casts", link: "https://www.pocketcasts.com", desc: "Powerful podcast player with sync and discovery.", cat: "Audio" },
+
+  // --- Audio Tools & Utilities ---
+  { name: "Audacity", link: "https://www.audacityteam.org", desc: "Open-source audio editor and recorder.", cat: "Audio" },
+  { name: "Ocenaudio", link: "https://www.ocenaudio.com", desc: "Fast and functional audio editor.", cat: "Audio" },
+  { name: "Spek", link: "https://spek.cc", desc: "Acoustic spectrum analyser for audio files.", cat: "Audio" },
+  { name: "Sonic Visualiser", link: "https://www.sonicvisualiser.org", desc: "Visualize and analyze audio data.", cat: "Audio" },
+  { name: "Bfxr", link: "https://www.bfxr.net", desc: "Simple tool for making retro game sounds.", cat: "Audio" },
+  { name: "Chiptone", link: "https://sfbgames.itch.io/chiptone", desc: "Generate chiptune sounds and music.", cat: "Audio" },
+  { name: "Online Voice Recorder", link: "https://online-voice-recorder.com", desc: "Record and download voice memos directly in browser.", cat: "Audio" },
+  { name: "Bear Audio Tool", link: "https://bear.audio", desc: "Collaborative audio editing and mixing.", cat: "Audio" },
+  
+  
+  
 
   /* -------------------- IMAGES -------------------- */
   { name: "Unsplash", link: "https://unsplash.com", desc: "High-quality free photos.", cat: "Images" },
@@ -640,14 +676,43 @@ window.BOOKMARKS_DATA = [
   { name: "Remove.bg", link: "https://remove.bg", desc: "Remove image backgrounds.", cat: "Tools" },
   { name: "StackPrinter", link: "http://stackprinter.appspot.com", desc: "Readable StackOverflow print view.", cat: "Tools" },
 
-  /* -------------------- VIDEO -------------------- */
-  { name: "YouTube", link: "https://youtube.com", desc: "Global video platform.", cat: "Video" },
-  { name: "Dailymotion", link: "https://dailymotion.com", desc: "French video platform.", cat: "Video" },
-  { name: "FMovies", link: "https://fmoviesz.to", desc: "Streaming movies and series.", cat: "Video" },
-  { name: "Archive.org Videos", link: "https://archive.org/details/movies", desc: "Free movies and videos.", cat: "Video" },
-  { name: "PeerTube Instances", link: "https://instances.joinpeertube.org", desc: "Decentralized alternative to YouTube.", cat: "Video" },
-  { name: "LBRY/Odysee", link: "https://odysee.com", desc: "Decentralized and free videos.", cat: "Video" },
-  { name: "Internet Archive: TV News", link: "https://archive.org/details/tv", desc: "TV news archives.", cat: "Video" },
+/* -------------------- VIDÉO -------------------- */
+  // --- Plateformes Vidéo Alternatives & Communautaires ---
+  { name: "PeerTube", link: "https://peertube.tv", desc: "Plateforme vidéo décentralisée et open-source.", cat: "Video" },
+  { name: "LBRY/Odysee", link: "https://odysee.com", desc: "Plateforme vidéo basée sur la blockchain, sans censure.", cat: "Video" },
+  { name: "DTube", link: "https://d.tube", desc: "Alternative décentralisée à YouTube, basée sur la blockchain Steem.", cat: "Video" },
+  { name: "Bitchute", link: "https://www.bitchute.com", desc: "Plateforme vidéo axée sur la liberté d'expression.", cat: "Video" },
+  { name: "Rumble", link: "https://rumble.com", desc: "Plateforme vidéo alternative avec un accent sur la liberté de contenu.", cat: "Video" },
+  { name: "Vimeo (Communauté)", link: "https://vimeo.com", desc: "Plateforme pour créateurs avec une forte communauté artistique.", cat: "Video" },
+  { name: "Internet Archive: TV News", link: "https://archive.org/details/tv", desc: "Archives de nouvelles télévisées et contenus historiques.", cat: "Video" },
+  { name: "TikTok (Créateurs Indépendants)", link: "https://www.tiktok.com", desc: "Plateforme de vidéos courtes avec une forte communauté de créateurs.", cat: "Video" },
+  { name: "Twitch (Communauté)", link: "https://www.twitch.tv", desc: "Plateforme de streaming en direct pour les communautés de joueurs et créateurs.", cat: "Video" },
+  { name: "Trovo", link: "https://trovo.live", desc: "Alternative à Twitch pour le streaming en direct.", cat: "Video" },
+  { name: "Caffeine", link: "https://www.caffeine.tv", desc: "Plateforme de streaming interactif pour les créateurs.", cat: "Video" },
+  { name: "DLive", link: "https://dlive.tv", desc: "Plateforme de streaming basée sur la blockchain.", cat: "Video" },
+  { name: "Theta.tv", link: "https://www.theta.tv", desc: "Streaming de jeux et de contenus en direct avec récompenses.", cat: "Video" },
+  { name: "VK Video", link: "https://vk.com/video", desc: "Plateforme vidéo populaire en Russie et pays voisins.", cat: "Video" },
+  { name: "Rutube", link: "https://rutube.ru", desc: "Alternative russe à YouTube.", cat: "Video" },
+  { name: "Mail.ru Video", link: "https://video.mail.ru", desc: "Plateforme vidéo russe avec contenu communautaire.", cat: "Video" },
+  { name: "YouNow", link: "https://www.younow.com", desc: "Plateforme de streaming en direct et de rencontres virtuelles.", cat: "Video" },
+  { name: "Periscope (Archive)", link: "https://www.pscp.tv", desc: "Ancienne plateforme de streaming en direct, archives disponibles.", cat: "Video" },
+  { name: "Smashcast", link: "https://www.smashcast.tv", desc: "Plateforme de streaming pour les communautés de jeux.", cat: "Video" },
+  { name: "Nimo TV", link: "https://www.nimo.tv", desc: "Plateforme de streaming interactive pour les joueurs.", cat: "Video" },
+  { name: "Nonolive", link: "https://www.nonolive.com", desc: "Streaming en direct et contenu communautaire.", cat: "Video" },
+  { name: "Booyah", link: "https://www.booyah.live", desc: "Plateforme de streaming pour les joueurs mobiles.", cat: "Video" },
+  { name: "Kick", link: "https://kick.com", desc: "Nouvelle plateforme de streaming en direct pour créateurs.", cat: "Video" },
+  { name: "Glimesh", link: "https://glimesh.tv", desc: "Plateforme de streaming communautaire et open-source.", cat: "Video" },
+  { name: "Owncast", link: "https://owncast.online", desc: "Solution auto-hébergée pour le streaming en direct.", cat: "Video" },
+  { name: "Streamable", link: "https://streamable.com", desc: "Partage de vidéos courtes et simples.", cat: "Video" },
+  { name: "Loom", link: "https://www.loom.com", desc: "Enregistrement et partage d'écran pour les créateurs.", cat: "Video" },
+  { name: "Wistia", link: "https://wistia.com", desc: "Plateforme vidéo pour les professionnels et entreprises.", cat: "Video" },
+  { name: "JW Player", link: "https://www.jwplayer.com", desc: "Solution vidéo pour les éditeurs et créateurs.", cat: "Video" },
+  { name: "ISS Out TV", link: "https://issoutv.com", desc: "Flux vidéo en direct depuis la Station Spatiale Internationale.", cat: "Video" },
+  { name: "NASA TV", link: "https://www.nasa.gov/nasatv", desc: "Chaîne officielle de la NASA pour les événements spatiaux.", cat: "Video" },
+  { name: "CCTV Video News Agency", link: "http://www.cctvplus.com", desc: "Agence de presse vidéo chinoise avec contenus variés.", cat: "Video" },
+  { name: "AP Archive", link: "https://www.aparchive.com", desc: "Archives vidéo historiques et actualités de l'Associated Press.", cat: "Video" },
+  { name: "Reuters TV", link: "https://www.reuters.com/video", desc: "Actualités et reportages vidéo de Reuters.", cat: "Video" },
+
 
   /* -------------------- ARCHIVES -------------------- */
   { name: "Archive.org", link: "https://archive.org", desc: "Web and media archives.", cat: "Archives" },
@@ -1784,15 +1849,35 @@ window.BOOKMARKS_DATA = [
   { name: "Sitekick", link: "https://sitekick.ai", desc: "AI landing page builder.", cat: "Builder" },
   { name: "Mixo", link: "https://mixo.io", desc: "AI startup website and landing page generator.", cat: "Builder" },
 
-  /* -------------------- DATA -------------------- */
-  { name: "Kaggle", link: "https://kaggle.com", desc: "Datasets, ML competitions, notebooks.", cat: "Data" },
-  { name: "Hugging Face", link: "https://huggingface.co", desc: "Open-source ML models and NLP tools.", cat: "Data" },
-  { name: "UCI Repo", link: "https://archive.ics.uci.edu", desc: "Classic machine learning datasets.", cat: "Data" },
-  { name: "Google Dataset Search", link: "https://datasetsearch.research.google.com", desc: "Search engine for data worldwide.", cat: "Data" },
-  { name: "Our World in Data", link: "https://ourworldindata.org", desc: "Research and data on global problems.", cat: "Data" },
-  { name: "Visual Capitalist", link: "https://visualcapitalist.com", desc: "Data-driven visual storytelling.", cat: "Data" },
-  { name: "DeepMind", link: "https://deepmind.google", desc: "Cutting-edge AI research and articles.", cat: "Data" },
-  { name: "FiveThirtyEight", link: "https://fivethirtyeight.com", desc: "Statistical analysis and data journalism.", cat: "Data" },
+/* -------------------- DATA -------------------- */
+{ name: "Kaggle", link: "https://kaggle.com", desc: "Datasets, ML competitions, notebooks.", cat: "Data" },
+{ name: "Hugging Face", link: "https://huggingface.co", desc: "Open-source ML models and NLP tools.", cat: "Data" },
+{ name: "UCI Repo", link: "https://archive.ics.uci.edu", desc: "Classic machine learning datasets.", cat: "Data" },
+{ name: "Google Dataset Search", link: "https://datasetsearch.research.google.com", desc: "Search engine for data worldwide.", cat: "Data" },
+{ name: "Our World in Data", link: "https://ourworldindata.org", desc: "Research and data on global problems.", cat: "Data" },
+{ name: "Visual Capitalist", link: "https://visualcapitalist.com", desc: "Data-driven visual storytelling.", cat: "Data" },
+{ name: "DeepMind", link: "https://deepmind.google", desc: "Cutting-edge AI research and articles.", cat: "Data" },
+{ name: "FiveThirtyEight", link: "https://fivethirtyeight.com", desc: "Statistical analysis and data journalism.", cat: "Data" },
+{ name: "Data.gov", link: "https://data.gov", desc: "US government open data portal.", cat: "Data" },
+{ name: "AWS Open Data", link: "https://registry.opendata.aws", desc: "Public datasets hosted on AWS.", cat: "Data" },
+{ name: "Open Data Soft", link: "https://www.opendatasoft.com", desc: "Platform for sharing and exploring datasets.", cat: "Data" },
+{ name: "DataHub", link: "https://datahub.io", desc: "Collaborative platform for datasets.", cat: "Data" },
+{ name: "Zenodo", link: "https://zenodo.org", desc: "Open-access repository for research data.", cat: "Data" },
+{ name: "Figshare", link: "https://figshare.com", desc: "Repository for academic research data.", cat: "Data" },
+{ name: "Dryad", link: "https://datadryad.org", desc: "Curated general-purpose research data.", cat: "Data" },
+{ name: "NASA Open Data", link: "https://data.nasa.gov", desc: "NASA’s public datasets and APIs.", cat: "Data" },
+{ name: "World Bank Open Data", link: "https://data.worldbank.org", desc: "Global development data.", cat: "Data" },
+{ name: "Eurostat", link: "https://ec.europa.eu/eurostat", desc: "European statistical data.", cat: "Data" },
+{ name: "UN Data", link: "https://data.un.org", desc: "United Nations statistical databases.", cat: "Data" },
+{ name: "DataPortals.org", link: "https://dataportals.org", desc: "Directory of open data portals.", cat: "Data" },
+{ name: "Open Data Inception", link: "https://opendatainception.io", desc: "Aggregator of open data portals.", cat: "Data" },
+{ name: "DataIsPlural", link: "https://tinyletter.com/data-is-plural", desc: "Weekly newsletter of interesting datasets.", cat: "Data" },
+{ name: "Quandl", link: "https://www.quandl.com", desc: "Financial, economic, and alternative datasets.", cat: "Data" },
+{ name: "Statista", link: "https://www.statista.com", desc: "Statistics and market data.", cat: "Data" },
+{ name: "DataUSA", link: "https://datausa.io", desc: "Visualizations of US public data.", cat: "Data" },
+{ name: "OpenStreetMap", link: "https://www.openstreetmap.org", desc: "Free editable map of the world.", cat: "Data" },
+{ name: "Natural Earth", link: "https://www.naturalearthdata.com", desc: "Public domain map datasets.", cat: "Data" },
+{ name: "GDELT Project", link: "https://www.gdeltproject.org", desc: "Global database of society events.", cat: "Data" },
 
   /* -------------------- PRODUCTIVITY -------------------- */
   { name: "Obsidian", link: "https://obsidian.md", desc: "Markdown-based knowledge base with graph view.", cat: "Productivity" },

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Curator Submission Form — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit your curator application to Bookmarks.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --bg: #07111f;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      --border: rgba(255,255,255,0.10);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      --glass-border: rgba(255,255,255,0.1);
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: rgba(0,0,0,0.03);
+      --surface-2: rgba(0,0,0,0.05);
+      --text: #0f172a;
+      --text-soft: #475569;
+      --text-dim: #94a3b8;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 10px 40px rgba(0,0,0,0.05);
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      --glass-border: rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(12,132,243,0.22), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(83,181,255,0.16), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #09121d 50%, #050b14 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    [data-theme="light"] body {
+      background:
+        radial-gradient(circle at top left, rgba(12,132,243,0.10), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(83,181,255,0.08), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.06; z-index: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+      background-size: 24px 24px, 36px 36px;
+    }
+    .page { position: relative; z-index: 1; min-height: 100vh; }
+    .container { width: min(100% - 32px, 1160px); margin: 0 auto; }
+    .header {
+      position: sticky; top: 0; z-index: 30; padding: 18px 0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .logo-section { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 42px; height: 42px; border-radius: 12px; color: white;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-family: "Space Grotesk", sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.03em; }
+    .logo-text span { color: var(--brand-light); }
+    .theme-toggle {
+      position: relative; width: 52px; height: 28px; border-radius: 50px; cursor: pointer;
+      background: var(--surface-2); border: 1px solid var(--border); overflow: hidden;
+    }
+    .theme-toggle-knob {
+      position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      transition: transform 0.35s ease; display: flex; align-items: center; justify-content: center; color: white;
+    }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+    .theme-toggle-knob svg { width: 11px; height: 11px; }
+
+    .hero { padding: 54px 0 22px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; padding: 10px 16px; border-radius: 999px; margin-bottom: 18px;
+      background: rgba(12,132,243,0.12); border: 1px solid rgba(83,181,255,0.22);
+      color: var(--brand-light); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .hero h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      letter-spacing: -0.05em;
+      line-height: 0.98;
+      margin-bottom: 14px;
+    }
+    .hero p { max-width: 760px; margin: 0 auto; color: var(--text-soft); line-height: 1.8; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 22px;
+      align-items: start;
+      padding-bottom: 70px;
+    }
+    .info-card, .form-card {
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #09111c, #070d16);
+      box-shadow: var(--shadow);
+    }
+    .info-card { padding: 30px; }
+    .info-card h2, .form-title {
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: -0.04em;
+    }
+    .info-card h2 { font-size: 2rem; line-height: 0.98; margin-bottom: 14px; }
+    .info-card p { color: var(--text-soft); line-height: 1.8; font-size: 0.97rem; }
+    .contact-blocks, .detail-grid { display: grid; gap: 12px; margin-top: 22px; }
+    .contact-line, .detail-card {
+      padding: 16px 18px; border-radius: 18px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08); color: var(--text-soft);
+    }
+    .contact-line strong, .detail-card strong {
+      display: block; color: #fff; margin-bottom: 6px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.09em;
+    }
+    .detail-card p { margin: 0; font-size: 0.93rem; line-height: 1.7; }
+    .note-card {
+      margin-top: 18px; padding: 18px 20px; border-radius: 18px; background: rgba(12,132,243,0.10);
+      border: 1px solid rgba(83,181,255,0.18); color: var(--text-soft);
+    }
+    .note-card span { display: block; color: #fff; margin-bottom: 10px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.09em; font-weight: 700; }
+    .note-card ul { padding-left: 18px; display: grid; gap: 8px; }
+
+    .form-card { padding: 28px; }
+    .form-title { font-size: 1.85rem; margin-bottom: 8px; }
+    .form-sub { color: var(--text-soft); line-height: 1.75; margin-bottom: 18px; font-size: 0.95rem; }
+    .plan-summary-pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+      background: rgba(12,132,243,0.12); border: 1px solid rgba(83,181,255,0.25); color: var(--brand-light);
+      font-size: 0.82rem; font-weight: 600; margin-bottom: 16px;
+    }
+    .plan-summary-pill svg { width: 14px; height: 14px; }
+    .paid-plan-notice {
+      display: none; padding: 14px 16px; border-radius: 14px; margin-bottom: 16px;
+      background: rgba(250,204,21,0.07); border: 1px solid rgba(250,204,21,0.2);
+      font-size: 0.86rem; color: rgba(250,204,21,0.9); line-height: 1.55; gap: 10px; align-items: flex-start;
+    }
+    .paid-plan-notice.visible { display: flex; }
+    .paid-plan-notice svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display: block; margin-bottom: 8px; font-size: 0.86rem; color: var(--text-soft); font-weight: 600; }
+    .field input, .field textarea {
+      width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04); color: var(--text); padding: 14px 16px; font: inherit; outline: none;
+    }
+    .field textarea { min-height: 154px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--text-dim); }
+    .submit-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; cursor: pointer;
+      border-radius: 999px; padding: 14px 18px; font-weight: 700; font: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(83,181,255,0.28), rgba(12,132,243,0.18));
+      border: 1px solid rgba(83,181,255,0.3); color: white; min-width: 180px;
+    }
+    .submit-hint { color: var(--text-dim); font-size: 0.82rem; display: flex; align-items: center; gap: 6px; }
+    .submit-hint svg { width: 14px; height: 14px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--brand-light); font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .info-card, .form-card { padding: 20px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="logo-text">Book<span>marks</span></div>
+        </a>
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">Curator application</div>
+          <h1>Submit your <span>curator profile</span>.</h1>
+          <p>Share your links, your niche, and the context behind your collection. This page is dedicated to the final submission step so the flow feels cleaner and more direct.</p>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="content-grid">
+          <aside class="info-card">
+            <h2>Before you submit.</h2>
+            <p>Use this form to send the essentials for your curator page. If you selected a paid review on the previous step, keep the same name and email for a smoother match on our side.</p>
+
+            <div class="contact-blocks">
+              <div class="contact-line"><strong>Contact us</strong>bookmarks.love@outlook.com</div>
+              <div class="contact-line"><strong>Socials</strong>@bookmarks_hub</div>
+              <div class="contact-line"><strong>Location</strong>The Open Web</div>
+            </div>
+
+            <div class="note-card">
+              <span>Best to include</span>
+              <ul>
+                <li>Your niche, audience, and why your collection matters</li>
+                <li>Important links, reference pages, and public profiles</li>
+                <li>Any file export, document, or structured list that helps review</li>
+              </ul>
+            </div>
+
+            <div class="detail-grid">
+              <div class="detail-card">
+                <strong>Purpose</strong>
+                <p>Bookmarks turns scattered internet knowledge into readable, public collections with stronger context and attribution.</p>
+              </div>
+              <div class="detail-card">
+                <strong>Review flow</strong>
+                <p>We review relevance, clarity, and fit before shaping approved submissions into a cleaner public curator page.</p>
+              </div>
+              <div class="detail-card">
+                <strong>Safety & trust</strong>
+                <p>Broken links, attribution issues, impersonation concerns, and correction requests can all be reported through the same contact channel.</p>
+              </div>
+            </div>
+
+            <a href="become-curator.html" class="back-link">← Back to plan selection</a>
+          </aside>
+
+          <div class="form-card">
+            <div class="form-title">Curator Submission Form</div>
+            <div class="form-sub">Complete the fields below and send your submission directly through Formspree.</div>
+
+            <div class="plan-summary-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="planSummaryText">Free Review selected — no payment required</span>
+            </div>
+
+            <div class="paid-plan-notice" id="paidPlanNotice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Please use the same identity details as your paid review selection.</span>
+            </div>
+
+            <form id="contactForm" action="https://formspree.io/f/mzdjovve" method="POST" enctype="multipart/form-data" novalidate>
+              <input type="hidden" name="selected_plan" id="selectedPlan" value="Free Review">
+              <input type="hidden" name="plan_price" id="planPrice" value="0">
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Full name *</label>
+                  <input id="name" name="name" type="text" placeholder="Your name" required>
+                </div>
+                <div class="field">
+                  <label for="email">Your email *</label>
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="field full">
+                  <label for="message">Tell us about your collection *</label>
+                  <textarea id="message" name="message" placeholder="What kind of resources do you want to feature? Add links, context, niche, audience, and anything useful." required></textarea>
+                </div>
+                <div class="field full">
+                  <label for="upload">Optional file (export, list, doc…)</label>
+                  <input id="upload" name="upload" type="file">
+                </div>
+              </div>
+
+              <div class="submit-row">
+                <button class="btn btn-primary" type="submit" id="submitBtn">Send submission</button>
+                <div class="submit-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  Powered by Formspree
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const knob = document.querySelector('.theme-toggle-knob svg');
+      function updateIcon(theme) {
+        if (theme === 'dark') {
+          knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+        } else {
+          knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+        }
+      }
+      updateIcon(savedTheme);
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+      });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan') || 'Free Review';
+    const price = parseInt(params.get('price') || '0', 10) || 0;
+    document.getElementById('selectedPlan').value = plan;
+    document.getElementById('planPrice').value = String(price);
+    document.getElementById('planSummaryText').textContent = price > 0
+      ? `${plan} selected — paid review`
+      : 'Free Review selected — no payment required';
+    if (price > 0) document.getElementById('paidPlanNotice').classList.add('visible');
+
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true;
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('https://formspree.io/f/mzdjovve', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          submitBtn.textContent = '✓ Submitted!';
+          form.reset();
+          document.getElementById('selectedPlan').value = plan;
+          document.getElementById('planPrice').value = String(price);
+          setTimeout(() => {
+            submitBtn.textContent = 'Send submission';
+            submitBtn.disabled = false;
+          }, 4000);
+        } else {
+          const data = await response.json();
+          throw new Error(data?.errors?.map(e => e.message).join(', ') || 'Submission failed');
+        }
+      } catch (err) {
+        submitBtn.textContent = 'Error — try again';
+        submitBtn.disabled = false;
+        console.error('Form error:', err);
+      }
+    });
+
+    initTheme();
+  </script>
+</body>
+</html>
