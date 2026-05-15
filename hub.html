@@ -1,202 +1,193 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<script src="/zoom.js"></script>
+<script src="zoom.js"></script>
 <meta charset="UTF-8">
 <title>Bookmarks - Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 
 <script>
   window.BOOKMARKS_DATA = window.BOOKMARKS_DATA || [];
 </script>
 <script src="data/bookmarks-data.js?v=20250310"></script>
+<script src="data/bookmarks-enhanced.js"></script>
 
 <style>
+/* =============================================================================
+   TOKENS & THEME
+   ============================================================================= */
 :root {
-  /* Default Dark Theme */
-  --brand: #0c84f3;
-  --brand-dark: #0066d9;
-  --brand-light: #53b5ff;
-  --brand-soft: rgba(12,132,243,0.12);
-  --brand-glow: rgba(12,132,243,0.2);
-  
-  --bg: #07111f;
-  --bg-2: #0b1628;
-  --surface: rgba(255,255,255,0.06);
-  --surface-2: rgba(255,255,255,0.08);
-  --surface-3: rgba(255,255,255,0.12);
-  --surface-hover: rgba(255,255,255,0.1);
-  
-  --text: #f7fbff;
-  --text-soft: rgba(247,251,255,0.78);
-  --text-dim: rgba(247,251,255,0.56);
-  
-  --border: rgba(255,255,255,0.10);
-  --border-strong: rgba(255,255,255,0.16);
-  --shadow: 0 20px 60px rgba(0,0,0,0.35);
-  
-  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-  --glass-border: rgba(255,255,255,0.1);
-  --noise-opacity: 0.06;
-  
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-}
+  /* Colors - Dark Theme */
+  --c-bg: #050810;
+  --c-bg2: #080c18;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-surface2: rgba(255, 255, 255, 0.07);
+  --c-border: rgba(255, 255, 255, 0.08);
+  --c-border2: rgba(255, 255, 255, 0.14);
+  --c-text: #eef2ff;
+  --c-muted: rgba(238, 242, 255, 0.6);
+  --c-dim: rgba(238, 242, 255, 0.35);
+  --c-accent: #4f9eff;
+  --c-accent2: #a78bfa;
+  --c-green: #34d399;
+  --c-gold: #fbbf24;
 
-/* Light Theme Overrides */
-[data-theme="light"] {
-  --bg: #f8fafc;
-  --bg-2: #ffffff;
-  --surface: rgba(0,0,0,0.03);
-  --surface-2: rgba(0,0,0,0.05);
-  --surface-3: rgba(0,0,0,0.08);
-  --surface-hover: rgba(0,0,0,0.05);
-  
-  --text: #0f172a;
-  --text-soft: #475569;
-  --text-dim: #94a3b8;
-  
-  --border: rgba(0,0,0,0.08);
-  --border-strong: rgba(0,0,0,0.12);
-  --shadow: 0 10px 40px rgba(0,0,0,0.05);
-  
-  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-  --glass-border: rgba(0,0,0,0.08);
+  /* Spacing & Sizing */
+  --r-sm: 10px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-xl: 36px;
+  --r-2xl: 48px;
+  --max: 1100px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Legacy aliases */
+  --brand: #4f9eff;
+  --brand-dark: #2563eb;
+  --brand-light: #93c5fd;
+  --brand-soft: rgba(79, 158, 255, 0.12);
+  --brand-glow: rgba(79, 158, 255, 0.2);
+  --bg: var(--c-bg);
+  --bg-2: var(--c-bg2);
+  --surface: var(--c-surface);
+  --surface-2: var(--c-surface2);
+  --surface-3: rgba(255, 255, 255, 0.1);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --text: var(--c-text);
+  --text-soft: var(--c-muted);
+  --text-dim: var(--c-dim);
+  --border: var(--c-border);
+  --border-strong: var(--c-border2);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --noise-opacity: 0.03;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* Light Theme */
+[data-theme="light"] {
+  --c-bg: #f8fafc;
+  --c-bg2: #ffffff;
+  --c-surface: rgba(0, 0, 0, 0.03);
+  --c-surface2: rgba(0, 0, 0, 0.05);
+  --c-border: rgba(0, 0, 0, 0.08);
+  --c-border2: rgba(0, 0, 0, 0.12);
+  --c-text: #0f172a;
+  --c-muted: #475569;
+  --c-dim: #94a3b8;
+  --c-accent: #2563eb;
+  --c-accent2: #7c3aed;
+  --bg: var(--c-bg);
+  --bg-2: var(--c-bg2);
+  --surface: var(--c-surface);
+  --surface-2: var(--c-surface2);
+  --surface-hover: rgba(0, 0, 0, 0.05);
+  --text: var(--c-text);
+  --text-soft: var(--c-muted);
+  --text-dim: var(--c-dim);
+  --border: var(--c-border);
+  --border-strong: var(--c-border2);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --brand: #2563eb;
+  --brand-light: #60a5fa;
+  --brand-dark: #1d4ed8;
+  --brand-soft: rgba(37, 99, 235, 0.08);
+  --brand-glow: rgba(37, 99, 235, 0.15);
+}
 
+/* =============================================================================
+   RESET & BASE STYLES
+   ============================================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 158, 255, 0.3) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 158, 255, 0.3);
+  border-radius: 99px;
+}
 
 body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  overflow-x: hidden;
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: "Inter", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
 }
 
-/* --- NEW AMBIENT BACKGROUND --- */
-.noise {
-  position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 1;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
-    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
-  background-size: 24px 24px, 36px 36px;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-[data-theme="light"] .noise {
-   background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
-}
-
-.bg-ambient {
+/* =============================================================================
+   BACKGROUND & OVERLAYS
+   ============================================================================= */
+#bg-canvas {
   position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
-  overflow: hidden;
   pointer-events: none;
+  opacity: 0.35;
+  filter: blur(20px) saturate(120%);
 }
 
-/* Glowing Orbs */
-.ambient-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
-  animation: floatOrb 20s ease-in-out infinite;
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px;
 }
 
-[data-theme="light"] .ambient-orb {
-  opacity: 0.2;
-  filter: blur(100px);
+[data-theme="light"] .noise-overlay {
+  opacity: 0.015;
 }
 
-.orb-1 {
-  width: 60vw;
-  height: 60vw;
-  max-width: 800px;
-  max-height: 800px;
-  background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
-  top: -20%;
-  left: -10%;
-  animation-delay: 0s;
-}
-
-.orb-2 {
-  width: 50vw;
-  height: 50vw;
-  max-width: 600px;
-  max-height: 600px;
-  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
-  bottom: -10%;
-  right: -10%;
-  animation-delay: -7s;
-  animation-duration: 25s;
-}
-
-.orb-3 {
-  width: 40vw;
-  height: 40vw;
-  max-width: 500px;
-  max-height: 500px;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
-  top: 40%;
-  left: 40%;
-  animation-delay: -14s;
-  animation-duration: 30s;
-}
-
-@keyframes floatOrb {
-  0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(5%, 10%) scale(1.05); }
-  50% { transform: translate(-5%, 5%) scale(0.95); }
-  75% { transform: translate(10%, -5%) scale(1.02); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-/* Tracers */
-.tracer {
-  position: absolute;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  height: 1px;
-  width: 200%;
-  left: -50%;
-  animation: driftTracer 15s linear infinite;
-  transform-origin: center;
-}
-
-[data-theme="light"] .tracer {
-  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
-}
-
-.tracer-1 { top: 20%; transform: rotate(-15deg); animation-delay: 0s; opacity: 0.6; }
-.tracer-2 { top: 50%; transform: rotate(10deg); animation-delay: -5s; animation-duration: 20s; opacity: 0.4; }
-.tracer-3 { top: 80%; transform: rotate(-5deg); animation-delay: -10s; animation-duration: 25s; opacity: 0.5; }
-.tracer-4 { top: 35%; transform: rotate(25deg); animation-delay: -3s; animation-duration: 18s; opacity: 0.3; }
-
-@keyframes driftTracer {
-  0% { transform: translateX(-25%) rotate(inherit); }
-  100% { transform: translateX(25%) rotate(inherit); }
-}
-
-/* --- END BACKGROUND --- */
-
-/* Loader */
+/* =============================================================================
+   LOADER
+   ============================================================================= */
 .loader {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: var(--c-bg);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -204,51 +195,75 @@ body {
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-.loader.hidden { opacity: 0; visibility: hidden; }
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
 
 .loader-ring {
   width: 36px;
   height: 36px;
-  border: 2px solid var(--border);
-  border-top-color: var(--brand);
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-accent);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-/* Main Container */
+/* =============================================================================
+   LAYOUT
+   ============================================================================= */
 .container {
   position: relative;
   z-index: 2;
-  max-width: 1100px;
+  max-width: var(--max);
   margin: 0 auto;
-  padding: 0 20px;
-  min-height: 100vh;
+  padding: 24px 28px 0;
 }
 
-/* Header */
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+  }
+}
+
+/* =============================================================================
+   HEADER (NOW OUTSIDE .container)
+   ============================================================================= */
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
-  padding: 18px 0;
-  margin-bottom: 32px;
-  backdrop-filter: blur(14px); 
-  -webkit-backdrop-filter: blur(14px);
-  background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
-  border-bottom: 1px solid transparent;
+  width: 100%;
+  left: 0;
+  padding: 0;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(5, 8, 16, 0.85);
+  border-bottom: 1px solid var(--c-border);
+  transition: background 0.4s, border-color 0.4s;
 }
 
 [data-theme="light"] .header {
-   background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+  background: rgba(248, 250, 252, 0.88);
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px;
+  height: 72px;
+  flex-wrap: nowrap;
 }
 
 .logo-section {
@@ -257,55 +272,68 @@ body {
   gap: 12px;
   text-decoration: none;
   color: inherit;
+  flex-shrink: 0;
 }
 
 .logo-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  transition: transform 0.3s ease;
-  box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+  background: linear-gradient(135deg, rgba(79, 158, 255, 0.25), rgba(167, 139, 250, 0.15));
+  border: 1px solid rgba(79, 158, 255, 0.25);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 20px rgba(79, 158, 255, 0.12);
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease-spring);
 }
 
-.logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+.logo-icon:hover {
+  transform: rotate(-5deg) scale(1.05);
+}
 
-.logo-icon svg { width: 20px; height: 20px; }
+.logo-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--c-accent);
+}
 
 .logo-text {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-family: "Syne", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
   letter-spacing: -0.03em;
-  color: var(--text);
+  color: var(--c-text);
+  white-space: nowrap;
 }
 
-.logo-text span { color: var(--brand-light); }
+.logo-text span {
+  color: var(--c-accent);
+}
 
 /* Clock */
 .clock {
   text-align: right;
-  font-family: "Space Grotesk", sans-serif;
-  margin-right: 16px;
+  font-family: "Syne", sans-serif;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .clock-time {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--brand-light);
+  color: var(--c-accent);
   letter-spacing: 0.02em;
   line-height: 1;
 }
 
 .clock-date {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-top: 3px;
+  font-size: 0.62rem;
+  color: var(--c-dim);
+  margin-top: 2px;
   font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* Theme Toggle */
@@ -313,15 +341,18 @@ body {
   position: relative;
   width: 52px;
   height: 28px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-.theme-toggle:hover { border-color: var(--brand); }
+.theme-toggle:hover {
+  border-color: var(--c-accent);
+}
 
 .theme-toggle-knob {
   position: absolute;
@@ -329,21 +360,32 @@ body {
   left: 3px;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  background: linear-gradient(135deg, var(--c-accent), #2563eb);
   border-radius: 50%;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(79, 158, 255, 0.3);
   z-index: 2;
 }
 
-.theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+.theme-toggle-knob svg {
+  width: 11px;
+  height: 11px;
+  color: white;
+}
 
-[data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+[data-theme="light"] .theme-toggle-knob {
+  transform: translateX(24px);
+}
 
-.header-actions { display: flex; align-items: center; gap: 10px; }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
 
 /* Social Link */
 .header-social-link {
@@ -353,16 +395,55 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  color: var(--text-soft);
-  transition: all 0.3s ease;
-  text-decoration: none;
+  border: 1px solid var(--c-border);
+  color: var(--c-muted);
+  transition: all 0.25s ease;
+  flex-shrink: 0;
 }
 
-.header-social-link:hover { background: var(--surface); color: var(--text); }
-.header-social-link svg { width: 18px; height: 18px; }
+.header-social-link:hover {
+  background: var(--c-surface2);
+  color: var(--c-text);
+  border-color: var(--c-border2);
+}
 
-/* Search Section */
-.search-section { margin-bottom: 28px; }
+.header-social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+  display: flex;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: 8px;
+  cursor: pointer;
+  color: var(--c-muted);
+  transition: all 0.25s ease;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-btn:hover {
+  color: var(--c-accent);
+  background: var(--c-surface2);
+  border-color: rgba(79, 158, 255, 0.3);
+}
+
+.hamburger-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =============================================================================
+   SEARCH SECTION
+   ============================================================================= */
+.search-section {
+  padding-top: 0;
+  margin-bottom: 28px;
+}
 
 .search-row {
   display: flex;
@@ -375,30 +456,32 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-md);
   padding: 0 16px;
   transition: all 0.3s ease;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(20px); 
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
 .search-wrapper:focus-within {
-  border-color: rgba(83,181,255,0.4);
-  box-shadow: 0 0 0 3px var(--brand-soft), var(--shadow);
+  border-color: rgba(79, 158, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(79, 158, 255, 0.08), var(--shadow);
 }
 
 .search-icon {
   width: 16px;
   height: 16px;
-  color: var(--text-dim);
+  color: var(--c-dim);
   flex-shrink: 0;
   transition: color 0.3s ease;
 }
 
-.search-wrapper:focus-within .search-icon { color: var(--brand-light); }
+.search-wrapper:focus-within .search-icon {
+  color: var(--c-accent);
+}
 
 .search-input {
   flex: 1;
@@ -406,46 +489,52 @@ body {
   border: none;
   padding: 14px 14px;
   font-size: 0.9rem;
-  color: var(--text);
+  color: var(--c-text);
   outline: none;
   min-width: 0;
-  font-family: inherit;
+  font-family: "DM Sans", sans-serif;
 }
 
-.search-input::placeholder { color: var(--text-dim); }
+.search-input::placeholder {
+  color: var(--c-dim);
+}
 
 .search-stats {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 10px 20px;
-  background: var(--glass-bg);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--glass-border);
+  background: var(--c-surface);
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border2);
   box-shadow: var(--shadow);
   backdrop-filter: blur(20px);
 }
 
-.stat { text-align: center; }
+.stat {
+  text-align: center;
+}
 
 .stat-num {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--brand-light);
+  color: var(--c-accent);
   line-height: 1;
 }
 
 .stat-label {
-  font-size: 0.65rem;
-  color: var(--text-dim);
+  font-size: 0.62rem;
+  color: var(--c-dim);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   margin-top: 3px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-/* Category Pills */
+/* =============================================================================
+   CATEGORY PILLS
+   ============================================================================= */
 .categories {
   display: flex;
   flex-wrap: wrap;
@@ -457,47 +546,89 @@ body {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: 99px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--text-soft);
+  color: var(--c-muted);
   cursor: pointer;
   transition: all 0.25s ease;
   white-space: nowrap;
-  font-family: inherit;
-  backdrop-filter: blur(10px);
+  font-family: "DM Sans", sans-serif;
 }
 
 .category-pill:hover {
-  border-color: var(--border-strong);
-  color: var(--text);
-  background: var(--surface-2);
+  border-color: rgba(79, 158, 255, 0.3);
+  color: var(--c-text);
+  background: var(--c-surface2);
 }
 
 .category-pill.active {
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-  border-color: transparent;
-  color: white;
+  background: rgba(79, 158, 255, 0.12);
+  border-color: rgba(79, 158, 255, 0.4);
+  color: var(--c-accent);
   font-weight: 600;
-  box-shadow: 0 4px 12px var(--brand-glow);
+  box-shadow: 0 0 0 2px rgba(79, 158, 255, 0.1);
 }
 
 .category-pill .count {
-  background: rgba(0,0,0,0.15);
+  background: rgba(79, 158, 255, 0.12);
+  color: var(--c-accent);
   padding: 2px 7px;
   border-radius: 50px;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: 0.62rem;
+  font-weight: 700;
 }
 
-.category-pill:not(.active) .count {
-  background: var(--brand-soft);
-  color: var(--brand-light);
+.category-pill.active .count {
+  background: rgba(79, 158, 255, 0.2);
 }
 
-/* Featured Section */
+/* Inline notices */
+.hub-inline-notices {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.hub-inline-notice {
+  position: relative;
+  padding: 14px 42px 14px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border2);
+  background: var(--c-surface);
+  color: var(--c-muted);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.hub-inline-notice strong {
+  color: var(--c-text);
+  font-family: "Syne", sans-serif;
+}
+
+.hub-inline-notice.warn {
+  border-color: rgba(251, 191, 36, 0.24);
+  background: rgba(74, 56, 11, 0.6);
+  color: #fff1bb;
+}
+
+.hub-inline-notice-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  cursor: pointer;
+}
+
+/* =============================================================================
+   FEATURED GRID
+   ============================================================================= */
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -506,15 +637,15 @@ body {
 }
 
 .featured-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-md);
   padding: 20px 14px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-out);
   text-decoration: none;
   color: inherit;
   position: relative;
@@ -524,28 +655,37 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  will-change: transform;
+}
+
+.featured-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 158, 255, 0.07), transparent 70%);
+  pointer-events: none;
 }
 
 .featured-card:hover {
-  border-color: rgba(83,181,255,0.4);
+  border-color: rgba(79, 158, 255, 0.3);
   transform: translateY(-3px);
+  background: var(--c-surface2);
 }
 
-/* Large Featured Card (Creators) - Same Color, Different Animation */
 .featured-card.large {
   grid-column: span 2;
   grid-row: span 2;
   padding: 30px;
-  /* Same base color as others */
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
 }
 
 .featured-card.large:hover {
-  /* Different animation: scale up and glow instead of just moving up */
   transform: scale(1.02);
-  box-shadow: 0 20px 50px rgba(12, 132, 243, 0.2);
-  border-color: var(--brand-light);
+  box-shadow: 0 20px 50px rgba(79, 158, 255, 0.15);
+  border-color: rgba(79, 158, 255, 0.4);
   z-index: 2;
 }
 
@@ -574,30 +714,43 @@ body {
   width: 40px;
   height: 40px;
   margin: 0 auto 12px;
-  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
-  border-radius: var(--radius-sm);
+  background: rgba(79, 158, 255, 0.1);
+  border: 1px solid rgba(79, 158, 255, 0.2);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  transition: transform 0.3s ease;
-  box-shadow: 0 8px 20px rgba(12,132,243,0.2);
+  color: var(--c-accent);
+  transition: all 0.3s var(--ease-spring);
+  will-change: transform;
 }
 
-.featured-card:hover .featured-icon { transform: scale(1.1) rotate(-5deg); }
-.featured-icon svg { width: 18px; height: 18px; }
+.featured-card:hover .featured-icon {
+  transform: scale(1.1) rotate(-5deg);
+  background: rgba(79, 158, 255, 0.15);
+}
+
+.featured-icon svg {
+  width: 18px;
+  height: 18px;
+}
 
 .featured-title {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--c-text);
   margin-bottom: 3px;
 }
 
-.featured-desc { font-size: 0.65rem; color: var(--text-dim); }
+.featured-desc {
+  font-size: 0.65rem;
+  color: var(--c-dim);
+}
 
-/* Bookmarks Grid */
+/* =============================================================================
+   SECTION HEADER
+   ============================================================================= */
 .section-header {
   display: flex;
   align-items: center;
@@ -607,12 +760,12 @@ body {
 }
 
 .section-title {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 0.7rem;
+  font-family: "Syne", sans-serif;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  color: var(--c-accent);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -622,10 +775,13 @@ body {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
+  background: linear-gradient(to right, rgba(79, 158, 255, 0.3), transparent);
   min-width: 40px;
 }
 
+/* =============================================================================
+   BOOKMARKS GRID
+   ============================================================================= */
 .bookmarks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -634,16 +790,18 @@ body {
   width: 100%;
 }
 
-/* Bookmark Card */
+/* =============================================================================
+   BOOKMARK CARD
+   ============================================================================= */
 .bookmark-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius-md);
-  padding: 18px;
+  border-radius: var(--r-md);
+  padding: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-out);
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -652,6 +810,7 @@ body {
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow);
+  will-change: transform;
 }
 
 .bookmark-card::before {
@@ -661,18 +820,21 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--brand-light), var(--brand-dark));
+  background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s var(--ease-out);
 }
 
 .bookmark-card:hover {
-  border-color: rgba(83,181,255,0.4);
+  border-color: rgba(79, 158, 255, 0.3);
   transform: translateY(-3px);
+  background: var(--c-surface2);
 }
 
-.bookmark-card:hover::before { transform: scaleX(1); }
+.bookmark-card:hover::before {
+  transform: scaleX(1);
+}
 
 .card-top {
   display: flex;
@@ -683,10 +845,10 @@ body {
 }
 
 .card-title {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--c-text);
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -696,29 +858,32 @@ body {
   transition: color 0.2s ease;
 }
 
-.bookmark-card:hover .card-title { color: var(--brand-light); }
+.bookmark-card:hover .card-title {
+  color: var(--c-accent);
+}
 
 .card-arrow {
   width: 16px;
   height: 16px;
-  color: var(--text-dim);
-  transition: all 0.3s ease;
+  color: var(--c-dim);
+  transition: transform 0.3s var(--ease-spring), opacity 0.3s ease;
   flex-shrink: 0;
   margin-top: 2px;
   opacity: 0;
   transform: translate(-4px, 4px);
+  will-change: transform, opacity;
 }
 
 .bookmark-card:hover .card-arrow {
   transform: translate(2px, -2px);
-  color: var(--brand-light);
+  color: var(--c-accent);
   opacity: 1;
 }
 
 .card-desc {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  line-height: 1.6;
+  font-size: 0.82rem;
+  color: var(--c-muted);
+  line-height: 1.65;
   margin-bottom: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -732,7 +897,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-top: 12px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--c-border);
   margin-top: auto;
   gap: 10px;
 }
@@ -741,28 +906,29 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--text-dim);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--c-dim);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: "DM Sans", sans-serif;
 }
 
 .card-category::before {
   content: "";
   width: 5px;
   height: 5px;
-  background: var(--brand-light);
+  background: var(--c-accent);
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .card-domain {
   font-size: 0.7rem;
-  color: var(--text-dim);
+  color: var(--c-dim);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -772,9 +938,13 @@ body {
   transition: color 0.2s ease;
 }
 
-.bookmark-card:hover .card-domain { color: var(--text-soft); }
+.bookmark-card:hover .card-domain {
+  color: var(--c-muted);
+}
 
-/* Empty State */
+/* =============================================================================
+   EMPTY STATE
+   ============================================================================= */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -784,29 +954,32 @@ body {
   width: 64px;
   height: 64px;
   margin: 0 auto 20px;
-  background: var(--surface);
-  border-radius: var(--radius-md);
+  background: var(--c-surface);
+  border-radius: var(--r-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-dim);
-  border: 1px solid var(--border);
+  color: var(--c-dim);
+  border: 1px solid var(--c-border2);
 }
 
 .empty-text {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--c-muted);
   margin-bottom: 6px;
   font-weight: 500;
+  font-family: "Syne", sans-serif;
 }
 
 .empty-query {
-  color: var(--brand-light);
-  font-weight: 600;
-  font-family: "Space Grotesk", sans-serif;
+  color: var(--c-accent);
+  font-weight: 700;
+  font-family: "Syne", sans-serif;
 }
 
-/* Show More Button */
+/* =============================================================================
+   SHOW MORE BUTTON
+   ============================================================================= */
 .show-more-wrapper {
   display: flex;
   justify-content: center;
@@ -815,105 +988,167 @@ body {
 
 .show-more-btn {
   padding: 14px 32px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  font-family: "Space Grotesk", sans-serif;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: 99px;
+  font-family: "Syne", sans-serif;
   font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-soft);
+  font-weight: 600;
+  color: var(--c-muted);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-spring);
+  will-change: transform;
 }
 
 .show-more-btn:hover {
-  border-color: var(--brand);
-  color: var(--brand-light);
-  background: var(--brand-soft);
+  border-color: rgba(79, 158, 255, 0.4);
+  color: var(--c-accent);
+  background: rgba(79, 158, 255, 0.06);
   transform: translateY(-2px);
 }
 
-/* Footer */
-        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
-    .footer .container {
-      min-height: auto;
-      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
-      margin: 0 auto;
-      padding-left: 0;
-      padding-right: 0;
-    }
-    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
-    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
-    .footer-brand span { display: block; }
-    
-    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
-    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
-    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+/* =============================================================================
+   FOOTER
+   ============================================================================= */
+.footer {
+  padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px);
+  border-top: 1px solid var(--c-border);
+  margin-top: clamp(36px, 5vw, 56px);
+}
 
-        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
-    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
-    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  flex-wrap: wrap;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-muted);
+  font-size: 0.9rem;
+  min-width: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  padding: 8px 13px;
+  border-radius: 99px;
+  color: var(--c-dim);
+  transition: all 0.2s;
+  font-size: 0.88rem;
+}
+
+.footer-link:hover {
+  color: var(--c-text);
+  background: var(--c-surface);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--c-green);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+  display: inline-block;
+  margin-right: 8px;
+  animation: breathe 2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.footer-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.footer-status-meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--c-dim);
+}
 
 .footer-version {
   font-size: 0.7rem;
-  color: var(--text-dim);
+  color: var(--c-dim);
   padding: 4px 10px;
-  background: var(--surface);
+  background: var(--c-surface);
   border-radius: 6px;
-  border: 1px solid var(--border);
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 500;
+  border: 1px solid var(--c-border);
+  font-family: "Syne", sans-serif;
+  font-weight: 600;
 }
 
-/* Hamburger Button */
-.hamburger-btn {
-  display: flex;
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  color: var(--text-soft);
-  transition: all 0.3s ease;
-  border-radius: 8px;
-}
-
-.hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
-
-.hamburger-btn svg { width: 20px; height: 20px; }
-
-/* Hamburger Menu */
+/* =============================================================================
+   HAMBURGER MENU
+   ============================================================================= */
 .hamburger-menu {
   position: fixed;
   top: 80px;
   right: 20px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px); 
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  background: rgba(8, 12, 24, 0.95);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-lg);
   padding: 20px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   z-index: 100;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-out);
   max-width: 320px;
   width: 100%;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  transform: translateY(-10px);
 }
 
-.hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+[data-theme="light"] .hamburger-menu {
+  background: rgba(248, 250, 252, 0.95);
+}
+
+.hamburger-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 .hamburger-menu-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 99;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
 }
 
-.hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+.hamburger-menu-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
 
 .hamburger-header {
   display: flex;
@@ -921,46 +1156,58 @@ body {
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .hamburger-title {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--c-text);
 }
 
 .hamburger-close {
   width: 32px;
   height: 32px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  color: var(--text-soft);
+  transition: all 0.25s ease;
+  color: var(--c-muted);
 }
 
-.hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
-.hamburger-close svg { width: 16px; height: 16px; }
+.hamburger-close:hover {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: white;
+}
 
-.hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.hamburger-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hamburger-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
 
 .hamburger-item {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-md);
   text-decoration: none;
-  color: var(--text);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--c-text);
+  transition: all 0.25s var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -969,62 +1216,176 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+  background: linear-gradient(135deg, rgba(79, 158, 255, 0.07), transparent);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
-.hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
-.hamburger-item:hover::before { opacity: 1; }
+.hamburger-item:hover {
+  border-color: rgba(79, 158, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.hamburger-item:hover::before {
+  opacity: 1;
+}
 
 .hamburger-icon {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  background: rgba(79, 158, 255, 0.1);
+  border: 1px solid rgba(79, 158, 255, 0.2);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: white;
-  box-shadow: 0 4px 12px var(--brand-glow);
+  color: var(--c-accent);
 }
 
-.hamburger-icon svg { width: 20px; height: 20px; }
+.hamburger-icon svg {
+  width: 18px;
+  height: 18px;
+}
 
-.hamburger-content { flex: 1; position: relative; z-index: 1; }
+.hamburger-content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
 
 .hamburger-item-title {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text);
+  font-family: "Syne", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c-text);
   margin-bottom: 2px;
 }
 
-.hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
-
-/* Animations */
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
+.hamburger-item-desc {
+  font-size: 0.72rem;
+  color: var(--c-dim);
+  line-height: 1.4;
 }
 
-.hamburger-item { animation: slideInRight 0.4s ease forwards; opacity: 0; }
-.hamburger-item:nth-child(1) { animation-delay: 0.05s; }
-.hamburger-item:nth-child(2) { animation-delay: 0.1s; }
-.hamburger-item:nth-child(3) { animation-delay: 0.15s; }
-.hamburger-item:nth-child(4) { animation-delay: 0.2s; }
-.hamburger-item:nth-child(5) { animation-delay: 0.25s; }
-.hamburger-item:nth-child(6) { animation-delay: 0.3s; }
-.hamburger-item:nth-child(7) { animation-delay: 0.35s; }
+/* =============================================================================
+   ANIMATIONS
+   ============================================================================= */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
+.hamburger-item {
+  animation: slideInRight 0.4s var(--ease-out) forwards;
+  opacity: 0;
+}
+
+.hamburger-item:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.hamburger-item:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.hamburger-item:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.hamburger-item:nth-child(4) {
+  animation-delay: 0.16s;
+}
+
+.hamburger-item:nth-child(5) {
+  animation-delay: 0.20s;
+}
+
+.hamburger-item:nth-child(6) {
+  animation-delay: 0.24s;
+}
+
+.hamburger-item:nth-child(7) {
+  animation-delay: 0.28s;
+}
+
+.hamburger-item:nth-child(8) {
+  animation-delay: 0.32s;
+}
+
+.hamburger-item:nth-child(9) {
+  animation-delay: 0.36s;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bookmark-card {
+  animation: fadeSlideIn 0.4s var(--ease-out) backwards;
+}
+
+.bookmark-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.bookmark-card:nth-child(2) {
+  animation-delay: 0.03s;
+}
+
+.bookmark-card:nth-child(3) {
+  animation-delay: 0.06s;
+}
+
+.bookmark-card:nth-child(4) {
+  animation-delay: 0.09s;
+}
+
+.bookmark-card:nth-child(5) {
+  animation-delay: 0.12s;
+}
+
+.bookmark-card:nth-child(6) {
+  animation-delay: 0.15s;
+}
+
+.bookmark-card:nth-child(7) {
+  animation-delay: 0.18s;
+}
+
+.bookmark-card:nth-child(8) {
+  animation-delay: 0.21s;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
 @media (max-width: 768px) {
-  .container { padding: 0 16px; }
-  .header { padding: 14px 0; margin-bottom: 24px; }
-  .logo-text { font-size: 1.2rem; }
-  .clock { display: none; }
-  
+  .header-inner {
+    padding: 0 16px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .clock {
+    display: none;
+  }
+
   .hamburger-menu {
     top: 70px;
     right: 16px;
@@ -1033,17 +1394,35 @@ body {
     width: auto;
     padding: 16px;
   }
-  
-  .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
-  .hamburger-item { padding: 12px 14px; }
-  .hamburger-icon { width: 38px; height: 38px; }
-  .hamburger-icon svg { width: 18px; height: 18px; }
-  .hamburger-item-title { font-size: 0.9rem; }
-  .hamburger-item-desc { font-size: 0.7rem; }
-  
-  .search-row { flex-direction: column; }
-  .search-stats { width: 100%; justify-content: center; }
-  
+
+  .hamburger-grid {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .hamburger-item {
+    padding: 11px 12px;
+  }
+
+  .hamburger-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hamburger-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-stats {
+    width: 100%;
+    justify-content: center;
+  }
+
   .categories {
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -1054,145 +1433,155 @@ body {
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
-  
-  .categories::-webkit-scrollbar { display: none; }
-  
-  /* Mobile Grid Logic for Featured */
+
+  .categories::-webkit-scrollbar {
+    display: none;
+  }
+
   .featured-grid {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
 
-  /* Order Logic */
-  /* Row 1: Docs, Files */
-  .featured-card:nth-child(1) { order: 1; }
-  .featured-card:nth-child(2) { order: 2; }
-  
-  /* Row 2: Jobs, News */
-  .featured-card:nth-child(5) { order: 3; }
-  .featured-card:nth-child(6) { order: 4; }
-  
-  /* Row 3: GitHub, Support */
-  .featured-card:nth-child(3) { order: 5; }
-  .featured-card:nth-child(7) { order: 6; }
-  
-  /* Row 4: Creators (Large) */
-  .featured-card.large { 
-    order: 7; 
-    grid-column: span 2; 
-    grid-row: span 1; 
-    padding: 24px; 
+  .featured-card:nth-child(1) {
+    order: 1;
+  }
+
+  .featured-card:nth-child(2) {
+    order: 2;
+  }
+
+  .featured-card:nth-child(5) {
+    order: 3;
+  }
+
+  .featured-card:nth-child(6) {
+    order: 4;
+  }
+
+  .featured-card:nth-child(3) {
+    order: 5;
+  }
+
+  .featured-card:nth-child(7) {
+    order: 6;
+  }
+
+  .featured-card.large {
+    order: 7;
+    grid-column: span 2;
+    grid-row: span 1;
+    padding: 24px;
   }
 
   .featured-card.large .featured-icon {
-     width: 50px; height: 50px;
-  }
-  .featured-card.large .featured-title {
-     font-size: 1rem;
+    width: 50px;
+    height: 50px;
   }
 
-  .bookmarks-grid { grid-template-columns: 1fr; gap: 10px; }
-  
-    .footer .container { width: min(100% - 24px, var(--max-width)); }
-    .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
-  .footer-right { align-items: center; }
-  .footer-brand { justify-content: center; }
-  .footer-status { align-items: center; justify-self: center; }
-  .footer-links { flex-wrap: wrap; justify-content: center; }
-  .card-arrow { opacity: 1; }
+  .featured-card.large .featured-title {
+    font-size: 1rem;
+  }
+
+  .bookmarks-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footer-status {
+    align-items: flex-start;
+  }
+
+  .card-arrow {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 480px) {
-  .search-stats { gap: 12px; padding: 8px 16px; }
-  .stat-num { font-size: 1rem; }
-}
+  .search-stats {
+    gap: 12px;
+    padding: 8px 16px;
+  }
 
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-size: 1rem;
+  }
 }
-
-.bookmark-card { animation: fadeSlideIn 0.4s ease backwards; }
-.bookmark-card:nth-child(1) { animation-delay: 0s; }
-.bookmark-card:nth-child(2) { animation-delay: 0.03s; }
-.bookmark-card:nth-child(3) { animation-delay: 0.06s; }
-.bookmark-card:nth-child(4) { animation-delay: 0.09s; }
-.bookmark-card:nth-child(5) { animation-delay: 0.12s; }
-.bookmark-card:nth-child(6) { animation-delay: 0.15s; }
-.bookmark-card:nth-child(7) { animation-delay: 0.18s; }
-.bookmark-card:nth-child(8) { animation-delay: 0.21s; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
 </style>
 </head>
-<body>
 
+<body>
+<!-- Canvas Background -->
+<canvas id="bg-canvas"></canvas>
+<div class="noise-overlay"></div>
+
+<!-- Loader -->
 <div class="loader" id="loader">
   <div class="loader-ring"></div>
 </div>
 
-<div class="noise"></div>
-
-<div class="bg-ambient">
-  <div class="ambient-orb orb-1"></div>
-  <div class="ambient-orb orb-2"></div>
-  <div class="ambient-orb orb-3"></div>
-  
-  <div class="tracer tracer-1"></div>
-  <div class="tracer tracer-2"></div>
-  <div class="tracer tracer-3"></div>
-  <div class="tracer tracer-4"></div>
-</div>
-
-<div class="container">
-  
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo-section">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-          </svg>
-        </div>
-        <div class="logo-text">Book<span>marks</span></div>
+<!-- HEADER (OUTSIDE .container) -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo-section">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
       </div>
-      
-      <div class="header-actions">
-        <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-        </a>
-        <div class="clock">
-          <div class="clock-time" id="clock-time">--:--</div>
-          <div class="clock-date" id="clock-date">...</div>
-        </div>
-        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
-          <div class="theme-toggle-knob">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </div>
-        </div>
-        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
+      <div class="logo-text">Book<span>marks</span></div>
+    </a>
+
+    <div class="header-actions">
+      <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <div class="clock">
+        <div class="clock-time" id="clock-time">--:--</div>
+        <div class="clock-date" id="clock-date">...</div>
       </div>
+      <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+        <div class="theme-toggle-knob">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </div>
+      </div>
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
     </div>
-  </header>
+  </div>
+</header>
 
+<!-- MAIN CONTAINER -->
+<div class="container">
   <section class="search-section">
     <div class="search-row">
       <div class="search-wrapper">
@@ -1213,492 +1602,232 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
         </div>
       </div>
     </div>
-    
+
     <div class="categories" id="categories"></div>
+    <div class="hub-inline-notices" id="hub-inline-notices"></div>
   </section>
 
   <section id="featured-section"></section>
 
   <main id="main-content"></main>
-
-      <footer class="footer">
-      <div class="container footer-inner">
-        <div class="footer-brand">
-          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-            </svg>
-          </div>
-          <span>Bookmarks — Curated internet, structured with intent.</span>
-        </div>
-
-        <div class="footer-links">
-          <a class="footer-link" href="news.html">News</a>
-          <a class="footer-link" href="terms.html">Terms</a>
-          <a class="footer-link" href="privacy.html">Privacy</a>
-          <a class="footer-link" href="index.html#contact">Contact</a>
-          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-        
-        <div class="footer-status">
-           <div class="footer-status-meta">
-             <span class="status-dot"></span> All systems operational
-           </div>
-           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
-        </div>
-      </div>
-    </footer>
-
-  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
-  <div class="hamburger-menu" id="hamburger-menu">
-    <div class="hamburger-header">
-      <div class="hamburger-title">Quick Access</div>
-      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <div class="hamburger-grid">
-      <a href="docs.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-          <div class="hamburger-item-title">Docs</div>
-          <div class="hamburger-item-desc">Documentation & Resources</div>
-        </div>
-      </a>
-      <a href="files.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-          <div class="hamburger-item-title">Files</div>
-          <div class="hamburger-item-desc">Downloads & Software</div>
-        </div>
-      </a>
-      <a href="jobs.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-          <div class="hamburger-item-title">Jobs</div>
-          <div class="hamburger-item-desc">Career Opportunities</div>
-        </div>
-      </a>
-      <a href="creators.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-                    <div class="hamburger-item-title">Curators</div>
-                    <div class="hamburger-item-desc">Featured Curators</div>
-        </div>
-      </a>
-      <a href="news.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
-            <path d="M18 14h-8"/>
-            <path d="M15 18h-5"/>
-            <path d="M10 6h8v4h-8V6Z"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-          <div class="hamburger-item-title">News</div>
-          <div class="hamburger-item-desc">Latest Updates</div>
-        </div>
-      </a>
-      
-      
-      <a href="privacy.html" class="hamburger-item">
-  <div class="hamburger-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-    </svg>
-  </div>
-  <div class="hamburger-content">
-    <div class="hamburger-item-title">Privacy</div>
-    <div class="hamburger-item-desc">Privacy Policy</div>
-  </div>
-</a>
-      
-      <a href="terms.html" class="hamburger-item">
-        <div class="hamburger-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-          </svg>
-        </div>
-        <div class="hamburger-content">
-          <div class="hamburger-item-title">Terms</div>
-          <div class="hamburger-item-desc">Terms of Service</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
 </div>
 
-<script>
-const data = window.BOOKMARKS_DATA || [];
-
-const loader = document.getElementById('loader');
-const searchInput = document.getElementById('search-input');
-const categoriesContainer = document.getElementById('categories');
-const featuredSection = document.getElementById('featured-section');
-const mainContent = document.getElementById('main-content');
-const visibleCount = document.getElementById('visible-count');
-const totalCount = document.getElementById('total-count');
-const themeToggle = document.getElementById('theme-toggle');
-const hamburgerBtn = document.getElementById('hamburger-btn');
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const hamburgerOverlay = document.getElementById('hamburger-overlay');
-const hamburgerClose = document.getElementById('hamburger-close');
-
-let activeCategories = new Set();
-let searchQuery = '';
-let showAll = false;
-
-const featuredData = [
-  { name: 'Docs', desc: 'Documentation', link: 'docs.html', icon: 'file-text' },
-  { name: 'Files', desc: 'Downloads', link: 'files.html', icon: 'download' },
-  { name: 'GitHub', desc: 'Source', link: 'https://github.com/bookmarks-cih', icon: 'github' },
-            { name: 'Curators', desc: 'Curated Profiles', link: 'creators.html', icon: 'users', size: 'large' },
-  { name: 'Jobs', desc: 'Careers', link: 'jobs.html', icon: 'briefcase' },
-  { name: 'News', desc: 'Updates', link: 'news.html', icon: 'newspaper' },
-  { name: 'Support', desc: 'Donate', link: 'https://ko-fi.com/bookmarks', icon: 'heart' }
-];
-
-const icons = {
-  'file-text': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
-  'download': '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
-  'briefcase': '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
-  'newspaper': '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>',
-  'github': '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
-  'heart': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
-  'users': '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'
-};
-
-function updateClock() {
-  const now = new Date();
-  document.getElementById('clock-time').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-  document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-function initTheme() {
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  
-  const knob = themeToggle.querySelector('svg');
-  
-  function updateIcon(theme) {
-    if (theme === 'dark') {
-      knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-    } else {
-      knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-    }
-  }
-
-  updateIcon(savedTheme);
-
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateIcon(newTheme);
-  });
-  
-  themeToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      themeToggle.click();
-    }
-  });
-}
-
-function getDomain(url) {
-  try {
-    return new URL(url).hostname.replace('www.', '');
-  } catch (e) {
-    return 'link';
-  }
-}
-
-function createCard(item, index) {
-  const card = document.createElement('a');
-  card.className = 'bookmark-card';
-  card.href = item.link || '#';
-  card.target = '_blank';
-  card.rel = 'noopener noreferrer';
-  card.style.animationDelay = `${Math.min(index, 8) * 0.03}s`;
-  
-  card.innerHTML = `
-    <div class="card-top">
-      <div class="card-title">${item.name}</div>
-      <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="7" y1="17" x2="17" y2="7"/>
-        <polyline points="7 7 17 7 17 17"/>
-      </svg>
-    </div>
-    <div class="card-desc">${item.desc || ''}</div>
-    <div class="card-meta">
-      <span class="card-category">${item.cat}</span>
-      <span class="card-domain">${getDomain(item.link)}</span>
-    </div>
-  `;
-  
-  return card;
-}
-
-function renderFeatured() {
-  featuredSection.innerHTML = '';
-  
-  if (activeCategories.size > 0 || searchQuery || showAll) {
-    return;
-  }
-  
-  const header = document.createElement('div');
-  header.className = 'section-header';
-  header.innerHTML = '<div class="section-title">Featured</div>';
-  featuredSection.appendChild(header);
-  
-  const grid = document.createElement('div');
-  grid.className = 'featured-grid';
-  
-  featuredData.forEach((item, i) => {
-    const card = document.createElement('a');
-    card.className = 'featured-card';
-    if (item.size === 'large') {
-        card.classList.add('large');
-    }
-    
-    card.href = item.link;
-    card.target = item.link.startsWith('http') ? '_blank' : '_self';
-    card.rel = 'noopener noreferrer';
-    card.style.animationDelay = `${i * 0.04}s`;
-    
-    card.innerHTML = `
-      <div class="featured-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          ${icons[item.icon] || ''}
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="width:34px;height:34px;border-radius:10px;background:rgba(79,158,255,0.1);border:1px solid rgba(79,158,255,0.2);display:grid;place-items:center;color:var(--c-accent);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
         </svg>
       </div>
-      <div class="featured-title">${item.name}</div>
-      <div class="featured-desc">${item.desc}</div>
-    `;
-    
-    grid.appendChild(card);
-  });
-  
-  featuredSection.appendChild(grid);
-}
+      <span>Bookmarks — Curated internet, structured with intent.</span>
+    </div>
 
-function render() {
-  const filtered = data.filter(item => {
-    const matchCat = activeCategories.size === 0 || activeCategories.has(item.cat);
-    const searchStr = `${item.name} ${item.cat} ${item.desc || ''}`.toLowerCase();
-    const matchSearch = searchStr.includes(searchQuery.toLowerCase());
-    return matchCat && matchSearch;
-  });
-  
-  visibleCount.textContent = filtered.length;
-  totalCount.textContent = data.length;
-  
-  renderFeatured();
-  
-  if (filtered.length === 0) {
-    mainContent.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </div>
-        <div class="empty-text">No results for <span class="empty-query">"${searchQuery}"</span></div>
+    <div class="footer-links">
+      <a class="footer-link" href="news.html">News</a>
+      <a class="footer-link" href="terms.html">Terms</a>
+      <a class="footer-link" href="privacy.html">Privacy</a>
+      <a class="footer-link" href="index.html#contact">Contact</a>
+      <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+
+    <div class="footer-status">
+      <div class="footer-status-meta">
+        <span class="status-dot"></span> All systems operational
       </div>
-    `;
-    return;
-  }
-  
-  const limit = 12;
-  const displayItems = showAll ? filtered : filtered.slice(0, limit);
-  const hasMore = filtered.length > limit && !showAll;
-  
-  const header = document.createElement('div');
-  header.className = 'section-header';
-  header.innerHTML = '<div class="section-title">Bookmarks</div>';
-  mainContent.innerHTML = '';
-  mainContent.appendChild(header);
-  
-  const grid = document.createElement('div');
-  grid.className = 'bookmarks-grid';
-  
-  displayItems.forEach((item, i) => {
-    grid.appendChild(createCard(item, i));
-  });
-  
-  mainContent.appendChild(grid);
-  
-  if (hasMore) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'show-more-wrapper';
-    
-    const btn = document.createElement('button');
-    btn.className = 'show-more-btn';
-    btn.textContent = `Show ${filtered.length - limit} more`;
-    btn.onclick = () => {
-      showAll = true;
-      render();
-    };
-    
-    wrapper.appendChild(btn);
-    mainContent.appendChild(wrapper);
-  }
-}
+      <span style="font-size:0.7rem;color:var(--c-dim);font-family:'Syne',sans-serif;font-weight:600;">v3.2</span>
+    </div>
+  </div>
+</footer>
 
-function initCategories() {
-  const counts = {};
-  data.forEach(item => {
-    counts[item.cat] = (counts[item.cat] || 0) + 1;
-  });
-  
-  const allBtn = document.createElement('button');
-  allBtn.className = 'category-pill active';
-  allBtn.textContent = 'All';
-  allBtn.dataset.cat = 'all';
-  categoriesContainer.appendChild(allBtn);
-  
-  Object.keys(counts).sort().forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'category-pill';
-    btn.dataset.cat = cat;
-    btn.innerHTML = `${cat} <span class="count">${counts[cat]}</span>`;
-    categoriesContainer.appendChild(btn);
-  });
-  
-  categoriesContainer.addEventListener('click', (e) => {
-    const btn = e.target.closest('.category-pill');
-    if (!btn) return;
-    
-    const cat = btn.dataset.cat;
-    
-    if (cat === 'all') {
-      activeCategories.clear();
-    } else {
-      if (activeCategories.has(cat)) {
-        activeCategories.delete(cat);
-      } else {
-        activeCategories.add(cat);
-      }
-    }
-    
-    categoriesContainer.querySelectorAll('.category-pill').forEach(b => {
-      const isActive = (b.dataset.cat === 'all' && activeCategories.size === 0) || 
-                       activeCategories.has(b.dataset.cat);
-      b.classList.toggle('active', isActive);
+<!-- HAMBURGER MENU -->
+<div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+<div class="hamburger-menu" id="hamburger-menu">
+  <div class="hamburger-header">
+    <div class="hamburger-title">Quick Access</div>
+    <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="hamburger-grid">
+    <a href="index.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9,22 9,12 15,12 15,22"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Home</div>
+        <div class="hamburger-item-desc">Main dashboard</div>
+      </div>
+    </a>
+    <a href="hub.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Hub</div>
+        <div class="hamburger-item-desc">Explore sections</div>
+      </div>
+    </a>
+    <a href="docs.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Docs</div>
+        <div class="hamburger-item-desc">Documentation & Resources</div>
+      </div>
+    </a>
+    <a href="files.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Files</div>
+        <div class="hamburger-item-desc">Downloads & Software</div>
+      </div>
+    </a>
+    <a href="news.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+          <path d="M18 14h-8"/>
+          <path d="M15 18h-5"/>
+          <path d="M10 6h8v4h-8V6Z"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">News</div>
+        <div class="hamburger-item-desc">Latest Updates</div>
+      </div>
+    </a>
+    <a href="jobs.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Jobs</div>
+        <div class="hamburger-item-desc">Career Opportunities</div>
+      </div>
+    </a>
+    <a href="creators.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Creators</div>
+        <div class="hamburger-item-desc">Curated profiles</div>
+      </div>
+    </a>
+    <a href="privacy.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Privacy</div>
+        <div class="hamburger-item-desc">Privacy Policy</div>
+      </div>
+    </a>
+    <a href="terms.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Terms</div>
+        <div class="hamburger-item-desc">Terms & Conditions</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Canvas Background Script -->
+<script>
+(() => {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let time = 0;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') !== 'light';
+  }
+
+  const orbs = [
+    { x: 0.15, y: 0.2, r: 0.28, color: '#4f9eff', speedX: 0.0008, speedY: 0.0012 },
+    { x: 0.75, y: 0.3, r: 0.22, color: '#a78bfa', speedX: 0.001, speedY: 0.0009 },
+    { x: 0.55, y: 0.75, r: 0.35, color: '#2563eb', speedX: 0.0006, speedY: 0.0011 }
+  ];
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const opacity = isDark() ? 0.14 : 0.07;
+
+    orbs.forEach((o, i) => {
+      const ox = (o.x + Math.sin(time * o.speedX + i) * 0.05) * canvas.width;
+      const oy = (o.y + Math.cos(time * o.speedY + i * 2) * 0.05) * canvas.height;
+      const radius = o.r * Math.min(canvas.width, canvas.height);
+      const grad = ctx.createRadialGradient(ox, oy, 0, ox, oy, radius);
+      grad.addColorStop(0, o.color + Math.round(opacity * 255).toString(16).padStart(2, '0'));
+      grad.addColorStop(1, o.color + '00');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(ox, oy, radius, 0, Math.PI * 2);
+      ctx.fill();
     });
-    
-    showAll = false;
-    render();
-  });
-}
 
-let searchTimeout = null;
-searchInput.addEventListener('input', (e) => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    searchQuery = e.target.value.trim();
-    showAll = false;
-    render();
-  }, 200);
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === '/' && document.activeElement !== searchInput) {
-    e.preventDefault();
-    searchInput.focus();
+    time += 0.6;
+    requestAnimationFrame(draw);
   }
-  if (e.key === 'Escape') {
-    searchInput.blur();
-    searchInput.value = '';
-    searchQuery = '';
-    showAll = false;
-    render();
-    hideHamburgerMenu();
-  }
-});
 
-function showHamburgerMenu() {
-  hamburgerMenu.classList.add('show');
-  hamburgerOverlay.classList.add('show');
-}
-
-function hideHamburgerMenu() {
-  hamburgerMenu.classList.remove('show');
-  hamburgerOverlay.classList.remove('show');
-}
-
-hamburgerBtn.addEventListener('click', showHamburgerMenu);
-hamburgerClose.addEventListener('click', hideHamburgerMenu);
-hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
-
-function init() {
-  initTheme();
-  
-  const waitForData = () => {
-    if (window.BOOKMARKS_DATA && window.BOOKMARKS_DATA.length > 0) {
-      console.log('Data loaded:', window.BOOKMARKS_DATA.length, 'items');
-      initCategories();
-      render();
-      
-      setTimeout(() => {
-        loader.classList.add('hidden');
-      }, 300);
-    } else {
-      console.log('Waiting for data...');
-      setTimeout(waitForData, 100);
-    }
-  };
-  
-  waitForData();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+  draw();
+})();
 </script>
 
+<!-- App Scripts -->
+<script src="scripts/hub-app.js" defer></script>
 </body>
 </html>
-
-
+```
