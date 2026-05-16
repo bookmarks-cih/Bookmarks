@@ -76,16 +76,6 @@ Each link is manually reviewed.
   <img src="https://i.pinimg.com/1200x/b0/45/c9/b045c9fd50b248958a05fad2e8e1deed.jpg" width="70%" />
 </p>
 
----
-
-## 🤝 Contribute
-
-Want to add something valuable?
-
-- Open an issue  
-- Submit a PR  
-
-Quality > quantity.
 
 ---
 
