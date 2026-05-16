@@ -5,13 +5,14 @@
 <br>
 
 <p>
-  <center>
+
   <img src="https://img.shields.io/badge/Curated-By%20Humans-0c84f3?style=for-the-badge&logo=bookstack&logoColor=white" />
+  <br>
   <img src="https://img.shields.io/badge/Privacy-First-0c84f3?style=for-the-badge&logo=protonmail&logoColor=white" />
+  <br>
   <img src="https://img.shields.io/badge/bookmarks.love-curated%20internet-0c84f3?style=flat-square" />
   <br>
   <img src="https://img.shields.io/badge/Open-Source-111111?style=for-the-badge&logo=github&logoColor=white" />
-    </center>
 </p>
 
 ---
