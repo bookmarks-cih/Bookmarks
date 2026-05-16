@@ -66,7 +66,7 @@ Each link is manually reviewed.
 ## 📸 Preview
 
 <p align="center">
-  <img src="[https://i.pinimg.com/736x/ce/52/5a/ce525a8983ab0ec1be6daefc945026bc.jpg](https://i.pinimg.com/1200x/10/37/27/1037278af4ab5d17bc521a2fda2c1e1a.jpg)" width="70%" />
+  <img src="[https://i.pinimg.com/736x/ce/52/5a/ce525a8983ab0ec1be6daefc945026bc.jpg](https://i.pinimg.com/1200x/10/37/27/1037278af4ab5d17bc521a2fda2c1e1a.jpg)](https://i.pinimg.com/1200x/10/37/27/1037278af4ab5d17bc521a2fda2c1e1a.jpg)" width="70%" />
 </p>
 
 ---
