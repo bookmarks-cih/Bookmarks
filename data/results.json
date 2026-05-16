@@ -1,0 +1,48 @@
+{
+  "scanTime": "2026-03-11T13:48:00.000Z",
+  "totalUrls": 1714,
+  "results": [
+    {
+      "url": "https://google.com",
+      "name": "Google",
+      "category": "Search",
+      "description": "The most widely used search engine.",
+      "status": "healthy",
+      "statusCode": 200,
+      "title": "Google",
+      "reportUrl": "https://urlscan.io/result/test/",
+      "timestamp": 1678601280000,
+      "scanUuid": "test-uuid"
+    },
+    {
+      "url": "https://archive.org",
+      "name": "Internet Archive",
+      "category": "Archive",
+      "description": "Digital library.",
+      "status": "healthy",
+      "statusCode": 200,
+      "title": "Internet Archive",
+      "reportUrl": "https://urlscan.io/result/test2/",
+      "timestamp": 1678601280000,
+      "scanUuid": "test-uuid2"
+    },
+    {
+      "url": "https://example-failed-site.com",
+      "name": "Example Failed Site",
+      "category": "Test",
+      "description": "This is a test failure.",
+      "status": "error",
+      "statusCode": 0,
+      "title": "Example Failed Site",
+      "reportUrl": null,
+      "timestamp": 1678601280000,
+      "error": "Connection timeout"
+    }
+  ],
+  "summary": {
+    "healthy": 2,
+    "warning": 0,
+    "error": 1,
+    "unknown": 1711
+  }
+}

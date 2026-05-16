@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>News @Bookmarks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* =============================================================================
+   TOKENS & THEME (docs.html design system)
+============================================================================= */
+:root {
+  --c-bg: #050810;
+  --c-bg2: #080c18;
+  --c-surface: rgba(255,255,255,0.04);
+  --c-surface2: rgba(255,255,255,0.07);
+  --c-border: rgba(255,255,255,0.08);
+  --c-border2: rgba(255,255,255,0.14);
+  --c-text: #eef2ff;
+  --c-muted: rgba(238,242,255,0.6);
+  --c-dim: rgba(238,242,255,0.35);
+  --c-accent: #4f9eff;
+  --c-accent2: #a78bfa;
+  --c-green: #34d399;
+  --c-gold: #fbbf24;
+  --r-sm: 10px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-xl: 36px;
+  --max: 860px;
+  --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+  --shadow: 0 24px 60px rgba(0,0,0,0.5);
+  --brand: #4f9eff;
+  --brand-dark: #2563eb;
+}
+
+[data-theme="light"] {
+  --c-bg: #f8fafc;
+  --c-bg2: #ffffff;
+  --c-surface: rgba(0,0,0,0.03);
+  --c-surface2: rgba(0,0,0,0.05);
+  --c-border: rgba(0,0,0,0.08);
+  --c-border2: rgba(0,0,0,0.12);
+  --c-text: #0f172a;
+  --c-muted: #475569;
+  --c-dim: #94a3b8;
+  --c-accent: #2563eb;
+  --c-accent2: #7c3aed;
+  --shadow: 0 10px 40px rgba(0,0,0,0.08);
+  --brand: #2563eb;
+  --brand-dark: #1d4ed8;
+}
+
+/* =============================================================================
+   RESET & BASE
+============================================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79,158,255,0.3) transparent;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(79,158,255,0.3); border-radius: 99px; }
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+a { color: inherit; text-decoration: none; }
+
+/* =============================================================================
+   BACKGROUND
+============================================================================= */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  filter: blur(20px) saturate(120%);
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+[data-theme="light"] .noise-overlay { opacity: 0.015; }
+
+/* =============================================================================
+   LOADER
+============================================================================= */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--c-bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-ring {
+  width: 36px; height: 36px;
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =============================================================================
+   HEADER
+============================================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  left: 0;
+  padding: 0;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(5,8,16,0.85);
+  border-bottom: 1px solid var(--c-border);
+  transition: background 0.4s, border-color 0.4s;
+}
+[data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+  height: 72px;
+  flex-wrap: nowrap;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,rgba(79,158,255,0.25),rgba(167,139,250,0.15));
+  border: 1px solid rgba(79,158,255,0.25);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 20px rgba(79,158,255,0.12);
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease-spring);
+}
+.logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+.logo-icon svg { width: 20px; height: 20px; color: var(--c-accent); }
+
+.logo-text {
+  font-family: "Syne", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--c-text);
+  white-space: nowrap;
+}
+.logo-text span { color: var(--c-accent); }
+
+.clock {
+  text-align: right;
+  font-family: "Syne", sans-serif;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.clock-time { font-size: 1rem; font-weight: 700; color: var(--c-accent); letter-spacing: 0.02em; line-height: 1; }
+.clock-date { font-size: 0.62rem; color: var(--c-dim); margin-top: 2px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.theme-toggle {
+  position: relative;
+  width: 52px; height: 28px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--c-accent); }
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  background: linear-gradient(135deg, var(--c-accent), #2563eb);
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-spring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(79,158,255,0.3);
+  z-index: 2;
+}
+.theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+[data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--c-border);
+  color: var(--c-muted);
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+.header-social-link:hover { background: var(--c-surface2); color: var(--c-text); border-color: var(--c-border2); }
+.header-social-link svg { width: 16px; height: 16px; }
+
+.hamburger-btn {
+  display: flex;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: 8px;
+  cursor: pointer;
+  color: var(--c-muted);
+  transition: all 0.25s ease;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger-btn:hover { color: var(--c-accent); background: var(--c-surface2); border-color: rgba(79,158,255,0.3); }
+.hamburger-btn svg { width: 18px; height: 18px; }
+
+/* =============================================================================
+   HAMBURGER MENU
+============================================================================= */
+.hamburger-menu {
+  position: fixed;
+  top: 80px; right: 20px;
+  background: rgba(8,12,24,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s var(--ease-out);
+  max-width: 320px;
+  width: 100%;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+[data-theme="light"] .hamburger-menu { background: rgba(248,250,252,0.95); }
+.hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.hamburger-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+.hamburger-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--c-border);
+}
+.hamburger-title {
+  font-family: "Syne", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--c-text);
+}
+.hamburger-close {
+  width: 32px; height: 32px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: var(--c-muted);
+}
+.hamburger-close:hover { background: var(--c-accent); border-color: var(--c-accent); color: white; }
+.hamburger-close svg { width: 16px; height: 16px; }
+
+.hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.hamburger-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--c-text);
+  transition: all 0.25s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.hamburger-item:hover { border-color: rgba(79,158,255,0.35); transform: translateY(-2px); background: var(--c-surface2); }
+.hamburger-icon {
+  width: 40px; height: 40px;
+  background: rgba(79,158,255,0.1);
+  border: 1px solid rgba(79,158,255,0.2);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--c-accent);
+  transition: all 0.3s var(--ease-spring);
+}
+.hamburger-item:hover .hamburger-icon { background: rgba(79,158,255,0.2); transform: rotate(-5deg) scale(1.08); }
+.hamburger-icon svg { width: 18px; height: 18px; }
+.hamburger-content { flex: 1; }
+.hamburger-item-title { font-family: "Syne", sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--c-text); margin-bottom: 2px; }
+.hamburger-item-desc { font-size: 0.72rem; color: var(--c-dim); line-height: 1.4; }
+
+/* =============================================================================
+   LAYOUT
+============================================================================= */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 48px 28px 0;
+}
+
+/* =============================================================================
+   HERO / PAGE HEADER
+============================================================================= */
+.hero {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-top: 20px;
+}
+.hero-label {
+  display: inline-block;
+  font-family: "Syne", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 18px;
+  padding: 8px 18px;
+  background: rgba(79,158,255,0.08);
+  border: 1px solid rgba(79,158,255,0.2);
+  border-radius: 50px;
+}
+.hero h1 {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem,4vw,3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--c-text);
+  letter-spacing: -0.03em;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--c-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* =============================================================================
+   NEWS CONTAINER
+============================================================================= */
+.news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* =============================================================================
+   NEWS ITEM
+============================================================================= */
+.news-item {
+  position: relative;
+  padding: 36px 28px 36px 44px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  border-radius: var(--r-lg);
+  margin-bottom: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.3s var(--ease-out);
+  overflow: hidden;
+  animation: fadeSlideIn 0.4s ease backwards;
+}
+.news-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--c-accent), var(--c-accent2));
+  border-radius: 3px 0 0 3px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.news-item::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.news-item:hover { border-color: rgba(79,158,255,0.3); transform: translateY(-2px); background: var(--c-surface2); }
+.news-item:hover::before { opacity: 1; }
+.news-item:hover::after { transform: scaleX(1); }
+
+.news-item:nth-child(1) { animation-delay: 0s; }
+.news-item:nth-child(2) { animation-delay: 0.06s; }
+.news-item:nth-child(3) { animation-delay: 0.12s; }
+.news-item:nth-child(4) { animation-delay: 0.18s; }
+.news-item:nth-child(5) { animation-delay: 0.24s; }
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.news-date {
+  font-family: "Syne", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--c-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  background: rgba(79,158,255,0.08);
+  border: 1px solid rgba(79,158,255,0.2);
+  border-radius: 50px;
+}
+
+.news-tag {
+  font-size: 0.68rem;
+  color: var(--c-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+}
+
+.news-title {
+  font-family: "Syne", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--c-text);
+  margin-bottom: 14px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+.news-item:hover .news-title { color: var(--c-accent); }
+
+.news-content {
+  font-size: 0.92rem;
+  color: var(--c-muted);
+  line-height: 1.75;
+}
+.news-content p { margin-bottom: 12px; }
+.news-content p:last-child { margin-bottom: 0; }
+.news-content strong { color: var(--c-text); font-weight: 600; }
+.news-content a {
+  color: var(--c-accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(79,158,255,0.3);
+  transition: border-color 0.2s ease;
+}
+.news-content a:hover { border-color: var(--c-accent); }
+
+/* =============================================================================
+   SEPARATOR
+============================================================================= */
+.separator {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-border2), transparent);
+  margin: 24px 0 8px;
+}
+
+/* =============================================================================
+   FOOTER
+============================================================================= */
+.footer {
+  padding: clamp(22px,3vw,30px) 0 clamp(24px,3.8vw,34px);
+  border-top: 1px solid var(--c-border);
+  margin-top: clamp(36px,5vw,56px);
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) auto auto;
+  align-items: center;
+  gap: 16px 20px;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-muted);
+  font-size: 0.88rem;
+  min-width: 0;
+}
+.footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-link {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--c-dim);
+  transition: 0.25s ease;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.footer-link:hover { color: var(--c-text); background: rgba(79,158,255,0.06); }
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: var(--c-green);
+  box-shadow: 0 0 10px rgba(52,211,153,0.5);
+  display: inline-block;
+  margin-right: 8px;
+}
+.footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+.footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--c-dim); }
+.footer-version {
+  font-size: 0.7rem;
+  color: var(--c-dim);
+  padding: 4px 10px;
+  background: var(--c-surface);
+  border-radius: 6px;
+  border: 1px solid var(--c-border);
+  font-family: "Syne", sans-serif;
+  font-weight: 600;
+}
+
+/* =============================================================================
+   ANIMATIONS
+============================================================================= */
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
+/* =============================================================================
+   RESPONSIVE
+============================================================================= */
+@media (max-width: 768px) {
+  .header-inner { padding: 0 16px; height: 64px; }
+  .logo-text { font-size: 1.1rem; }
+  .clock { display: none; }
+  .hamburger-menu { top: 70px; right: 12px; left: 12px; max-width: none; width: auto; padding: 16px; }
+  .container { padding: 24px 16px 0; }
+  .hero h1 { font-size: 1.8rem; }
+  .news-item { padding: 24px 20px 24px 32px; }
+  .news-title { font-size: 1.05rem; }
+  .news-content { font-size: 0.88rem; }
+  .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+  .footer-status { align-items: center; justify-self: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- Background canvas -->
+<canvas id="bg-canvas"></canvas>
+<div class="noise-overlay"></div>
+
+<!-- ============================================================ HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="hub.html" class="logo-section">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="logo-text">Book<span>marks</span></div>
+    </a>
+
+    <div class="header-actions">
+      <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <div class="clock">
+        <div class="clock-time" id="clock-time">--:--</div>
+        <div class="clock-date" id="clock-date">...</div>
+      </div>
+      <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+        <div class="theme-toggle-knob" id="theme-toggle-knob">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </div>
+      </div>
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================ HAMBURGER MENU -->
+<div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+<div class="hamburger-menu" id="hamburger-menu">
+  <div class="hamburger-header">
+    <div class="hamburger-title">Quick Access</div>
+    <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="hamburger-grid">
+    <a href="index.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Home</div>
+        <div class="hamburger-item-desc">Main dashboard</div>
+      </div>
+    </a>
+    <a href="hub.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Hub</div>
+        <div class="hamburger-item-desc">Explore sections</div>
+      </div>
+    </a>
+    <a href="docs.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Docs</div>
+        <div class="hamburger-item-desc">Documentation &amp; Resources</div>
+      </div>
+    </a>
+    <a href="files.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Files</div>
+        <div class="hamburger-item-desc">Downloads &amp; Software</div>
+      </div>
+    </a>
+    <a href="news.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">News</div>
+        <div class="hamburger-item-desc">Latest Updates</div>
+      </div>
+    </a>
+    <a href="jobs.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Jobs</div>
+        <div class="hamburger-item-desc">Career Opportunities</div>
+      </div>
+    </a>
+    <a href="creators.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Creators</div>
+        <div class="hamburger-item-desc">Curated profiles</div>
+      </div>
+    </a>
+    <a href="privacy.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Privacy</div>
+        <div class="hamburger-item-desc">Privacy Policy</div>
+      </div>
+    </a>
+    <a href="terms.html" class="hamburger-item">
+      <div class="hamburger-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="hamburger-content">
+        <div class="hamburger-item-title">Terms</div>
+        <div class="hamburger-item-desc">Terms &amp; Conditions</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================ MAIN -->
+<div class="container">
+
+  <section class="hero">
+    <span class="hero-label">Changelog &amp; Updates</span>
+    <h1>Bookmarks News</h1>
+    <p class="hero-subtitle">
+      Stay up to date with the latest features, improvements, and announcements from the Bookmarks team.
+    </p>
+  </section>
+
+  <main class="news-container">
+
+    <article class="news-item">
+      <div class="news-meta">
+        <span class="news-date">March 9, 2026</span>
+        <span class="news-tag">Feature Update &amp; Community</span>
+      </div>
+      <h2 class="news-title">New Sections Added: Civil Rights &amp; Psychology in Bookmarks Docs</h2>
+      <div class="news-content">
+        <p>
+          We are excited to announce the addition of two new sections to the Docs area of Bookmarks: "Civil Rights" and "Psychology". These categories have been carefully curated to provide valuable resources and documentation on important social justice and mental health topics.
+        </p>
+        <p>
+          This update reflects our ongoing commitment to expanding access to knowledge and supporting diverse educational needs within our community.
+        </p>
+      </div>
+    </article>
+
+    <article class="news-item">
+      <div class="news-meta">
+        <span class="news-date">March 8, 2026</span>
+        <span class="news-tag">Technical Update &amp; Community</span>
+      </div>
+      <h2 class="news-title">Performance Overhaul &amp; Special Wishes</h2>
+      <div class="news-content">
+        <p>
+          We have significantly improved the homepage and hub by reducing animation lag and simplifying navigation and responsiveness on mobile devices. To support these enhancements, we have integrated new libraries such as AlpineJS, ThreeJS, GSAP, and AnimeJS.
+        </p>
+        <p>
+          Additionally, we have completed the graphic redesign of our HTTPing, however this service will be paused for the foreseeable future due to a lack of support, making us unable to cover the necessary runtime API costs.
+        </p>
+        <p>
+          On a lighter note, we wish a joyful International Women's Day 2026 to all the women in our community and around the world. Your strength and creativity continue to inspire us all.
+        </p>
+      </div>
+    </article>
+
+    <article class="news-item">
+      <div class="news-meta">
+        <span class="news-date">March 6, 2026</span>
+        <span class="news-tag">Feature Release</span>
+      </div>
+      <h2 class="news-title">Introducing Dump Status Dashboard &amp; CSV Access</h2>
+      <div class="news-content">
+        <p>
+          We are excited to announce the launch of our new <strong>Dump Status</strong> page, a dedicated dashboard designed to provide full transparency on the health of the Bookmarks repository. You can now monitor the status of thousands of links in real-time, checking for active connections, redirect chains, and DNS errors. These status reports are generated daily between 12:00 and 18:00 (French time) to ensure up-to-date accuracy.
+        </p>
+        <p>
+          For developers and data enthusiasts who prefer raw data, we have also made the entire archive accessible via CSV files on GitHub. You can explore the datasets or integrate them into your own tools directly from our <a href="https://github.com/bookmarks-cih/statusdump-csv" target="_blank">GitHub Repository</a>. We hope these additions provide greater utility and reliability for the community.
+        </p>
+      </div>
+    </article>
+
+    <article class="news-item">
+      <div class="news-meta">
+        <span class="news-date">May 24, 2025</span>
+        <span class="news-tag">Feature Update</span>
+      </div>
+      <h2 class="news-title">Multi-Category Selection &amp; Display Optimization</h2>
+      <div class="news-content">
+        <p>
+          We have introduced a highly requested feature: the ability to select multiple categories simultaneously. This allows for more precise filtering and a more flexible browsing experience tailored to your specific needs.
+        </p>
+        <p>
+          To ensure a cleaner and more minimalist interface, a "Show More" button has been added to the category list. This optimization hides the bulk of the categories by default, reducing visual clutter and keeping the focus on the main content.
+        </p>
+      </div>
+    </article>
+
+    <article class="news-item">
+      <div class="news-meta">
+        <span class="news-date">May 22, 2025</span>
+        <span class="news-tag">Feature Update</span>
+      </div>
+      <h2 class="news-title">Interface Refinements &amp; Mobile Optimization</h2>
+      <div class="news-content">
+        <p>
+          We've rolled out major visual updates to the main dashboard, focusing on atmosphere refinement with layered gradients and enhanced "glassmorphism" effects on cards for improved readability.
+        </p>
+        <p>
+          Most importantly, we've completely overhauled the mobile experience: all pages now feature a modern, fully responsive design built to be truly phone-friendly. Navigation, layout, and interactions are optimized for seamless use on smartphones and tablets — expect smoother transitions and a more consistent dark/light theme balance across all devices.
+        </p>
+      </div>
+    </article>
+
+    <div class="separator"></div>
+
+  </main>
+
+  <!-- ============================================================ FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="width:34px;height:34px;border-radius:10px;background:rgba(79,158,255,0.1);border:1px solid rgba(79,158,255,0.2);display:grid;place-items:center;color:var(--c-accent);flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <span>Bookmarks — Curated internet, structured with intent.</span>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link" href="news.html">News</a>
+        <a class="footer-link" href="terms.html">Terms</a>
+        <a class="footer-link" href="privacy.html">Privacy</a>
+        <a class="footer-link" href="index.html#contact">Contact</a>
+        <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <div class="footer-status">
+        <div class="footer-status-meta">
+          <span class="status-dot"></span> All systems operational
+        </div>
+        <span class="footer-version">v3.2</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============================================================ SCRIPTS -->
+<script>
+// Background canvas (hub.html / docs.html style)
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, orbs = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createOrbs(){
+    orbs = [
+      { x: W*0.15, y: H*0.2,  r: Math.min(W,H)*0.35, color: '#4f9eff', dx: 0.15,  dy: 0.1  },
+      { x: W*0.8,  y: H*0.75, r: Math.min(W,H)*0.28, color: '#a78bfa', dx: -0.12, dy: -0.08 },
+      { x: W*0.5,  y: H*0.5,  r: Math.min(W,H)*0.22, color: '#7dd3fc', dx: 0.08,  dy: 0.13  }
+    ];
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    orbs.forEach(o => {
+      const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+      grad.addColorStop(0, o.color + '88');
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      o.x += o.dx; o.y += o.dy;
+      if (o.x < -o.r || o.x > W + o.r) o.dx *= -1;
+      if (o.y < -o.r || o.y > H + o.r) o.dy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  createOrbs();
+  draw();
+  window.addEventListener('resize', () => { resize(); createOrbs(); });
+})();
+
+// Loader
+window.addEventListener('load', function(){
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 300);
+});
+
+// Clock
+(function(){
+  function update(){
+    const now = new Date();
+    const t = now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    const d = now.toLocaleDateString('en-GB', { weekday:'short', month:'short', day:'numeric' });
+    document.getElementById('clock-time').textContent = t;
+    document.getElementById('clock-date').textContent = d;
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+// Theme Toggle
+(function(){
+  const html = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  const knob = document.getElementById('theme-toggle-knob');
+
+  const moonSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  const sunSVG  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+  function applyTheme(theme){
+    if(theme === 'dark'){
+      html.setAttribute('data-theme','dark');
+      knob.innerHTML = moonSVG;
+    } else {
+      html.setAttribute('data-theme','light');
+      knob.innerHTML = sunSVG;
+    }
+  }
+
+  const saved = localStorage.getItem('theme') || 'dark';
+  applyTheme(saved);
+
+  toggle.addEventListener('click', function(){
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+  toggle.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle.click(); }
+  });
+})();
+
+// Hamburger Menu
+(function(){
+  const btn     = document.getElementById('hamburger-btn');
+  const menu    = document.getElementById('hamburger-menu');
+  const overlay = document.getElementById('hamburger-overlay');
+  const close   = document.getElementById('hamburger-close');
+
+  function open(){ menu.classList.add('show'); overlay.classList.add('show'); }
+  function shut(){ menu.classList.remove('show'); overlay.classList.remove('show'); }
+
+  btn.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  overlay.addEventListener('click', shut);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') shut(); });
+})();
+</script>
+
+</body>
+</html>

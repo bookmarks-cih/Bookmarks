@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>About Us - Bookmarks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Discover the story behind Bookmarks - A curated intelligence hub for the digital age.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --brand: #0c84f3;
+    --brand-dark: #0066d9;
+    --surface-bg: #f8fafc;
+    --surface-card: #ffffff;
+    --surface-muted: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-light: #e2e8f0;
+    --border-subtle: #f1f5f9;
+  }
+
+  [data-theme="dark"] {
+    --brand: #36a5f6;
+    --brand-dark: #0c84f3;
+    --surface-bg: #0f172a;
+    --surface-card: #1e293b;
+    --surface-muted: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border-light: #334155;
+    --border-subtle: #1e293b;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--surface-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  .bg-mesh {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+      radial-gradient(at 40% 20%, rgba(12, 132, 243, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(12, 132, 243, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(0, 102, 217, 0.05) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(12, 132, 243, 0.03) 0px, transparent 50%);
+  }
+
+  .card-flat {
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-flat:hover {
+    border-color: rgba(12, 132, 243, 0.3);
+    box-shadow: 0 4px 24px rgba(12, 132, 243, 0.08);
+  }
+
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--brand) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(12, 132, 243, 0.25);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(12, 132, 243, 0.35);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .highlight {
+    color: var(--brand);
+    font-weight: 500;
+  }
+
+  .contact-link {
+    color: var(--brand);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .contact-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--brand);
+    transition: width 0.3s ease;
+  }
+
+  .contact-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--brand);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-link.active {
+    color: var(--brand);
+  }
+
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .stat-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-color: var(--brand);
+    box-shadow: 0 4px 20px rgba(12, 132, 243, 0.1);
+  }
+
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--brand);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+  }
+
+  .logo-mark:hover {
+    transform: rotate(-5deg) scale(1.05);
+  }
+
+  .logo-mark svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(12, 132, 243, 0.08);
+    border: 1px solid rgba(12, 132, 243, 0.15);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--brand);
+  }
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    background: var(--surface-muted);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+  }
+
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 16px 0;
+    margin-bottom: 32px;
+    background: linear-gradient(to bottom, var(--surface-bg) 70%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .logo-text span {
+    color: var(--brand);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* Clock */
+  .clock {
+    text-align: right;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .clock-time {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .clock-date {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  /* Theme Toggle */
+  .theme-toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--brand);
+  }
+
+  .theme-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .theme-toggle-knob svg {
+    width: 11px;
+    height: 11px;
+    color: white;
+  }
+
+  [data-theme="dark"] .theme-toggle-knob {
+    transform: translateX(24px);
+  }
+
+  /* Main Container */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: 100vh;
+  }
+
+  /* Hero Section */
+  .hero {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background: rgba(12, 132, 243, 0.08);
+    border: 1px solid rgba(12, 132, 243, 0.15);
+    border-radius: 50px;
+  }
+
+  .hero h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-number {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--brand);
+    background: rgba(12, 132, 243, 0.08);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(12, 132, 243, 0.15);
+  }
+
+  .section-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .section-content {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .section-content p {
+    margin-bottom: 18px;
+  }
+
+  .section-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .section-content a {
+    color: var(--brand);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .section-content a:hover {
+    border-bottom-color: var(--brand);
+  }
+
+  /* Separator */
+  .separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 60px 0;
+  }
+
+  .separator-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .separator-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--brand);
+    border-radius: 50%;
+    margin: 0 20px;
+  }
+
+  /* Values List */
+  .values-list {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--surface-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .value-item:hover {
+    border-color: var(--brand);
+    box-shadow: 0 4px 20px rgba(12, 132, 243, 0.1);
+  }
+
+  .value-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(12, 132, 243, 0.08);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .value-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--brand);
+  }
+
+  .value-content h4 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .value-content p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 12px;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    margin: 32px 0;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--brand), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    background: var(--brand);
+    border-radius: 50%;
+  }
+
+  .timeline-date {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 6px;
+  }
+
+  .timeline-content h4 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .timeline-content p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    margin: 80px 0 40px;
+    padding: 48px;
+    background: var(--surface-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+  }
+
+  .cta-section h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .cta-section p {
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: transparent;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(12, 132, 243, 0.08);
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+
+  /* Footer */
+  .site-footer {
+    border-top: 1px solid var(--border-light);
+    padding: 40px 0;
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .footer-brand-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-year {
+    color: var(--brand);
+    font-weight: 600;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 16px;
+    }
+
+    .header {
+      padding: 14px 0;
+      margin-bottom: 24px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+    }
+
+    .nav-desktop {
+      display: none;
+    }
+
+    .clock {
+      display: none;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .values-list {
+      gap: 12px;
+    }
+
+    .value-item {
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .cta-section {
+      padding: 32px 24px;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus Styles */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-section">
+        <div class="logo-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+
+      <div class="header-actions">
+        <nav class="nav-desktop">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link active">About</a>
+          <a href="hub.html" class="nav-link">Hub</a>
+          <a href="privacy.html" class="nav-link">Privacy</a>
+        </nav>
+
+        <div class="clock">
+          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-date" id="clock-date">...</div>
+        </div>
+
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob" id="theme-toggle-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-label">About Us</span>
+    <h1>Curated Intelligence<br>for Digital Age</h1>
+    <p class="hero-subtitle">
+      A meticulously crafted directory designed to counter AI-biased search results, promote digital privacy, and provide reliable access to high-quality resources.
+    </p>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Mission Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Our Mission</h2>
+    </div>
+    <div class="section-content">
+      <p>
+        In an era where search engines are increasingly influenced by artificial intelligence—often prioritizing commercial interests over relevance—<strong class="highlight">Bookmarks</strong> emerges as a solution. This platform meticulously curates high-quality resources across diverse categories, offering a reliable alternative to AI-biased search results.
+      </p>
+      <p>
+        As a personal initiative, <strong class="highlight">Bookmarks</strong> is designed to help individuals navigate digital landscape with confidence. We prioritize <strong>privacy</strong>, <strong>security</strong>, and <strong>anonymity</strong>, ensuring that every listed resource adheres to ethical standards. No gray-area promotions—just best tools and services across a wide range of domains.
+      </p>
+    </div>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Values Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Core Values</h2>
+    </div>
+    <ul class="values-list">
+      <li class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="value-content">
+          <h4>Privacy First</h4>
+          <p>Every resource is evaluated for privacy compliance. We reject services that compromise user data or engage in surveillance practices.</p>
+        </div>
+      </li>
+      <li class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="value-content">
+          <h4>Quality Over Quantity</h4>
+          <p>We curate selectively. Each entry is verified, tested, and evaluated before inclusion. No paid placements, no sponsored content.</p>
+        </div>
+      </li>
+      <li class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div class="value-content">
+          <h4>Transparency</h4>
+          <p>Clear categorization, honest descriptions, and open methodology. Users deserve to know why resources are recommended.</p>
+        </div>
+      </li>
+      <li class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="value-content">
+          <h4>Community Driven</h4>
+          <p>Built by enthusiasts, for enthusiasts. Community feedback shapes our curation decisions and platform evolution.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Statistics Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">By The Numbers</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Curated Resources</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Privacy Verified</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Timeline Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Our Journey</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2023</div>
+        <div class="timeline-content">
+          <h4>Project Inception</h4>
+          <p>Started as a personal collection of verified resources, growing from a simple bookmark file to a structured directory.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2024</div>
+        <div class="timeline-content">
+          <h4>Platform Development</h4>
+          <p>Built public interface, established categorization methodology, and implemented privacy-first hosting infrastructure.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025</div>
+        <div class="timeline-content">
+          <h4>Community Expansion</h4>
+          <p>Opened submission channels, integrated community feedback systems, and expanded to 500+ verified resources.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026</div>
+        <div class="timeline-content">
+          <h4>Continuous Evolution</h4>
+          <p>Ongoing refinement, new categories, and enhanced verification processes. The journey continues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Get In Touch</h2>
+    </div>
+    <div class="section-content">
+      <p>
+        We welcome suggestions, corrections, and collaboration inquiries. Whether you've discovered a broken link, want to recommend a resource, or have questions about our methodology—we're here to listen.
+      </p>
+      <p>
+        For all inquiries, reach out via: <a href="mailto:idritteris@proton.me" class="contact-link">idritteris@proton.me</a>
+      </p>
+      <p>
+        <strong>Response Time:</strong> We aim to respond within 48-72 hours. For resource submissions, please include a brief description and relevant category.
+      </p>
+    </div>
+  </section>
+
+  <!-- Separator -->
+  <div class="separator">
+    <div class="separator-line"></div>
+    <div class="separator-dot"></div>
+    <div class="separator-line"></div>
+  </div>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h3>Ready to Explore?</h3>
+    <p>Discover our curated collection of verified resources across security, privacy, development, and more.</p>
+    <div class="cta-buttons">
+      <a href="hub.html" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Visit Hub
+      </a>
+      <a href="mailto:idritteris@proton.me" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Contact Us
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p class="footer-brand-text">&copy; <span class="footer-year" id="footer-year">2026</span> Bookmarks CIH</p>
+  </footer>
+
+</div>
+
+<script>
+// Clock
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock-time').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Theme Toggle — Dark mode is default
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  const knob = document.getElementById('theme-toggle-knob');
+
+  const sunSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/>
+    <line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>`;
+
+  const moonSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>`;
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+      knob.innerHTML = moonSVG;
+      knob.style.background = 'linear-gradient(135deg, #94a3b8, #64748b)';
+    } else {
+      html.removeAttribute('data-theme');
+      knob.innerHTML = sunSVG;
+      knob.style.background = 'linear-gradient(135deg, var(--brand), var(--brand-dark))';
+    }
+  }
+
+  const saved = localStorage.getItem('theme');
+  const theme = saved || 'dark';
+  applyTheme(theme);
+
+  toggle.addEventListener('click', function() {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+
+  toggle.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle.click();
+    }
+  });
+})();
+
+// Footer Year
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+// Reveal animations
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.add('reveal');
+    observer.observe(section);
+  });
+});
+</script>
+
+</body>
+</html>

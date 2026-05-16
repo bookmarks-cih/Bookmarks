@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Become a Curator — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose a curator review plan and start your Bookmarks curator submission.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+  <style>
+    /* =============================================================================
+    TOKENS & THEME (docs.html design system)
+    ============================================================================= */
+    :root {
+      --c-bg: #050810;
+      --c-bg2: #080c18;
+      --c-surface: rgba(255,255,255,0.04);
+      --c-surface2: rgba(255,255,255,0.07);
+      --c-border: rgba(255,255,255,0.08);
+      --c-border2: rgba(255,255,255,0.14);
+      --c-text: #eef2ff;
+      --c-muted: rgba(238,242,255,0.6);
+      --c-dim: rgba(238,242,255,0.35);
+      --c-accent: #4f9eff;
+      --c-accent2: #a78bfa;
+      --c-green: #34d399;
+      --c-gold: #fbbf24;
+      --r-sm: 10px;
+      --r-md: 18px;
+      --r-lg: 26px;
+      --max: 1100px;
+      --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+      --ease-out: cubic-bezier(0.16,1,0.3,1);
+      --shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+
+    [data-theme="light"] {
+      --c-bg: #f8fafc;
+      --c-bg2: #ffffff;
+      --c-surface: rgba(0,0,0,0.03);
+      --c-surface2: rgba(0,0,0,0.05);
+      --c-border: rgba(0,0,0,0.08);
+      --c-border2: rgba(0,0,0,0.12);
+      --c-text: #0f172a;
+      --c-muted: #475569;
+      --c-dim: #94a3b8;
+      --c-accent: #2563eb;
+      --c-accent2: #7c3aed;
+      --shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    /* =============================================================================
+    RESET & BASE
+    ============================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(79,158,255,0.3) transparent;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(79,158,255,0.3); border-radius: 99px; }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================================================
+    BACKGROUND
+    ============================================================================= */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      filter: blur(20px) saturate(120%);
+    }
+
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    [data-theme="light"] .noise-overlay { opacity: 0.015; }
+
+    /* =============================================================================
+    LOADER
+    ============================================================================= */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--c-bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden { opacity: 0; visibility: hidden; }
+
+    .loader-ring {
+      width: 36px; height: 36px;
+      border: 2px solid var(--c-border);
+      border-top-color: var(--c-accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =============================================================================
+    LAYOUT
+    ============================================================================= */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 28px 0;
+    }
+
+    @media (max-width: 600px) { .container { padding: 16px; } }
+
+    /* =============================================================================
+    HEADER
+    ============================================================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(5,8,16,0.85);
+      border-bottom: 1px solid var(--c-border);
+      transition: background 0.4s, border-color 0.4s;
+    }
+
+    [data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 72px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,rgba(79,158,255,0.25),rgba(167,139,250,0.15));
+      border: 1px solid rgba(79,158,255,0.25);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 20px rgba(79,158,255,0.12);
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease-spring);
+    }
+
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+    .logo-icon svg { width: 20px; height: 20px; color: var(--c-accent); }
+
+    .logo-text {
+      font-family: "Syne", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+      white-space: nowrap;
+    }
+
+    .logo-text span { color: var(--c-accent); }
+
+    .clock {
+      text-align: right;
+      font-family: "Syne", sans-serif;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .clock-time { font-size: 1rem; font-weight: 700; color: var(--c-accent); letter-spacing: 0.02em; line-height: 1; }
+    .clock-date { font-size: 0.62rem; color: var(--c-dim); margin-top: 2px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .theme-toggle {
+      position: relative;
+      width: 52px; height: 28px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover { border-color: var(--c-accent); }
+
+    .theme-toggle-knob {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, var(--c-accent), #2563eb);
+      border-radius: 50%;
+      transition: transform 0.4s var(--ease-spring);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(79,158,255,0.3);
+      z-index: 2;
+    }
+
+    .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .header-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--c-border);
+      color: var(--c-muted);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .header-social-link:hover { background: var(--c-surface2); color: var(--c-text); border-color: var(--c-border2); }
+    .header-social-link svg { width: 16px; height: 16px; }
+
+    .hamburger-btn {
+      display: flex;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      padding: 8px;
+      cursor: pointer;
+      color: var(--c-muted);
+      transition: all 0.25s ease;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger-btn:hover { color: var(--c-accent); background: var(--c-surface2); border-color: rgba(79,158,255,0.3); }
+    .hamburger-btn svg { width: 18px; height: 18px; }
+
+    /* =============================================================================
+    HAMBURGER MENU
+    ============================================================================= */
+    .hamburger-menu {
+      position: fixed;
+      top: 80px; right: 20px;
+      background: rgba(8,12,24,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-lg);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s var(--ease-out);
+      max-width: 320px;
+      width: 100%;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
+    [data-theme="light"] .hamburger-menu { background: rgba(248,250,252,0.95); }
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .hamburger-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--c-text);
+    }
+
+    .hamburger-close {
+      width: 32px; height: 32px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: var(--c-muted);
+    }
+
+    .hamburger-close:hover { background: var(--c-accent); border-color: var(--c-accent); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+    .hamburger-grid { display: grid; gap: 8px; }
+
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      text-decoration: none;
+      color: var(--c-text);
+      transition: all 0.25s var(--ease-out);
+    }
+
+    .hamburger-item:hover { border-color: rgba(79,158,255,0.35); transform: translateY(-2px); background: var(--c-surface2); }
+
+    .hamburger-icon {
+      width: 40px; height: 40px;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.2);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--c-accent);
+      transition: all 0.3s var(--ease-spring);
+    }
+
+    .hamburger-item:hover .hamburger-icon { background: rgba(79,158,255,0.2); transform: rotate(-5deg) scale(1.08); }
+    .hamburger-icon svg { width: 18px; height: 18px; }
+
+    .hamburger-content { flex: 1; }
+    .hamburger-item-title { font-family: "Syne", sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--c-text); margin-bottom: 2px; }
+    .hamburger-item-desc { font-size: 0.72rem; color: var(--c-dim); line-height: 1.4; }
+
+    /* =============================================================================
+    HERO
+    ============================================================================= */
+    .hero { text-align: center; margin-bottom: 36px; padding-top: 20px; }
+
+    .hero-label {
+      display: inline-block;
+      font-family: "Syne", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 18px;
+      padding: 8px 18px;
+      background: rgba(79,158,255,0.08);
+      border: 1px solid rgba(79,158,255,0.2);
+      border-radius: 50px;
+    }
+
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2rem,4vw,3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--c-text);
+      letter-spacing: -0.04em;
+    }
+
+    .hero h1 span { color: var(--c-accent); }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--c-muted);
+      max-width: 700px;
+      margin: 0 auto 28px;
+      line-height: 1.75;
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-stat {
+      padding: 20px;
+      border-radius: var(--r-md);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      text-align: left;
+      box-shadow: var(--shadow);
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+      animation: fadeSlideIn 0.4s ease backwards;
+    }
+
+    .hero-stat:nth-child(1) { animation-delay: 0.05s; }
+    .hero-stat:nth-child(2) { animation-delay: 0.1s; }
+    .hero-stat:nth-child(3) { animation-delay: 0.15s; }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    .hero-stat:hover { border-color: rgba(79,158,255,0.3); transform: translateY(-3px); background: var(--c-surface2); }
+    .hero-stat:hover::before { transform: scaleX(1); }
+
+    .hero-stat strong {
+      display: block;
+      font-family: "Syne", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--c-text);
+    }
+
+    .hero-stat span { color: var(--c-muted); font-size: 0.85rem; line-height: 1.65; }
+
+    /* =============================================================================
+    SHELL
+    ============================================================================= */
+    .shell {
+      width: 100%;
+      max-width: 860px;
+      margin: 36px auto 80px;
+    }
+
+    /* =============================================================================
+    TOP GRID
+    ============================================================================= */
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0,0.88fr) minmax(0,1.12fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    /* =============================================================================
+    INFO CARDS
+    ============================================================================= */
+    .info-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      animation: fadeSlideIn 0.5s ease backwards;
+      animation-delay: 0.1s;
+    }
+
+    .info-card h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--c-text);
+    }
+
+    .info-card p { color: var(--c-muted); line-height: 1.75; font-size: 0.9rem; }
+
+    .intro-points { display: grid; gap: 10px; margin-top: 16px; }
+
+    .intro-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--c-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .intro-point svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--c-accent); margin-top: 2px; }
+
+    .process-steps { display: grid; gap: 10px; margin-top: 16px; }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border-radius: var(--r-sm);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--c-border);
+      transition: all 0.25s ease;
+    }
+
+    .process-step:hover { border-color: rgba(79,158,255,0.25); background: var(--c-surface2); }
+
+    .process-step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-accent);
+      font-weight: 800;
+      font-size: 0.8rem;
+      font-family: "Syne", sans-serif;
+    }
+
+    .process-step strong { display: block; margin-bottom: 4px; font-size: 0.9rem; color: var(--c-text); font-weight: 600; }
+    .process-step span { color: var(--c-muted); font-size: 0.82rem; line-height: 1.6; }
+
+    /* =============================================================================
+    PRICING CARD
+    ============================================================================= */
+    .pricing-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      animation: fadeSlideIn 0.5s ease backwards;
+      animation-delay: 0.2s;
+    }
+
+    .section-title-bar {
+      font-family: "Syne", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--c-accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title-bar::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(79,158,255,0.3), transparent);
+    }
+
+    .pricing-head { text-align: center; margin-bottom: 24px; }
+
+    .pricing-head h2 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.5rem,3vw,2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+      color: var(--c-text);
+    }
+
+    .pricing-head p { color: var(--c-muted); line-height: 1.75; max-width: 580px; margin: 0 auto; font-size: 0.92rem; }
+
+    /* =============================================================================
+    PLAN GRID
+    ============================================================================= */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .plan-card {
+      appearance: none;
+      text-align: left;
+      width: 100%;
+      border: 1px solid var(--c-border2);
+      background: var(--c-surface);
+      border-radius: var(--r-md);
+      padding: 18px;
+      color: var(--c-text);
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    .plan-card:hover { border-color: rgba(79,158,255,0.3); transform: translateY(-3px); background: var(--c-surface2); }
+    .plan-card:hover::before { transform: scaleX(1); }
+
+    .plan-card.selected {
+      border-color: rgba(79,158,255,0.45);
+      background: rgba(79,158,255,0.08);
+      box-shadow: 0 0 0 3px rgba(79,158,255,0.08), var(--shadow);
+    }
+
+    .plan-card.selected::before { transform: scaleX(1); }
+
+    .plan-badge {
+      display: inline-flex;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.2);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--c-accent);
+      margin-bottom: 14px;
+      font-family: "Syne", sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .plan-badge.hot {
+      background: rgba(251,191,36,0.1);
+      border-color: rgba(251,191,36,0.25);
+      color: var(--c-gold);
+    }
+
+    .plan-badge.premium {
+      background: rgba(167,139,250,0.1);
+      border-color: rgba(167,139,250,0.25);
+      color: var(--c-accent2);
+    }
+
+    .plan-name {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--c-text);
+    }
+
+    .plan-desc { color: var(--c-muted); font-size: 0.85rem; line-height: 1.6; min-height: 44px; margin-bottom: 16px; }
+
+    .plan-price {
+      font-family: "Syne", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--c-text);
+    }
+
+    .plan-price sup { top: -0.45em; font-size: 0.75rem; position: relative; margin-right: 2px; color: var(--c-muted); }
+
+    /* =============================================================================
+    PLAN SUMMARY PILL
+    ============================================================================= */
+    .plan-summary-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(79,158,255,0.08);
+      border: 1px solid rgba(79,158,255,0.2);
+      font-size: 0.8rem;
+      color: var(--c-accent);
+      font-weight: 600;
+      margin: 10px 0 0;
+      font-family: "Syne", sans-serif;
+    }
+
+    .plan-summary-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* =============================================================================
+    STRIPE EMBED
+    ============================================================================= */
+    .stripe-embed {
+      display: none;
+      margin-top: 16px;
+      padding: 20px;
+      border-radius: var(--r-md);
+      background: rgba(79,158,255,0.04);
+      border: 1px solid rgba(79,158,255,0.18);
+    }
+
+    .stripe-embed.visible { display: block; }
+
+    .stripe-embed-header {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .stripe-embed-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-accent);
+      flex-shrink: 0;
+    }
+
+    .stripe-embed-icon svg { width: 18px; height: 18px; }
+
+    .stripe-embed-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--c-text);
+    }
+
+    .stripe-embed-sub { color: var(--c-muted); font-size: 0.88rem; line-height: 1.6; }
+
+    .stripe-embed-body { display: flex; width: 100%; min-height: 80px; }
+
+    .stripe-payment-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: var(--c-dim);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .stripe-payment-note svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .stripe-embed stripe-buy-button { width: 100%; display: block; }
+
+    /* =============================================================================
+    PAID PLAN NOTICE
+    ============================================================================= */
+    .paid-plan-notice {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: var(--r-sm);
+      background: rgba(251,191,36,0.06);
+      border: 1px solid rgba(251,191,36,0.18);
+      font-size: 0.84rem;
+      color: var(--c-gold);
+      line-height: 1.6;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .paid-plan-notice.visible { display: flex; }
+    .paid-plan-notice svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+
+    /* =============================================================================
+    NEXT STEP
+    ============================================================================= */
+    .next-step {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--c-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .next-step p { color: var(--c-muted); font-size: 0.9rem; line-height: 1.7; max-width: 480px; }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(79,158,255,0.35);
+      background: rgba(79,158,255,0.12);
+      color: var(--c-accent);
+      font-weight: 700;
+      font-family: "Syne", sans-serif;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      transition: all 0.3s var(--ease-out);
+      letter-spacing: 0.02em;
+    }
+
+    .cta-link:hover { transform: translateY(-2px); background: rgba(79,158,255,0.22); box-shadow: 0 12px 28px rgba(79,158,255,0.15); border-color: rgba(79,158,255,0.55); }
+    .cta-link svg { width: 15px; height: 15px; }
+
+    /* =============================================================================
+    FOOTER
+    ============================================================================= */
+    .footer {
+      padding: clamp(22px,3vw,30px) 0 clamp(24px,3.8vw,34px);
+      border-top: 1px solid var(--c-border);
+      margin-top: clamp(36px,5vw,56px);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) auto auto;
+      align-items: center;
+      gap: 16px 20px;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--c-muted); font-size: 0.88rem; min-width: 0; }
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .footer-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--c-dim);
+      transition: 0.25s ease;
+      font-size: 0.85rem;
+    }
+
+    .footer-link:hover { color: var(--c-text); background: rgba(79,158,255,0.06); }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--c-green);
+      box-shadow: 0 0 10px rgba(52,211,153,0.5);
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--c-dim); }
+
+    .footer-version {
+      font-size: 0.7rem;
+      color: var(--c-dim);
+      padding: 4px 10px;
+      background: var(--c-surface);
+      border-radius: 6px;
+      border: 1px solid var(--c-border);
+      font-family: "Syne", sans-serif;
+      font-weight: 600;
+    }
+
+    /* =============================================================================
+    ANIMATIONS
+    ============================================================================= */
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    :focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
+    /* =============================================================================
+    RESPONSIVE
+    ============================================================================= */
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; height: 64px; }
+      .clock { display: none; }
+      .hamburger-menu { top: 70px; right: 12px; left: 12px; max-width: none; width: auto; padding: 16px; }
+      .hero-highlights, .top-grid, .plan-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .pricing-card { padding: 20px; }
+      .cta-link { width: 100%; justify-content: center; }
+      .next-step { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-ring"></div>
+  </div>
+
+  <!-- Background canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="noise-overlay"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+
+      <div class="header-actions">
+        <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+
+        <div class="clock">
+          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-date" id="clock-date">...</div>
+        </div>
+
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </div>
+
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+
+  <div class="hamburger-menu" id="hamburger-menu">
+    <div class="hamburger-header">
+      <div class="hamburger-title">Quick Access</div>
+      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="hamburger-grid">
+      <a href="index.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Home</div>
+          <div class="hamburger-item-desc">Main landing page</div>
+        </div>
+      </a>
+
+      <a href="hub.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Hub</div>
+          <div class="hamburger-item-desc">Explore sections</div>
+        </div>
+      </a>
+
+      <a href="creators.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Creators</div>
+          <div class="hamburger-item-desc">Featured profiles</div>
+        </div>
+      </a>
+
+      <a href="docs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Docs</div>
+          <div class="hamburger-item-desc">Curated collections</div>
+        </div>
+      </a>
+
+      <a href="news.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">News</div>
+          <div class="hamburger-item-desc">Product updates</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero container">
+      <span class="hero-label">Curator access</span>
+      <h1>Cure the <span>web</span>.</h1>
+      <p class="hero-subtitle">Turn your favorite resources into a clean public collection on Bookmarks. Choose your review path below, unlock a curator page, and help structure the internet with stronger context, better attribution, and sharper discovery.</p>
+
+      <div class="hero-highlights">
+        <div class="hero-stat">
+          <strong>Curated identity</strong>
+          <span>Transform scattered links into a sharper public profile with a clearer editorial voice.</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Human review</strong>
+          <span>Every submission is reviewed for fit, clarity, and usefulness before publication.</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Better discovery</strong>
+          <span>Help visitors navigate your niche through structure, context, and more intentional link curation.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="shell">
+        <div class="top-grid">
+          <div class="info-card">
+            <h3>Why become a curator?</h3>
+            <p>Bookmarks is built for people who do more than post links. It is for people who organize knowledge, surface quality resources, and give others a better way to explore the open web.</p>
+            <div class="intro-points">
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Create a cleaner, more intentional public page around your resources.</span>
+              </div>
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Give your audience direct access to the tools, references, and materials behind your work.</span>
+              </div>
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Improve visibility while staying aligned with curation, attribution, and quality.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>How the flow works</h3>
+            <p>This page keeps the curator journey simple: choose a review path, complete payment if needed, then continue to the dedicated submission form.</p>
+            <div class="process-steps">
+              <div class="process-step">
+                <div class="process-step-num">01</div>
+                <div>
+                  <strong>Select your plan</strong>
+                  <span>Choose between Free Review, Priority Review, or UX Feedback depending on speed and visibility.</span>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="process-step-num">02</div>
+                <div>
+                  <strong>Complete payment if required</strong>
+                  <span>Paid tiers unlock the Stripe module below and prepare your curator application flow.</span>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="process-step-num">03</div>
+                <div>
+                  <strong>Continue to the form</strong>
+                  <span>Finish your curator submission on the dedicated form page with your links, context, and optional file.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-card">
+          <div class="section-title-bar">Choose your flow</div>
+
+          <div class="pricing-head">
+            <h2>Become a Curator</h2>
+            <p>Choose the review path that matches your goals. Whether you want a free submission, faster review, or extra UX guidance, this page keeps the curator onboarding focused and polished.</p>
+          </div>
+
+          <div class="plan-grid" id="planGrid" role="radiogroup" aria-label="Curator plans">
+            <button type="button" class="plan-card selected" data-plan="Free Review" data-price="0" role="radio" aria-checked="true">
+              <span class="plan-badge">Free</span>
+              <div class="plan-name">Free Review</div>
+              <div class="plan-desc">Standard queue, slower review timeline.</div>
+              <div class="plan-price"><sup>€</sup>0</div>
+            </button>
+
+            <button type="button" class="plan-card" data-plan="Priority Review" data-price="5" role="radio" aria-checked="false">
+              <span class="plan-badge hot">⚡ Priority</span>
+              <div class="plan-name">Priority Review</div>
+              <div class="plan-desc">Faster review, moved to the front of the queue.</div>
+              <div class="plan-price"><sup>€</sup>5</div>
+            </button>
+
+            <button type="button" class="plan-card" data-plan="UX Feedback + Visibility" data-price="15" role="radio" aria-checked="false">
+              <span class="plan-badge premium">★ Featured</span>
+              <div class="plan-name">UX Feedback</div>
+              <div class="plan-desc">Extra curator visibility plus thoughtful UX feedback on your page.</div>
+              <div class="plan-price"><sup>€</sup>15</div>
+            </button>
+          </div>
+
+          <div class="plan-summary-pill" id="planSummaryPill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="planSummaryText">Free Review selected — no payment required</span>
+          </div>
+
+          <div class="stripe-embed" id="stripeEmbed">
+            <div class="stripe-embed-header">
+              <div class="stripe-embed-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              </div>
+              <div>
+                <div class="stripe-embed-title" id="stripeEmbedTitle">Complete payment — Priority Review €5</div>
+                <div class="stripe-embed-sub">Secure payment via Stripe. After payment, continue with your curator submission form.</div>
+              </div>
+            </div>
+
+            <div class="stripe-embed-body">
+              <div id="stripePriority" style="display:none; flex:1;">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1TT2Ai029cAiEbnR47LWWprI"
+                  publishable-key="pk_live_51TQUsX029cAiEbnRWosYYhfXN718mmNrqAnd1UYvbDOWcTlo9maPwbWLwkPgZFWKCSk6GePzkdTDY7ShzPJex65c00Ci490GcJ"
+                ></stripe-buy-button>
+              </div>
+              <div id="stripeUX" style="display:none; flex:1;">
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1TT28T029cAiEbnRVi93EVnl"
+                  publishable-key="pk_live_51TQUsX029cAiEbnRWosYYhfXN718mmNrqAnd1UYvbDOWcTlo9maPwbWLwkPgZFWKCSk6GePzkdTDY7ShzPJex65c00Ci490GcJ"
+                ></stripe-buy-button>
+              </div>
+            </div>
+
+            <div class="stripe-payment-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              Secure · Encrypted · Powered by Stripe.
+            </div>
+          </div>
+
+          <div class="paid-plan-notice" id="paidPlanNotice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>After payment, continue to the submission form and use the same name in both places.</span>
+          </div>
+
+          <div class="next-step">
+            <p>Ready to finish your curator application? Use the main submission form to send links, context, and the essentials for your curator page.</p>
+            <a href="curator-form.html?plan=Free%20Review&price=0" class="cta-link" id="continueToForm">
+              <span>Continue to submission form</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <div style="width:34px;height:34px;border-radius:10px;background:rgba(79,158,255,0.1);border:1px solid rgba(79,158,255,0.2);display:grid;place-items:center;color:var(--c-accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <span>Bookmarks — Curated internet, structured with intent.</span>
+          </div>
+
+          <div class="footer-links">
+            <a class="footer-link" href="hub.html">Hub</a>
+            <a class="footer-link" href="creators.html">Creators</a>
+            <a class="footer-link" href="docs.html">Docs</a>
+            <a class="footer-link" href="news.html">News</a>
+            <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+
+          <div class="footer-status">
+            <div class="footer-status-meta">
+              <span class="status-dot"></span> All systems operational
+            </div>
+            <span class="footer-version">v3.2</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Background canvas animation -->
+  <script>
+    (function(){
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, orbs = [];
+
+      function resize(){
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function createOrbs(){
+        orbs = [
+          { x: W*0.15, y: H*0.2, r: Math.min(W,H)*0.35, color: '#4f9eff', dx: 0.15, dy: 0.1 },
+          { x: W*0.8, y: H*0.75, r: Math.min(W,H)*0.28, color: '#a78bfa', dx: -0.12, dy: -0.08 },
+          { x: W*0.5, y: H*0.5, r: Math.min(W,H)*0.22, color: '#7dd3fc', dx: 0.08, dy: 0.13 }
+        ];
+      }
+
+      function draw(){
+        ctx.clearRect(0, 0, W, H);
+        orbs.forEach(o => {
+          const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+          g.addColorStop(0, o.color + '66');
+          g.addColorStop(1, o.color + '00');
+          ctx.beginPath();
+          ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+          ctx.fillStyle = g;
+          ctx.fill();
+          o.x += o.dx; o.y += o.dy;
+          if(o.x < -o.r || o.x > W+o.r) o.dx *= -1;
+          if(o.y < -o.r || o.y > H+o.r) o.dy *= -1;
+        });
+        requestAnimationFrame(draw);
+      }
+
+      resize(); createOrbs(); draw();
+      window.addEventListener('resize', () => { resize(); createOrbs(); });
+    })();
+  </script>
+
+  <!-- Clock -->
+  <script>
+    function updateClock(){
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('clock-time').textContent = h + ':' + m;
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      document.getElementById('clock-date').textContent = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()];
+    }
+    updateClock();
+    setInterval(updateClock, 10000);
+  </script>
+
+  <!-- Theme -->
+  <script>
+    function initTheme(){
+      const saved = localStorage.getItem('bookmarks-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+
+      const knob = document.querySelector('.theme-toggle-knob svg');
+      const sunIcon = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+      const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+
+      function updateIcon(theme){ knob.innerHTML = theme === 'dark' ? sunIcon : moonIcon; }
+      updateIcon(saved);
+
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('bookmarks-theme', next);
+        updateIcon(next);
+      });
+    }
+    initTheme();
+  </script>
+
+  <!-- Hamburger -->
+  <script>
+    const hBtn = document.getElementById('hamburger-btn');
+    const hMenu = document.getElementById('hamburger-menu');
+    const hOverlay = document.getElementById('hamburger-overlay');
+    const hClose = document.getElementById('hamburger-close');
+
+    hBtn.addEventListener('click', () => { hMenu.classList.add('show'); hOverlay.classList.add('show'); });
+    hClose.addEventListener('click', () => { hMenu.classList.remove('show'); hOverlay.classList.remove('show'); });
+    hOverlay.addEventListener('click', () => { hMenu.classList.remove('show'); hOverlay.classList.remove('show'); });
+  </script>
+
+  <!-- Plan selection logic (unchanged functionally) -->
+  <script>
+    const planCards = document.querySelectorAll('.plan-card');
+    const stripeEmbed = document.getElementById('stripeEmbed');
+    const stripeEmbedTitle = document.getElementById('stripeEmbedTitle');
+    const stripePriority = document.getElementById('stripePriority');
+    const stripeUX = document.getElementById('stripeUX');
+    const planSummaryText = document.getElementById('planSummaryText');
+    const paidPlanNotice = document.getElementById('paidPlanNotice');
+    const continueToForm = document.getElementById('continueToForm');
+
+    function selectPlan(card) {
+      planCards.forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-checked', 'false'); });
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+
+      const plan = card.dataset.plan;
+      const price = parseInt(card.dataset.price, 10) || 0;
+      const isPaid = price > 0;
+      continueToForm.href = `curator-form.html?plan=${encodeURIComponent(plan)}&price=${price}`;
+
+      if (isPaid) {
+        stripeEmbed.classList.add('visible');
+        stripeEmbedTitle.textContent = `Complete payment — ${plan} €${price}`;
+        stripePriority.style.display = plan === 'Priority Review' ? 'flex' : 'none';
+        stripeUX.style.display = plan === 'UX Feedback + Visibility' ? 'flex' : 'none';
+        planSummaryText.textContent = `${plan} selected — complete payment above`;
+        paidPlanNotice.classList.add('visible');
+      } else {
+        stripeEmbed.classList.remove('visible');
+        stripePriority.style.display = 'none';
+        stripeUX.style.display = 'none';
+        planSummaryText.textContent = 'Free Review selected — no payment required';
+        paidPlanNotice.classList.remove('visible');
+      }
+    }
+
+    planCards.forEach(card => card.addEventListener('click', () => selectPlan(card)));
+  </script>
+
+  <!-- Loader -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 300);
+    });
+  </script>
+</body>
+</html>

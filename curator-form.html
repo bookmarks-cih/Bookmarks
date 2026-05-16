@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Curator Submission Form — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit your curator application to Bookmarks.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================================================
+       TOKENS & THEME (docs.html design system)
+    ============================================================================= */
+    :root {
+      --c-bg: #050810;
+      --c-bg2: #080c18;
+      --c-surface: rgba(255,255,255,0.04);
+      --c-surface2: rgba(255,255,255,0.07);
+      --c-border: rgba(255,255,255,0.08);
+      --c-border2: rgba(255,255,255,0.14);
+      --c-text: #eef2ff;
+      --c-muted: rgba(238,242,255,0.6);
+      --c-dim: rgba(238,242,255,0.35);
+      --c-accent: #4f9eff;
+      --c-accent2: #a78bfa;
+      --c-green: #34d399;
+      --c-gold: #fbbf24;
+      --r-sm: 10px;
+      --r-md: 18px;
+      --r-lg: 26px;
+      --r-xl: 36px;
+      --max: 1160px;
+      --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+      --ease-out: cubic-bezier(0.16,1,0.3,1);
+      --shadow: 0 24px 60px rgba(0,0,0,0.5);
+      /* legacy aliases */
+      --brand: #4f9eff;
+      --brand-dark: #2563eb;
+      --brand-light: #93c5fd;
+    }
+    [data-theme="light"] {
+      --c-bg: #f8fafc;
+      --c-bg2: #ffffff;
+      --c-surface: rgba(0,0,0,0.03);
+      --c-surface2: rgba(0,0,0,0.05);
+      --c-border: rgba(0,0,0,0.08);
+      --c-border2: rgba(0,0,0,0.12);
+      --c-text: #0f172a;
+      --c-muted: #475569;
+      --c-dim: #94a3b8;
+      --c-accent: #2563eb;
+      --c-accent2: #7c3aed;
+      --brand: #2563eb;
+      --brand-light: #60a5fa;
+      --brand-dark: #1d4ed8;
+      --shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    /* =============================================================================
+       RESET & BASE
+    ============================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(79,158,255,0.3) transparent;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(79,158,255,0.3); border-radius: 99px; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================================================
+       BACKGROUND CANVAS
+    ============================================================================= */
+    #bg-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+      opacity: 0.35;
+      filter: blur(20px) saturate(120%);
+    }
+    .noise-overlay {
+      position: fixed; inset: 0;
+      z-index: 1; pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    [data-theme="light"] .noise-overlay { opacity: 0.015; }
+
+    /* =============================================================================
+       LOADER
+    ============================================================================= */
+    .loader {
+      position: fixed; inset: 0;
+      background: var(--c-bg);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-ring {
+      width: 36px; height: 36px;
+      border: 2px solid var(--c-border);
+      border-top-color: var(--c-accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =============================================================================
+       SCROLL PROGRESS
+    ============================================================================= */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; width: 0%; height: 2px;
+      background: var(--c-accent); z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    /* =============================================================================
+       LAYOUT
+    ============================================================================= */
+    .page { position: relative; z-index: 2; min-height: 100vh; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+
+    /* =============================================================================
+       HEADER
+    ============================================================================= */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      width: 100%; padding: 0;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(5,8,16,0.85);
+      border-bottom: 1px solid var(--c-border);
+      transition: background 0.4s, border-color 0.4s;
+    }
+    [data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      height: 72px; padding: 0 28px;
+      max-width: var(--max); margin: 0 auto;
+    }
+    .logo-section {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: inherit; flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(79,158,255,0.25), rgba(167,139,250,0.15));
+      border: 1px solid rgba(79,158,255,0.25);
+      display: grid; place-items: center;
+      box-shadow: 0 0 20px rgba(79,158,255,0.12);
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease-spring);
+      color: var(--c-accent);
+    }
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text {
+      font-family: "Syne", sans-serif;
+      font-size: 1.2rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--c-text); white-space: nowrap;
+    }
+    .logo-text span { color: var(--c-accent); }
+    .theme-toggle {
+      position: relative; width: 52px; height: 28px;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 50px; cursor: pointer;
+      transition: all 0.3s ease; overflow: hidden; flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--c-accent); }
+    .theme-toggle-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, var(--c-accent), #2563eb);
+      border-radius: 50%;
+      transition: transform 0.4s var(--ease-spring);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(79,158,255,0.3); z-index: 2;
+    }
+    .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+    /* =============================================================================
+       HERO
+    ============================================================================= */
+    .hero { padding: 54px 0 22px; text-align: center; }
+    .hero-badge {
+      display: inline-flex; padding: 8px 18px; border-radius: 999px; margin-bottom: 18px;
+      background: rgba(79,158,255,0.08); border: 1px solid rgba(79,158,255,0.2);
+      color: var(--c-accent);
+      font-family: "Syne", sans-serif;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    }
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      letter-spacing: -0.05em; line-height: 0.98;
+      margin-bottom: 14px; color: var(--c-text);
+    }
+    .hero h1 span { color: var(--c-accent); }
+    .hero p { max-width: 760px; margin: 0 auto; color: var(--c-muted); line-height: 1.8; }
+
+    /* =============================================================================
+       CONTENT GRID
+    ============================================================================= */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 22px; align-items: start;
+      padding-bottom: 70px;
+    }
+
+    /* =============================================================================
+       INFO CARD
+    ============================================================================= */
+    .info-card, .form-card {
+      border-radius: var(--r-xl);
+      border: 1px solid var(--c-border2);
+      background: var(--c-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+      transition: border-color 0.3s ease;
+    }
+    .info-card { padding: 30px; }
+    .info-card:hover { border-color: rgba(79,158,255,0.2); }
+    .info-card h2 {
+      font-family: "Syne", sans-serif;
+      font-size: 2rem; line-height: 0.98;
+      letter-spacing: -0.04em; margin-bottom: 14px;
+      color: var(--c-text);
+    }
+    .info-card > p { color: var(--c-muted); line-height: 1.8; font-size: 0.97rem; }
+    .contact-blocks, .detail-grid { display: grid; gap: 12px; margin-top: 22px; }
+    .contact-line, .detail-card {
+      padding: 16px 18px; border-radius: var(--r-md);
+      background: var(--c-surface2); border: 1px solid var(--c-border2);
+      color: var(--c-muted);
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .contact-line:hover, .detail-card:hover { border-color: rgba(79,158,255,0.25); background: rgba(255,255,255,0.09); }
+    .contact-line strong, .detail-card strong {
+      display: block; color: var(--c-text); margin-bottom: 6px;
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.09em;
+      font-family: "Syne", sans-serif; font-weight: 700;
+    }
+    .detail-card p { margin: 0; font-size: 0.93rem; line-height: 1.7; }
+    .note-card {
+      margin-top: 18px; padding: 18px 20px; border-radius: var(--r-md);
+      background: rgba(79,158,255,0.07); border: 1px solid rgba(79,158,255,0.18);
+      color: var(--c-muted);
+    }
+    .note-card span {
+      display: block; color: var(--c-accent); margin-bottom: 10px;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
+      font-weight: 700; font-family: "Syne", sans-serif;
+    }
+    .note-card ul { padding-left: 18px; display: grid; gap: 8px; font-size: 0.92rem; line-height: 1.65; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+      color: var(--c-accent); font-weight: 600;
+      font-family: "Syne", sans-serif; font-size: 0.9rem;
+      transition: gap 0.25s ease, opacity 0.25s ease;
+    }
+    .back-link:hover { gap: 12px; opacity: 0.8; }
+
+    /* =============================================================================
+       FORM CARD
+    ============================================================================= */
+    .form-card { padding: 28px; }
+    .form-card:hover { border-color: rgba(79,158,255,0.2); }
+    .form-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1.85rem; letter-spacing: -0.04em;
+      margin-bottom: 8px; color: var(--c-text);
+    }
+    .form-sub { color: var(--c-muted); line-height: 1.75; margin-bottom: 18px; font-size: 0.95rem; }
+
+    .plan-summary-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px; margin-bottom: 16px;
+      background: rgba(79,158,255,0.08); border: 1px solid rgba(79,158,255,0.2);
+      color: var(--c-accent);
+      font-family: "Syne", sans-serif;
+      font-size: 0.78rem; font-weight: 700;
+    }
+    .plan-summary-pill svg { width: 14px; height: 14px; }
+
+    .paid-plan-notice {
+      display: none; padding: 14px 16px; border-radius: var(--r-md); margin-bottom: 16px;
+      background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.2);
+      font-size: 0.86rem; color: rgba(251,191,36,0.9); line-height: 1.55;
+      gap: 10px; align-items: flex-start;
+    }
+    .paid-plan-notice.visible { display: flex; }
+    .paid-plan-notice svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 4px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      display: block; margin-bottom: 8px;
+      font-size: 0.82rem; color: var(--c-muted); font-weight: 600;
+      font-family: "Syne", sans-serif; letter-spacing: 0.02em;
+    }
+    .field input, .field textarea {
+      width: 100%; border-radius: var(--r-md);
+      border: 1px solid var(--c-border2);
+      background: var(--c-surface2);
+      color: var(--c-text); padding: 14px 16px;
+      font-family: "DM Sans", sans-serif; font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+    .field input:focus, .field textarea:focus {
+      border-color: rgba(79,158,255,0.48);
+      box-shadow: 0 0 0 3px rgba(79,158,255,0.1);
+      background: rgba(255,255,255,0.07);
+    }
+    .field textarea { min-height: 154px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--c-dim); }
+    .field input[type="file"] {
+      padding: 12px 16px; cursor: pointer;
+      font-size: 0.88rem; color: var(--c-muted);
+    }
+
+    .submit-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: none; cursor: pointer; border-radius: 999px; padding: 14px 28px;
+      font-family: "Syne", sans-serif; font-weight: 800; font-size: 0.95rem;
+      transition: transform 0.28s var(--ease-out), box-shadow 0.28s ease, background 0.28s ease;
+      position: relative; overflow: hidden; isolation: isolate;
+    }
+    .btn::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
+      transform: translateX(-130%);
+      transition: transform 0.7s var(--ease-out);
+      pointer-events: none; z-index: 0;
+    }
+    .btn:hover::before { transform: translateX(130%); }
+    .btn > * { position: relative; z-index: 2; }
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(79,158,255,0.24), rgba(37,99,235,0.18));
+      border: 1px solid rgba(79,158,255,0.3);
+      color: white; min-width: 180px;
+      box-shadow: 0 8px 24px rgba(79,158,255,0.15), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(79,158,255,0.25);
+      border-color: rgba(79,158,255,0.5);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .submit-hint {
+      color: var(--c-dim); font-size: 0.82rem;
+      display: flex; align-items: center; gap: 6px;
+      font-family: "DM Sans", sans-serif;
+    }
+    .submit-hint svg { width: 14px; height: 14px; color: var(--c-accent); }
+
+    /* =============================================================================
+       FOOTER
+    ============================================================================= */
+    .footer {
+      padding: clamp(22px,3vw,30px) 0 clamp(24px,3.8vw,34px);
+      border-top: 1px solid var(--c-border);
+      margin-top: clamp(36px,5vw,56px);
+      position: relative; z-index: 2;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0,1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--c-muted); font-size: 0.88rem; }
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--c-dim); transition: 0.25s ease; font-size: 0.85rem; }
+    .footer-link:hover { color: var(--c-text); background: rgba(79,158,255,0.06); }
+    .status-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--c-green); box-shadow: 0 0 10px rgba(52,211,153,0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--c-dim); }
+    .footer-version { font-size: 0.7rem; color: var(--c-dim); padding: 4px 10px; background: var(--c-surface); border-radius: 6px; border: 1px solid var(--c-border); font-family: "Syne", sans-serif; font-weight: 600; }
+
+    /* =============================================================================
+       ANIMATIONS
+    ============================================================================= */
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .info-card { animation: fadeSlideIn 0.5s var(--ease-out) 0.1s backwards; }
+    .form-card { animation: fadeSlideIn 0.5s var(--ease-out) 0.2s backwards; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    :focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
+    /* =============================================================================
+       RESPONSIVE
+    ============================================================================= */
+    @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; height: 64px; }
+      .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .info-card, .form-card { padding: 20px; border-radius: var(--r-lg); }
+      .hero { padding: 36px 0 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader"><div class="loader-ring"></div></div>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Background canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="noise-overlay"></div>
+
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="logo-text">Book<span>marks</span></div>
+        </a>
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">Curator application</div>
+          <h1>Submit your <span>curator profile</span>.</h1>
+          <p>Share your links, your niche, and the context behind your collection. This page is dedicated to the final submission step so the flow feels cleaner and more direct.</p>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="content-grid">
+          <aside class="info-card">
+            <h2>Before you submit.</h2>
+            <p>Use this form to send the essentials for your curator page. If you selected a paid review on the previous step, keep the same name and email for a smoother match on our side.</p>
+
+            <div class="contact-blocks">
+              <div class="contact-line"><strong>Contact us</strong>bookmarks.love@outlook.com</div>
+              <div class="contact-line"><strong>Socials</strong>@bookmarks_hub</div>
+              <div class="contact-line"><strong>Location</strong>The Open Web</div>
+            </div>
+
+            <div class="note-card">
+              <span>Best to include</span>
+              <ul>
+                <li>Your niche, audience, and why your collection matters</li>
+                <li>Important links, reference pages, and public profiles</li>
+                <li>Any file export, document, or structured list that helps review</li>
+              </ul>
+            </div>
+
+            <div class="detail-grid">
+              <div class="detail-card">
+                <strong>Purpose</strong>
+                <p>Bookmarks turns scattered internet knowledge into readable, public collections with stronger context and attribution.</p>
+              </div>
+              <div class="detail-card">
+                <strong>Review flow</strong>
+                <p>We review relevance, clarity, and fit before shaping approved submissions into a cleaner public curator page.</p>
+              </div>
+              <div class="detail-card">
+                <strong>Safety & trust</strong>
+                <p>Broken links, attribution issues, impersonation concerns, and correction requests can all be reported through the same contact channel.</p>
+              </div>
+            </div>
+
+            <a href="become-curator.html" class="back-link">← Back to plan selection</a>
+          </aside>
+
+          <div class="form-card">
+            <div class="form-title">Curator Submission Form</div>
+            <div class="form-sub">Complete the fields below and send your submission directly through Formspree.</div>
+
+            <div class="plan-summary-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span id="planSummaryText">Free Review selected — no payment required</span>
+            </div>
+
+            <div class="paid-plan-notice" id="paidPlanNotice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Please use the same identity details as your paid review selection.</span>
+            </div>
+
+            <form id="contactForm" action="https://formspree.io/f/mzdjovve" method="POST" enctype="multipart/form-data" novalidate>
+              <input type="hidden" name="selected_plan" id="selectedPlan" value="Free Review">
+              <input type="hidden" name="plan_price" id="planPrice" value="0">
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Full name *</label>
+                  <input id="name" name="name" type="text" placeholder="Your name" required>
+                </div>
+                <div class="field">
+                  <label for="email">Your email *</label>
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="field full">
+                  <label for="message">Tell us about your collection *</label>
+                  <textarea id="message" name="message" placeholder="What kind of resources do you want to feature? Add links, context, niche, audience, and anything useful." required></textarea>
+                </div>
+                <div class="field full">
+                  <label for="upload">Optional file (export, list, doc…)</label>
+                  <input id="upload" name="upload" type="file">
+                </div>
+              </div>
+
+              <div class="submit-row">
+                <button class="btn btn-primary" type="submit" id="submitBtn">Send submission</button>
+                <div class="submit-hint">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  Powered by Formspree
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container footer-inner">
+          <div class="footer-brand">
+            <div style="width:34px;height:34px;border-radius:10px;background:rgba(79,158,255,0.1);border:1px solid rgba(79,158,255,0.2);display:grid;place-items:center;color:var(--c-accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <span>Bookmarks — Curated internet, structured with intent.</span>
+          </div>
+          <div class="footer-links">
+            <a class="footer-link" href="news.html">News</a>
+            <a class="footer-link" href="terms.html">Terms</a>
+            <a class="footer-link" href="privacy.html">Privacy</a>
+            <a class="footer-link" href="index.html#contact">Contact</a>
+            <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div class="footer-status">
+            <div class="footer-status-meta"><span class="status-dot"></span> All systems operational</div>
+            <span class="footer-version">v3.2</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Background canvas animation -->
+  <script>
+    (function(){
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, orbs = [];
+      function resize(){
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      function createOrbs(){
+        orbs = [
+          { x: W*0.15, y: H*0.2,  r: Math.min(W,H)*0.35, color: '#4f9eff', dx: 0.15,  dy: 0.10 },
+          { x: W*0.8,  y: H*0.75, r: Math.min(W,H)*0.28, color: '#a78bfa', dx: -0.12, dy: -0.08 },
+          { x: W*0.5,  y: H*0.5,  r: Math.min(W,H)*0.22, color: '#7dd3fc', dx: 0.08,  dy: 0.13 }
+        ];
+      }
+      function draw(){
+        ctx.clearRect(0, 0, W, H);
+        orbs.forEach(o => {
+          o.x += o.dx; o.y += o.dy;
+          if(o.x < -o.r || o.x > W+o.r) o.dx *= -1;
+          if(o.y < -o.r || o.y > H+o.r) o.dy *= -1;
+          const g = ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+          g.addColorStop(0, o.color+'99');
+          g.addColorStop(1, o.color+'00');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize(); createOrbs(); draw();
+      window.addEventListener('resize', () => { resize(); createOrbs(); });
+    })();
+
+    // Scroll progress
+    window.addEventListener('scroll', () => {
+      const el = document.getElementById('scrollProgress');
+      if(el){
+        const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        el.style.width = pct + '%';
+      }
+    });
+
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const l = document.getElementById('loader');
+        if(l) l.classList.add('hidden');
+      }, 300);
+    });
+  </script>
+
+  <script>
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const knob = document.querySelector('.theme-toggle-knob svg');
+      function updateIcon(theme) {
+        if (theme === 'dark') {
+          knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+        } else {
+          knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+        }
+      }
+      updateIcon(savedTheme);
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+      });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan') || 'Free Review';
+    const price = parseInt(params.get('price') || '0', 10) || 0;
+    document.getElementById('selectedPlan').value = plan;
+    document.getElementById('planPrice').value = String(price);
+    document.getElementById('planSummaryText').textContent = price > 0
+      ? `${plan} selected — paid review`
+      : 'Free Review selected — no payment required';
+    if (price > 0) document.getElementById('paidPlanNotice').classList.add('visible');
+
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true;
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('https://formspree.io/f/mzdjovve', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          submitBtn.textContent = '✓ Submitted!';
+          form.reset();
+          document.getElementById('selectedPlan').value = plan;
+          document.getElementById('planPrice').value = String(price);
+          setTimeout(() => {
+            submitBtn.textContent = 'Send submission';
+            submitBtn.disabled = false;
+          }, 4000);
+        } else {
+          const data = await response.json();
+          throw new Error(data?.errors?.map(e => e.message).join(', ') || 'Submission failed');
+        }
+      } catch (err) {
+        submitBtn.textContent = 'Error — try again';
+        submitBtn.disabled = false;
+        console.error('Form error:', err);
+      }
+    });
+
+    initTheme();
+  </script>
+</body>
+</html>

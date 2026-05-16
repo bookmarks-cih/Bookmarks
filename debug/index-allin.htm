@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bookmarks — Curated Intelligence Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A curated directory of high-quality resources, designed to counter AI-biased search results and promote digital privacy.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12, 132, 243, 0.12);
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255, 255, 255, 0.06);
+      --surface-2: rgba(255, 255, 255, 0.08);
+      --surface-3: rgba(255, 255, 255, 0.12);
+      --text: #f7fbff;
+      --text-soft: rgba(247, 251, 255, 0.78);
+      --text-dim: rgba(247, 251, 255, 0.56);
+      --border: rgba(255, 255, 255, 0.10);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --shadow: 0 16px 48px rgba(0, 0, 0, 0.30);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --max-width: 1200px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 80%; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(12, 132, 243, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 0%, rgba(12, 132, 243, 0.12), transparent 22%),
+        linear-gradient(180deg, #081221 0%, #09111c 35%, #050b14 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, input, textarea { font: inherit; }
+
+    #canvas-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.45; }
+
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.05; z-index: 1;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0.7px, transparent 0.9px);
+      background-size: 24px 24px, 36px 36px, 42px 42px;
+    }
+
+    .page { position: relative; z-index: 2; }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* ======================== HEADER ======================== */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.92), rgba(5,11,20,0.55), transparent);
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header.scrolled {
+      background: rgba(5,11,20,0.95);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 14px 0; position: relative;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center;
+      box-shadow: 0 8px 24px rgba(12,132,243,0.22);
+      flex-shrink: 0; transition: transform 0.3s ease; overflow: hidden;
+    }
+
+    .brand-mark:hover { transform: rotate(-5deg) scale(1.05); }
+    .brand-mark svg { width: 18px; height: 18px; color: white; }
+
+    .brand-text { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
+
+    .brand-name {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: -0.03em;
+    }
+
+    .brand-name span { color: var(--brand-light); }
+
+    .brand-sub {
+      font-size: 0.68rem; color: var(--text-dim);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .nav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+    .nav-link {
+      padding: 8px 12px; border-radius: 999px;
+      font-size: 0.86rem; color: var(--text-soft); transition: 0.25s ease;
+    }
+
+    .nav-link:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+    .nav-cta {
+      padding: 10px 16px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      color: #fff; font-weight: 700; font-size: 0.86rem;
+      box-shadow: 0 8px 24px rgba(12,132,243,0.22);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(12,132,243,0.30); }
+
+    .nav-toggle {
+      display: none; width: 40px; height: 40px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.05);
+      border-radius: 10px; cursor: pointer; position: relative;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; padding: 0; z-index: 60; flex-shrink: 0;
+    }
+
+    .nav-toggle span {
+      display: block; width: 18px; height: 2px;
+      background: var(--text); transition: all 0.3s ease; border-radius: 2px;
+    }
+
+    .header.menu-open .nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .header.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .header.menu-open .nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ======================== REVEAL ======================== */
+    .reveal-on-scroll {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ======================== HERO ======================== */
+    .hero { padding: 28px 0 24px; }
+
+    .hero-shell {
+      position: relative; overflow: hidden; border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: rgba(5,11,20,0.6); backdrop-filter: blur(10px);
+      box-shadow: var(--shadow); isolation: isolate;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    }
+
+    .hero-content {
+      padding: 48px 44px; display: flex; flex-direction: column;
+      justify-content: center; max-width: 680px; position: relative; z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      width: fit-content; padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); color: var(--text-soft);
+      font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 14px;
+      position: relative; overflow: hidden;
+    }
+
+    .eyebrow::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: scan 2s linear infinite;
+    }
+
+    @keyframes scan { to { transform: translateX(100%); } }
+
+    .hero h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+      line-height: 0.96; letter-spacing: -0.055em;
+      max-width: 13ch; margin-bottom: 14px;
+    }
+
+    .hero h1 .accent { color: var(--brand-light); }
+
+    .hero p {
+      max-width: 58ch; color: var(--text-soft);
+      font-size: 0.97rem; line-height: 1.72; margin-bottom: 22px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; border: none; cursor: pointer;
+      border-radius: 999px; font-weight: 700; transition: 0.25s ease;
+    }
+
+    .btn-primary { background: #fff; color: #081221; padding: 13px 20px; font-size: 0.9rem; }
+    .btn-primary:hover { transform: translateY(-1px); background: #f1f8ff; }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.10); color: #fff;
+      padding: 13px 20px; border: 1px solid rgba(255,255,255,0.10); font-size: 0.9rem;
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+
+    /* Hero meta — 2 cols, mais plus compacts */
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px; margin-top: 18px;
+    }
+
+    .meta-card {
+      position: relative; padding: 14px 16px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; gap: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      overflow: hidden;
+    }
+
+    .meta-card::before {
+      content: ""; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(83,181,255,0.10), transparent 70%);
+      opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    }
+
+    .meta-card:hover::before { opacity: 0.6; }
+    .meta-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); border-color: rgba(83,181,255,0.35); }
+
+    .meta-icon {
+      width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+      background: rgba(12,132,243,0.15); border: 1px solid rgba(83,181,255,0.2);
+      display: grid; place-items: center;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .meta-icon svg { width: 15px; height: 15px; color: var(--brand-light); }
+
+    .meta-content { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .meta-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .meta-value { font-family: "Space Grotesk", sans-serif; font-size: 0.95rem; font-weight: 700; color: #fff; line-height: 1.2; }
+    .meta-desc { font-size: 0.8rem; color: var(--text-soft); line-height: 1.4; word-break: break-word; }
+
+    /* wide card reste sur 2 colonnes mais plus compact */
+    .meta-card-wide {
+      grid-column: 1 / -1;
+      padding: 12px 16px;
+    }
+
+    /* ======================== HERO VISUAL ======================== */
+    .hero-visual { position: relative; display: flex; align-items: stretch; justify-content: center; min-height: 100%; min-width: 0; }
+
+    .glow-orb {
+      position: absolute; inset: auto 8% 10% auto;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(83,181,255,0.18), transparent 62%);
+      filter: blur(14px); z-index: 0;
+    }
+
+    .stack-card {
+      position: relative; width: 100%; min-height: 420px;
+      overflow: hidden; background: #050b14; z-index: 1;
+      display: flex; flex-direction: column;
+    }
+
+    .stack-background {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(5,11,20,0.3) 0%, rgba(5,11,20,0.6) 50%, rgba(5,11,20,0.95) 100%),
+        url("landingimage.png");
+      background-size: cover; background-position: center top;
+    }
+
+    .stack-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(5,11,20,0.15) 0%, rgba(5,11,20,0.25) 20%, rgba(5,11,20,0.45) 40%, rgba(5,11,20,0.75) 65%, rgba(5,11,20,0.92) 85%, rgba(5,11,20,0.98) 100%);
+      pointer-events: none;
+    }
+
+    .stack-badge {
+      position: absolute; top: 20px; left: 20px;
+      padding: 8px 13px; border-radius: 7px;
+      background: rgba(12,132,243,0.25); border: 1px solid rgba(83,181,255,0.3);
+      font-size: 0.68rem; font-weight: 700; color: var(--brand-light);
+      backdrop-filter: blur(12px); letter-spacing: 0.08em; text-transform: uppercase; z-index: 10;
+    }
+
+    .stack-content {
+      position: relative; z-index: 5; flex: 1;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 36px 32px 34px;
+    }
+
+    .stack-title-netflix {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800;
+      color: #ffffff; line-height: 0.92; letter-spacing: -0.03em;
+      margin-bottom: 6px;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3);
+      max-width: 10ch; text-transform: uppercase;
+    }
+
+    .stack-subtitle-netflix { font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; color: rgba(255,255,255,0.85); letter-spacing: 0.02em; margin-bottom: 14px; }
+
+    .stack-copy { color: rgba(255,255,255,0.72); font-size: 0.97rem; max-width: 42ch; line-height: 1.65; margin-bottom: 18px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+
+    .stack-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+
+    .btn-netflix-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 22px; border-radius: 7px;
+      background: #ffffff; color: #000000;
+      font-weight: 700; font-size: 0.95rem; border: none;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+
+    .btn-netflix-primary:hover { background: rgba(255,255,255,0.85); transform: scale(1.02); }
+
+    .stack-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .stack-meta-item { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,0.68); font-size: 0.85rem; }
+    .stack-meta-item svg { width: 16px; height: 16px; opacity: 0.8; flex-shrink: 0; }
+
+    /* ======================== STATS ======================== */
+    .stats-section { padding: 20px 0; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+
+    .stat-card {
+      padding: 18px; border-radius: 16px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      text-align: center; transition: 0.3s ease;
+    }
+
+    .stat-card:hover { border-color: var(--brand); background: rgba(12,132,243,0.06); transform: translateY(-4px); }
+    .stat-number { font-family: "Space Grotesk", sans-serif; font-size: 2.2rem; font-weight: 700; color: #fff; display: block; margin-bottom: 3px; }
+    .stat-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ======================== SECTIONS ======================== */
+    .section { padding: 26px 0; }
+
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+
+    .section-kicker { display: inline-block; font-size: 0.68rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; font-weight: 700; }
+
+    .section-title { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.6rem, 2.6vw, 2.6rem); line-height: 0.98; letter-spacing: -0.05em; }
+
+    .section-copy { color: var(--text-soft); max-width: 60ch; line-height: 1.7; margin-top: 10px; font-size: 0.95rem; }
+
+    /* ======================== SLIDER ======================== */
+    .slider-shell {
+      position: relative; overflow: hidden; border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #091321, #07101a);
+      box-shadow: var(--shadow);
+    }
+
+    .slider-track { display: flex; transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.24, 1); will-change: transform; }
+
+    .slide {
+      min-width: 100%; display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      align-items: stretch; min-height: 420px; position: relative; overflow: hidden;
+    }
+
+    .slide-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.28; filter: blur(6px) grayscale(40%); pointer-events: none; mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
+    .slide-bg img { width: 100%; height: 100%; object-fit: cover; }
+
+    .slide-panel {
+      padding: 36px; display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 2;
+      background: linear-gradient(90deg, rgba(7,17,31,0.85) 0%, rgba(7,17,31,0.6) 70%, transparent 100%);
+    }
+
+    .slide-tag { display: inline-flex; width: fit-content; margin-bottom: 12px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.08); color: var(--text-soft); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .slide-title { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.6rem, 2.6vw, 2.8rem); line-height: 0.97; letter-spacing: -0.05em; margin-bottom: 12px; max-width: 12ch; }
+
+    .slide-text { color: var(--text-soft); line-height: 1.75; max-width: 56ch; margin-bottom: 18px; font-size: 0.95rem; }
+
+    .slide-list { display: grid; gap: 8px; list-style: none; margin-bottom: 18px; }
+
+    .slide-list li { display: flex; align-items: flex-start; gap: 9px; color: var(--text-soft); font-size: 0.92rem; line-height: 1.6; }
+
+    .slide-list li::before { content: ""; flex-shrink: 0; width: 7px; height: 7px; border-radius: 999px; background: #fff; margin-top: 0.5em; box-shadow: 0 0 10px rgba(255,255,255,0.4); }
+
+    .slide-visual { position: relative; padding: 22px; display: flex; align-items: center; justify-content: center; z-index: 1; background: transparent; min-width: 0; }
+
+    .showcase { width: 100%; max-width: 400px; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.30); }
+
+    .showcase-cover { aspect-ratio: 16/10; position: relative; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; background-size: cover; background-position: center; background-image: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url("landingpage2.png"); }
+
+    .showcase-chip { position: absolute; top: 14px; left: 14px; border-radius: 999px; padding: 6px 9px; background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.10); font-size: 0.68rem; font-weight: 700; }
+
+    .showcase-title { font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; letter-spacing: -0.04em; margin-bottom: 6px; }
+    .showcase-sub { color: var(--text-soft); font-size: 0.88rem; line-height: 1.6; max-width: 30ch; }
+
+    .showcase-body { padding: 14px; display: grid; gap: 8px; }
+
+    .showcase-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+
+    .showcase-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .showcase-dot { width: 8px; height: 8px; border-radius: 999px; background: white; box-shadow: 0 0 10px rgba(255,255,255,0.4); flex-shrink: 0; }
+    .showcase-row-title { font-size: 0.86rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .showcase-row-meta { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0; }
+
+    .slider-controls { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 18px 18px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); position: relative; z-index: 5; }
+
+    .slider-nav { display: flex; gap: 8px; align-items: center; }
+
+    .slider-btn { width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); color: white; display: grid; place-items: center; cursor: pointer; transition: 0.25s ease; flex-shrink: 0; }
+    .slider-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+    .slider-btn svg { width: 16px; height: 16px; }
+
+    .slider-dots { display: flex; align-items: center; gap: 7px; justify-content: center; flex: 1; flex-wrap: wrap; }
+
+    .dot { width: 8px; height: 8px; border-radius: 999px; border: none; cursor: pointer; background: rgba(255,255,255,0.26); transition: transform 0.25s ease, background 0.25s ease, width 0.25s ease; }
+    .dot.active { width: 22px; background: #fff; }
+
+    .slider-count { color: var(--text-dim); font-size: 0.82rem; font-weight: 600; min-width: 62px; text-align: right; }
+
+    /* ======================== WHY GRID ======================== */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+
+    .info-card {
+      position: relative; overflow: hidden; padding: 22px; border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #0a1320, #09111b);
+      box-shadow: var(--shadow); min-height: 200px;
+    }
+
+    .info-card::after { content: ""; position: absolute; inset: auto -30px -40px auto; width: 130px; height: 130px; background: radial-gradient(circle, rgba(83,181,255,0.10), transparent 70%); pointer-events: none; }
+
+    .info-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 14px; }
+    .info-icon svg { width: 20px; height: 20px; color: #fff; }
+
+    .info-card h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.18rem; line-height: 1; letter-spacing: -0.04em; margin-bottom: 10px; }
+    .info-card p { color: var(--text-soft); line-height: 1.72; font-size: 0.91rem; }
+
+    /* ======================== CTA BANNER ======================== */
+    .cta-banner {
+      position: relative; overflow: hidden; padding: 28px 30px; border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(135deg, rgba(12,132,243,0.20), rgba(12,132,243,0.07) 45%, rgba(255,255,255,0.04)), linear-gradient(180deg, #0c1728, #09111a);
+      box-shadow: var(--shadow); display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 18px; align-items: center;
+    }
+
+    .cta-banner h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.6rem, 2.5vw, 2.5rem); line-height: 0.97; letter-spacing: -0.05em; margin-bottom: 10px; max-width: 15ch; }
+    .cta-banner p { color: var(--text-soft); line-height: 1.72; max-width: 56ch; font-size: 0.94rem; }
+
+    .cta-points { display: grid; gap: 10px; }
+    .cta-point { padding: 13px 16px; border-radius: 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: var(--text-soft); font-size: 0.91rem; line-height: 1.6; }
+    .cta-point strong { color: #fff; }
+
+    /* ======================== CONTACT ======================== */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 18px; align-items: stretch;
+    }
+
+    .contact-card, .contact-form {
+      border-radius: 28px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #09111c, #070d16);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card { padding: 26px; display: flex; flex-direction: column; gap: 0; }
+
+    .contact-card h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.7rem; line-height: 0.98; letter-spacing: -0.04em; margin-bottom: 12px; max-width: 13ch; }
+    .contact-card p { color: var(--text-soft); line-height: 1.75; font-size: 0.93rem; }
+    #contactForm { scroll-margin-top: 100px; }
+
+    .contact-blocks { display: grid; gap: 8px; margin-top: 18px; }
+
+    .contact-line { padding: 12px 14px; border-radius: 13px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: var(--text-soft); line-height: 1.6; font-size: 0.9rem; word-break: break-word; }
+    .contact-line strong { display: block; color: #fff; margin-bottom: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; }
+    .contact-note { margin-top: 16px; padding: 14px 16px; border-radius: 14px; background: rgba(12,132,243,0.08); border: 1px solid rgba(83,181,255,0.16); color: var(--text-soft); font-size: 0.9rem; }
+    .contact-note-title { display: block; color: #fff; margin-bottom: 8px; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.09em; font-weight: 700; }
+    .contact-note ul { margin: 0; padding-left: 16px; display: grid; gap: 6px; }
+    .contact-note li { line-height: 1.6; }
+    .contact-detail-grid { display: grid; gap: 10px; margin-top: 14px; }
+    .contact-detail-card { padding: 13px 15px; border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .contact-detail-card strong { display: block; color: #fff; margin-bottom: 6px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.09em; }
+    .contact-detail-card p { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--text-soft); }
+
+    .contact-form { padding: 24px; }
+
+    .form-title { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; letter-spacing: -0.04em; margin-bottom: 6px; }
+    .form-sub { color: var(--text-soft); line-height: 1.65; margin-bottom: 18px; font-size: 0.91rem; }
+
+    /* ======================== PLANS ======================== */
+    .plans-section { margin-bottom: 22px; }
+
+    .plans-label {
+      font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .plans-label::after {
+      content: ""; flex: 1; height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.12), transparent);
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 8px;
+    }
+
+    .plan-card {
+      position: relative; padding: 14px 13px 13px; border-radius: 16px;
+      border: 1.5px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: var(--text); cursor: pointer; text-align: left;
+      overflow: hidden; isolation: isolate;
+      transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .plan-card::before {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: radial-gradient(circle at top right, rgba(83,181,255,0.20), transparent 42%), linear-gradient(135deg, rgba(12,132,243,0.13), transparent 55%);
+      opacity: 0; transition: opacity 0.22s ease;
+    }
+
+    .plan-card:hover { transform: translateY(-2px); border-color: rgba(83,181,255,0.45); box-shadow: 0 10px 32px rgba(12,132,243,0.12); }
+    .plan-card:hover::before { opacity: 1; }
+
+    .plan-card.selected {
+      border-color: var(--brand-light);
+      background: rgba(12,132,243,0.11);
+      box-shadow: 0 0 0 3px rgba(12,132,243,0.16), 0 14px 38px rgba(12,132,243,0.16);
+    }
+
+    .plan-card.selected::before { opacity: 1; }
+
+    .plan-card.selected::after {
+      content: ""; position: absolute; top: 10px; right: 10px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--brand);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 11px; background-repeat: no-repeat; background-position: center;
+      box-shadow: 0 0 10px rgba(12,132,243,0.45);
+    }
+
+    .plan-badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 8px; border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      font-size: 0.62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 9px; width: fit-content;
+    }
+
+    .plan-badge.hot { background: rgba(255,190,80,0.16); color: #ffd98a; }
+    .plan-badge.premium { background: rgba(180,120,255,0.18); color: #dabdff; }
+
+    .plan-name { font-family: "Space Grotesk", sans-serif; font-size: 0.9rem; font-weight: 700; line-height: 1.2; margin-bottom: 4px; }
+    .plan-desc { font-size: 0.76rem; color: var(--text-dim); line-height: 1.4; margin-bottom: 11px; }
+    .plan-price { font-family: "Space Grotesk", sans-serif; font-size: 1.7rem; font-weight: 900; letter-spacing: -0.04em; margin-top: auto; color: #fff; }
+    .plan-price sup { font-size: 0.9rem; font-weight: 700; vertical-align: super; margin-right: 1px; }
+
+    /* ======================== STRIPE EMBED ======================== */
+    .stripe-embed {
+      margin-top: 14px; padding: 15px; border-radius: 14px;
+      background: rgba(12,132,243,0.07); border: 1px solid rgba(83,181,255,0.16);
+      display: none; flex-direction: column; gap: 10px;
+    }
+
+    .stripe-embed.visible { display: flex; }
+
+    .stripe-embed-header { display: flex; align-items: center; gap: 9px; }
+
+    .stripe-embed-icon {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: rgba(12,132,243,0.18); border: 1px solid rgba(83,181,255,0.28);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+
+    .stripe-embed-icon svg { width: 14px; height: 14px; color: var(--brand-light); }
+
+    .stripe-embed-title { font-family: "Space Grotesk", sans-serif; font-size: 0.88rem; font-weight: 700; }
+    .stripe-embed-sub { font-size: 0.76rem; color: var(--text-dim); line-height: 1.35; }
+
+    .stripe-embed-body { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .stripe-embed stripe-buy-button { flex: 1; min-width: 170px; }
+
+    .stripe-payment-note {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; color: var(--text-dim); line-height: 1.35;
+    }
+    .stripe-payment-note svg { width: 13px; height: 13px; flex-shrink: 0; color: #4ade80; }
+
+    /* ======================== FORM STEPS ======================== */
+    .form-steps { display: flex; align-items: center; gap: 0; margin-bottom: 18px; }
+
+    .form-step {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.75rem; font-weight: 600; color: var(--text-dim); white-space: nowrap;
+    }
+
+    .form-step.active { color: var(--text); }
+    .form-step.done { color: #4ade80; }
+
+    .form-step-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; flex-shrink: 0;
+    }
+
+    .form-step.active .form-step-num {
+      background: var(--brand); border-color: var(--brand);
+      color: white; box-shadow: 0 0 10px rgba(12,132,243,0.36);
+    }
+
+    .form-step.done .form-step-num {
+      background: rgba(74,222,128,0.14); border-color: rgba(74,222,128,0.38); color: #4ade80;
+    }
+
+    .form-step-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); min-width: 12px; }
+
+    /* ======================== FORM ======================== */
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 11px; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+    .field input, .field textarea {
+      width: 100%; border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05); color: #fff;
+      border-radius: 14px; padding: 12px 14px; outline: none; transition: 0.25s ease;
+    }
+
+    .field textarea { min-height: 120px; resize: vertical; }
+
+    .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.32); }
+
+    .field input:focus, .field textarea:focus {
+      border-color: rgba(83,181,255,0.52);
+      box-shadow: 0 0 0 3px rgba(12,132,243,0.10);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .field input[type="file"] { cursor: pointer; }
+
+    .submit-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .submit-hint { color: var(--text-dim); font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
+    .submit-hint svg { width: 13px; height: 13px; }
+
+    .process-note {
+      margin-top: 14px; border-radius: 18px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden; position: relative; min-height: 180px;
+    }
+
+    .process-slideshow {
+      position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 180px;
+      background: linear-gradient(135deg, rgba(12,132,243,0.10), rgba(255,255,255,0.02));
+    }
+
+    .process-slide {
+      position: absolute; inset: 0; opacity: 0;
+      animation: processFade 12s ease-in-out infinite;
+    }
+
+    .process-slide:nth-child(2) { animation-delay: 6s; }
+    .process-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    @keyframes processFade {
+      0% { opacity: 0; transform: scale(1.02); }
+      8% { opacity: 1; transform: scale(1); }
+      42% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0; transform: scale(1.02); }
+      100% { opacity: 0; transform: scale(1.02); }
+    }
+
+    /* Plan summary + notice */
+    .plan-summary-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 12px; border-radius: 999px;
+      background: rgba(12,132,243,0.10); border: 1px solid rgba(83,181,255,0.22);
+      font-size: 0.78rem; color: var(--brand-light); font-weight: 600; margin-bottom: 14px;
+    }
+
+    .plan-summary-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    .paid-plan-notice {
+      display: none; padding: 11px 14px; border-radius: 11px;
+      background: rgba(250,204,21,0.06); border: 1px solid rgba(250,204,21,0.18);
+      font-size: 0.82rem; color: rgba(250,204,21,0.88); line-height: 1.5;
+      margin-bottom: 12px; gap: 9px; align-items: flex-start;
+    }
+
+    .paid-plan-notice.visible { display: flex; }
+    .paid-plan-notice svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+
+    /* ======================== FOOTER ======================== */
+    .footer {
+      padding: 20px 0 26px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .footer .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) auto auto;
+      align-items: center; gap: 14px 18px;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 9px; color: var(--text-soft); font-size: 0.87rem; min-width: 0; }
+
+    .footer-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .footer-link { padding: 8px 12px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.85rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+    .status-dot { width: 7px; height: 7px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.48); display: inline-block; margin-right: 7px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.77rem; color: var(--text-dim); }
+
+    /* ======================== RESPONSIVE ======================== */
+    @media (max-width: 1100px) {
+      .hero-content { padding: 40px 32px; }
+      .stack-content { padding: 36px 28px 32px; }
+    }
+
+    @media (max-width: 920px) {
+      html { font-size: 77%; }
+      .hero-grid, .slide, .cta-banner, .contact-wrap { grid-template-columns: 1fr; }
+      .hero-content { max-width: none; padding: 36px 24px; }
+      .hero-visual { min-height: 420px; order: 1; }
+      .stack-card { min-height: 420px; }
+      .slide { min-height: auto; }
+      .slide-panel { background: linear-gradient(180deg, rgba(7,17,31,0.90), rgba(7,17,31,0.68)); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .cta-banner { padding: 24px; }
+      .contact-card, .contact-form { padding: 20px; }
+      .plan-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      html { font-size: 75%; }
+      .container { width: min(100% - 20px, var(--max-width)); }
+      .header-inner { gap: 10px; }
+      .nav-toggle { display: flex; }
+      .nav {
+        opacity: 0; visibility: hidden; transform: translateY(-12px);
+        position: absolute; top: calc(100% + 1px); left: -10px;
+        width: calc(100% + 20px); background: rgba(7,17,31,0.98);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        flex-direction: column; padding: 14px; gap: 8px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+        transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), visibility 0.3s;
+        pointer-events: none;
+      }
+      .header.menu-open .nav { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+      .nav-link, .nav-cta { width: 100%; text-align: center; justify-content: center; padding: 12px; }
+      .hero { padding-top: 18px; }
+      .hero-grid { display: flex; flex-direction: column; }
+      .hero-content { padding: 24px 16px; order: 2; }
+      .hero h1 { max-width: 11ch; }
+      .hero-visual { min-height: 360px; order: 1; }
+      .stack-card { min-height: 360px; }
+      .stack-content { padding: 24px 18px; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+      .hero-meta { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .section { padding: 20px 0; }
+      .form-grid { grid-template-columns: 1fr; }
+      .submit-row { align-items: stretch; }
+      .submit-row .btn { width: 100%; }
+      .footer .container { width: min(100% - 20px, var(--max-width)); }
+      .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 12px; }
+      .footer-brand { justify-content: center; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
+      .form-steps { display: none; }
+    }
+
+    @media (max-width: 460px) {
+      html { font-size: 73%; }
+      .brand-sub { max-width: 140px; }
+      .brand-mark { width: 34px; height: 34px; }
+      .hero-content { padding: 20px 14px; }
+      .stack-content { padding: 22px 16px; }
+      .slider-controls { flex-wrap: wrap; }
+      .slider-dots { order: 3; width: 100%; flex-basis: 100%; }
+      .cta-banner { padding: 18px; border-radius: 22px; }
+      .contact-card, .contact-form { padding: 16px; border-radius: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+
+  <style id="global-responsive-enhancements">
+    html { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+    body { min-width: 320px; overflow-x: hidden; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; overscroll-behavior-x: none; }
+    *, *::before, *::after { box-sizing: border-box; }
+    img, svg, video, canvas, iframe, object, embed { max-width: 100%; height: auto; }
+    a, button, input, textarea, select, summary { touch-action: manipulation; }
+
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148,163,184,0.50) rgba(255,255,255,0.04);
+      scrollbar-gutter: stable;
+      scroll-behavior: smooth;
+    }
+    body { overscroll-behavior-x: none; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(148,163,184,0.46), rgba(83,181,255,0.30));
+      border-radius: 999px; border: 3px solid transparent;
+      background-clip: padding-box; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(167,180,196,0.64), rgba(83,181,255,0.44));
+    }
+    ::-webkit-scrollbar-corner { background: transparent; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div class="noise"></div>
+
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="hub.html" class="brand" aria-label="Bookmarks Hub">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Book<span>marks</span></div>
+            <div class="brand-sub">Curated Intelligence Hub</div>
+          </div>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a class="nav-link" href="#concept">Mission</a>
+          <a class="nav-link" href="#highlights">Highlights</a>
+          <a class="nav-link" href="#why">Why it matters</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <a class="nav-cta" href="hub.html">Explore Hub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-shell">
+            <div class="hero-grid">
+              <div class="hero-content reveal-on-scroll">
+                <div class="eyebrow">Cure the Web</div>
+                <h1>Navigate the <span class="accent">Digital Landscape</span> with Confidence.</h1>
+                <p>A meticulously curated directory of high-quality resources, designed to counter AI-biased search results and restore relevance. We help you discover reliable tools, research, and guides through human curation.</p>
+                <div class="hero-actions">
+                  <a href="hub.html" class="btn btn-primary">Visit Hub</a>
+                  <a href="#contact" class="btn btn-secondary">Join as Curator</a>
+                </div>
+                <div class="hero-meta">
+                  <div class="meta-card">
+                    <div class="meta-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <div class="meta-content">
+                      <div class="meta-label">Intelligence</div>
+                      <div class="meta-value">AI-Bias Free</div>
+                      <div class="meta-desc">Countering commercial interests in search results.</div>
+                    </div>
+                  </div>
+                  <div class="meta-card">
+                    <div class="meta-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <div class="meta-content">
+                      <div class="meta-label">Ethics</div>
+                      <div class="meta-value">Privacy First</div>
+                      <div class="meta-desc">Verified resources adhering to ethical standards.</div>
+                    </div>
+                  </div>
+                  <div class="meta-card meta-card-wide">
+                    <div class="meta-icon" style="background: var(--brand-soft); border-color: var(--brand-light); flex-shrink: 0;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="meta-content" style="flex:1;">
+                      <div class="meta-value">Get in touch</div>
+                      <a href="mailto:bookmarks.love@outlook.com" class="meta-desc" style="color: var(--brand-light); font-weight: 600;">bookmarks.love@outlook.com</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-visual reveal-on-scroll">
+                <div class="glow-orb"></div>
+                <div class="stack-card">
+                  <div class="stack-background"></div>
+                  <div class="stack-overlay"></div>
+                  <div class="stack-badge">Featured Collection</div>
+                  <div class="stack-content">
+                    <h2 class="stack-title-netflix">The Hub</h2>
+                    <p class="stack-subtitle-netflix">Curated Intelligence Stack</p>
+                    <p class="stack-copy">Access a verified ecosystem of tools, research, and guides maintained by human experts. No algorithms, just quality.</p>
+                    <div class="stack-actions">
+                      <a href="hub.html" class="btn-netflix-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Explore Collection
+                      </a>
+                    </div>
+                    <div class="stack-meta">
+                      <div class="stack-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        500+ Resources
+                      </div>
+                      <div class="stack-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Updated Daily
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATS -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid reveal-on-scroll">
+            <div class="stat-card">
+              <span class="stat-number digital-counter" data-target="500">0</span>
+              <span class="stat-label">Resources</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number digital-counter" data-target="50">0</span>
+              <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number digital-counter" data-target="100">0</span>
+              <span class="stat-label">Verified</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MISSION -->
+      <section class="section" id="concept">
+        <div class="container">
+          <div class="section-head reveal-on-scroll">
+            <div>
+              <div class="section-kicker">The Mission</div>
+              <h2 class="section-title">A premium layer of human curation on top of the open web.</h2>
+              <p class="section-copy">In an era where search engines are increasingly influenced by artificial intelligence—often prioritizing commercial interests over relevance—Bookmarks emerges as a solution. We help "Cure the Web" by curating high-quality resources, offering a reliable alternative to AI-biased results.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HIGHLIGHTS SLIDER -->
+      <section class="section" id="highlights">
+        <div class="container">
+          <div class="slider-shell" data-slider>
+            <div class="slider-track">
+              <article class="slide">
+                <div class="slide-bg"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt=""></div>
+                <div class="slide-panel">
+                  <div class="slide-tag">The Hub</div>
+                  <h3 class="slide-title">Curated collections, verified quality.</h3>
+                  <p class="slide-text">Each resource in Hub is vetted for reliability. We strip away SEO spam and AI hallucinations to give you direct access to tools and information that actually work.</p>
+                  <ul class="slide-list">
+                    <li>Direct access to high-value resources without algorithmic bias.</li>
+                    <li>Structured by experts in cybersecurity, privacy, and development.</li>
+                    <li>Focus on utility, privacy, and open-source tools.</li>
+                  </ul>
+                  <a href="hub.html" class="btn btn-secondary">Browse Hub</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <div class="showcase-cover">
+                      <div class="showcase-chip">Verified</div>
+                      <div class="showcase-title">Security Tools</div>
+                      <div class="showcase-sub">Pen-testing frameworks, network analysis, and defensive utilities.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Network Security</span></div><span class="showcase-row-meta">12 links</span></div>
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Forensics</span></div><span class="showcase-row-meta">08 links</span></div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="slide">
+                <div class="slide-bg"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop" alt=""></div>
+                <div class="slide-panel">
+                  <div class="slide-tag">Community</div>
+                  <h3 class="slide-title">Built by experts, for everyone.</h3>
+                  <p class="slide-text">Bookmarks isn't just a directory; it's a collaborative effort of researchers, developers, and privacy advocates who are tired of noise.</p>
+                  <ul class="slide-list">
+                    <li>Curators become gateways to tightly curated corners of the web.</li>
+                    <li>Real-world usage determines inclusion, not keyword stuffing.</li>
+                    <li>A constantly evolving library of digital intelligence.</li>
+                  </ul>
+                  <a href="#contact" class="btn btn-secondary">Become a Curator</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <div class="showcase-cover" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');">
+                      <div class="showcase-chip">Open Source</div>
+                      <div class="showcase-title">Dev Intelligence</div>
+                      <div class="showcase-sub">Libraries, frameworks, and guides vetted by senior engineers.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Frontend</span></div><span class="showcase-row-meta">Featured</span></div>
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Backend</span></div><span class="showcase-row-meta">Featured</span></div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="slide">
+                <div class="slide-bg"><img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop" alt=""></div>
+                <div class="slide-panel">
+                  <div class="slide-tag">Methodology</div>
+                  <h3 class="slide-title">Transparent & Ethical.</h3>
+                  <p class="slide-text">We believe in digital sovereignty. Our curation process is designed to respect user privacy and promote tools that do the same.</p>
+                  <ul class="slide-list">
+                    <li>Strict policy against tracking or invasive tools.</li>
+                    <li>Promotion of decentralized and open web technologies.</li>
+                    <li>Curators maintain editorial control over their stacks.</li>
+                  </ul>
+                  <a href="#why" class="btn btn-secondary">Why it matters</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <div class="showcase-cover" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.78)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop');">
+                      <div class="showcase-chip">Trust Layer</div>
+                      <div class="showcase-title">Ethical Discovery</div>
+                      <div class="showcase-sub">Human-reviewed stacks for privacy, research, learning, and useful web exploration.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Privacy Guides</span></div><span class="showcase-row-meta">Curated</span></div>
+                      <div class="showcase-row"><div class="showcase-left"><span class="showcase-dot"></span><span class="showcase-row-title">Open Web Tools</span></div><span class="showcase-row-meta">Trusted</span></div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="slider-controls">
+              <div class="slider-nav">
+                <button class="slider-btn" type="button" data-prev aria-label="Previous slide">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button class="slider-btn" type="button" data-next aria-label="Next slide">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+              </div>
+              <div class="slider-dots" data-dots></div>
+              <div class="slider-count" data-count>01 / 03</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY -->
+      <section class="section" id="why">
+        <div class="container">
+          <div class="section-head reveal-on-scroll">
+            <div>
+              <div class="section-kicker">Why it matters</div>
+              <h2 class="section-title">It turns Bookmarks into a map of trusted internet ecosystems.</h2>
+              <p class="section-copy">Instead of only listing resources, Bookmarks becomes a place where expertise, taste, context, and identity shape discovery. That makes experience more human, more niche, and far more memorable than a plain directory.</p>
+            </div>
+          </div>
+          <div class="grid-3">
+            <article class="info-card reveal-on-scroll">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <h3>Human context</h3>
+              <p>Links feel stronger when users understand why they were selected and who stands behind them. Stacks provide narrative, trust, and editorial framing.</p>
+            </article>
+            <article class="info-card reveal-on-scroll">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M12 4h9"/><path d="M4 9h16"/><path d="M4 15h16"/></svg></div>
+              <h3>Better discovery</h3>
+              <p>A person-driven browsing model helps users reach precise subcultures and useful niches more quickly than broad taxonomy alone ever could.</p>
+            </article>
+            <article class="info-card reveal-on-scroll">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.2-2.9 8.1-7 9-4.1-.9-7-4.8-7-9V7l7-4Z"></path><path d="M9.5 12.5 11 14l4-4"></path></svg></div>
+              <h3>Creator value</h3>
+              <p>It gives creators a clean public page for their best resources, with attribution, direct traffic, and a better way to organize useful internet.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA BANNER -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-banner reveal-on-scroll">
+            <div>
+              <h2>Designed for human collaboration, not lazy scraping.</h2>
+              <p>Bookmarks aims to feature resources through voluntary contribution, curator-approved selections, or assisted curation workflows that stay respectful, editable, and clearly attributed.</p>
+            </div>
+            <div class="cta-points">
+              <div class="cta-point"><strong>Official attribution:</strong> every collection can carry clear curator credit and profile links.</div>
+              <div class="cta-point"><strong>Flexible input:</strong> exports, simple lists, docs, spreadsheets, or rough drafts are all workable.</div>
+              <div class="cta-point"><strong>Editorial control:</strong> curators can request edits, updates, or removal at any time.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="section-head reveal-on-scroll">
+            <div>
+              <div class="section-kicker">For curators & experts</div>
+              <h2 class="section-title">Want to contribute?</h2>
+              <p class="section-copy">If you publish educational content, research, tools, lists, or niche internet resources, Bookmarks can create a dedicated public collection around your work.</p>
+            </div>
+          </div>
+
+          <div class="contact-wrap reveal-on-scroll">
+            <aside class="contact-card">
+              <div>
+                <h3>Submissions & inquiries.</h3>
+                <p>We welcome educators, researchers, security people, builders, archivists, and public-facing niche experts who want a clean public profile for their favorite resources.</p>
+                <p style="margin-top: 10px;">If you want to submit a profile, suggest a category, report an issue, or discuss a collaboration, this is the best place to reach the Bookmarks team.</p>
+                <div class="contact-blocks">
+                  <div class="contact-line"><strong>Contact us</strong>bookmarks.love@outlook.com</div>
+                  <div class="contact-line"><strong>Socials</strong>@bookmarks_hub</div>
+                  <div class="contact-line"><strong>Location</strong>The Open Web</div>
+                </div>
+                <div class="contact-note">
+                  <span class="contact-note-title">Best for</span>
+                  <ul>
+                    <li>Creator profile submissions and curation requests</li>
+                    <li>Broken link reports, corrections, and archive feedback</li>
+                    <li>Partnership ideas, visibility requests, and product questions</li>
+                  </ul>
+                </div>
+                <div class="contact-detail-grid">
+                  <div class="contact-detail-card">
+                    <strong>Purpose</strong>
+                    <p>Bookmarks exists to turn scattered internet knowledge into curated, readable public collections. The goal is not just to list links, but to organize useful resources with context, attribution, and a cleaner discovery experience.</p>
+                  </div>
+                  <div class="contact-detail-card">
+                    <strong>How submissions work</strong>
+                    <p>When someone submits a profile, list, or recommendation, we review the material, check relevance, and shape it into a more structured public page when it fits the project.</p>
+                  </div>
+                  <div class="contact-detail-card">
+                    <strong>Safety & trust</strong>
+                    <p>We care about accuracy, source quality, and respectful representation. Reports about broken links, impersonation, or attribution issues can be sent directly through this contact channel.</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <div class="contact-form">
+              <div class="form-title">Submit your profile</div>
+              <div class="form-sub">Choose a review option, complete payment if applicable, then fill the form below.</div>
+
+              <div class="form-steps">
+                <div class="form-step active" id="step1">
+                  <span class="form-step-num">1</span>
+                  <span>Choose plan</span>
+                </div>
+                <div class="form-step-line"></div>
+                <div class="form-step" id="step2">
+                  <span class="form-step-num">2</span>
+                  <span>Payment</span>
+                </div>
+                <div class="form-step-line"></div>
+                <div class="form-step" id="step3">
+                  <span class="form-step-num">3</span>
+                  <span>Submit form</span>
+                </div>
+              </div>
+
+              <div class="plans-section">
+                <div class="plans-label">Select your plan</div>
+                <div class="plan-grid" id="planGrid" role="radiogroup" aria-label="Submission plans">
+                  <button type="button" class="plan-card selected" data-plan="Free Review" data-price="0" role="radio" aria-checked="true">
+                    <span class="plan-badge">Free</span>
+                    <div class="plan-name">Free Review</div>
+                    <div class="plan-desc">Standard queue, slower review timeline.</div>
+                    <div class="plan-price"><sup>€</sup>0</div>
+                  </button>
+                  <button type="button" class="plan-card" data-plan="Priority Review" data-price="5" role="radio" aria-checked="false">
+                    <span class="plan-badge hot">⚡ Priority</span>
+                    <div class="plan-name">Priority Review</div>
+                    <div class="plan-desc">Faster review, moved to front of queue.</div>
+                    <div class="plan-price"><sup>€</sup>5</div>
+                  </button>
+                  <button type="button" class="plan-card" data-plan="UX Feedback + Visibility" data-price="15" role="radio" aria-checked="false">
+                    <span class="plan-badge premium">★ Featured</span>
+                    <div class="plan-name">UX Feedback</div>
+                    <div class="plan-desc">UX notes + extra creator visibility boost.</div>
+                    <div class="plan-price"><sup>€</sup>15</div>
+                  </button>
+                </div>
+
+                <div class="stripe-embed" id="stripeEmbed">
+                  <div class="stripe-embed-header">
+                    <div class="stripe-embed-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    </div>
+                    <div>
+                      <div class="stripe-embed-title" id="stripeEmbedTitle">Complete payment — Priority Review €5</div>
+                      <div class="stripe-embed-sub">Secure payment via Stripe. After payment, fill and submit the form below.</div>
+                    </div>
+                  </div>
+                  <div class="stripe-embed-body">
+                    <div id="stripePriority" style="display:none; flex:1;">
+                      <stripe-buy-button
+                        buy-button-id="buy_btn_1TT2Ai029cAiEbnR47LWWprI"
+                        publishable-key="pk_live_51TQUsX029cAiEbnRWosYYhfXN718mmNrqAnd1UYvbDOWcTlo9maPwbWLwkPgZFWKCSk6GePzkdTDY7ShzPJex65c00Ci490GcJ"
+                      ></stripe-buy-button>
+                    </div>
+                    <div id="stripeUX" style="display:none; flex:1;">
+                      <stripe-buy-button
+                        buy-button-id="buy_btn_1TT28T029cAiEbnRVi93EVnl"
+                        publishable-key="pk_live_51TQUsX029cAiEbnRWosYYhfXN718mmNrqAnd1UYvbDOWcTlo9maPwbWLwkPgZFWKCSk6GePzkdTDY7ShzPJex65c00Ci490GcJ"
+                      ></stripe-buy-button>
+                    </div>
+                  </div>
+                  <div class="stripe-payment-note">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Secure · Encrypted · Powered by Stripe. After payment, complete the form below.
+                  </div>
+                </div>
+              </div>
+
+              <div class="plan-summary-pill" id="planSummaryPill">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="planSummaryText">Free Review selected — no payment required</span>
+              </div>
+
+              <div class="paid-plan-notice" id="paidPlanNotice">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>Please ensure the <strong>name used in the form matches exactly the name used in the Stripe payment</strong>.</span>
+              </div>
+
+              <form id="contactForm" action="https://formspree.io/f/mzdjovve" method="POST" enctype="multipart/form-data" novalidate>
+                <input type="hidden" name="selected_plan" id="selectedPlan" value="Free Review">
+                <input type="hidden" name="plan_price" id="planPrice" value="0">
+
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="name">Full name *</label>
+                    <input id="name" name="name" type="text" placeholder="Your name" required />
+                  </div>
+                  <div class="field">
+                    <label for="email">Your email *</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                  </div>
+                  <div class="field full">
+                    <label for="message">Tell us about your collection *</label>
+                    <textarea id="message" name="message" placeholder="What kind of resources do you want to feature? Add links, context, niche, audience, and anything useful." required></textarea>
+                  </div>
+                  <div class="field full">
+                    <label for="upload">Optional file (export, list, doc…)</label>
+                    <input id="upload" name="upload" type="file" />
+                  </div>
+                </div>
+
+                <div class="submit-row">
+                  <button class="btn btn-primary" type="submit" id="submitBtn">Send submission</button>
+                  <div class="submit-hint">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Powered by Formspree
+                  </div>
+                </div>
+                <div class="process-note" aria-label="Plan preview slideshow">
+                  <div class="process-slideshow">
+                    <div class="process-slide">
+                      <img src="priority_review.png" alt="Priority Review preview">
+                    </div>
+                    <div class="process-slide">
+                      <img src="ux-feedback.png" alt="UX Feedback preview">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-mark" style="width:30px;height:30px;border-radius:9px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+
+        <div class="footer-status">
+          <div class="footer-status-meta">
+            <span class="status-dot"></span> All systems operational
+          </div>
+          <span style="font-size: 0.68rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- THREE.JS BACKGROUND -->
+  <script type="module">
+    import * as THREE from 'three';
+    const container = document.getElementById('canvas-container');
+    const canvas = document.createElement('canvas');
+    if (container) {
+      container.appendChild(canvas);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const particleCount = window.innerWidth < 720 ? 30 : 50;
+      const positions = new Float32Array(particleCount * 3);
+      const sizes = new Float32Array(particleCount);
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 100;
+        positions[i3 + 1] = (Math.random() - 0.5) * 100;
+        positions[i3 + 2] = (Math.random() - 0.5) * 50 - 20;
+        sizes[i] = Math.random() * 2.2 + 0.4;
+      }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+      const material = new THREE.ShaderMaterial({
+        uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color('#53b5ff') }, uPixelRatio: { value: renderer.getPixelRatio() } },
+        vertexShader: `attribute float aSize; varying float vAlpha; uniform float uTime; uniform float uPixelRatio; void main() { vec3 pos = position; pos.x += sin(uTime * 0.3 + position.y * 0.05) * 3.0; pos.y += cos(uTime * 0.2 + position.x * 0.05) * 3.0; vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0); gl_PointSize = aSize * uPixelRatio * (200.0 / -mvPosition.z); gl_Position = projectionMatrix * mvPosition; vAlpha = 0.12 + sin(uTime + position.x * 0.5) * 0.08; }`,
+        fragmentShader: `uniform vec3 uColor; varying float vAlpha; void main() { float dist = length(gl_PointCoord - vec2(0.5)); if (dist > 0.5) discard; float alpha = (1.0 - smoothstep(0.0, 0.5, dist)) * vAlpha; gl_FragColor = vec4(uColor, alpha); }`,
+        transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+      });
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+      camera.position.z = 40;
+      let mouseX = 0, mouseY = 0;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.addEventListener('mousemove', (e) => { mouseX = (e.clientX / window.innerWidth) * 2 - 1; mouseY = -(e.clientY / window.innerHeight) * 2 + 1; });
+      function animate() {
+        requestAnimationFrame(animate);
+        const time = performance.now() * 0.001;
+        material.uniforms.uTime.value = time;
+        if (!reduceMotion) { camera.position.x += (mouseX * 3 - camera.position.x) * 0.02; camera.position.y += (mouseY * 3 - camera.position.y) * 0.02; particles.rotation.y = time * 0.02; }
+        camera.lookAt(scene.position); renderer.render(scene, camera);
+      }
+      animate();
+      window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); material.uniforms.uPixelRatio.value = renderer.getPixelRatio(); });
+    }
+  </script>
+
+  <!-- BOOKMARKS DATA (conservé intact) -->
+  <script>
+  window.BOOKMARKS_DATA = [];
+  </script>
+
+  <!-- MAIN SCRIPTS -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // HEADER
+    const header = document.querySelector('.header');
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
+
+    if (toggle && header) {
+      toggle.addEventListener('click', () => {
+        const isOpen = header.classList.toggle('menu-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (header && header.classList.contains('menu-open')) {
+          header.classList.remove('menu-open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (!header) return;
+      if (header.classList.contains('menu-open')) {
+        header.classList.remove('menu-open');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // PLAN SELECTION
+    const planCards = document.querySelectorAll('.plan-card');
+    const selectedPlanInput = document.getElementById('selectedPlan');
+    const planPriceInput = document.getElementById('planPrice');
+    const stripeEmbed = document.getElementById('stripeEmbed');
+    const stripeEmbedTitle = document.getElementById('stripeEmbedTitle');
+    const stripePriority = document.getElementById('stripePriority');
+    const stripeUX = document.getElementById('stripeUX');
+    const planSummaryText = document.getElementById('planSummaryText');
+    const paidPlanNotice = document.getElementById('paidPlanNotice');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+
+    function selectPlan(card) {
+      planCards.forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-checked', 'false'); });
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+      const plan = card.dataset.plan;
+      const price = parseInt(card.dataset.price, 10) || 0;
+      selectedPlanInput.value = plan;
+      planPriceInput.value = price;
+      const isPaid = price > 0;
+      if (isPaid) {
+        stripeEmbed.classList.add('visible');
+        stripeEmbedTitle.textContent = `Complete payment — ${plan} €${price}`;
+        stripePriority.style.display = plan === 'Priority Review' ? 'flex' : 'none';
+        stripeUX.style.display = plan === 'UX Feedback + Visibility' ? 'flex' : 'none';
+        planSummaryText.textContent = `${plan} selected — complete payment above`;
+        paidPlanNotice.classList.add('visible');
+        step1.classList.add('done'); step1.classList.remove('active');
+        step2.classList.add('active'); step3.classList.remove('active');
+      } else {
+        stripeEmbed.classList.remove('visible');
+        planSummaryText.textContent = 'Free Review selected — no payment required';
+        paidPlanNotice.classList.remove('visible');
+        step1.classList.add('done'); step1.classList.remove('active');
+        step2.classList.remove('active'); step3.classList.add('active');
+      }
+    }
+
+    planCards.forEach(card => { card.addEventListener('click', () => selectPlan(card)); });
+
+    // FORM
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    if (form && submitBtn) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        submitBtn.textContent = 'Sending…'; submitBtn.disabled = true;
+        try {
+          const response = await fetch('https://formspree.io/f/mzdjovve', {
+            method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+          });
+          if (response.ok) {
+            submitBtn.textContent = '✓ Submitted!';
+            form.reset();
+            planCards.forEach(c => c.classList.remove('selected'));
+            const freeCard = document.querySelector('[data-plan="Free Review"]');
+            if (freeCard) selectPlan(freeCard);
+            setTimeout(() => { submitBtn.textContent = 'Send submission'; submitBtn.disabled = false; }, 4000);
+          } else {
+            const data = await response.json();
+            throw new Error(data?.errors?.map(e => e.message).join(', ') || 'Submission failed');
+          }
+        } catch (err) { submitBtn.textContent = 'Error — try again'; submitBtn.disabled = false; }
+      });
+    }
+
+    // COUNTERS
+    if (!prefersReducedMotion && typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      document.querySelectorAll('.digital-counter').forEach((el) => {
+        const target = parseInt(el.dataset.target, 10) || 0;
+        gsap.to(el, {
+          textContent: target, duration: 2, ease: 'power1.out', snap: { textContent: 1 },
+          scrollTrigger: { trigger: '.stats-section', start: 'top 80%', toggleActions: 'play none none none' },
+          onUpdate() { this.targets()[0].textContent = Math.ceil(this.targets()[0].textContent); }
+        });
+      });
+    } else {
+      document.querySelectorAll('.digital-counter').forEach(el => { el.textContent = el.dataset.target; });
+    }
+
+    // SCROLL REVEALS
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+
+    // SLIDER
+    const slider = document.querySelector('[data-slider]');
+    if (slider) {
+      const track = slider.querySelector('.slider-track');
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const prevBtn = slider.querySelector('[data-prev]');
+      const nextBtn = slider.querySelector('[data-next]');
+      const dotsWrap = slider.querySelector('[data-dots]');
+      const countDisplay = slider.querySelector('[data-count]');
+      let index = 0, autoPlay, inactivityTimer;
+      let touchStartX = 0, touchCurrentX = 0;
+      function fmt(n) { return String(n).padStart(2, '0'); }
+      function updateSlider() {
+        if (!track) return;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dotsWrap.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === index));
+        countDisplay.textContent = `${fmt(index + 1)} / ${fmt(slides.length)}`;
+      }
+      function next() { index = (index + 1) % slides.length; updateSlider(); }
+      function prev() { index = (index - 1 + slides.length) % slides.length; updateSlider(); }
+      function stopAuto() { clearInterval(autoPlay); }
+      function startAuto() { stopAuto(); if (!prefersReducedMotion) autoPlay = setInterval(next, 6000); }
+      function pauseReset() { stopAuto(); clearTimeout(inactivityTimer); inactivityTimer = setTimeout(startAuto, 42000); }
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.type = 'button'; dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => { index = i; updateSlider(); pauseReset(); });
+        dotsWrap.appendChild(dot);
+      });
+      if (nextBtn) nextBtn.addEventListener('click', () => { next(); pauseReset(); });
+      if (prevBtn) prevBtn.addEventListener('click', () => { prev(); pauseReset(); });
+      slider.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchCurrentX = touchStartX; stopAuto(); }, { passive: true });
+      slider.addEventListener('touchmove', (e) => { touchCurrentX = e.touches[0].clientX; }, { passive: true });
+      slider.addEventListener('touchend', () => { const d = touchCurrentX - touchStartX; if (d < -70) next(); if (d > 70) prev(); pauseReset(); });
+      slider.addEventListener('mouseenter', stopAuto);
+      slider.addEventListener('mouseleave', startAuto);
+      updateSlider(); startAuto();
+    }
+
+    // Init plan
+    const freeCard = document.querySelector('[data-plan="Free Review"]');
+    if (freeCard) selectPlan(freeCard);
+  });
+  </script>
+</body>
+</html>

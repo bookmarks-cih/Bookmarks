@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Become a Creator — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apply to become a featured Creator on Bookmarks and share quality resources linked to your field.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+ 
+  <style>
+    /* =============================================================================
+    TOKENS & THEME (docs.html design system)
+    ============================================================================= */
+    :root {
+      --c-bg: #050810;
+      --c-bg2: #080c18;
+      --c-surface: rgba(255,255,255,0.04);
+      --c-surface2: rgba(255,255,255,0.07);
+      --c-border: rgba(255,255,255,0.08);
+      --c-border2: rgba(255,255,255,0.14);
+      --c-text: #eef2ff;
+      --c-muted: rgba(238,242,255,0.6);
+      --c-dim: rgba(238,242,255,0.35);
+      --c-accent: #4f9eff;
+      --c-accent2: #a78bfa;
+      --c-green: #34d399;
+      --c-gold: #fbbf24;
+      --r-sm: 10px;
+      --r-md: 18px;
+      --r-lg: 26px;
+      --r-xl: 36px;
+      --max: 1100px;
+      --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+      --ease-out: cubic-bezier(0.16,1,0.3,1);
+      --shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+ 
+    [data-theme="light"] {
+      --c-bg: #f8fafc;
+      --c-bg2: #ffffff;
+      --c-surface: rgba(0,0,0,0.03);
+      --c-surface2: rgba(0,0,0,0.05);
+      --c-border: rgba(0,0,0,0.08);
+      --c-border2: rgba(0,0,0,0.12);
+      --c-text: #0f172a;
+      --c-muted: #475569;
+      --c-dim: #94a3b8;
+      --c-accent: #2563eb;
+      --c-accent2: #7c3aed;
+      --shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+ 
+    /* =============================================================================
+    RESET & BASE
+    ============================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(79,158,255,0.3) transparent;
+    }
+ 
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(79,158,255,0.3); border-radius: 99px; }
+ 
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--c-bg);
+      color: var(--c-text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+ 
+    a { color: inherit; text-decoration: none; }
+ 
+    /* =============================================================================
+    BACKGROUND
+    ============================================================================= */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      filter: blur(20px) saturate(120%);
+    }
+ 
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+ 
+    [data-theme="light"] .noise-overlay { opacity: 0.015; }
+ 
+    /* =============================================================================
+    LOADER
+    ============================================================================= */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--c-bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+ 
+    .loader.hidden { opacity: 0; visibility: hidden; }
+ 
+    .loader-ring {
+      width: 36px; height: 36px;
+      border: 2px solid var(--c-border);
+      border-top-color: var(--c-accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+ 
+    @keyframes spin { to { transform: rotate(360deg); } }
+ 
+    /* =============================================================================
+    LAYOUT
+    ============================================================================= */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px 28px 0;
+    }
+ 
+    @media (max-width: 600px) { .container { padding: 16px; } }
+ 
+    /* =============================================================================
+    HEADER
+    ============================================================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(5,8,16,0.85);
+      border-bottom: 1px solid var(--c-border);
+      transition: background 0.4s, border-color 0.4s;
+    }
+ 
+    [data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+ 
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 72px;
+      flex-wrap: nowrap;
+    }
+ 
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+    }
+ 
+    .logo-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,rgba(79,158,255,0.25),rgba(167,139,250,0.15));
+      border: 1px solid rgba(79,158,255,0.25);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 20px rgba(79,158,255,0.12);
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease-spring);
+    }
+ 
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+    .logo-icon svg { width: 20px; height: 20px; color: var(--c-accent); }
+ 
+    .logo-text {
+      font-family: "Syne", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+      white-space: nowrap;
+    }
+ 
+    .logo-text span { color: var(--c-accent); }
+ 
+    .clock {
+      text-align: right;
+      font-family: "Syne", sans-serif;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+ 
+    .clock-time { font-size: 1rem; font-weight: 700; color: var(--c-accent); letter-spacing: 0.02em; line-height: 1; }
+    .clock-date { font-size: 0.62rem; color: var(--c-dim); margin-top: 2px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+ 
+    .theme-toggle {
+      position: relative;
+      width: 52px; height: 28px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+ 
+    .theme-toggle:hover { border-color: var(--c-accent); }
+ 
+    .theme-toggle-knob {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, var(--c-accent), #2563eb);
+      border-radius: 50%;
+      transition: transform 0.4s var(--ease-spring);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(79,158,255,0.3);
+      z-index: 2;
+    }
+ 
+    .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+    [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+ 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+ 
+    .header-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--c-border);
+      color: var(--c-muted);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+ 
+    .header-social-link:hover { background: var(--c-surface2); color: var(--c-text); border-color: var(--c-border2); }
+    .header-social-link svg { width: 16px; height: 16px; }
+ 
+    .hamburger-btn {
+      display: flex;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      padding: 8px;
+      cursor: pointer;
+      color: var(--c-muted);
+      transition: all 0.25s ease;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .hamburger-btn:hover { color: var(--c-accent); background: var(--c-surface2); border-color: rgba(79,158,255,0.3); }
+    .hamburger-btn svg { width: 18px; height: 18px; }
+ 
+    /* =============================================================================
+    HAMBURGER MENU
+    ============================================================================= */
+    .hamburger-menu {
+      position: fixed;
+      top: 80px; right: 20px;
+      background: rgba(8,12,24,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-lg);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s var(--ease-out);
+      max-width: 320px;
+      width: 100%;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+ 
+    [data-theme="light"] .hamburger-menu { background: rgba(248,250,252,0.95); }
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+ 
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+ 
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+ 
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--c-border);
+    }
+ 
+    .hamburger-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--c-text);
+    }
+ 
+    .hamburger-close {
+      width: 32px; height: 32px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: var(--c-muted);
+    }
+ 
+    .hamburger-close:hover { background: var(--c-accent); border-color: var(--c-accent); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+ 
+    .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+ 
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      text-decoration: none;
+      color: var(--c-text);
+      transition: all 0.25s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .hamburger-item:hover { border-color: rgba(79,158,255,0.35); transform: translateY(-2px); background: var(--c-surface2); }
+ 
+    .hamburger-icon {
+      width: 40px; height: 40px;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.2);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--c-accent);
+      transition: all 0.3s var(--ease-spring);
+    }
+ 
+    .hamburger-item:hover .hamburger-icon { background: rgba(79,158,255,0.2); transform: rotate(-5deg) scale(1.08); }
+    .hamburger-icon svg { width: 18px; height: 18px; }
+ 
+    .hamburger-content { flex: 1; }
+    .hamburger-item-title { font-family: "Syne", sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--c-text); margin-bottom: 2px; }
+    .hamburger-item-desc { font-size: 0.72rem; color: var(--c-dim); line-height: 1.4; }
+ 
+    /* =============================================================================
+    HERO
+    ============================================================================= */
+    .hero { text-align: center; margin-bottom: 36px; padding-top: 20px; }
+ 
+    .hero-label {
+      display: inline-block;
+      font-family: "Syne", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 18px;
+      padding: 8px 18px;
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.22);
+      border-radius: 50px;
+    }
+ 
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2rem,4vw,3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--c-text);
+      letter-spacing: -0.04em;
+    }
+ 
+    .hero h1 span { color: var(--c-accent); }
+ 
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--c-muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.75;
+    }
+ 
+    /* =============================================================================
+    HERO HIGHLIGHTS
+    ============================================================================= */
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+ 
+    .hero-stat {
+      padding: 20px;
+      border-radius: var(--r-md);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      text-align: left;
+      box-shadow: var(--shadow);
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+ 
+    .hero-stat:hover { border-color: rgba(79,158,255,0.3); transform: translateY(-3px); background: var(--c-surface2); }
+    .hero-stat:hover::before { transform: scaleX(1); }
+ 
+    .hero-stat strong {
+      display: block;
+      font-family: "Syne", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--c-text);
+    }
+ 
+    .hero-stat span {
+      color: var(--c-muted);
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+ 
+    /* =============================================================================
+    SHELL / MAIN CONTENT AREA
+    ============================================================================= */
+    .shell {
+      width: 100%;
+      max-width: 900px;
+      margin: 36px auto 80px;
+    }
+ 
+    /* =============================================================================
+    TOP GRID
+    ============================================================================= */
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0,0.92fr) minmax(0,1.08fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+ 
+    /* =============================================================================
+    INFO CARDS
+    ============================================================================= */
+    .info-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .info-card h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--c-text);
+    }
+ 
+    .info-card p {
+      color: var(--c-muted);
+      line-height: 1.75;
+      font-size: 0.9rem;
+    }
+ 
+    /* =============================================================================
+    INTRO POINTS
+    ============================================================================= */
+    .intro-points {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+ 
+    .intro-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--c-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+ 
+    .intro-point svg {
+      width: 15px; height: 15px;
+      flex-shrink: 0;
+      color: var(--c-accent);
+      margin-top: 2px;
+    }
+ 
+    /* =============================================================================
+    PROCESS STEPS
+    ============================================================================= */
+    .process-steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+ 
+    .process-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border-radius: var(--r-sm);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--c-border);
+      transition: all 0.25s ease;
+    }
+ 
+    .process-step:hover { border-color: rgba(79,158,255,0.25); background: var(--c-surface2); }
+ 
+    .process-step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(79,158,255,0.1);
+      border: 1px solid rgba(79,158,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-accent);
+      font-weight: 800;
+      font-size: 0.8rem;
+      font-family: "Syne", sans-serif;
+    }
+ 
+    .process-step strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+      color: var(--c-text);
+      font-weight: 600;
+    }
+ 
+    .process-step span {
+      color: var(--c-muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+ 
+    /* =============================================================================
+    FORM CARD
+    ============================================================================= */
+    .form-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border2);
+      border-radius: var(--r-md);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+ 
+    /* Section title bar style from docs.html */
+    .section-title-bar {
+      font-family: "Syne", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--c-accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+ 
+    .section-title-bar::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(79,158,255,0.3), transparent);
+    }
+ 
+    .form-head { text-align: center; margin-bottom: 28px; }
+ 
+    .form-head h2 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.5rem,3vw,2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+      color: var(--c-text);
+    }
+ 
+    .form-head p {
+      color: var(--c-muted);
+      line-height: 1.75;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 0.92rem;
+    }
+ 
+    /* =============================================================================
+    FORM FIELDS
+    ============================================================================= */
+    .creator-form { display: grid; gap: 16px; }
+ 
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+    }
+ 
+    .field { display: grid; gap: 8px; }
+ 
+    .field label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--c-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: "Syne", sans-serif;
+    }
+ 
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1px solid var(--c-border2);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--r-sm);
+      color: var(--c-text);
+      padding: 13px 15px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+ 
+    .field textarea { min-height: 120px; resize: vertical; }
+ 
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--c-dim); }
+ 
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(79,158,255,0.45);
+      box-shadow: 0 0 0 3px rgba(79,158,255,0.08);
+      background: rgba(255,255,255,0.06);
+    }
+ 
+    .field-full { grid-column: 1 / -1; }
+ 
+    /* =============================================================================
+    FILE BOX
+    ============================================================================= */
+    .file-box {
+      padding: 16px;
+      border-radius: var(--r-sm);
+      border: 1px dashed rgba(79,158,255,0.3);
+      background: rgba(79,158,255,0.04);
+    }
+ 
+    .file-box input {
+      padding: 0;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+ 
+    .file-box input:focus { box-shadow: none; }
+ 
+    .file-note {
+      color: var(--c-dim);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+ 
+    /* =============================================================================
+    SUBMIT ROW
+    ============================================================================= */
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--c-border);
+      flex-wrap: wrap;
+    }
+ 
+    .submit-note {
+      color: var(--c-dim);
+      font-size: 0.8rem;
+      line-height: 1.65;
+      max-width: 480px;
+    }
+ 
+    .submit-btn {
+      appearance: none;
+      border: 1px solid rgba(79,158,255,0.35);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      background: rgba(79,158,255,0.12);
+      color: var(--c-accent);
+      font-weight: 700;
+      font-family: "Syne", sans-serif;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      transition: all 0.3s var(--ease-out);
+      letter-spacing: 0.02em;
+    }
+ 
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(79,158,255,0.22);
+      box-shadow: 0 12px 28px rgba(79,158,255,0.15);
+      border-color: rgba(79,158,255,0.55);
+    }
+ 
+    .submit-btn svg { width: 16px; height: 16px; }
+ 
+    /* =============================================================================
+    FOOTER
+    ============================================================================= */
+    .footer {
+      padding: clamp(22px,3vw,30px) 0 clamp(24px,3.8vw,34px);
+      border-top: 1px solid var(--c-border);
+      margin-top: clamp(36px,5vw,56px);
+    }
+ 
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) auto auto;
+      align-items: center;
+      gap: 16px 20px;
+    }
+ 
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--c-muted); font-size: 0.88rem; min-width: 0; }
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+ 
+    .footer-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--c-dim);
+      transition: 0.25s ease;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+ 
+    .footer-link:hover { color: var(--c-text); background: rgba(79,158,255,0.06); }
+ 
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--c-green);
+      box-shadow: 0 0 10px rgba(52,211,153,0.5);
+      display: inline-block;
+      margin-right: 8px;
+    }
+ 
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--c-dim); }
+ 
+    .footer-version {
+      font-size: 0.7rem;
+      color: var(--c-dim);
+      padding: 4px 10px;
+      background: var(--c-surface);
+      border-radius: 6px;
+      border: 1px solid var(--c-border);
+      font-family: "Syne", sans-serif;
+      font-weight: 600;
+    }
+ 
+    /* =============================================================================
+    ANIMATIONS
+    ============================================================================= */
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+ 
+    .hero-stat { animation: fadeSlideIn 0.4s ease backwards; }
+    .hero-stat:nth-child(1) { animation-delay: 0.05s; }
+    .hero-stat:nth-child(2) { animation-delay: 0.1s; }
+    .hero-stat:nth-child(3) { animation-delay: 0.15s; }
+ 
+    .info-card { animation: fadeSlideIn 0.5s ease backwards; animation-delay: 0.1s; }
+    .form-card { animation: fadeSlideIn 0.5s ease backwards; animation-delay: 0.2s; }
+ 
+    :focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+ 
+    /* =============================================================================
+    RESPONSIVE
+    ============================================================================= */
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; height: 64px; }
+      .logo-text { font-size: 1.1rem; }
+      .clock { display: none; }
+      .hamburger-menu { top: 70px; right: 12px; left: 12px; max-width: none; width: auto; padding: 16px; }
+      .hamburger-grid { gap: 8px; }
+      .hero-highlights, .top-grid, .field-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .submit-btn { width: 100%; justify-content: center; }
+      .submit-row { flex-direction: column; }
+      .form-card { padding: 20px; }
+      .shell { padding: 0; }
+    }
+  </style>
+</head>
+ 
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-ring"></div>
+  </div>
+ 
+  <!-- Background canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="noise-overlay"></div>
+ 
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+ 
+      <div class="header-actions">
+        <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+ 
+        <div class="clock">
+          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-date" id="clock-date">...</div>
+        </div>
+ 
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob" id="theme-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </div>
+ 
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+ 
+  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+ 
+  <div class="hamburger-menu" id="hamburger-menu">
+    <div class="hamburger-header">
+      <div class="hamburger-title">Quick Access</div>
+      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+ 
+    <div class="hamburger-grid">
+      <a href="index.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Home</div>
+          <div class="hamburger-item-desc">Main landing page</div>
+        </div>
+      </a>
+ 
+      <a href="hub.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Hub</div>
+          <div class="hamburger-item-desc">Explore sections</div>
+        </div>
+      </a>
+ 
+      <a href="creators.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Creators</div>
+          <div class="hamburger-item-desc">Featured profiles</div>
+        </div>
+      </a>
+ 
+      <a href="curator-form.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Become a Curator</div>
+          <div class="hamburger-item-desc">Submit curated links</div>
+        </div>
+      </a>
+ 
+      <a href="docs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Docs</div>
+          <div class="hamburger-item-desc">Curated collections</div>
+        </div>
+      </a>
+    </div>
+  </div>
+ 
+  <main>
+    <section class="hero container">
+      <span class="hero-label">Creator access</span>
+ 
+      <h1>Become a <span>featured voice</span>.</h1>
+ 
+      <p class="hero-subtitle">
+        Apply to appear in the Bookmarks Creators directory. Share your work, your sector,
+        and the external resources that help your community understand your universe better.
+        Bookmarks highlights creators we judge as quality voices with useful context, real signal,
+        and something worth discovering.
+      </p>
+ 
+      <div class="hero-highlights">
+        <div class="hero-stat">
+          <strong>More visibility</strong>
+          <span>Get a clean public profile designed to help new people discover your work.</span>
+        </div>
+ 
+        <div class="hero-stat">
+          <strong>Resource context</strong>
+          <span>Add links, tools, references, videos, articles, podcasts, or docs connected to your field.</span>
+        </div>
+ 
+        <div class="hero-stat">
+          <strong>Quality signal</strong>
+          <span>Bookmarks is selective: Creator profiles are meant for voices with clarity, usefulness, and taste.</span>
+        </div>
+      </div>
+    </section>
+ 
+    <div class="container">
+      <div class="shell">
+        <div class="top-grid">
+          <div class="info-card">
+            <h3>Why become a Creator?</h3>
+            <p>
+              A Creator profile is not just a link page. It is a curated identity card for your work,
+              your references, and the resources that make your niche easier to explore.
+            </p>
+ 
+            <div class="intro-points">
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Appear inside the Creators tab with a clean public profile.</span>
+              </div>
+ 
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Help your audience discover your best resources without noise.</span>
+              </div>
+ 
+              <div class="intro-point">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Connect with people in the same domain through better attribution and discovery.</span>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="info-card">
+            <h3>How the review works</h3>
+            <p>
+              Creator submissions are reviewed manually. The goal is to keep the directory focused,
+              useful, and aligned with the Bookmarks quality standard.
+            </p>
+ 
+            <div class="process-steps">
+              <div class="process-step">
+                <div class="process-step-num">01</div>
+                <div>
+                  <strong>Send your creator info</strong>
+                  <span>Share your email, links, niche, bio, and optional assets in the form below.</span>
+                </div>
+              </div>
+ 
+              <div class="process-step">
+                <div class="process-step-num">02</div>
+                <div>
+                  <strong>Manual quality review</strong>
+                  <span>Bookmarks checks fit, clarity, usefulness, and whether your profile brings signal.</span>
+                </div>
+              </div>
+ 
+              <div class="process-step">
+                <div class="process-step-num">03</div>
+                <div>
+                  <strong>Profile preparation</strong>
+                  <span>If approved, your Creator page can be prepared with your resources and social links.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="form-card">
+          <div class="section-title-bar">Creator submission</div>
+ 
+          <div class="form-head">
+            <h2>Apply to become a Creator</h2>
+            <p>
+              Send the essentials. The more context you provide, the easier it is to understand your sector,
+              your audience, and the resources that deserve to appear around your profile.
+            </p>
+          </div>
+ 
+          <form
+            class="creator-form"
+            action="https://formspree.io/f/mrejozjd"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="field-grid">
+              <div class="field">
+                <label for="email">Your email</label>
+                <input id="email" type="email" name="email" placeholder="you@example.com" required>
+              </div>
+ 
+              <div class="field">
+                <label for="creator_name">Creator name</label>
+                <input id="creator_name" type="text" name="creator_name" placeholder="Your public creator name" required>
+              </div>
+ 
+              <div class="field">
+                <label for="sector">Sector / niche</label>
+                <input id="sector" type="text" name="sector" placeholder="Cybersecurity, design, AI, science, crypto...">
+              </div>
+ 
+              <div class="field">
+                <label for="main_link">Main link</label>
+                <input id="main_link" type="url" name="main_link" placeholder="https://your-site-or-main-profile.com">
+              </div>
+ 
+              <div class="field field-full">
+                <label for="socials">Social links</label>
+                <textarea id="socials" name="socials" placeholder="YouTube, X, GitHub, Instagram, TikTok, podcast, newsletter..."></textarea>
+              </div>
+ 
+              <div class="field field-full">
+                <label for="bio">Short bio</label>
+                <textarea id="bio" name="bio" placeholder="Tell us who you are, what you create, and why your work matters."></textarea>
+              </div>
+ 
+              <div class="field field-full">
+                <label for="resources">External resources to feature</label>
+                <textarea id="resources" name="resources" placeholder="Paste useful resources linked to your activity: tools, docs, videos, articles, references, communities, datasets, etc. Add one link per line if possible."></textarea>
+              </div>
+ 
+              <div class="field field-full">
+                <label for="why_quality">Why should Bookmarks feature you?</label>
+                <textarea id="why_quality" name="why_quality" placeholder="Explain your angle, your expertise, your community value, or what makes your voice useful in your field."></textarea>
+              </div>
+ 
+              <div class="field field-full">
+                <label for="upload">Optional file</label>
+                <div class="file-box">
+                  <input id="upload" type="file" name="upload">
+                  <div class="file-note">
+                    Optional: send a profile picture, resource list, press kit, logo, .txt notes, or any useful asset.
+                  </div>
+                </div>
+              </div>
+            </div>
+ 
+            <div class="submit-row">
+              <p class="submit-note">
+                By submitting, you understand that Creator profiles are reviewed manually and may be edited for clarity,
+                formatting, attribution, and fit with the Bookmarks directory.
+              </p>
+ 
+              <button type="submit" class="submit-btn">
+                <span>Send Creator Application</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+ 
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <div style="width:34px;height:34px;border-radius:10px;background:rgba(79,158,255,0.1);border:1px solid rgba(79,158,255,0.2);display:grid;place-items:center;color:var(--c-accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <span>Bookmarks — Curated internet, structured with intent.</span>
+          </div>
+ 
+          <div class="footer-links">
+            <a class="footer-link" href="hub.html">Hub</a>
+            <a class="footer-link" href="creators.html">Creators</a>
+            <a class="footer-link" href="docs.html">Docs</a>
+            <a class="footer-link" href="index.html#contact">Contact</a>
+            <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+ 
+          <div class="footer-status">
+            <div class="footer-status-meta">
+              <span class="status-dot"></span> All systems operational
+            </div>
+            <span class="footer-version">v3.2</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+ 
+  <!-- Background canvas animation (docs.html style) -->
+  <script>
+    (function(){
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, orbs = [];
+ 
+      function resize(){
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+ 
+      function createOrbs(){
+        orbs = [
+          { x: W*0.15, y: H*0.2, r: Math.min(W,H)*0.35, color: '#4f9eff', dx: 0.15, dy: 0.1 },
+          { x: W*0.8, y: H*0.75, r: Math.min(W,H)*0.28, color: '#a78bfa', dx: -0.12, dy: -0.08 },
+          { x: W*0.5, y: H*0.5, r: Math.min(W,H)*0.22, color: '#7dd3fc', dx: 0.08, dy: 0.13 }
+        ];
+      }
+ 
+      function draw(){
+        ctx.clearRect(0, 0, W, H);
+        orbs.forEach(o => {
+          const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+          g.addColorStop(0, o.color + '66');
+          g.addColorStop(1, o.color + '00');
+          ctx.beginPath();
+          ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+          ctx.fillStyle = g;
+          ctx.fill();
+ 
+          o.x += o.dx;
+          o.y += o.dy;
+          if(o.x < -o.r || o.x > W+o.r) o.dx *= -1;
+          if(o.y < -o.r || o.y > H+o.r) o.dy *= -1;
+        });
+        requestAnimationFrame(draw);
+      }
+ 
+      resize();
+      createOrbs();
+      draw();
+      window.addEventListener('resize', () => { resize(); createOrbs(); });
+    })();
+  </script>
+ 
+  <!-- Clock -->
+  <script>
+    function updateClock(){
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('clock-time').textContent = h + ':' + m;
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      document.getElementById('clock-date').textContent = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()];
+    }
+    updateClock();
+    setInterval(updateClock, 10000);
+  </script>
+ 
+  <!-- Theme toggle -->
+  <script>
+    function initTheme(){
+      const saved = localStorage.getItem('bookmarks-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+ 
+      const knob = document.querySelector('.theme-toggle-knob');
+      const sunIcon = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+      const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+ 
+      function updateIcon(theme){
+        knob.querySelector('svg').innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+      }
+ 
+      updateIcon(saved);
+ 
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('bookmarks-theme', next);
+        updateIcon(next);
+      });
+    }
+    initTheme();
+  </script>
+ 
+  <!-- Hamburger -->
+  <script>
+    const hBtn = document.getElementById('hamburger-btn');
+    const hMenu = document.getElementById('hamburger-menu');
+    const hOverlay = document.getElementById('hamburger-overlay');
+    const hClose = document.getElementById('hamburger-close');
+ 
+    hBtn.addEventListener('click', () => { hMenu.classList.add('show'); hOverlay.classList.add('show'); });
+    hClose.addEventListener('click', () => { hMenu.classList.remove('show'); hOverlay.classList.remove('show'); });
+    hOverlay.addEventListener('click', () => { hMenu.classList.remove('show'); hOverlay.classList.remove('show'); });
+  </script>
+ 
+  <!-- Loader -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 300);
+    });
+  </script>
+</body>
+</html>
+ 

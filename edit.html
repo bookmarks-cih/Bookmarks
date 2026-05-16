@@ -1,0 +1,1068 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suggest Edit — Bookmarks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12,132,243,0.12);
+      --brand-glow: rgba(12,132,243,0.2);
+      
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --surface-hover: rgba(255,255,255,0.1);
+      
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      
+      --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      --glass-border: rgba(255,255,255,0.1);
+      
+      --danger: #ff4d4d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 100%; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background: linear-gradient(180deg, #07111f 0%, #09121d 50%, #050b14 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== BACKGROUND ORBS ===== */
+    .bg-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+    }
+
+    .bg-orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(12,132,243,0.3), transparent 70%);
+      top: -150px;
+      left: -100px;
+    }
+
+    .bg-orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(83,181,255,0.2), transparent 70%);
+      bottom: -100px;
+      right: -50px;
+    }
+
+    /* ===== HEADER (From Hub) ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      max-width: 1100px;
+      padding: 16px 0;
+      margin: 0 auto;
+      margin-bottom: 32px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+      border-bottom: 1px solid transparent;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      padding: 0 20px;
+    }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+      min-width: fit-content;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: transform 0.3s ease;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+      flex-shrink: 0;
+    }
+
+    .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+    .logo-icon svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .logo-text {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .logo-text span { color: var(--brand-light); }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .back-btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .back-btn-header:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+    .back-btn-header svg { width: 16px; height: 16px; }
+
+    /* Hamburger Button */
+    .hamburger-btn {
+      display: flex;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+    .hamburger-btn svg { width: 22px; height: 22px; }
+
+    /* ===== HAMBURGER MENU (From Hub) ===== */
+    .hamburger-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+    .hamburger-menu {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--surface);
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      max-width: 320px;
+      width: 100%;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
+    .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .hamburger-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hamburger-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hamburger-close {
+      width: 32px;
+      height: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-soft);
+    }
+
+    .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+    .hamburger-close svg { width: 16px; height: 16px; }
+
+    .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+    .hamburger-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); background: var(--surface-2); }
+
+    .hamburger-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      box-shadow: 0 4px 12px var(--brand-glow);
+    }
+
+    .hamburger-icon svg { width: 20px; height: 20px; }
+
+    .hamburger-content { flex: 1; }
+
+    .hamburger-item-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .hamburger-item { animation: slideInRight 0.4s ease forwards; opacity: 0; }
+    .hamburger-item:nth-child(1) { animation-delay: 0.05s; }
+    .hamburger-item:nth-child(2) { animation-delay: 0.1s; }
+    .hamburger-item:nth-child(3) { animation-delay: 0.15s; }
+    .hamburger-item:nth-child(4) { animation-delay: 0.2s; }
+    .hamburger-item:nth-child(5) { animation-delay: 0.25s; }
+    .hamburger-item:nth-child(6) { animation-delay: 0.3s; }
+    .hamburger-item:nth-child(7) { animation-delay: 0.35s; }
+
+
+    /* ===== MAIN LAYOUT ===== */
+    .page-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 60px;
+    }
+
+    .page-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--text), var(--brand-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    
+    .page-subtitle {
+       color: var(--text-dim);
+       font-size: 0.9rem;
+    }
+
+    /* ===== GLASS CARD ===== */
+    .glass-card {
+      background: rgba(12, 20, 35, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-light);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-desc {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    /* ===== FORM STYLES ===== */
+    .form-group { margin-bottom: 20px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--brand-light);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 3px rgba(12,132,243,0.2);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(12,132,243,0.3);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .form-status {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .form-status.success { color: #4ade80; }
+    .form-status.error { color: var(--danger); }
+
+    /* ===== DELETION BOX ===== */
+    .deletion-box {
+      background: rgba(255, 77, 77, 0.05);
+      border: 1px solid rgba(255, 77, 77, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .deletion-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--danger);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .deletion-text {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .copy-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .copy-text {
+      flex: 1;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+      background: none;
+      border: none;
+      outline: none;
+    }
+
+    .copy-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: var(--text-soft);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .copy-btn.copied {
+      background: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+    }
+
+    @media (max-width: 600px) {
+      .header-inner { gap: 10px; }
+      .logo-text { font-size: 1.1rem; }
+      .back-btn-header span { display: none; } /* Hide text on mobile */
+      .back-btn-header { padding: 8px; }
+      
+      .glass-card { padding: 24px 20px; }
+      .page-title { font-size: 1.5rem; }
+      
+      .hamburger-menu {
+        top: 70px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+      }
+    }
+  </style>
+
+<style id="global-responsive-enhancements">
+  html { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+  body {
+    min-width: 320px;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-x: none;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  img, svg, video, canvas, iframe, object, embed { max-width: 100%; height: auto; }
+  table { max-width: 100%; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  input, textarea, select, button { font: inherit; }
+  a, button, input, textarea, select, summary { touch-action: manipulation; }
+
+  @media (max-width: 1024px) {
+    .header-inner,
+    .hero-inner,
+    .section-head,
+    .footer-content,
+    .showcase-row,
+    .slider-controls,
+    .stack-actions,
+    .stack-meta,
+    .contact-card,
+    .card-inner,
+    .curated-link-top,
+    .curator-top,
+    .curator-post-header,
+    .curating-content,
+    .stripe-embed-body,
+    .hamburger-item,
+    .nav,
+    .header-actions {
+      flex-wrap: wrap;
+    }
+
+    .hero,
+    .hero-inner,
+    .section-head,
+    .footer-content,
+    .form-grid,
+    .stats-grid,
+    .grid-3,
+    .grid-4,
+    .hero-meta,
+    .creator-meta,
+    .card-actions,
+    .pagination,
+    .header-actions,
+    .nav {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 14px 0;
+    }
+
+    .header-inner,
+    .hero-inner,
+    .footer-content,
+    .section-head {
+      gap: 12px;
+    }
+
+    .header-inner {
+      padding: 0 16px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+    }
+
+    .header-actions {
+      gap: 6px;
+      justify-content: flex-end;
+    }
+
+    .theme-toggle {
+      width: 48px;
+      height: 26px;
+    }
+
+    .theme-toggle-knob {
+      width: 18px;
+      height: 18px;
+    }
+
+    [data-theme="light"] .theme-toggle-knob {
+      transform: translateX(22px);
+    }
+
+    .nav,
+    .footer-links {
+      justify-content: flex-start;
+    }
+
+    .hero-visual,
+    .stack-card,
+    .showcase,
+    .contact-card,
+    .info-card,
+    .bookmark-card,
+    .creator-card,
+    .curator-card,
+    .link-item,
+    .card,
+    .content-card,
+    .glass-card,
+    .panel {
+      max-width: 100%;
+    }
+
+    .form-grid,
+    .stats-grid,
+    .grid-3,
+    .grid-4,
+    .hero-meta {
+      grid-template-columns: 1fr !important;
+    }
+
+    .hamburger-menu {
+      left: 12px !important;
+      right: 12px !important;
+      width: auto !important;
+      max-width: none !important;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    body { font-size: clamp(16px, 0.94vw, 18px); }
+    .header-inner,
+    .hero-inner,
+    .section-inner,
+    .footer-inner,
+    .container,
+    .content,
+    .page-content,
+    .main-content {
+      width: min(calc(100% - 96px), 1680px);
+    }
+  }
+      /* global-scrollbar-doux */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148,163,184,0.52) rgba(255,255,255,0.05);
+      scrollbar-gutter: stable;
+      scroll-behavior: smooth;
+    }
+    body { overscroll-behavior-x: none; }
+    ::-webkit-scrollbar { width: 11px; height: 11px; }
+    ::-webkit-scrollbar-track {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(148,163,184,0.48), rgba(83,181,255,0.32));
+      border-radius: 999px;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(167,180,196,0.66), rgba(83,181,255,0.46));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    ::-webkit-scrollbar-corner { background: transparent; }
+    .glass-container {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148,163,184,0.50) rgba(255,255,255,0.04);
+      scrollbar-gutter: stable both-edges;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .glass-container::-webkit-scrollbar { width: 10px; height: 10px; }
+    .glass-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 999px; }
+    .glass-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(148,163,184,0.50), rgba(83,181,255,0.34));
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    .glass-container::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(173,186,200,0.70), rgba(83,181,255,0.50));
+    }
+</style>
+
+</head>
+<body>
+
+  <div class="bg-container">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- HEADER FROM HUB -->
+  <header class="header">
+    <div class="header-inner">
+      <!-- HOME LINK -> hub.html -->
+      <a href="hub.html" class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+      
+      <div class="header-actions">
+        <!-- BACK BUTTON -> creators.html -->
+        <a href="creators.html" class="back-btn-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back to Creators</span>
+        </a>
+        
+        <!-- HAMBURGER BUTTON -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-container">
+    
+    <!-- PAGE TITLE -->
+    <div>
+        <h1 class="page-title">Suggest an Edit</h1>
+        <p class="page-subtitle">Request an update or deletion of a creator profile.</p>
+    </div>
+
+    <div class="glass-card">
+      <span class="section-label">Update Request</span>
+      <p class="section-desc">
+        If you are the creator or represent the organization, please fill out the form below to update the content. Proof of ownership is required.
+      </p>
+
+      <!-- UPDATED FORM ACTION HERE -->
+      <form id="my-form" action="https://formspree.io/f/xvzdbjvr" method="POST">
+        
+        <!-- CREATOR NAME -->
+        <div class="form-group">
+          <label for="creatorName">Creator Name to Edit</label>
+          <input type="text" id="creatorName" name="creator_name" class="form-input" placeholder="e.g. Cyber Maddy" required />
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group">
+          <label for="email">Your Contact Email</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="name@company.com" required />
+        </div>
+
+        <!-- PROOF -->
+        <div class="form-group">
+          <label for="proof">Proof of Identity</label>
+          <textarea id="proof" name="proof" class="form-textarea" placeholder="Please provide links to official social media accounts, website, or any information that proves you are the creator or an authorized representative." required></textarea>
+        </div>
+
+        <!-- DELETION REQUEST SECTION -->
+        <div class="deletion-box">
+          <div class="deletion-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            Request Full Deletion
+          </div>
+          <p class="deletion-text">
+            If you only wish to delete the page, copy the sentence below and paste it into the "Proposed Changes" field.
+          </p>
+          <div class="copy-field">
+            <input type="text" class="copy-text" value="I request the complete deletion of this page and associated data." readonly id="deleteText">
+            <button type="button" class="copy-btn" onclick="copyDeletionText()">Copy</button>
+          </div>
+        </div>
+
+        <!-- MESSAGE / CHANGES -->
+        <div class="form-group">
+          <label for="message">Proposed Changes</label>
+          <textarea id="message" name="message" class="form-textarea" placeholder="Describe the changes you want to apply (Bio, Links, Category...) or paste the deletion request above." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="my-form-button">
+          <span>Submit Request</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+        
+        <p id="my-form-status" class="form-status"></p>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- HAMBURGER MENU OVERLAY -->
+  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+
+  <!-- HAMBURGER MENU CONTAINER -->
+  <div class="hamburger-menu" id="hamburger-menu">
+    <div class="hamburger-header">
+      <div class="hamburger-title">Quick Access</div>
+      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hamburger-grid">
+        <a href="index.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Home</div>
+            <div class="hamburger-item-desc">Main dashboard</div>
+          </div>
+        </a>
+        <a href="hub.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Hub</div>
+            <div class="hamburger-item-desc">Explore sections</div>
+          </div>
+        </a>
+        <a href="docs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Docs</div>
+            <div class="hamburger-item-desc">Documentation & Resources</div>
+          </div>
+        </a>
+        <a href="files.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Files</div>
+            <div class="hamburger-item-desc">Downloads & Software</div>
+          </div>
+        </a>
+        <a href="news.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+              <path d="M18 14h-8"/>
+              <path d="M15 18h-5"/>
+              <path d="M10 6h8v4h-8V6Z"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">News</div>
+            <div class="hamburger-item-desc">Latest Updates</div>
+          </div>
+        </a>
+        <a href="jobs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Jobs</div>
+            <div class="hamburger-item-desc">Career Opportunities</div>
+          </div>
+        </a>
+        <a href="creators.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Creators</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
+          </div>
+        </a>
+        <a href="privacy.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Privacy</div>
+            <div class="hamburger-item-desc">Privacy Policy</div>
+          </div>
+        </a>
+        <a href="terms.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Terms</div>
+            <div class="hamburger-item-desc">Terms & Conditions</div>
+          </div>
+        </a>
+      </div>
+  </div>
+
+  <script>
+    // ===== FORM HANDLING =====
+    var form = document.getElementById("my-form");
+    
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var status = document.getElementById("my-form-status");
+      var button = document.getElementById("my-form-button");
+      var data = new FormData(event.target);
+      
+      button.innerHTML = "Sending...";
+      button.disabled = true;
+
+      fetch(event.target.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          status.innerHTML = "✓ Thanks for your submission!";
+          status.className = "form-status success";
+          form.reset();
+          button.innerHTML = "Sent ✓";
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+            } else {
+              status.innerHTML = "Oops! There was a problem."
+            }
+            status.className = "form-status error";
+            button.innerHTML = "Submit Request";
+            button.disabled = false;
+          })
+        }
+      }).catch(error => {
+        status.innerHTML = "Oops! There was a problem.";
+        status.className = "form-status error";
+        button.innerHTML = "Submit Request";
+        button.disabled = false;
+      });
+    }
+    form.addEventListener("submit", handleSubmit);
+
+    // ===== COPY FUNCTION =====
+    function copyDeletionText() {
+      var copyText = document.getElementById("deleteText");
+      var copyBtn = document.querySelector(".copy-btn");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+      copyBtn.innerHTML = "Copied!";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.innerHTML = "Copy";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    }
+
+    // ===== HAMBURGER MENU LOGIC =====
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const hamburgerOverlay = document.getElementById('hamburger-overlay');
+    const hamburgerClose = document.getElementById('hamburger-close');
+
+    function showMenu() {
+      hamburgerMenu.classList.add('show');
+      hamburgerOverlay.classList.add('show');
+    }
+
+    function hideMenu() {
+      hamburgerMenu.classList.remove('show');
+      hamburgerOverlay.classList.remove('show');
+    }
+
+    hamburgerBtn.addEventListener('click', showMenu);
+    hamburgerClose.addEventListener('click', hideMenu);
+    hamburgerOverlay.addEventListener('click', hideMenu);
+  </script>
+</body>
+</html>
+
+
