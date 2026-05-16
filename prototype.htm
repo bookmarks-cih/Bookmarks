@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1081,3 +1082,1088 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bookmarks — Creator Collections</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0c84f3;
+      --brand-dark: #0066d9;
+      --brand-light: #53b5ff;
+      --brand-soft: rgba(12,132,243,0.12);
+      --bg: #07111f;
+      --bg-2: #0b1628;
+      --surface: rgba(255,255,255,0.06);
+      --surface-2: rgba(255,255,255,0.08);
+      --surface-3: rgba(255,255,255,0.12);
+      --text: #f7fbff;
+      --text-soft: rgba(247,251,255,0.78);
+      --text-dim: rgba(247,251,255,0.56);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-xl: 34px;
+      --max-width: 1240px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* DEZOOM 20% */
+    html {
+      scroll-behavior: smooth;
+      font-size: 80%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(12,132,243,0.20), transparent 30%),
+        radial-gradient(circle at 85% 0%, rgba(12,132,243,0.14), transparent 24%),
+        linear-gradient(180deg, #081221 0%, #09111c 35%, #050b14 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.06; z-index: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0.7px, transparent 0.9px);
+      background-size: 24px 24px, 36px 36px, 42px 42px;
+    }
+
+    .page { position: relative; z-index: 1; }
+    .container { width: min(100% - 32px, var(--max-width)); margin: 0 auto; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,11,20,0.92), rgba(5,11,20,0.55), transparent);
+      border-bottom: 1px solid transparent;
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      display: grid; place-items: center;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24); flex-shrink: 0;
+    }
+    .brand-mark svg { width: 20px; height: 20px; color: white; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+    .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.03em; }
+    .brand-name span { color: var(--brand-light); }
+    .brand-sub { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+    .nav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .nav-link { padding: 10px 14px; border-radius: 999px; font-size: 0.88rem; color: var(--text-soft); transition: 0.25s ease; }
+    .nav-link:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+    .nav-cta {
+      padding: 12px 18px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+      color: #fff; font-weight: 700; font-size: 0.88rem;
+      box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(12,132,243,0.32); }
+
+    /* HERO */
+    .hero { padding: 42px 0 34px; }
+    .hero-shell {
+      position: relative; overflow: hidden; border-radius: var(--radius-xl); min-height: 680px;
+      border: 1px solid var(--border); background: #050b14; box-shadow: var(--shadow); isolation: isolate;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr 0.92fr; min-height: 680px; }
+    .hero-content { padding: 70px 54px; display: flex; flex-direction: column; justify-content: center; max-width: 720px; position: relative; z-index: 2; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+      padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-soft); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #fff; box-shadow: 0 0 14px rgba(255,255,255,0.5); }
+    .hero h1 { font-family: "Space Grotesk", sans-serif; font-size: clamp(2.4rem, 5vw, 5rem); line-height: 0.95; letter-spacing: -0.06em; max-width: 12ch; margin-bottom: 18px; }
+    .hero h1 .accent { color: var(--brand-light); }
+    .hero p { max-width: 62ch; color: var(--text-soft); font-size: 1.02rem; line-height: 1.75; margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none; cursor: pointer; border-radius: 999px; font-weight: 700; transition: 0.25s ease; }
+    .btn-primary { background: #fff; color: #081221; padding: 15px 22px; }
+    .btn-primary:hover { transform: translateY(-1px); background: #f1f8ff; }
+    .btn-secondary { background: rgba(255,255,255,0.10); color: #fff; padding: 15px 22px; border: 1px solid rgba(255,255,255,0.10); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+
+    /* IMPROVED META CARDS */
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .meta-card {
+      position: relative;
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .meta-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      border-color: rgba(83,181,255,0.4);
+    }
+
+    .meta-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(12,132,243,0.15);
+      border: 1px solid rgba(83,181,255,0.2);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .meta-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--brand-light);
+    }
+
+    .meta-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    /* FEATURED CREATOR CARD */
+    .hero-visual { position: relative; display: flex; align-items: stretch; justify-content: center; min-height: 100%; }
+    .glow-orb { position: absolute; inset: auto 8% 10% auto; width: 360px; height: 360px; background: radial-gradient(circle, rgba(83,181,255,0.22), transparent 62%); filter: blur(14px); z-index: 0; }
+    .stack-card { position: relative; width: 100%; min-height: 100%; border-radius: 0; overflow: hidden; background: #050b14; box-shadow: none; z-index: 1; display: flex; flex-direction: column; }
+    .stack-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; background: linear-gradient(180deg, rgba(5,11,20,0.3) 0%, rgba(5,11,20,0.6) 50%, rgba(5,11,20,0.95) 100%), url("img/maddy.png"); background-size: cover; background-position: center top; }
+    .stack-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(5,11,20,0.15) 0%, rgba(5,11,20,0.25) 20%, rgba(5,11,20,0.45) 40%, rgba(5,11,20,0.75) 65%, rgba(5,11,20,0.92) 85%, rgba(5,11,20,0.98) 100%); pointer-events: none; }
+    .stack-overlay-vignette { position: absolute; inset: 0; z-index: 2; background: radial-gradient(ellipse at center 30%, transparent 0%, rgba(5,11,20,0.4) 70%, rgba(5,11,20,0.7) 100%); pointer-events: none; }
+    .stack-badge { position: absolute; top: 28px; left: 28px; padding: 10px 16px; border-radius: 8px; background: rgba(12,132,243,0.25); border: 1px solid rgba(83,181,255,0.3); font-size: 0.72rem; font-weight: 700; color: var(--brand-light); backdrop-filter: blur(12px); letter-spacing: 0.08em; text-transform: uppercase; z-index: 10; }
+    .stack-content { position: relative; z-index: 5; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 50px 40px 45px; }
+    .stack-title-netflix { font-family: "Space Grotesk", "Bebas Neue", "Impact", sans-serif; font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; color: #ffffff; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 8px; text-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3); max-width: 10ch; text-transform: uppercase; }
+    .stack-subtitle-netflix { font-family: "Inter", sans-serif; font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 500; color: rgba(255,255,255,0.85); letter-spacing: 0.02em; margin-bottom: 20px; text-transform: none; }
+    .stack-copy { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 45ch; line-height: 1.7; margin-bottom: 24px; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+    .stack-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 30px; }
+    .btn-netflix-primary { display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 8px; background: #ffffff; color: #000000; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: all 0.2s ease; text-transform: none; }
+    .btn-netflix-primary:hover { background: rgba(255,255,255,0.85); transform: scale(1.02); }
+    .btn-netflix-secondary { display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 8px; background: rgba(255,255,255,0.15); color: #ffffff; font-weight: 600; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(10px); }
+    .btn-netflix-secondary:hover { background: rgba(255,255,255,0.25); }
+    .stack-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+    .stack-meta-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+    .stack-meta-item svg { width: 18px; height: 18px; opacity: 0.8; }
+    .stack-carousel { position: relative; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); z-index: 5; }
+    .stack-carousel-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+    .stack-carousel-images { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
+    .stack-carousel-images::-webkit-scrollbar { height: 4px; }
+    .stack-carousel-images::-webkit-scrollbar-track { background: transparent; }
+    .stack-carousel-images::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+    .stack-thumbnail { flex-shrink: 0; width: 140px; height: 80px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.25s ease; cursor: pointer; background: linear-gradient(135deg, rgba(12,132,243,0.2), rgba(12,132,243,0.05)), #0d1a2d; background-size: cover; background-position: center; }
+    .stack-thumbnail:hover { transform: scale(1.05); border-color: rgba(83,181,255,0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .stack-thumbnail:nth-child(1) { background-image: url("https://img.youtube.com/vi/P0wWeP1iw5E/0.jpg"); }
+    .stack-thumbnail:nth-child(2) { background-image: url("https://img.youtube.com/vi/JYBVchX2HRc/0.jpg"); }
+    .stack-thumbnail:nth-child(3) { background-image: url("https://img.youtube.com/vi/mcmIFHqbE0Q/0.jpg"); }
+    .stack-thumbnail:nth-child(4) { background-image: url("https://img.youtube.com/vi/SkEUXfv9sEo/0.jpg"); }
+    .stack-thumbnail:nth-child(5) { background-image: url("https://img.youtube.com/vi/67gztJqHPOQ/0.jpg"); }
+    .stack-more-btn { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 80px; height: 80px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.25s ease; }
+    .stack-more-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: #ffffff; }
+
+    /* Section */
+    .section { padding: 34px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .section-kicker { display: inline-block; font-size: 0.72rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; font-weight: 700; }
+    .section-title { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.8rem, 3vw, 3rem); line-height: 0.98; letter-spacing: -0.05em; }
+    .section-copy { color: var(--text-soft); max-width: 62ch; line-height: 1.75; margin-top: 12px; }
+
+    /* Slider */
+    .slider-shell { position: relative; overflow: hidden; border-radius: var(--radius-xl); border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #091321, #07101a); box-shadow: var(--shadow); }
+    .slider-track { display: flex; transition: transform 0.45s cubic-bezier(.22,.8,.24,1); will-change: transform; }
+    .slide { min-width: 100%; display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: stretch; min-height: 480px; position: relative; }
+
+    /* BACKGROUND IMAGES FOR SLIDES (BLUR + FADE) */
+    .slide-bg {
+      position: absolute; inset: 0; z-index: 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr);
+      opacity: 0.3; filter: blur(6px) grayscale(40%); pointer-events: none; overflow: hidden;
+      mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    }
+    .slide-bg img { width: 100%; height: 100%; object-fit: cover; }
+
+    .slide-panel {
+      padding: 42px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2;
+      background: linear-gradient(90deg, rgba(7,17,31,0.85) 0%, rgba(7,17,31,0.6) 70%, transparent 100%);
+    }
+    .slide-tag { display: inline-flex; width: fit-content; margin-bottom: 16px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); color: var(--text-soft); font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .slide-title { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.8rem, 3vw, 3.2rem); line-height: 0.96; letter-spacing: -0.05em; margin-bottom: 16px; max-width: 11ch; }
+    .slide-text { color: var(--text-soft); line-height: 1.82; max-width: 58ch; margin-bottom: 24px; }
+    .slide-list { display: grid; gap: 10px; list-style: none; margin-bottom: 22px; }
+    .slide-list li { display: flex; align-items: flex-start; gap: 10px; color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
+    .slide-list li::before { content: ""; flex-shrink: 0; width: 8px; height: 8px; border-radius: 999px; background: #fff; margin-top: 0.55em; box-shadow: 0 0 12px rgba(255,255,255,0.45); }
+    .slide-visual { position: relative; padding: 26px; display: flex; align-items: center; justify-content: center; z-index: 1; background: transparent; }
+
+    .showcase {
+      width: 100%; max-width: 430px; border-radius: 30px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.05); box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+
+    /* SHOWCASE COVER IMAGES */
+    .showcase-cover {
+      aspect-ratio: 16/10; position: relative; padding: 22px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background-size: cover; background-position: center;
+      /* Image pour Slide 1 */
+      background-image: 
+        linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+        url("img/FW0ixqLKDwM_hqdefault_480.jpg"); 
+    }
+    
+    .showcase-cover.alt-2 {
+      /* Image pour Slide 2 */
+      background-image: 
+        linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+        url("img/redmaddy.jpg");
+    }
+
+    .showcase-cover.alt-3 {
+      /* Image pour Slide 3 */
+      background-image: 
+        linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+        url("img/gewgsegser.jpg");
+    }
+
+    .showcase-chip { position: absolute; top: 18px; left: 18px; border-radius: 999px; padding: 8px 10px; background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.10); font-size: 0.72rem; font-weight: 700; }
+    .showcase-title { font-family: "Space Grotesk", sans-serif; font-size: 1.55rem; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .showcase-sub { color: var(--text-soft); font-size: 0.93rem; line-height: 1.7; max-width: 30ch; }
+    .showcase-body { padding: 18px; display: grid; gap: 10px; }
+    .showcase-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+    .showcase-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .showcase-dot { width: 10px; height: 10px; border-radius: 999px; background: white; box-shadow: 0 0 14px rgba(255,255,255,0.45); flex-shrink: 0; }
+    .showcase-row-title { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .showcase-row-meta { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0; }
+
+    .slider-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px 22px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); position: relative; z-index: 5; }
+    .slider-nav { display: flex; gap: 10px; align-items: center; }
+    .slider-btn { width: 48px; height: 48px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); color: white; display: grid; place-items: center; cursor: pointer; transition: 0.25s ease; }
+    .slider-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+    .slider-btn svg { width: 18px; height: 18px; }
+    .slider-dots { display: flex; align-items: center; gap: 8px; justify-content: center; flex: 1; flex-wrap: wrap; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; border: none; cursor: pointer; background: rgba(255,255,255,0.28); transition: transform 0.25s ease, background 0.25s ease, width 0.25s ease; }
+    .dot.active { width: 26px; background: #fff; }
+    .slider-count { color: var(--text-dim); font-size: 0.84rem; font-weight: 600; min-width: 70px; text-align: right; }
+
+    /* Values */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .info-card { position: relative; overflow: hidden; padding: 24px; border-radius: 28px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #0a1320, #09111b); box-shadow: var(--shadow); min-height: 240px; }
+    .info-card::after { content: ""; position: absolute; inset: auto -30px -40px auto; width: 160px; height: 160px; background: radial-gradient(circle, rgba(83,181,255,0.12), transparent 70%); pointer-events: none; }
+    .info-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 18px; }
+    .info-icon svg { width: 22px; height: 22px; color: #fff; }
+    .info-card h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.3rem; line-height: 1; letter-spacing: -0.04em; margin-bottom: 12px; }
+    .info-card p { color: var(--text-soft); line-height: 1.78; font-size: 0.95rem; }
+
+    /* CTA Banner */
+    .cta-banner { position: relative; overflow: hidden; padding: 34px; border-radius: 34px; border: 1px solid rgba(255,255,255,0.10); background: linear-gradient(135deg, rgba(12,132,243,0.22), rgba(12,132,243,0.08) 45%, rgba(255,255,255,0.04)), linear-gradient(180deg, #0c1728, #09111a); box-shadow: var(--shadow); display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 20px; align-items: center; }
+    .cta-banner h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.9rem, 3vw, 3rem); line-height: 0.96; letter-spacing: -0.05em; margin-bottom: 14px; max-width: 14ch; }
+    .cta-banner p { color: var(--text-soft); line-height: 1.78; max-width: 58ch; }
+    .cta-points { display: grid; gap: 12px; }
+    .cta-point { padding: 16px 18px; border-radius: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08); color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
+    .cta-point strong { color: #fff; }
+
+    /* Contact */
+    .contact-wrap { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 22px; align-items: stretch; }
+    .contact-card, .contact-form { border-radius: 32px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)), linear-gradient(180deg, #09111c, #070d16); box-shadow: var(--shadow); }
+    .contact-card { padding: 30px; display: flex; flex-direction: column; justify-content: space-between; gap: 26px; }
+    .contact-card h3 { font-family: "Space Grotesk", sans-serif; font-size: 2rem; line-height: 0.98; letter-spacing: -0.04em; margin-bottom: 14px; max-width: 12ch; }
+    .contact-card p { color: var(--text-soft); line-height: 1.8; font-size: 0.97rem; }
+    .contact-blocks { display: grid; gap: 12px; }
+    .contact-line { padding: 16px 18px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: var(--text-soft); line-height: 1.7; font-size: 0.94rem; }
+    .contact-line strong { display: block; color: #fff; margin-bottom: 6px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.09em; }
+    .contact-form { padding: 28px; }
+    .form-title { font-family: "Space Grotesk", sans-serif; font-size: 1.7rem; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .form-sub { color: var(--text-soft); line-height: 1.75; margin-bottom: 22px; font-size: 0.95rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+    .field input, .field textarea, .field select { width: 100%; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); color: #fff; border-radius: 18px; padding: 15px 16px; font: inherit; outline: none; transition: 0.25s ease; }
+    .field input[type="file"] { padding: 13px 16px; cursor: pointer; position: relative; }
+    .field input[type="file"]::file-selector-button { border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-right: 16px; transition: all 0.2s ease; }
+    .field input[type="file"]::file-selector-button:hover { background: rgba(255,255,255,0.2); }
+    .field textarea { min-height: 150px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.34); }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: rgba(83,181,255,0.54); box-shadow: 0 0 0 4px rgba(12,132,243,0.12); background: rgba(255,255,255,0.07); }
+    .form-note { margin-top: 16px; color: var(--text-dim); font-size: 0.82rem; line-height: 1.7; }
+    .submit-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+    .submit-hint { color: var(--text-dim); font-size: 0.82rem; }
+
+    /* Footer */
+    .footer { padding: 42px 0 56px; }
+    .footer-shell { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-left { display: flex; align-items: center; gap: 12px; color: var(--text-soft); font-size: 0.92rem; }
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; }
+    .footer-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) { .hero-grid, .slide, .cta-banner, .contact-wrap { grid-template-columns: 1fr; } .hero-content { padding: 42px 28px; } .hero-visual { min-height: 500px; } .cta-banner { padding: 28px; } .contact-card, .contact-form { padding: 24px; } }
+    
+    /* Mobile Specific Meta Cards Overlay */
+    @media (max-width: 720px) {
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .nav { width: 100%; }
+      .nav-link, .nav-cta { width: 100%; text-align: center; justify-content: center; }
+      .hero { padding-top: 24px; }
+      .hero-shell { min-height: auto; border-radius: var(--radius-lg); }
+      .hero-grid { display: flex; flex-direction: column; }
+      .hero-content { padding: 30px 20px; order: 2; }
+      .hero h1 { max-width: 9ch; }
+      .hero-visual { min-height: 420px; order: 1; }
+      
+      /* Meta Cards Responsive Overlay Logic */
+      .hero-meta {
+        position: relative;
+        z-index: 10;
+        margin: 0 -16px 24px -16px; /* Full width overlay effect */
+        padding: 12px;
+        
+        /* Unified Glass Panel Style */
+        background: linear-gradient(180deg, rgba(12,132,243,0.08), rgba(5,11,20,0.85));
+        border-top: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .meta-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        background: rgba(255,255,255,0.04);
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.05);
+        backdrop-filter: blur(8px);
+      }
+
+      .meta-card:hover {
+        transform: none;
+        background: rgba(255,255,255,0.07);
+      }
+
+      .meta-content {
+        flex: 1;
+      }
+
+      .meta-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .meta-value {
+        font-size: 0.95rem;
+      }
+
+      .stack-card { min-height: 420px; }
+      .stack-content { padding: 30px 24px; }
+      .stack-title-netflix { font-size: clamp(2.8rem, 10vw, 4rem); }
+      .stack-subtitle-netflix { font-size: 1rem; }
+      .stack-copy { font-size: 0.95rem; max-width: 100%; }
+      .stack-actions { flex-direction: column; }
+      .btn-netflix-primary, .btn-netflix-secondary { width: 100%; justify-content: center; }
+      .stack-carousel-images { padding: 0 0 10px 0; }
+      .stack-thumbnail { width: 110px; height: 65px; }
+      .stack-more-btn { width: 65px; height: 65px; font-size: 0.65rem; }
+      .stack-badge { top: 20px; left: 20px; padding: 8px 12px; font-size: 0.65rem; }
+      .slide-panel { padding: 26px 20px; }
+      .slide-visual { padding: 20px; }
+      .slider-controls { padding: 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .section { padding: 24px 0; }
+    }
+    
+    @media (max-width: 880px) { 
+      .grid-3 { grid-template-columns: 1fr; } 
+      .hero-shell { min-height: auto; } 
+      .slide { min-height: auto; } 
+      .slide-visual { padding-top: 0; } 
+      .showcase { max-width: none; } 
+    }
+
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="Bookmarks Home">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Book<span>marks</span></div>
+            <div class="brand-sub">Creator Collections</div>
+          </div>
+        </a>
+
+        <nav class="nav">
+          <a class="nav-link" href="#concept">Concept</a>
+          <a class="nav-link" href="#highlights">Highlights</a>
+          <a class="nav-link" href="#why">Why it matters</a>
+          <a class="nav-link" href="#contact">For creators</a>
+          <a class="nav-cta" href="#contact">Get featured</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-shell">
+            <div class="hero-grid">
+              <div class="hero-content">
+                <div class="eyebrow">Official creator stacks</div>
+                <h1>
+                  Public knowledge,
+                  <span class="accent">curated by real people.</span>
+                </h1>
+                <p>
+                  Bookmarks is expanding into creator-led collections: official, attributed, and highly curated resource stacks built with public figures, researchers, educators, and niche internet experts. Instead of browsing random links, visitors can explore the web through the trusted paths of people they already follow.
+                </p>
+
+                <div class="hero-actions">
+                  <a href="#highlights" class="btn btn-primary">Explore the concept</a>
+                  <a href="#contact" class="btn btn-secondary">Contact Bookmarks</a>
+                </div>
+
+                <!-- IMPROVED META CARDS HTML -->
+                <div class="hero-meta">
+                  <!-- Carte 1: Format -->
+                  <div class="meta-card">
+                    <div class="meta-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                      </svg>
+                    </div>
+                    <div class="meta-content">
+                      <div class="meta-label">Format</div>
+                      <div class="meta-value">Official curated stacks</div>
+                    </div>
+                  </div>
+
+                  <!-- Carte 2: Source -->
+                  <div class="meta-card">
+                    <div class="meta-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                        <polyline points="16 11 12 15 8 11"></polyline> <!-- Checkmark style accent -->
+                      </svg>
+                    </div>
+                    <div class="meta-content">
+                      <div class="meta-label">Source</div>
+                      <div class="meta-value">Creator-approved links</div>
+                    </div>
+                  </div>
+
+                  <!-- Carte 3: Use case -->
+                  <div class="meta-card">
+                    <div class="meta-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                      </svg>
+                    </div>
+                    <div class="meta-content">
+                      <div class="meta-label">Use case</div>
+                      <div class="meta-value">Niche discovery by trusted taste</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="hero-visual">
+                <div class="glow-orb"></div>
+                <div class="stack-card">
+                  <div class="stack-background"></div>
+                  <div class="stack-overlay"></div>
+                  <div class="stack-overlay-vignette"></div>
+                  <div class="stack-badge">Prototype collection</div>
+
+                  <div class="stack-content">
+                    <h2 class="stack-title-netflix">Cyber Maddy</h2>
+                    <p class="stack-subtitle-netflix">Security Researcher & Content Creator</p>
+                    
+                    <p class="stack-copy">
+                      A creator-focused cybersecurity collection organized into learning, labs, tools, news, and career progression.
+                    </p>
+
+                    <div class="stack-actions">
+                      <button class="btn-netflix-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        View Collection
+                      </button>
+                      <button class="btn-netflix-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="12" y1="8" x2="12" y2="12"/>
+                          <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        More Info
+                      </button>
+                    </div>
+
+                    <div class="stack-meta">
+                      <div class="stack-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        5 Sections
+                      </div>
+                      <div class="stack-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        50+ Links
+                      </div>
+                      <div class="stack-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="10"/>
+                          <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        Updated 2024
+                      </div>
+                    </div>
+
+                    <div class="stack-carousel">
+                      <div class="stack-carousel-label">More from this creator</div>
+                      <div class="stack-carousel-images">
+                        <div class="stack-thumbnail"></div>
+                        <div class="stack-thumbnail"></div>
+                        <div class="stack-thumbnail"></div>
+                        <div class="stack-thumbnail"></div>
+                        <div class="stack-thumbnail"></div>
+                        <button class="stack-more-btn">View All</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="concept">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">The concept</div>
+              <h2 class="section-title">A premium layer of human curation on top of the open web.</h2>
+              <p class="section-copy">
+                This feature lets Bookmarks host creator-specific bookmark ecosystems. Each profile can have a dedicated page, structured categories, strong attribution, and a clean editorial presentation. A visitor can browse by topic, but also by person — which makes discovery much more alive, contextual, and memorable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="highlights">
+        <div class="container">
+          <div class="slider-shell" data-slider>
+            <div class="slider-track">
+              
+              <!-- SLIDE 1 -->
+              <article class="slide">
+                <div class="slide-bg">
+                   <img src="img/FW0ixqLKDwM_auto_thumbnail_2.jpg" alt="">
+                   <img src="img/FW0ixqLKDwM_hqdefault_480.jpg" alt="">
+                   <img src="img/JwYgAYUd0Cc_auto_thumbnail_3.jpg" alt="">
+                   <img src="img/sCrKYeCi8C0_auto_thumbnail_3.jpg" alt="">
+                   <img src="img/wpSHcKIqyZQ_auto_thumbnail_2.jpg" alt="">
+                   <img src="img/gewgsegser.jpg" alt="">
+                </div>
+
+                <div class="slide-panel">
+                  <div class="slide-tag">Slide 1</div>
+                  <h3 class="slide-title">Official creator collections.</h3>
+                  <p class="slide-text">
+                    Each collection can be directly provided, approved, or reviewed by the creator. That means the page feels legitimate, intentional, and worth revisiting.
+                  </p>
+                  <ul class="slide-list">
+                    <li>Dedicated creator profile with branding, bio, and links.</li>
+                    <li>Multiple accepted formats: bookmarks HTML export, simple list, spreadsheet, or manual selection.</li>
+                    <li>Clear attribution and editorial status on every public page.</li>
+                  </ul>
+                  <a href="#contact" class="btn btn-secondary">Submit a collection</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <!-- SHOWCASE 1: Default class uses FW0ixqLKDwM_hqdefault_480.jpg -->
+                    <div class="showcase-cover">
+                      <div class="showcase-chip">Official picks</div>
+                      <div class="showcase-title">Cyber Maddy</div>
+                      <div class="showcase-sub">Learning pathways, labs, essential tooling, trusted security resources.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Beginner Learning Track</span>
+                        </div>
+                        <span class="showcase-row-meta">12 links</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Labs & Practice</span>
+                        </div>
+                        <span class="showcase-row-meta">08 links</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Career & Branding</span>
+                        </div>
+                        <span class="showcase-row-meta">06 links</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- SLIDE 2 -->
+              <article class="slide">
+                 <div class="slide-bg">
+                   <img src="img/maxresdefault.jpg" alt="">
+                   <img src="img/FW0ixqLKDwM_auto_thumbnail_2.jpg" alt="">
+                   <img src="img/FW0ixqLKDwM_hqdefault_480.jpg" alt="">
+                   <img src="img/JwYgAYUd0Cc_auto_thumbnail_3.jpg" alt="">
+                   <img src="img/sCrKYeCi8C0_auto_thumbnail_3.jpg" alt="">
+                   <img src="img/wpSHcKIqyZQ_auto_thumbnail_2.jpg" alt="">
+                </div>
+
+                <div class="slide-panel">
+                  <div class="slide-tag">Slide 2</div>
+                  <h3 class="slide-title">Explore by people, not just by category.</h3>
+                  <p class="slide-text">
+                    Some users trust a person's taste more than a generic topic label. This layer allows Bookmarks to surface web resources through identity, audience, field, and editorial personality.
+                  </p>
+                  <ul class="slide-list">
+                    <li>Users can discover highly specific ecosystems faster.</li>
+                    <li>Creators become entry points into niche internet culture.</li>
+                    <li>The platform gains a stronger social and editorial dimension.</li>
+                  </ul>
+                  <a href="#why" class="btn btn-secondary">Why this matters</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <!-- SHOWCASE 2: Alt-2 uses maxresdefault.jpg -->
+                    <div class="showcase-cover alt-2">
+                      <div class="showcase-chip">Discovery model</div>
+                      <div class="showcase-title">Browse by trusted voice</div>
+                      <div class="showcase-sub">Turn creators into gateways to tightly curated corners of the web.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Cybersecurity</span>
+                        </div>
+                        <span class="showcase-row-meta">By expert</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">OSINT / Threat Intel</span>
+                        </div>
+                        <span class="showcase-row-meta">By niche</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Career Resources</span>
+                        </div>
+                        <span class="showcase-row-meta">By path</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- SLIDE 3 -->
+              <article class="slide">
+                 <div class="slide-bg">
+                   <img src="img/gewgsegser.jpg" alt="">
+                   <img src="img/maxresdefault.jpg" alt="">
+                   <img src="img/FW0ixqLKDwM_auto_thumbnail_2.jpg" alt="">
+                   <img src="img/FW0ixqLKDwM_hqdefault_480.jpg" alt="">
+                   <img src="img/JwYgAYUd0Cc_auto_thumbnail_3.jpg" alt="">
+                   <img src="img/sCrKYeCi8C0_auto_thumbnail_3.jpg" alt="">
+                </div>
+
+                <div class="slide-panel">
+                  <div class="slide-tag">Slide 3</div>
+                  <h3 class="slide-title">Simple submission, polished publishing.</h3>
+                  <p class="slide-text">
+                    Many creators do not have a clean bookmarks export ready to send. So the process should be flexible, lightweight, and easy from the start.
+                  </p>
+                  <ul class="slide-list">
+                    <li>Accept raw links, docs, exported HTML, or assisted curation.</li>
+                    <li>Bookmarks can transform rough material into a clean public profile.</li>
+                    <li>Creators keep editorial control and may update or remove their page later.</li>
+                  </ul>
+                  <a href="#contact" class="btn btn-secondary">Become a featured creator</a>
+                </div>
+                <div class="slide-visual">
+                  <div class="showcase">
+                    <!-- SHOWCASE 3: Alt-3 uses gewgsegser.jpg -->
+                    <div class="showcase-cover alt-3">
+                      <div class="showcase-chip">Flexible onboarding</div>
+                      <div class="showcase-title">Low-friction contribution</div>
+                      <div class="showcase-sub">A clean process for creators who want visibility without unnecessary overhead.</div>
+                    </div>
+                    <div class="showcase-body">
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Bookmarks HTML export</span>
+                        </div>
+                        <span class="showcase-row-meta">Supported</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Manual link selection</span>
+                        </div>
+                        <span class="showcase-row-meta">Supported</span>
+                      </div>
+                      <div class="showcase-row">
+                        <div class="showcase-left">
+                          <span class="showcase-dot"></span>
+                          <span class="showcase-row-title">Assisted draft by Bookmarks</span>
+                        </div>
+                        <span class="showcase-row-meta">Supported</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="slider-controls">
+              <div class="slider-nav">
+                <button class="slider-btn" type="button" data-prev aria-label="Previous slide">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                  </svg>
+                </button>
+                <button class="slider-btn" type="button" data-next aria-label="Next slide">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="slider-dots" data-dots></div>
+              <div class="slider-count" data-count>01 / 03</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Why it matters</div>
+              <h2 class="section-title">It turns Bookmarks into a map of trusted internet ecosystems.</h2>
+              <p class="section-copy">
+                Instead of only listing resources, Bookmarks becomes a place where expertise, taste, context, and identity shape discovery. That makes the experience more human, more niche, and far more memorable than a plain directory.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <article class="info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <h3>Human context</h3>
+              <p>
+                Links feel stronger when users understand why they were selected and who stands behind them. Creator stacks provide narrative, trust, and editorial framing.
+              </p>
+            </article>
+
+            <article class="info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"/>
+                  <path d="M12 4h9"/>
+                  <path d="M4 9h16"/>
+                  <path d="M4 15h16"/>
+                </svg>
+              </div>
+              <h3>Better discovery</h3>
+              <p>
+                A person-driven browsing model helps users reach precise subcultures and useful niches more quickly than broad taxonomy alone ever could.
+              </p>
+            </article>
+
+            <article class="info-card">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1v22"/>
+                  <path d="m17 5-5-4-5 4"/>
+                  <path d="m17 19-5 4-5 4"/>
+                </svg>
+              </div>
+              <h3>Creator value</h3>
+              <p>
+                It gives creators a clean public page for their best resources, with attribution, direct traffic, and a better way to organize the useful internet around their field.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="cta-banner">
+            <div>
+              <h2>Designed for official collaboration, not lazy scraping.</h2>
+              <p>
+                Bookmarks aims to feature creators through voluntary contribution, creator-approved selections, or assisted curation workflows that stay respectful, editable, and clearly attributed.
+              </p>
+            </div>
+
+            <div class="cta-points">
+              <div class="cta-point"><strong>Official attribution:</strong> every collection can carry clear creator credit and profile links.</div>
+              <div class="cta-point"><strong>Flexible input:</strong> exports, simple lists, docs, spreadsheets, or rough drafts are all workable.</div>
+              <div class="cta-point"><strong>Editorial control:</strong> creators can request edits, updates, or removal at any time.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">For influencers, creators & experts</div>
+              <h2 class="section-title">Want to appear on Bookmarks?</h2>
+              <p class="section-copy">
+                If you publish educational content, research, tools, lists, or niche internet resources, Bookmarks can create a dedicated public collection around your work. Submit a selection, a rough export, or simply reach out and we can help shape the page with you.
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-wrap">
+            <aside class="contact-card">
+              <div>
+                <h3>Creator submissions & partnership inquiries.</h3>
+                <p>
+                  We welcome educators, researchers, security people, builders, archivists, curators, and public-facing niche experts who want a clean public profile for their favorite resources.
+                </p>
+              </div>
+
+              <div class="contact-blocks">
+                <div class="contact-line">
+                  <strong>Accepted formats</strong>
+                  Bookmarks HTML export, raw URLs, spreadsheet, markdown list, document, or assisted manual selection.
+                </div>
+                <div class="contact-line">
+                  <strong>What you get</strong>
+                  A dedicated creator page, structured categories, attribution, public links, and a polished editorial presentation.
+                </div>
+                <div class="contact-line">
+                  <strong>Direct contact</strong>
+                  hello@bookmarks.love<br>
+                  partnerships@bookmarks.love
+                </div>
+              </div>
+            </aside>
+
+            <div class="contact-form">
+              <div class="form-title">Submit your creator profile</div>
+              <div class="form-sub">
+                 Use the form below to send us your details and files.
+              </div>
+
+              <!-- FORMSPREE FORM -->
+              <form action="https://formspree.io/f/mzdjovve" method="POST" enctype="multipart/form-data">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="name">Full name</label>
+                    <input id="name" name="name" type="text" placeholder="Your name" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="email">Your email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                  </div>
+
+                  <div class="field full">
+                    <label for="upload">Upload File (Bookmarks export, list, etc.)</label>
+                    <input id="upload" name="upload" type="file" />
+                  </div>
+
+                  <div class="field full">
+                    <label for="message">Tell us about your collection</label>
+                    <textarea id="message" name="message" placeholder="What kind of resources do you want to feature? Which categories matter most?"></textarea>
+                  </div>
+                </div>
+
+                <div class="submit-row">
+                  <button class="btn btn-primary" type="submit">Send submission</button>
+                  <div class="submit-hint">
+                    Powered by Formspree.
+                  </div>
+                </div>
+
+                <div class="form-note">
+                  By contacting Bookmarks, creators can discuss publication, attribution, updates, corrections, or removal of their public collection page.
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-shell">
+        <div class="footer-left">
+          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="index.html">Home</a>
+          <a class="footer-link" href="about.html">About</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="https://ko-fi.com/bookmarks" target="_blank" rel="noopener noreferrer">Support</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const slider = document.querySelector('[data-slider]');
+      if (!slider) return;
+      const track = slider.querySelector('.slider-track');
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const prevBtn = slider.querySelector('[data-prev]');
+      const nextBtn = slider.querySelector('[data-next]');
+      const dotsWrap = slider.querySelector('[data-dots]');
+      const count = slider.querySelector('[data-count]');
+      let index = 0;
+      let autoPlay;
+      function formatNumber(num) { return String(num).padStart(2, '0'); }
+      function buildDots() {
+        slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'dot' + (i === 0 ? ' active' : '');
+          dot.type = 'button';
+          dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          dot.addEventListener('click', () => { index = i; updateSlider(); restartAuto(); });
+          dotsWrap.appendChild(dot);
+        });
+      }
+      function updateSlider() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        const dots = dotsWrap.querySelectorAll('.dot');
+        dots.forEach((dot, i) => { dot.classList.toggle('active', i === index); });
+        count.textContent = `${formatNumber(index + 1)} / ${formatNumber(slides.length)}`;
+      }
+      function nextSlide() { index = (index + 1) % slides.length; updateSlider(); }
+      function prevSlide() { index = (index - 1 + slides.length) % slides.length; updateSlider(); }
+      function startAuto() { autoPlay = setInterval(nextSlide, 5500); }
+      function stopAuto() { clearInterval(autoPlay); }
+      function restartAuto() { stopAuto(); startAuto(); }
+      nextBtn.addEventListener('click', () => { nextSlide(); restartAuto(); });
+      prevBtn.addEventListener('click', () => { prevSlide(); restartAuto(); });
+      slider.addEventListener('mouseenter', stopAuto);
+      slider.addEventListener('mouseleave', startAuto);
+      slider.addEventListener('touchstart', stopAuto, { passive: true });
+      slider.addEventListener('touchend', restartAuto, { passive: true });
+      buildDots();
+      updateSlider();
+      startAuto();
+    })();
+  </script>
+</body>
+</html>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c

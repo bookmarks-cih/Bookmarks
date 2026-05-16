@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -1017,3 +1018,1038 @@ window.addEventListener('load', function(){
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script src="/zoom.js"></script>
+<meta charset="UTF-8">
+<title>News @ Bookmarks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Latest updates from the Bookmarks project and curated tech news sources.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Default Dark Theme */
+    --brand: #0c84f3;
+    --brand-dark: #0066d9;
+    --brand-light: #53b5ff;
+    --brand-soft: rgba(12,132,243,0.12);
+
+    --bg: #07111f;
+    --bg-2: #0b1628;
+    --surface: rgba(255,255,255,0.06);
+    --surface-2: rgba(255,255,255,0.08);
+    --surface-3: rgba(255,255,255,0.12);
+
+    --text: #f7fbff;
+    --text-soft: rgba(247,251,255,0.78);
+    --text-dim: rgba(247,251,255,0.56);
+
+    --border: rgba(255,255,255,0.10);
+    --border-strong: rgba(255,255,255,0.16);
+    --shadow: 0 20px 60px rgba(0,0,0,0.35);
+
+    --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    --glass-border: rgba(255,255,255,0.1);
+    --noise-opacity: 0.06;
+  }
+
+  /* Light Theme Overrides */
+  [data-theme="light"] {
+    --bg: #f8fafc;
+    --bg-2: #ffffff;
+    --surface: rgba(0,0,0,0.03);
+    --surface-2: rgba(0,0,0,0.05);
+    --surface-3: rgba(0,0,0,0.08);
+
+    --text: #0f172a;
+    --text-soft: #475569;
+    --text-dim: #94a3b8;
+
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.12);
+    --shadow: 0 10px 40px rgba(0,0,0,0.05);
+
+    --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    --glass-border: rgba(0,0,0,0.08);
+    --noise-opacity: 0.03;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 100%;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    zoom: 75%;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Background Effects */
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+      radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px),
+      radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0.7px, transparent 0.9px);
+    background-size: 24px 24px, 36px 36px, 42px 42px;
+    z-index: 1;
+  }
+
+  [data-theme="light"] .noise {
+     background-image:
+      radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+  }
+
+  .bg-mesh {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(12,132,243,0.15), transparent 30%),
+      radial-gradient(circle at 85% 0%, rgba(12,132,243,0.10), transparent 24%);
+    transition: opacity 0.4s ease;
+  }
+
+  [data-theme="light"] .bg-mesh {
+     opacity: 0.5;
+  }
+
+  .page { position: relative; z-index: 2; }
+  .container { width: min(100% - 32px, 1240px); margin: 0 auto; }
+
+  /* Typography */
+  h1, h2, h3, h4 { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; }
+
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 18px 0;
+    margin-bottom: 32px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+    border-bottom: 1px solid transparent;
+  }
+
+  [data-theme="light"] .header {
+     background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: transform 0.3s ease;
+    box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+  }
+
+  .logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+  .logo-icon svg { width: 20px; height: 20px; }
+
+  .logo-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .logo-text span { color: var(--brand-light); }
+
+  .nav { display: none; align-items: center; gap: 22px; }
+  .nav-link {
+    color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+    transition: all 0.2s ease; position: relative; padding: 4px 0;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+    background: var(--brand-light); transition: width 0.3s ease;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link.active { color: var(--brand-light); }
+  .nav-link.active::after { width: 100%; }
+
+  @media (min-width: 768px) {
+    .nav { display: flex; }
+  }
+
+  /* Desktop - show hamburger elements */
+  @media (min-width: 769px) {
+    .hamburger-btn { display: flex; }
+    .hamburger-menu { display: block; }
+    .hamburger-menu-overlay { display: block; }
+  }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+
+  /* Social Link */
+  .header-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: var(--text-soft);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .header-social-link:hover { background: var(--surface); color: var(--text); }
+  .header-social-link svg { width: 18px; height: 18px; }
+
+  /* Hamburger Button */
+  .hamburger-btn {
+    display: flex;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--text-soft);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+
+  .hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+
+  .hamburger-btn svg { width: 20px; height: 20px; }
+
+  /* Hamburger Menu */
+  .hamburger-menu {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+  .hamburger-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu-overlay.show { opacity: 1; visibility: visible; }
+
+  .hamburger-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hamburger-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .hamburger-close {
+    width: 32px;
+    height: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-soft);
+  }
+
+  .hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+  .hamburger-close svg { width: 16px; height: 16px; }
+
+  .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+  .hamburger-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hamburger-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+  .hamburger-item:hover::before { opacity: 1; }
+
+  .hamburger-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 4px 12px var(--brand-glow);
+  }
+
+  .hamburger-icon svg { width: 20px; height: 20px; }
+
+  .hamburger-content { flex: 1; position: relative; z-index: 1; }
+
+  .hamburger-item-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+  /* Theme Toggle */
+  .theme-toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .theme-toggle:hover { border-color: var(--brand); }
+
+  .theme-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 2;
+  }
+
+  .theme-toggle-knob svg {
+    width: 11px;
+    height: 11px;
+    color: white;
+  }
+
+  [data-theme="light"] .theme-toggle-knob {
+    transform: translateX(24px);
+  }
+
+  /* Clock */
+  .clock {
+    text-align: right;
+    font-family: "Space Grotesk", sans-serif;
+    margin-right: 16px;
+  }
+
+  .clock-time {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-light);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .clock-date {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  /* Hero */
+  .hero { padding: 80px 0 60px; text-align: center; position: relative; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+    padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-soft); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 24px;
+  }
+  [data-theme="light"] .hero-badge { background: rgba(12, 132, 243, 0.08); border-color: rgba(12, 132, 243, 0.15); color: var(--brand); }
+
+  .hero h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.05; margin-bottom: 24px; }
+  .hero h1 span { color: var(--brand-light); }
+
+  .hero-subtitle { max-width: 700px; margin: 0 auto; color: var(--text-soft); font-size: 1.15rem; line-height: 1.75; }
+
+  /* Section Styling */
+  .section { padding: 60px 0; }
+  .section-head { margin-bottom: 32px; }
+
+  .section-kicker { display: inline-block; font-size: 0.75rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700; }
+  .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1; margin-bottom: 0; }
+  .section-desc { color: var(--text-soft); max-width: 620px; line-height: 1.8; font-size: 1.05rem; margin-top: 16px; }
+
+  /* Glass Cards */
+  .glass-card {
+    position: relative; overflow: hidden; padding: 28px; border-radius: 28px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow); transition: transform 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 32px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .glass-card:hover { border-color: rgba(83,181,255,0.4); transform: translateY(-3px); }
+
+  .info-icon {
+    width: 48px; height: 48px; display: grid; place-items: center; border-radius: 16px;
+    background: rgba(12,132,243,0.15); border: 1px solid rgba(83,181,255,0.2);
+    margin-bottom: 16px;
+  }
+  .info-icon svg { width: 22px; height: 22px; color: var(--brand-light); }
+
+  .glass-card h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; }
+  .glass-card h3 { font-size: 1.2rem; margin: 24px 0 12px 0; color: var(--text); }
+  .glass-card p { color: var(--text-soft); line-height: 1.7; font-size: 0.95rem; margin: 0 0 16px 0; }
+  .glass-card ul { list-style: none; margin: 16px 0; }
+  .glass-card li { position: relative; padding-left: 24px; margin-bottom: 12px; color: var(--text-soft); line-height: 1.6; }
+  .glass-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--brand);
+    border-radius: 50%;
+  }
+  .glass-card strong { color: var(--text); font-weight: 600; }
+  .glass-card a { color: var(--brand-light); text-decoration: none; transition: all 0.3s ease; }
+  .glass-card a:hover { text-decoration: underline; }
+
+  .highlight { color: var(--brand-light); font-weight: 500; }
+
+  /* Grid Layout for News Sources */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .news-grid .glass-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .badge-date {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--brand-light);
+    background: rgba(12, 132, 243, 0.12);
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(83,181,255,0.2);
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+
+  /* Footer */
+        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
+    .footer .container {
+      min-height: auto;
+      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
+    .footer-brand span { display: block; }
+    
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .nav { display: none; }
+    .clock { display: none; }
+    .header-inner { justify-content: center; }
+    .brand { margin-right: auto; }
+    .theme-toggle { margin-left: auto; }
+
+      .footer .container { width: min(100% - 24px, var(--max-width)); }
+          .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-brand { justify-content: center; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 16px; }
+    .header { padding: 14px 0; margin-bottom: 24px; }
+    .logo-text { font-size: 1.2rem; }
+    .clock { display: none; }
+
+    .hamburger-menu {
+      top: 70px;
+      right: 16px;
+      left: 16px;
+      max-width: none;
+      width: auto;
+      padding: 16px;
+    }
+
+    .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
+    .hamburger-item { padding: 12px 14px; }
+    .hamburger-icon { width: 38px; height: 38px; }
+    .hamburger-icon svg { width: 18px; height: 18px; }
+    .hamburger-item-title { font-size: 0.9rem; }
+    .hamburger-item-desc { font-size: 0.7rem; }
+
+          .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+      .footer-brand { justify-content: center; }
+      .footer-status { align-items: center; justify-self: center; }
+      .footer-links { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="bg-mesh"></div>
+
+  <div class="page">
+    <header class="header">
+      <div class="container header-inner">
+<a href="hub.html" class="logo-section">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="logo-text">Book<span>marks</span></div>
+        </a>
+
+        <div class="header-actions">
+          <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <div class="clock">
+            <div class="clock-time" id="clock-time">--:--</div>
+            <div class="clock-date" id="clock-date">...</div>
+          </div>
+          <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+            <div class="theme-toggle-knob">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </div>
+          </div>
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <div class="hamburger-header">
+        <div class="hamburger-title">Quick Access</div>
+        <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hamburger-grid">
+        <a href="docs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Docs</div>
+            <div class="hamburger-item-desc">Documentation & Resources</div>
+          </div>
+        </a>
+        <a href="files.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Files</div>
+            <div class="hamburger-item-desc">Downloads & Software</div>
+          </div>
+        </a>
+        <a href="jobs.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Jobs</div>
+            <div class="hamburger-item-desc">Career Opportunities</div>
+          </div>
+        </a>
+        <a href="creators.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Creators</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
+          </div>
+        </a>
+        <a href="news.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+              <path d="M18 14h-8"/>
+              <path d="M15 18h-5"/>
+              <path d="M10 6h8v4h-8V6Z"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">News</div>
+            <div class="hamburger-item-desc">Latest Updates</div>
+          </div>
+        </a>
+        <a href="privacy.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Privacy</div>
+            <div class="hamburger-item-desc">Privacy Policy</div>
+          </div>
+        </a>
+        <a href="terms.html" class="hamburger-item">
+          <div class="hamburger-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="hamburger-content">
+            <div class="hamburger-item-title">Terms</div>
+            <div class="hamburger-item-desc">Terms of Service</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">News & Updates</div>
+          <h1>Stay <span>Curated</span> & Informed</h1>
+          <p class="hero-subtitle">
+            Access the latest Bookmarks project changelogs and explore our hand-picked directory of reliable tech, security, and industry news sources.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 1: Project Changelog -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-kicker">01. Recent Updates</span>
+            <h2 class="section-title">Project Changelog</h2>
+            <p class="section-desc">
+              Track the evolution of Bookmarks with our latest feature releases, performance improvements, and community announcements.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">March 9, 2026</span>
+            <h3>Civil Rights and Psychology Went Live</h3>
+            <p>
+              Two new documentation lanes were added to Bookmarks: Civil Rights and Psychology. This release expands the platform beyond pure tooling and research by making room for social, legal, and mental-health oriented reading paths.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">March 8, 2026</span>
+            <h3>Homepage Performance Pass Completed</h3>
+            <p>
+              We reworked the homepage and hub interactions to feel lighter, cleaner, and less noisy on slower devices. Animation timing, navigation flow, and general visual balance were refined to make browsing smoother across the site.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">March 6, 2026</span>
+            <h3>Dump Status Dashboard Published</h3>
+            <p>
+              The new Dump Status page is now part of the ecosystem, giving visitors a clearer view of archive health and link maintenance. We also opened a CSV-oriented workflow for users who want a more raw, data-first view of the collection.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 25, 2026</span>
+            <h3>News Page Reframed as a Product Log</h3>
+            <p>
+              The News area was repositioned to work as a readable timeline for Bookmarks itself. Instead of acting like a generic feed, it now better reflects product changes, section launches, and archive milestones.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 18, 2026</span>
+            <h3>Creator Profiles Expanded Into a Real Directory</h3>
+            <p>
+              We moved beyond a placeholder creator concept and pushed a more complete profile system with dedicated pages, curated resource cards, and clearer attribution. The goal was to make each featured profile feel like a navigable knowledge space instead of a simple shoutout.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 10, 2026</span>
+            <h3>Bookmark Detail Pages Added for Key Resources</h3>
+            <p>
+              Several direct resource pages were introduced so visitors can land on a single bookmark and immediately understand why it matters. This helped the archive feel less like a raw list and more like a guided reference system.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">January 28, 2026</span>
+            <h3>Hub Layout Became the Main Navigation Layer</h3>
+            <p>
+              The hub was upgraded into a central routing surface for the project. Larger cards, stronger hierarchy, and a more visual tile system made it easier to jump between docs, files, creators, jobs, and support pages.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">January 14, 2026</span>
+            <h3>Docs Page Structure Was Reorganized</h3>
+            <p>
+              We cleaned up the Docs experience so categories feel more intentional and easier to scan. This pass focused on improving the way long-term knowledge collections are presented, especially for users exploring multiple subjects in one session.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">December 19, 2025</span>
+            <h3>Files Space Introduced for Shared Assets</h3>
+            <p>
+              A dedicated Files section was added to support downloadable resources, packaged material, and structured asset access. This gave Bookmarks a more practical layer for users who need more than just external links.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">December 3, 2025</span>
+            <h3>Edit Workflow Entered the Interface</h3>
+            <p>
+              We introduced a visible edit pathway to support future curation updates and content management actions. Even in its early form, the edit area marked a shift toward Bookmarks as a living system rather than a static gallery.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">November 21, 2025</span>
+            <h3>Jobs Section Joined the Platform Map</h3>
+            <p>
+              The Jobs page was added as part of a broader effort to connect discovery with opportunity. It gives the project a more career-oriented angle and helps extend the platform from research and reading into practical next steps.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">November 8, 2025</span>
+            <h3>Theme Switching Was Polished Across Core Pages</h3>
+            <p>
+              We improved the dark and light theme behavior so the site feels more consistent from page to page. Small visual mismatches were reduced, and the overall interface now carries a stronger product identity regardless of theme.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">October 26, 2025</span>
+            <h3>Footer and Global Navigation Were Unified</h3>
+            <p>
+              Navigation patterns were normalized across the site to reduce friction and repetition. This included updates to footer links, menu structure, and the way supporting pages connect back to the main archive.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">October 12, 2025</span>
+            <h3>Support and Trust Pages Were Filled Out</h3>
+            <p>
+              Pages covering privacy, terms, support, and public-facing project framing were expanded so the platform feels more complete and credible. This was an important step in turning Bookmarks into a publishable product instead of a private prototype.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">September 28, 2025</span>
+            <h3>Safety and Prevention Category Added</h3>
+            <p>
+              We added a Safety and Prevention lane to make room for resources focused on well-being, awareness, and personal resilience. That update broadened the editorial scope of Bookmarks while staying aligned with the idea of useful, structured internet.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">September 10, 2025</span>
+            <h3>Public Messaging for Creators Was Clarified</h3>
+            <p>
+              We refined how the project speaks to contributors, creators, and experts interested in being featured. The messaging now better explains attribution, editorial control, and how public resource pages can benefit both visitors and contributors.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">August 22, 2025</span>
+            <h3>Prototype Concepts Became Production Directions</h3>
+            <p>
+              Several ideas that originally lived inside prototype pages were promoted into the main product direction. This included clearer language around curation, audience value, and the role of themed knowledge pathways inside the site.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">July 30, 2025</span>
+            <h3>Data Library Continued to Grow</h3>
+            <p>
+              The main bookmarks dataset was expanded with more categories, more references, and better thematic spread. This work is less visible than a homepage redesign, but it remains the foundation of what makes the platform useful.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">June 18, 2025</span>
+            <h3>Card Styling and Glass UI Were Refined</h3>
+            <p>
+              We tightened spacing, softened contrast, and improved the layered glass treatment used across key panels. These changes were made to keep the interface expressive without sacrificing readability.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">April 27, 2025</span>
+            <h3>Archive Positioning Became More Curatorial</h3>
+            <p>
+              Bookmarks started leaning more clearly into curation rather than simple aggregation. The writing, structure, and page relationships were updated to make it obvious that selection quality matters as much as quantity.
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <span class="badge-date">February 2, 2025</span>
+            <h3>Foundations for the Public Bookmarks Hub Were Set</h3>
+            <p>
+              Early layout work established the core direction of the project: a curated internet hub with sections, profiles, expandable knowledge areas, and a visual identity strong enough to support long-term growth.
+            </p>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+        <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        
+        <div class="footer-status">
+           <div class="footer-status-meta">
+             <span class="status-dot"></span> All systems operational
+           </div>
+           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Clock Logic
+    function updateClock() {
+      const now = new Date();
+      const timeEl = document.getElementById('clock-time');
+      const dateEl = document.getElementById('clock-date');
+      if(timeEl) timeEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+      if(dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme Toggle Logic
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      const toggle = document.getElementById('theme-toggle');
+      const knob = toggle.querySelector('svg');
+
+      function updateIcon(theme) {
+        if (theme === 'dark') {
+          knob.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+        } else {
+          knob.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+        }
+      }
+
+      updateIcon(savedTheme);
+
+      toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+      });
+
+      toggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+    }
+
+    // Hamburger menu elements
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const hamburgerOverlay = document.getElementById('hamburger-overlay');
+    const hamburgerClose = document.getElementById('hamburger-close');
+
+    function showHamburgerMenu() {
+      hamburgerMenu.classList.add('show');
+      hamburgerOverlay.classList.add('show');
+    }
+
+    function hideHamburgerMenu() {
+      hamburgerMenu.classList.remove('show');
+      hamburgerOverlay.classList.remove('show');
+    }
+
+    if (hamburgerBtn && hamburgerMenu && hamburgerOverlay && hamburgerClose) {
+      hamburgerBtn.addEventListener('click', showHamburgerMenu);
+      hamburgerClose.addEventListener('click', hideHamburgerMenu);
+      hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
+    }
+
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+</body>
+</html>
+
+
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c

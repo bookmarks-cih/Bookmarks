@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+<<<<<<< HEAD
+=======
+<script src="/zoom.js"></script>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 <meta charset="UTF-8">
 <title>Files - Bookmarks</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Curated collection of file resources: Torrents, Games, Software, VST, and Design.">
+<<<<<<< HEAD
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,10 +199,176 @@ a { color: inherit; text-decoration: none; }
 /* =============================================================================
    HEADER
 ============================================================================= */
+=======
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --brand: #0c84f3;
+  --brand-dark: #0066d9;
+  --brand-light: #53b5ff;
+  --brand-soft: rgba(12,132,243,0.12);
+  --brand-glow: rgba(12,132,243,0.2);
+  
+  --bg: #07111f;
+  --bg-2: #0b1628;
+  --surface: rgba(255,255,255,0.06);
+  --surface-2: rgba(255,255,255,0.08);
+  --surface-3: rgba(255,255,255,0.12);
+  --surface-hover: rgba(255,255,255,0.1);
+  
+  --text: #f7fbff;
+  --text-soft: rgba(247,251,255,0.78);
+  --text-dim: rgba(247,251,255,0.56);
+  
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --shadow: 0 20px 60px rgba(0,0,0,0.35);
+  
+  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  --glass-border: rgba(255,255,255,0.1);
+  --noise-opacity: 0.06;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-2: #ffffff;
+  --surface: rgba(0,0,0,0.03);
+  --surface-2: rgba(0,0,0,0.05);
+  --surface-3: rgba(0,0,0,0.08);
+  --surface-hover: rgba(0,0,0,0.05);
+  
+  --text: #0f172a;
+  --text-soft: #475569;
+  --text-dim: #94a3b8;
+  
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.12);
+  --shadow: 0 10px 40px rgba(0,0,0,0.05);
+  
+  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  --glass-border: rgba(0,0,0,0.08);
+  --noise-opacity: 0.03;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+.noise {
+  position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 1;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+  background-size: 24px 24px, 36px 36px;
+}
+
+[data-theme="light"] .noise {
+   background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+}
+
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+
+[data-theme="light"] .ambient-orb {
+  opacity: 0.2;
+  filter: blur(100px);
+}
+
+.orb-1 {
+  width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
+  background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+  top: -20%; left: -10%; animation-delay: 0s;
+}
+.orb-2 {
+  width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  bottom: -10%; right: -10%; animation-delay: -7s; animation-duration: 25s;
+}
+.orb-3 {
+  width: 40vw; height: 40vw; max-width: 500px; max-height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+  top: 40%; left: 40%; animation-delay: -14s; animation-duration: 30s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(5%, 10%) scale(1.05); }
+  50% { transform: translate(-5%, 5%) scale(0.95); }
+  75% { transform: translate(10%, -5%) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.tracer {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  height: 1px; width: 200%; left: -50%;
+  animation: driftTracer 15s linear infinite;
+  transform-origin: center;
+}
+
+[data-theme="light"] .tracer {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+}
+
+.tracer-1 { top: 20%; transform: rotate(-15deg); animation-delay: 0s; opacity: 0.6; }
+.tracer-2 { top: 50%; transform: rotate(10deg); animation-delay: -5s; animation-duration: 20s; opacity: 0.4; }
+.tracer-3 { top: 80%; transform: rotate(-5deg); animation-delay: -10s; animation-duration: 25s; opacity: 0.5; }
+.tracer-4 { top: 35%; transform: rotate(25deg); animation-delay: -3s; animation-duration: 18s; opacity: 0.3; }
+
+@keyframes driftTracer {
+  0% { transform: translateX(-25%) rotate(inherit); }
+  100% { transform: translateX(25%) rotate(inherit); }
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  min-height: 100vh;
+}
+
+/* Header */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
+<<<<<<< HEAD
   width: 100%;
   left: 0;
   padding: 0;
@@ -209,11 +380,25 @@ a { color: inherit; text-decoration: none; }
 }
 
 [data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+=======
+  padding: 18px 0;
+  margin-bottom: 32px;
+  backdrop-filter: blur(14px); 
+  -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+  border-bottom: 1px solid transparent;
+}
+
+[data-theme="light"] .header {
+   background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+}
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+<<<<<<< HEAD
   gap: 12px;
   width: 100%;
   max-width: var(--max);
@@ -221,6 +406,9 @@ a { color: inherit; text-decoration: none; }
   padding: 0 28px;
   height: 72px;
   flex-wrap: nowrap;
+=======
+  gap: 16px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 }
 
 .logo-section {
@@ -229,6 +417,7 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
   text-decoration: none;
   color: inherit;
+<<<<<<< HEAD
   flex-shrink: 0;
 }
 
@@ -273,10 +462,98 @@ a { color: inherit; text-decoration: none; }
   width: 52px; height: 28px;
   background: var(--c-surface);
   border: 1px solid var(--c-border);
+=======
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: transform 0.3s ease;
+  box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+}
+
+.logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+.logo-icon svg { width: 20px; height: 20px; }
+
+.logo-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.logo-text span { color: var(--brand-light); }
+
+.nav { display: none; align-items: center; gap: 22px; }
+.nav-link {
+  color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+  transition: all 0.2s ease; position: relative; padding: 4px 0;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--brand-light); transition: width 0.3s ease;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--brand-light); }
+.nav-link.active::after { width: 100%; }
+
+@media (min-width: 768px) {
+  .nav { display: flex; }
+}
+
+/* Desktop - show hamburger elements */
+@media (min-width: 769px) {
+  .hamburger-btn { display: flex; }
+  .hamburger-menu { display: block; }
+  .hamburger-menu-overlay { display: block; }
+}
+
+.header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+/* Clock */
+.clock {
+  text-align: right;
+  font-family: "Space Grotesk", sans-serif;
+  margin-right: 16px;
+}
+
+.clock-time {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-light);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.clock-date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
+<<<<<<< HEAD
   flex-shrink: 0;
 }
 
@@ -293,10 +570,30 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(79,158,255,0.3);
+=======
+}
+
+.theme-toggle:hover { border-color: var(--brand); }
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   z-index: 2;
 }
 
 .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+<<<<<<< HEAD
 [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
 
 .header-actions {
@@ -306,10 +603,19 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 
+=======
+
+[data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+.header-actions { display: flex; align-items: center; gap: 10px; }
+
+/* Social Link */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .header-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   width: 36px; height: 36px;
   border-radius: 8px;
   border: 1px solid var(--c-border);
@@ -348,11 +654,51 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--c-border2);
   border-radius: var(--r-lg);
+=======
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--text-soft);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.header-social-link:hover { background: var(--surface); color: var(--text); }
+.header-social-link svg { width: 18px; height: 18px; }
+
+/* Hamburger Button */
+.hamburger-btn {
+  display: flex;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-soft);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+
+.hamburger-btn svg { width: 20px; height: 20px; }
+
+/* Hamburger Menu */
+.hamburger-menu {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   padding: 20px;
   box-shadow: var(--shadow);
   z-index: 100;
   opacity: 0;
   visibility: hidden;
+<<<<<<< HEAD
   transform: translateY(-10px);
   transition: all 0.3s var(--ease-out);
   max-width: 320px;
@@ -362,12 +708,23 @@ a { color: inherit; text-decoration: none; }
 }
 
 [data-theme="light"] .hamburger-menu { background: rgba(248,250,252,0.95); }
+=======
+  transition: all 0.3s ease;
+  max-width: 320px;
+  width: 100%;
+}
+
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
 .hamburger-menu-overlay {
   position: fixed;
   inset: 0;
+<<<<<<< HEAD
   background: rgba(0,0,0,0.5);
+=======
+  background: rgba(0, 0, 0, 0.3);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   z-index: 99;
   opacity: 0;
   visibility: hidden;
@@ -382,6 +739,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 16px;
+<<<<<<< HEAD
   border-bottom: 1px solid var(--c-border);
 }
 
@@ -396,11 +754,29 @@ a { color: inherit; text-decoration: none; }
   width: 32px; height: 32px;
   background: var(--c-surface);
   border: 1px solid var(--c-border);
+=======
+  border-bottom: 1px solid var(--border);
+}
+
+.hamburger-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hamburger-close {
+  width: 32px;
+  height: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+<<<<<<< HEAD
   transition: all 0.25s ease;
   color: var(--c-muted);
 }
@@ -409,11 +785,22 @@ a { color: inherit; text-decoration: none; }
 .hamburger-close svg { width: 16px; height: 16px; }
 
 .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+=======
+  transition: all 0.3s ease;
+  color: var(--text-soft);
+}
+
+.hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+.hamburger-close svg { width: 16px; height: 16px; }
+
+.hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .hamburger-item {
   display: flex;
   align-items: center;
   gap: 14px;
+<<<<<<< HEAD
   padding: 12px 14px;
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
@@ -421,10 +808,20 @@ a { color: inherit; text-decoration: none; }
   text-decoration: none;
   color: var(--c-text);
   transition: all 0.25s var(--ease-out);
+=======
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   position: relative;
   overflow: hidden;
 }
 
+<<<<<<< HEAD
 .hamburger-item:hover { border-color: rgba(79,158,255,0.35); transform: translateY(-2px); background: var(--c-surface2); }
 
 .hamburger-icon {
@@ -432,10 +829,30 @@ a { color: inherit; text-decoration: none; }
   background: rgba(79,158,255,0.1);
   border: 1px solid rgba(79,158,255,0.2);
   border-radius: var(--r-sm);
+=======
+.hamburger-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+.hamburger-item:hover::before { opacity: 1; }
+
+.hamburger-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-radius: 10px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+<<<<<<< HEAD
   color: var(--c-accent);
   transition: all 0.3s var(--ease-spring);
 }
@@ -488,6 +905,38 @@ a { color: inherit; text-decoration: none; }
 /* =============================================================================
    SEARCH
 ============================================================================= */
+=======
+  color: white;
+  box-shadow: 0 4px 12px var(--brand-glow);
+}
+
+.hamburger-icon svg { width: 20px; height: 20px; }
+
+.hamburger-content { flex: 1; position: relative; z-index: 1; }
+
+.hamburger-item-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+/* Hero */
+.hero { text-align: center; margin-bottom: 36px; padding-top: 16px; }
+.hero-label {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--brand-light); margin-bottom: 18px; padding: 8px 16px;
+  background: var(--brand-soft); border: 1px solid rgba(83,181,255,0.15); border-radius: 50px;
+}
+.hero h1 { font-family: "Space Grotesk", sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; color: var(--text); }
+.hero-subtitle { font-size: 1.05rem; color: var(--text-soft); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+/* Search */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .search-section { margin-bottom: 24px; }
 
 .search-wrapper {
@@ -496,6 +945,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
   border-radius: var(--r-md);
@@ -503,10 +953,20 @@ a { color: inherit; text-decoration: none; }
   transition: all 0.3s ease;
   box-shadow: var(--shadow);
   backdrop-filter: blur(20px);
+=======
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px); 
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   -webkit-backdrop-filter: blur(20px);
 }
 
 .search-wrapper:focus-within {
+<<<<<<< HEAD
   border-color: rgba(79,158,255,0.4);
   box-shadow: 0 0 0 3px rgba(79,158,255,0.08), var(--shadow);
 }
@@ -532,6 +992,36 @@ a { color: inherit; text-decoration: none; }
 /* =============================================================================
    CATEGORIES
 ============================================================================= */
+=======
+  border-color: rgba(83,181,255,0.4);
+  box-shadow: 0 0 0 3px var(--brand-soft), var(--shadow);
+}
+
+.search-icon {
+  width: 16px; height: 16px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.search-wrapper:focus-within .search-icon { color: var(--brand-light); }
+
+.search-input {
+  flex: 1;
+  background: none; border: none;
+  padding: 14px 14px;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  min-width: 0;
+  font-family: inherit;
+  width: 100%;
+}
+
+.search-input::placeholder { color: var(--text-dim); }
+
+/* Categories */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .categories {
   display: flex;
   flex-wrap: wrap;
@@ -544,6 +1034,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
+<<<<<<< HEAD
   padding: 8px 14px;
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
@@ -603,6 +1094,57 @@ a { color: inherit; text-decoration: none; }
   padding: 20px;
   cursor: pointer;
   transition: all 0.3s var(--ease-out);
+=======
+  padding: 7px 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  backdrop-filter: blur(10px);
+}
+
+.category-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.category-pill.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-color: transparent;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px var(--brand-glow);
+}
+
+.resource-count { text-align: center; color: var(--text-dim); margin-bottom: 20px; font-size: 0.85rem; }
+.resource-count span { color: var(--brand-light); font-weight: 600; }
+
+/* Grid */
+.bookmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.bookmark-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -611,7 +1153,10 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow);
+<<<<<<< HEAD
   will-change: transform;
+=======
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 }
 
 .bookmark-card::before {
@@ -619,6 +1164,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
+<<<<<<< HEAD
   background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
   transform: scaleX(0);
   transform-origin: left;
@@ -635,6 +1181,34 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--c-text);
+=======
+  background: linear-gradient(90deg, var(--brand-light), var(--brand-dark));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.bookmark-card:hover {
+  border-color: rgba(83,181,255,0.4);
+  transform: translateY(-3px);
+}
+
+.bookmark-card:hover::before { transform: scaleX(1); }
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -644,16 +1218,26 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.2s ease;
 }
 
+<<<<<<< HEAD
 .bookmark-card:hover .card-title { color: var(--c-accent); }
 
 .card-arrow {
   width: 16px; height: 16px;
   color: var(--c-dim);
   transition: transform 0.3s var(--ease-spring), opacity 0.3s ease;
+=======
+.bookmark-card:hover .card-title { color: var(--brand-light); }
+
+.card-arrow {
+  width: 16px; height: 16px;
+  color: var(--text-dim);
+  transition: all 0.3s ease;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   flex-shrink: 0;
   margin-top: 2px;
   opacity: 0;
   transform: translate(-4px, 4px);
+<<<<<<< HEAD
   will-change: transform, opacity;
 }
 
@@ -663,6 +1247,20 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.82rem;
   color: var(--c-muted);
   line-height: 1.65;
+=======
+}
+
+.bookmark-card:hover .card-arrow {
+  transform: translate(2px, -2px);
+  color: var(--brand-light);
+  opacity: 1;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   margin-bottom: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -676,7 +1274,11 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   padding-top: 12px;
+<<<<<<< HEAD
   border-top: 1px solid var(--c-border);
+=======
+  border-top: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   margin-top: auto;
   gap: 10px;
 }
@@ -685,6 +1287,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
+<<<<<<< HEAD
   font-size: 0.62rem;
   font-weight: 600;
   color: var(--c-dim);
@@ -701,6 +1304,29 @@ a { color: inherit; text-decoration: none; }
 .card-domain {
   font-size: 0.7rem;
   color: var(--c-dim);
+=======
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-category::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--brand-light);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-domain {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -710,6 +1336,7 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.2s ease;
 }
 
+<<<<<<< HEAD
 .bookmark-card:hover .card-domain { color: var(--c-muted); }
 
 /* =============================================================================
@@ -736,6 +1363,93 @@ a { color: inherit; text-decoration: none; }
    ANIMATIONS
 ============================================================================= */
 @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+=======
+.bookmark-card:hover .card-domain { color: var(--text-soft); }
+
+/* Footer */
+        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
+    .footer .container {
+      min-height: auto;
+      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
+    .footer-brand span { display: block; }
+    
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+
+.footer-version {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  padding: 4px 10px;
+  background: var(--surface);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  .header { padding: 14px 0; margin-bottom: 24px; }
+  .logo-text { font-size: 1.2rem; }
+  .clock { display: none; }
+  
+  .hamburger-menu {
+    top: 70px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    width: auto;
+    padding: 16px;
+  }
+  
+  .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
+  .hamburger-item { padding: 12px 14px; }
+  .hamburger-icon { width: 38px; height: 38px; }
+  .hamburger-icon svg { width: 18px; height: 18px; }
+  .hamburger-item-title { font-size: 0.9rem; }
+  .hamburger-item-desc { font-size: 0.7rem; }
+
+  .bookmarks-grid { grid-template-columns: 1fr; gap: 10px; }
+  
+    .footer .container { width: min(100% - 24px, var(--max-width)); }
+    .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+  .footer-right { align-items: center; }
+  .footer-brand { justify-content: center; }
+  .footer-status { align-items: center; justify-self: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+  .card-arrow { opacity: 1; }
+  
+  .categories {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+  }
+  
+  .categories::-webkit-scrollbar { display: none; }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .bookmark-card { animation: fadeSlideIn 0.4s ease backwards; }
 .bookmark-card:nth-child(1) { animation-delay: 0s; }
@@ -748,6 +1462,7 @@ a { color: inherit; text-decoration: none; }
 .bookmark-card:nth-child(8) { animation-delay: 0.21s; }
 
 @media (prefers-reduced-motion: reduce) {
+<<<<<<< HEAD
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -771,10 +1486,21 @@ a { color: inherit; text-decoration: none; }
   .categories::-webkit-scrollbar { display: none; }
   .container { padding: 16px; }
 }
+=======
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 </style>
 </head>
 <body>
 
+<<<<<<< HEAD
 <!-- Loader -->
 <div class="loader" id="loader">
   <div class="loader-ring"></div>
@@ -924,6 +1650,175 @@ a { color: inherit; text-decoration: none; }
   <section class="hero">
     <span class="hero-label">Universal Resource Hub</span>
     <h1>Files &amp; Resources</h1>
+=======
+<div class="noise"></div>
+
+<div class="bg-ambient">
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+  <div class="tracer tracer-1"></div>
+  <div class="tracer tracer-2"></div>
+  <div class="tracer tracer-3"></div>
+  <div class="tracer tracer-4"></div>
+</div>
+
+<div class="container">
+  
+  <header class="header">
+    <div class="header-inner">
+<a href="hub.html" class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+      
+      <div class="header-actions">
+        <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <div class="clock">
+          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-date" id="clock-date">...</div>
+        </div>
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </div>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+  <div class="hamburger-menu" id="hamburger-menu">
+    <div class="hamburger-header">
+      <div class="hamburger-title">Navigation</div>
+      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hamburger-grid">
+      <a href="docs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Docs</div>
+          <div class="hamburger-item-desc">Documentation & Resources</div>
+        </div>
+      </a>
+      <a href="files.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Files</div>
+          <div class="hamburger-item-desc">Downloads & Software</div>
+        </div>
+      </a>
+      <a href="jobs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Jobs</div>
+          <div class="hamburger-item-desc">Career Opportunities</div>
+        </div>
+      </a>
+      <a href="creators.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Creators</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
+        </div>
+      </a>
+      <a href="news.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+            <path d="M18 14h-8"/>
+            <path d="M15 18h-5"/>
+            <path d="M10 6h8v4h-8V6Z"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">News</div>
+          <div class="hamburger-item-desc">Latest Updates</div>
+        </div>
+      </a>
+      
+      
+      <a href="privacy.html" class="hamburger-item">
+  <div class="hamburger-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  </div>
+  <div class="hamburger-content">
+    <div class="hamburger-item-title">Privacy</div>
+    <div class="hamburger-item-desc">Privacy Policy</div>
+  </div>
+</a>
+      
+      <a href="terms.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Terms</div>
+          <div class="hamburger-item-desc">Terms of Service</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <span class="hero-label">Universal Resource Hub</span>
+    <h1>Files & Resources</h1>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
     <p class="hero-subtitle">
       Curated collection of file resources covering Torrents, Games, Software, VST plugins, Design assets, and more.
     </p>
@@ -947,6 +1842,7 @@ a { color: inherit; text-decoration: none; }
 
   <main class="bookmarks-grid" id="docs-grid"></main>
 
+<<<<<<< HEAD
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -1084,3 +1980,434 @@ window.addEventListener('load', () => {
 <script src="scripts/files-app.js" defer></script>
 </body>
 </html>
+=======
+      <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        
+        <div class="footer-status">
+           <div class="footer-status-meta">
+             <span class="status-dot"></span> All systems operational
+           </div>
+           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
+        </div>
+      </div>
+    </footer>
+
+</div>
+
+<script>
+  // Hamburger menu elements
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const hamburgerMenu = document.getElementById('hamburger-menu');
+  const hamburgerOverlay = document.getElementById('hamburger-overlay');
+  const hamburgerClose = document.getElementById('hamburger-close');
+
+  function showHamburgerMenu() {
+    hamburgerMenu.classList.add('show');
+    hamburgerOverlay.classList.add('show');
+  }
+
+  function hideHamburgerMenu() {
+    hamburgerMenu.classList.remove('show');
+    hamburgerOverlay.classList.remove('show');
+  }
+
+  hamburgerBtn.addEventListener('click', showHamburgerMenu);
+  hamburgerClose.addEventListener('click', hideHamburgerMenu);
+  hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
+
+  const docsData = [
+    { name: "The Pirate Bay", link: "https://thepiratebay.org", desc: "The galaxy's most resilient BitTorrent site.", cat: "Torrents" },
+    { name: "1337x", link: "https://1337x.to", desc: "A clean, popular directory for movies, games, and apps.", cat: "Torrents" },
+    { name: "YTS (YIFY)", link: "https://yts.mx", desc: "Best for downloading high-quality movies in small file sizes.", cat: "Torrents" },
+    { name: "NYAA.si", link: "https://nyaa.si", desc: "A dedicated BitTorrent site for Anime and Manga content.", cat: "Torrents" },
+    { name: "TorrentGalaxy", link: "https://torrentgalaxy.to", desc: "Modern community-driven torrent site with great UI.", cat: "Torrents" },
+    { name: "LimeTorrents", link: "https://www.limetorrents.info", desc: "General torrent index with a massive database.", cat: "Torrents" },
+    { name: "TorrentDownloads", link: "https://www.torrentdownloads.pro", desc: "Reliable source for music, shows, and Asian media.", cat: "Torrents" },
+    { name: "BTDigg", link: "https://btdigg.org", desc: "DHT search engine for the BitTorrent network.", cat: "Torrents" },
+    { name: "Knaben", link: "https://knaben.eu", desc: "Clean, fast torrent search engine and proxy.", cat: "Torrents" },
+    { name: "Torlock", link: "https://www.torlock.com", desc: "Fully verified torrents for movies and TV.", cat: "Torrents" },
+    { name: "SteamUnlocked", link: "https://steamunlocked.net", desc: "Pre-installed games for PC, ready to play directly.", cat: "Games" },
+    { name: "FitGirl Repacks", link: "https://fitgirl-repacks.site", desc: "Highly compressed repacks for heavy PC games.", cat: "Games" },
+    { name: "SteamRip", link: "https://steamrip.com", desc: "Free pre-installed steam games with direct links.", cat: "Games" },
+    { name: "IGG Games", link: "https://igggames.com", desc: "Free download of PC games and updates.", cat: "Games" },
+    { name: "SkidRowReloaded", link: "https://skidrowreloaded.com", desc: "Scene releases and game cracks.", cat: "Games" },
+    { name: "Nexus Mods", link: "https://nexusmods.com", desc: "The largest modding site for game modifications.", cat: "Games" },
+    { name: "GameBanana", link: "https://gamebanana.com", desc: "Resource for game mods, maps, and skins.", cat: "Games" },
+    { name: "Vimm's Lair", link: "https://vimm.net", desc: "Vast archive of retro games and manuals.", cat: "Games" },
+    { name: "ROMsMania", link: "https://romsmania.cc", desc: "Free ROMs download for consoles (PS2, GBA, etc).", cat: "Games" },
+    { name: "AllModded", link: "https://allmodded.com", desc: "Maps and mods for simulation games like BeamNG.", cat: "Games" },
+    { name: "GetIntoPC", link: "https://getintopc.com", desc: "Free software downloads with safe offline installers.", cat: "Software" },
+    { name: "FileCR", link: "https://filecr.com", desc: "Windows software and cracked programs.", cat: "Software" },
+    { name: "m0nkrus", link: "https://w14.monkrus.ws", desc: "Trusted repacks of Adobe and Windows software.", cat: "Software" },
+    { name: "AppNee", link: "https://appnee.com", desc: "Software giveaway and file downloads.", cat: "Software" },
+    { name: "SadeemAPK", link: "https://sadeemapk.com", desc: "PC software and Android APK downloads.", cat: "Software" },
+    { name: "KaranPC", link: "https://karanpc.com", desc: "Free download of latest software and drivers.", cat: "Software" },
+    { name: "Software188", link: "https://software188.com", desc: "Utility software and operating systems.", cat: "Software" },
+    { name: "CrackHash", link: "https://crackhash.com", desc: "Repacked software and cracks.", cat: "Software" },
+    { name: "RSLoad", link: "https://rsload.net", desc: "Activation keys and software cracks.", cat: "Software" },
+    { name: "Civil MDC", link: "https://civilmdc.com", desc: "Engineering software (Civil 3D, AutoCAD).", cat: "Software" },
+    { name: "VSTorrent", link: "https://vstorrent.org", desc: "VST plugins, VSTi instruments, and samples.", cat: "VST" },
+    { name: "AudioZ", link: "https://audioz.download", desc: "Professional audio software and samples.", cat: "VST" },
+    { name: "VST4Free", link: "https://vst4free.com", desc: "Free VST plugins and instruments.", cat: "VST" },
+    { name: "Plugin Boutique", link: "https://www.pluginboutique.com", desc: "Marketplace for music plugins and deals.", cat: "VST" },
+    { name: "Splice", link: "https://splice.com", desc: "Cloud-based music creation and collaboration.", cat: "VST" },
+    { name: "CrackedVST", link: "https://crackedvst.com", desc: "Cracked VST plugins and DAWs.", cat: "VST" },
+    { name: "Cymatics.fm", link: "https://cymatics.fm", desc: "Free sample packs and project files.", cat: "VST" },
+    { name: "R-loops", link: "https://r-loops.com", desc: "Free loops and samples for producers.", cat: "VST" },
+    { name: "Bedroom Producers Blog", link: "https://bedroomproducersblog.com", desc: "Free VST plugins news and reviews.", cat: "VST" },
+    { name: "KVRAudio", link: "https://kvraudio.com", desc: "The ultimate resource for VST plugins.", cat: "VST" },
+    { name: "Anna's Archive", link: "https://annas-archive.org", desc: "Comprehensive search engine for books and papers.", cat: "PDF" },
+    { name: "Z-Library", link: "https://z-lib.gs", desc: "The world's largest ebook library (mirrors active).", cat: "PDF" },
+    { name: "Library Genesis", link: "https://libgen.is", desc: "Search engine for scientific articles and books.", cat: "PDF" },
+    { name: "PDF Drive", link: "https://www.pdfdrive.com", desc: "Search engine for PDF documents.", cat: "PDF" },
+    { name: "Sci-Hub", link: "https://sci-hub.se", desc: "Free access to millions of research papers.", cat: "PDF" },
+    { name: "Project Gutenberg", link: "https://gutenberg.org", desc: "Over 70,000 free eBooks in the public domain.", cat: "PDF" },
+    { name: "Open Library", link: "https://openlibrary.org", desc: "An open, editable library catalog.", cat: "PDF" },
+    { name: "Standard Ebooks", link: "https://standardebooks.org", desc: "High-quality, well-formatted public domain ebooks.", cat: "PDF" },
+    { name: "BookSC", link: "https://booksc.org", desc: "The world's largest scientific articles library.", cat: "PDF" },
+    { name: "PDF Books World", link: "https://www.pdfbooksworld.com", desc: "Free PDF books in fiction and non-fiction.", cat: "PDF" },
+    { name: "Freepik", link: "https://www.freepik.com", desc: "Vectors, PSD files, and photos.", cat: "Design" },
+    { name: "Mockup World", link: "https://www.mockupworld.co", desc: "The best free mockups for designers.", cat: "Design" },
+    { name: "GraphicBurger", link: "https://graphicburger.com", desc: "Tasty design resources made with care.", cat: "Design" },
+    { name: "Pixeden", link: "https://www.pixeden.com", desc: "Free web resources and mockups.", cat: "Design" },
+    { name: "Dribbble", link: "https://dribbble.com", desc: "Design inspiration and community.", cat: "Design" },
+    { name: "Behance", link: "https://www.behance.net", desc: "Creative portfolios and projects.", cat: "Design" },
+    { name: "Unsplash", link: "https://unsplash.com", desc: "High-quality photos for free.", cat: "Design" },
+    { name: "Pexels", link: "https://www.pexels.com", desc: "Free stock photos and videos.", cat: "Design" },
+    { name: "Figma Community", link: "https://www.figma.com/community", desc: "UI kits, icons, and plugins.", cat: "Design" },
+    { name: "Abduzeedo", link: "https://abduzeedo.com", desc: "Design inspiration and tutorials.", cat: "Design" },
+    { name: "Zone-Téléchargement", link: "https://www.zone-telechargement.ws", desc: "Popular French site for DDL movies and series.", cat: "DDL" },
+    { name: "DDL-Island", link: "https://www.ddl-island.su", desc: "French forum and index for direct downloads.", cat: "DDL" },
+    { name: "Wawacity", link: "https://wawacity.vip", desc: "Direct download portal for French content.", cat: "DDL" },
+    { name: "Tirexo", link: "https://www.tirexo.net", desc: "Modern French DDL site for series and films.", cat: "DDL" },
+    { name: "Extreme Download", link: "https://www.extreme-download.in", desc: "Variety of files including films and software.", cat: "DDL" },
+    { name: "DDL Valley", link: "https://www.ddlvalley.me", desc: "Aggregator for release links (movies, TV).", cat: "DDL" },
+    { name: "O1L", link: "https://o1L.io", desc: "DDL link protection and directory.", cat: "DDL" },
+    { name: "FilmsDDL", link: "https://www.films-ddl.net", desc: "French DDL site focused on HD movies.", cat: "DDL" },
+    { name: "Telecharger-jeuxpc", link: "https://www.telecharger-jeuxpc.fr", desc: "Direct downloads for PC games in French.", cat: "DDL" },
+    { name: "Scene-Release", link: "https://www.scene-release.com", desc: "Index of scene releases with DDL links.", cat: "DDL" },
+    { name: "RuTracker", link: "https://rutracker.org", desc: "Massive Russian semi-private tracker.", cat: "Tracker" },
+    { name: "Rutor", link: "http://rutor.info", desc: "Popular Russian torrent tracker.", cat: "Tracker" },
+    { name: "NoNaMe Club", link: "https://nnmclub.to", desc: "Russian forum and tracker for various content.", cat: "Tracker" },
+    { name: "Rlsbb", link: "https://rlsbb.ru", desc: "Scene release blog and download links.", cat: "Scene" },
+    { name: "PreDB", link: "https://predb.org", desc: "Database of scene releases (pre-times).", cat: "Scene" },
+    { name: "OrlyDB", link: "https://orlydb.com", desc: "Scene release notifier and database.", cat: "Scene" },
+    { name: "Xrel", link: "https://www.xrel.to", desc: "Scene news and release information.", cat: "Scene" },
+    { name: "GazelleGames", link: "https://gazellegames.net", desc: "Private tracker dedicated to gaming.", cat: "Tracker" },
+    { name: "MyAnonaMouse", link: "https://myanonamouse.net", desc: "Private tracker for eBooks and audiobooks.", cat: "Tracker" },
+    { name: "Redacted (RED)", link: "https://redacted.sh", desc: "Largest private music torrent tracker.", cat: "Tracker" },
+    { name: "Crunchyroll", link: "https://www.crunchyroll.com", desc: "Legal streaming service for anime.", cat: "Anime" },
+    { name: "HiAnime", link: "https://hianime.to", desc: "Popular site for streaming anime content.", cat: "Anime" },
+    { name: "MangaDex", link: "https://mangadex.org", desc: "Online manga reader with scanlation archives.", cat: "Anime" },
+    { name: "AnimePahe", link: "https://animepahe.ru", desc: "High quality anime downloads and streaming.", cat: "Anime" },
+    { name: "SubsPlease", link: "https://subsplease.org", desc: "Fastest anime release indexer.", cat: "Anime" },
+    { name: "Viki", link: "https://www.viki.com", desc: "Legal streaming for Asian dramas.", cat: "Anime" },
+    { name: "DramaCool", link: "https://dramacool.ac", desc: "Asian drama streaming and download.", cat: "Anime" },
+    { name: "Comick", link: "https://comick.app", desc: "Manga reader platform with downloads.", cat: "Anime" },
+    { name: "AniWave", link: "https://aniwave.to", desc: "Formerly 9anime, streaming site.", cat: "Anime" },
+    { name: "9anime", link: "https://9anime.pl", desc: "Popular anime streaming mirror.", cat: "Anime" },
+    { name: "Internet Archive", link: "https://archive.org", desc: "Non-profit library of millions of free texts, movies.", cat: "Archive" },
+    { name: "ArXiv", link: "https://arxiv.org", desc: "Open-access archive for scholarly articles.", cat: "Archive" },
+    { name: "CORE", link: "https://core.ac.uk", desc: "Aggregator of open access research papers.", cat: "Archive" },
+    { name: "Semantic Scholar", link: "https://www.semanticscholar.org", desc: "AI-powered research tool for literature.", cat: "Archive" },
+    { name: "DBLP", link: "https://dblp.org", desc: "Computer science bibliography database.", cat: "Archive" },
+    { name: "Old Version", link: "https://www.oldversion.com", desc: "Archive of old software versions.", cat: "Archive" },
+    { name: "WinWorld", link: "https://winworldpc.com", desc: "Abandonware library for old OS and software.", cat: "Archive" },
+    { name: "Vetusware", link: "https://vetusware.com", desc: "Archive of old software and drivers.", cat: "Archive" },
+    { name: "HathiTrust", link: "https://www.hathitrust.org", desc: "Digital library partnership for preservation.", cat: "Archive" },
+    { name: "DBpia", link: "https://www.dbpia.co.kr", desc: "Korean academic research database.", cat: "Archive" },
+    { name: "GitHub", link: "https://github.com", desc: "Largest code repository and collaboration platform.", cat: "Dev" },
+    { name: "GitLab", link: "https://gitlab.com", desc: "DevOps platform and code repository.", cat: "Dev" },
+    { name: "SourceForge", link: "https://sourceforge.net", desc: "Open source software repository and download.", cat: "Dev" },
+    { name: "FossHub", link: "https://fosshub.com", desc: "Reliable software download site for open source.", cat: "Dev" },
+    { name: "OSDN", link: "https://osdn.net", desc: "Open Source Development Network for file distribution.", cat: "Dev" },
+    { name: "Softpedia", link: "https://www.softpedia.com", desc: "Encyclopedia of free software downloads.", cat: "Dev" },
+    { name: "MajorGeeks", link: "https://www.majorgeeks.com", desc: "Tech news and download repository.", cat: "Dev" },
+    { name: "Ninite", link: "https://ninite.com", desc: "Service to install/update multiple apps at once.", cat: "Dev" },
+    { name: "Chocolatey", link: "https://chocolatey.org", desc: "Package manager for Windows.", cat: "Dev" },
+    { name: "NuGet", link: "https://www.nuget.org", desc: "Package manager for .NET developers.", cat: "Dev" },
+    { name: "Movix", link: "https://movix.blog", desc: "Popular streaming site for movies and series in HD.", cat: "Streaming" },
+    { name: "Arte.tv", link: "https://arte.tv", desc: "Free European arthouse and independent films.", cat: "Streaming" },
+    { name: "NPO Start", link: "https://npostart.nl", desc: "Free Dutch films and documentaries.", cat: "Streaming" },
+    { name: "TV5MondePlus", link: "https://tv5mondeplus.com", desc: "Free French-language films and shows.", cat: "Streaming" },
+    { name: "Filmzie", link: "https://filmzie.com", desc: "Free independent films from around the world.", cat: "Streaming" },
+    { name: "Plex Movies", link: "https://plex.tv/watch", desc: "Free movies including indie and classic titles.", cat: "Streaming" },
+    { name: "Tubi", link: "https://tubitv.com", desc: "Free movies across genres, fully legal.", cat: "Streaming" },
+    { name: "Pluto TV", link: "https://pluto.tv", desc: "Free live channels and on-demand movies.", cat: "Streaming" },
+    { name: "Crackle", link: "https://crackle.com", desc: "Free indie films, cult classics, and originals.", cat: "Streaming" },
+    { name: "Popcornflix", link: "https://popcornflix.com", desc: "Free independent and genre films.", cat: "Streaming" },
+    { name: "FilmRise", link: "https://filmrise.com", desc: "Free classic and independent films.", cat: "Streaming" },
+    { name: "Xumo Play", link: "https://play.xumo.com", desc: "Free movies and live channels.", cat: "Streaming" },
+    { name: "Freevee", link: "https://freevee.amazon.com", desc: "Free movies supported by ads.", cat: "Streaming" },
+    { name: "Kanopy", link: "https://kanopy.com", desc: "Free arthouse films via libraries.", cat: "Streaming" },
+    { name: "Hoopla", link: "https://hoopladigital.com", desc: "Free films through library access.", cat: "Streaming" },
+    { name: "Internet Archive Movies", link: "https://archive.org/details/movies", desc: "Public domain films and rare classics.", cat: "Streaming" },
+    { name: "Open Culture Movies", link: "https://openculture.com/freemoviesonline", desc: "Free classic and educational films.", cat: "Streaming" },
+    { name: "Cineteca Milano", link: "https://cinetecamilano.it", desc: "Free restored Italian classics.", cat: "Streaming" },
+    { name: "Cinepub", link: "https://cinepub.ro", desc: "Free Romanian independent films.", cat: "Streaming" },
+    { name: "Nowness", link: "https://nowness.com", desc: "Free artistic and experimental short films.", cat: "Streaming" },
+    { name: "ShortsTV Free", link: "https://shorts.tv", desc: "Free award-winning short films.", cat: "Streaming" },
+    { name: "DocAlliance Free", link: "https://dafilms.com", desc: "Free European auteur documentaries.", cat: "Streaming" },
+    { name: "True Story Free", link: "https://truestory.film", desc: "Free independent documentaries.", cat: "Streaming" },
+    { name: "AsianCrush Free", link: "https://asiancrush.com", desc: "Free Asian films and dramas.", cat: "Streaming" },
+    { name: "RetroCrush Free", link: "https://retrocrush.tv", desc: "Free classic anime and retro films.", cat: "Streaming" },
+    { name: "Classic Cinema Online", link: "https://classiccinemaonline.com", desc: "Free classic Hollywood films.", cat: "Streaming" },
+    { name: "Public Domain Movies", link: "https://publicdomainmovies.net", desc: "Free public domain films.", cat: "Streaming" },
+    { name: "Top Documentary Films", link: "https://topdocumentaryfilms.com", desc: "Free documentaries across genres.", cat: "Streaming" },
+    { name: "Documentary Heaven", link: "https://documentaryheaven.com", desc: "Free curated documentaries.", cat: "Streaming" },
+    { name: "Documentary Storm", link: "https://documentarystorm.com", desc: "Free independent documentaries.", cat: "Streaming" },
+    { name: "Films for Action", link: "https://filmsforaction.org", desc: "Free activist and social-issue films.", cat: "Streaming" },
+    { name: "Europeana Films", link: "https://europeana.eu", desc: "Free European archive films.", cat: "Streaming" },
+    { name: "BFI Free", link: "https://player.bfi.org.uk/free", desc: "Free British classics and shorts.", cat: "Streaming" },
+    { name: "Korean Film Archive", link: "https://youtube.com/koreanfilm", desc: "Free restored Korean classics.", cat: "Streaming" },
+    { name: "National Film Board of Canada", link: "https://nfb.ca", desc: "Free Canadian films and documentaries.", cat: "Streaming" },
+    { name: "Japan Foundation Film", link: "https://jff.jpf.go.jp", desc: "Free Japanese films during festival periods.", cat: "Streaming" },
+    { name: "Indie Movies Online", link: "https://indiemoviesonline.com", desc: "Free independent films.", cat: "Streaming" },
+    { name: "Veoh", link: "https://veoh.com", desc: "Free indie and classic films.", cat: "Streaming" },
+    { name: "Vimeo Free Films", link: "https://vimeo.com/channels", desc: "Free auteur and festival films.", cat: "Streaming" },
+    { name: "NFB Kids", link: "https://nfb.ca/kids", desc: "Free animated films for kids.", cat: "Streaming" },
+    { name: "FilmAffinity Free", link: "https://filmaffinity.com", desc: "Free films depending on region.", cat: "Streaming" },
+    { name: "Cineuropa Free", link: "https://cineuropa.org", desc: "Free European independent films.", cat: "Streaming" },
+    { name: "Cine Latino", link: "https://cinelatino.com", desc: "Free Latin American films.", cat: "Streaming" },
+    { name: "MyFrenchFilmFestival Free", link: "https://myfrenchfilmfestival.com", desc: "Free French films during festival windows.", cat: "Streaming" },
+    { name: "FilmOn Free", link: "https://filmon.com", desc: "Free movies via live channels.", cat: "Streaming" },
+    { name: "Kanopy Kids", link: "https://kanopy.com/kids", desc: "Free kids films via libraries.", cat: "Streaming" },
+    { name: "Popcornflix Kids", link: "https://popcornflixkids.com", desc: "Free kids movies.", cat: "Streaming" },
+    { name: "Troma Movies", link: "https://troma.com", desc: "Free cult and underground films.", cat: "Streaming" },
+    { name: "Midnight Pulp Free", link: "https://midnightpulp.com", desc: "Free horror and cult films.", cat: "Streaming" },
+    { name: "Dark Matter TV", link: "https://darkmattertv.com", desc: "Free sci-fi and horror films.", cat: "Streaming" },
+    { name: "FilmOn Classics", link: "https://filmon.com/classics", desc: "Free classic films.", cat: "Streaming" },
+    { name: "Classic Movies HQ", link: "https://classicmovieshq.com", desc: "Free high-quality classic films.", cat: "Streaming" },
+    { name: "Classic Cinema", link: "https://classiccinema.org", desc: "Free vintage films.", cat: "Streaming" },
+    { name: "IndieFlix Free", link: "https://indieflix.com", desc: "Free section of independent films.", cat: "Streaming" },
+    { name: "Short of the Week", link: "https://shortoftheweek.com", desc: "Free award-winning short films.", cat: "Streaming" },
+    { name: "Dust Sci-Fi", link: "https://watchdust.com", desc: "Free sci-fi short films.", cat: "Streaming" },
+    { name: "Alter Horror", link: "https://watchalter.com", desc: "Free horror short films.", cat: "Streaming" },
+    { name: "Filmocracy Free", link: "https://filmocracy.com", desc: "Free independent films and festival titles.", cat: "Streaming" },
+    { name: "Reveel", link: "https://reveel.net", desc: "Free independent genre films.", cat: "Streaming" },
+    { name: "Free Movies Cinema", link: "https://freemoviescinema.com", desc: "Free indie and fan-made films.", cat: "Streaming" },
+    { name: "MoviesFoundOnline", link: "https://moviesfoundonline.com", desc: "Free indie films and documentaries.", cat: "Streaming" },
+    { name: "Classic Movies Online", link: "https://classicmoviesonline.com", desc: "Free classic films.", cat: "Streaming" },
+    { name: "Indie Rights Movies", link: "https://youtube.com/indierightsmovies", desc: "Free independent feature films.", cat: "Streaming" },
+    { name: "Cinehouse", link: "https://cinehouse.ca", desc: "Free curated indie films.", cat: "Streaming" },
+    { name: "FilmOn Noir", link: "https://filmon.com/noir", desc: "Free film noir classics.", cat: "Streaming" },
+    { name: "FilmOn Westerns", link: "https://filmon.com/westerns", desc: "Free classic western films.", cat: "Streaming" },
+  ];
+  
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock-time').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  const themeToggle = document.getElementById('theme-toggle');
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      if (newTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      localStorage.setItem('theme', newTheme);
+    });
+
+    themeToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        themeToggle.click();
+      }
+    });
+  }
+
+  const App = {
+    config: {
+      gridSelector: '#docs-grid',
+      filterSelector: '#filter-container',
+      countSelector: '#resource-count',
+      searchSelector: '#search-input'
+    },
+    state: {
+      rawData: [],
+      currentFilter: 'all',
+      searchQuery: ''
+    },
+
+    escapeHtml: function(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    },
+
+    getDomain: function(url) {
+      try {
+        return new URL(url).hostname.replace('www.', '');
+      } catch (e) {
+        return 'link';
+      }
+    },
+
+    createCard: function(item, index) {
+      const safeName = this.escapeHtml(item.name);
+      const safeDesc = this.escapeHtml(item.desc);
+      const safeCat = this.escapeHtml(item.cat);
+      const safeLink = this.escapeHtml(item.link);
+      const domain = this.getDomain(item.link);
+      const delay = Math.min(index * 0.03, 0.6);
+
+      return `
+        <a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="bookmark-card" style="animation-delay: ${delay}s">
+          <div class="card-top">
+            <h3 class="card-title">${safeName}</h3>
+            <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"/>
+              <polyline points="7 7 17 7 17 17"/>
+            </svg>
+          </div>
+          <div class="card-desc">${safeDesc}</div>
+          <div class="card-meta">
+            <span class="card-category">${safeCat}</span>
+            <span class="card-domain">${domain}</span>
+          </div>
+        </a>
+      `;
+    },
+
+    renderFilters: function(categories) {
+      const container = document.querySelector(this.config.filterSelector);
+      if (!container) return;
+      container.innerHTML = categories.map(cat => {
+        const isActive = cat === this.state.currentFilter;
+        const label = cat === 'all' ? 'All' : cat;
+        return `<button class="category-pill ${isActive ? 'active' : ''}" data-cat="${cat}">${label}</button>`;
+      }).join('');
+    },
+
+    renderGrid: function() {
+      const grid = document.querySelector(this.config.gridSelector);
+      const counter = document.querySelector(this.config.countSelector);
+      if (!grid) return;
+
+      const sorted = this.sortData([...this.state.rawData]);
+      const filtered = this.filterData(sorted, this.state.currentFilter, this.state.searchQuery);
+
+      if (counter) counter.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-dim);">No resources found matching your criteria.</p>';
+        return;
+      }
+      grid.innerHTML = filtered.map((item, i) => this.createCard(item, i)).join('');
+    },
+
+    handleFilterClick: function(e) {
+      const btn = e.target.closest('.category-pill');
+      if (!btn) return;
+      const category = btn.dataset.cat;
+      this.state.currentFilter = category;
+      document.querySelectorAll('.category-pill').forEach(b => {
+        b.classList.toggle('active', b.dataset.cat === category);
+      });
+      this.renderGrid();
+    },
+
+    handleSearch: function(e) {
+      this.state.searchQuery = e.target.value;
+      this.renderGrid();
+    },
+
+    sortData: function(data) {
+      return data.sort((a, b) => (a.name || '').toLowerCase().localeCompare((b.name || '').toLowerCase()));
+    },
+
+    filterData: function(data, filter, query) {
+      let filtered = data;
+      
+      if (filter !== 'all') {
+        filtered = filtered.filter(item => (item.cat || '').toLowerCase() === filter.toLowerCase());
+      }
+      
+      if (query) {
+        const searchStr = query.toLowerCase();
+        filtered = filtered.filter(item => 
+          (item.name || '').toLowerCase().includes(searchStr) ||
+          (item.desc || '').toLowerCase().includes(searchStr) ||
+          (item.cat || '').toLowerCase().includes(searchStr)
+        );
+      }
+      
+      return filtered;
+    },
+
+    getCategories: function(data) {
+      const cats = new Set();
+      data.forEach(item => { if (item.cat) cats.add(item.cat); });
+      const preferredOrder = ['Torrents', 'Streaming', 'Games', 'Software', 'VST', 'PDF', 'Design', 'DDL', 'Tracker', 'Scene', 'Anime', 'Archive', 'Dev'];
+      const sortedCats = Array.from(cats).sort((a, b) => {
+         const ia = preferredOrder.indexOf(a);
+         const ib = preferredOrder.indexOf(b);
+         if (ia === -1 && ib === -1) return a.localeCompare(b);
+         if (ia === -1) return 1;
+         if (ib === -1) return -1;
+         return ia - ib;
+      });
+      return ['all', ...sortedCats];
+    },
+
+    init: function() {
+      initTheme();
+      this.state.rawData = docsData;
+      const categories = this.getCategories(this.state.rawData);
+      this.renderFilters(categories);
+      this.renderGrid();
+
+      const filterContainer = document.querySelector(this.config.filterSelector);
+      if (filterContainer) {
+        filterContainer.addEventListener('click', this.handleFilterClick.bind(this));
+      }
+
+      const searchInput = document.querySelector(this.config.searchSelector);
+      if (searchInput) {
+        searchInput.addEventListener('input', this.handleSearch.bind(this));
+      }
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      App.init.bind(App)();
+    });
+  } else {
+    App.init.bind(App)();
+  }
+</script>
+
+</body>
+</html>
+
+
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c

@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <title>Collection — Natalie Brunell</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+=======
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -625,6 +629,7 @@
       position: absolute;
       inset: 0;
       display: flex;
+<<<<<<< HEAD
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -648,6 +653,28 @@
     .custom-play-btn {
       position: relative;
       z-index: 3;
+=======
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(247,147,26,0.05), rgba(0,0,0,0.5));
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .video-placeholder:hover {
+      background: linear-gradient(135deg, rgba(247,147,26,0.1), rgba(0,0,0,0.6));
+    }
+
+    .video-placeholder:hover .play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(255,0,0,0.4);
+    }
+
+    .play-btn {
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
       width: 64px;
       height: 64px;
       border-radius: 50%;
@@ -655,10 +682,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
+<<<<<<< HEAD
+=======
+      margin-bottom: 1rem;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
       box-shadow: 0 8px 24px rgba(255,0,0,0.3);
       transition: all 0.3s ease;
     }
 
+<<<<<<< HEAD
     .custom-play-btn::after {
       content: "";
       display: block;
@@ -673,6 +705,18 @@
     .video-placeholder:hover .custom-play-btn {
       transform: scale(1.12);
       box-shadow: 0 0 40px rgba(255,0,0,0.5);
+=======
+    .play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    .video-placeholder-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
     }
 
     /* ===== FOOTER ===== */
@@ -720,8 +764,13 @@
       .love-text { font-size: 4rem; }
       .video-title { font-size: 0.9rem; }
       .video-subtitle { display: none; }
+<<<<<<< HEAD
       .custom-play-btn { width: 56px; height: 56px; }
       .custom-play-btn::after { border-width: 8px 0 8px 15px; margin-left: 3px; }
+=======
+      .play-btn { width: 56px; height: 56px; }
+      .play-btn svg { width: 24px; height: 24px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
       .link-tag { font-size: 0.6rem; padding: 2px 6px; }
     }
 
@@ -729,6 +778,7 @@
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
+<<<<<<< HEAD
 
 <style id="global-responsive-enhancements">
   html { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
@@ -846,6 +896,8 @@
   }
 </style>
 
+=======
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 </head>
 <body>
   <div class="bg-container">
@@ -862,11 +914,19 @@
 
     <!-- Navigation Buttons -->
     <nav class="top-nav">
+<<<<<<< HEAD
     <a href="../creators.html" class="nav-btn" title="Back to Creators">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <span>Back</span>
       </a>
     <a href="../hub.html" class="nav-btn" title="Go to Hub">
+=======
+      <a href="/creators.html" class="nav-btn" title="Back to Creators">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back</span>
+      </a>
+      <a href="/hub.html" class="nav-btn" title="Go to Hub">
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Home</span>
       </a>
@@ -877,7 +937,11 @@
       <div class="avatar-wrapper">
         <div class="avatar-ring">
           <div class="avatar-img">
+<<<<<<< HEAD
             <img src="img/natpfp.jpg" alt="Natalie Brunell">
+=======
+            <img src="/creators/img/natpfp.jpg" alt="Natalie Brunell">
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
           </div>
         </div>
         <div class="avatar-badge">
@@ -920,7 +984,17 @@
       </div>
       <div class="video-container">
         <div class="video-wrapper" id="videoWrapper">
+<<<<<<< HEAD
           <div class="video-placeholder" id="videoPlaceholder"></div>
+=======
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/QVmBEwMqjCI" title="Coin Stories Podcast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <div class="video-placeholder" onclick="this.style.display='none'">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="video-placeholder-text">Click to play featured episode</span>
+          </div>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
         </div>
       </div>
     </div>
@@ -933,7 +1007,11 @@
 
   <script>
     /* ============================================================
+<<<<<<< HEAD
        DATA
+=======
+       DATA — Updated tags for better categorization
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
     ============================================================ */
     const collectionData = [
       {
@@ -942,7 +1020,11 @@
           {
             name: "Natalie Brunell - Talking Bitcoin",
             desc: "Official website and portfolio",
+<<<<<<< HEAD
             img: "img/talkingbtc.png",
+=======
+            img: "/creators/img/talkingbtc.png",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://www.nataliebrunell.com/",
             tag: "Website",
             tagClass: "tag-website"
@@ -950,15 +1032,24 @@
           {
             name: "Coin Stories Podcast",
             desc: "Weekly Bitcoin conversations with industry leaders",
+<<<<<<< HEAD
             img: "img/coinstories.jpeg",
+=======
+            img: "/creators/img/coinstories.jpeg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://www.coinstoriespodcast.com/",
             tag: "Podcast",
             tagClass: "tag-podcast"
           },
           {
             name: "Coin Stories Newsletter",
+<<<<<<< HEAD
             desc: "under construction. - Weekly insights delivered to your inbox",
             img: "img/coinstories-newsletter.png",
+=======
+            desc: "Weekly insights delivered to your inbox",
+            img: "https://picsum.photos/seed/coinstories-news/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://www.coinstoriespodcast.com/newsletter",
             tag: "Newsletter",
             tagClass: "tag-newsletter"
@@ -971,7 +1062,11 @@
           {
             name: "YouTube",
             desc: "Watch full video episodes on YouTube",
+<<<<<<< HEAD
             img: "img/ytlogo.jpg",
+=======
+            img: "https://picsum.photos/seed/cs-youtube/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://www.youtube.com/@NatalieBrunell",
             tag: "Video",
             tagClass: "tag-video"
@@ -979,7 +1074,11 @@
           {
             name: "Apple Podcasts",
             desc: "Subscribe on Apple Podcasts",
+<<<<<<< HEAD
             img: "img/applepodcast.png",
+=======
+            img: "https://picsum.photos/seed/cs-apple/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://podcasts.apple.com/us/podcast/coin-stories/id1652887276",
             tag: "Podcast",
             tagClass: "tag-podcast"
@@ -987,7 +1086,11 @@
           {
             name: "Spotify",
             desc: "Listen on Spotify",
+<<<<<<< HEAD
             img: "img/spotifylogo.png",
+=======
+            img: "https://picsum.photos/seed/cs-spotify/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://open.spotify.com/show/5qPZ2iE9LpHbZj8g0UuB0R",
             tag: "Podcast",
             tagClass: "tag-podcast"
@@ -995,11 +1098,27 @@
           {
             name: "Rumble",
             desc: "Watch on Rumble — censorship-free",
+<<<<<<< HEAD
             img: "img/rumblelogo.jpg",
             url: "https://rumble.com/c/NatBrunell",
             tag: "Video",
             tagClass: "tag-video"
           },
+=======
+            img: "https://picsum.photos/seed/cs-rumble/88/88.jpg",
+            url: "https://rumble.com/c/CoinStories",
+            tag: "Video",
+            tagClass: "tag-video"
+          },
+          {
+            name: "Google Podcasts",
+            desc: "Available on Google Podcasts",
+            img: "https://picsum.photos/seed/cs-google/88/88.jpg",
+            url: "https://podcasts.google.com/feed/1652887276",
+            tag: "Podcast",
+            tagClass: "tag-podcast"
+          }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
         ]
       },
       {
@@ -1008,7 +1127,11 @@
           {
             name: "The Bitcoin Whitepaper",
             desc: "Satoshi Nakamoto's original 2008 paper",
+<<<<<<< HEAD
             img: "img/pdf.png",
+=======
+            img: "https://picsum.photos/seed/bitcoin-whitepaper/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://bitcoin.org/bitcoin.pdf",
             tag: "Paper",
             tagClass: "tag-paper"
@@ -1016,25 +1139,58 @@
           {
             name: "The Bitcoin Standard",
             desc: "Saifedean Ammous — essential reading",
+<<<<<<< HEAD
             img: "img/book.png",
             url: "https://www.amazon.com/Bitcoin-Standard-Decentralized-Alternative-Central/dp/1119473861",
+=======
+            img: "https://picsum.photos/seed/bitcoin-standard/88/88.jpg",
+            url: "https://www.amazon.com/Bitcoin-Standard-Decentralized-Alternative-Central/dp/1119470360",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             tag: "Book",
             tagClass: "tag-book"
           },
           {
             name: "Bitcoin.org",
             desc: "Official Bitcoin open-source project",
+<<<<<<< HEAD
             img: "img/btc.png",
+=======
+            img: "https://picsum.photos/seed/bitcoin-org/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://bitcoin.org/",
             tag: "Website",
             tagClass: "tag-website"
           },
+<<<<<<< HEAD
           
           {
             name: "Bitcoin Layers",
             desc: "Understanding Lightning and L2 scaling",
             img: "img/bitcoinlayers.png",
             url: "https://www.bitcoinlayers.org/",
+=======
+          {
+            name: "Stack Sats Guide",
+            desc: "How to start stacking Bitcoin gradually",
+            img: "https://picsum.photos/seed/stack-sats/88/88.jpg",
+            url: "https://river.com/learn/what-is-stacking-sats/",
+            tag: "Guide",
+            tagClass: "tag-guide"
+          },
+          {
+            name: "Cold Storage Basics",
+            desc: "Self-custody and hardware wallet setup",
+            img: "https://picsum.photos/seed/cold-storage/88/88.jpg",
+            url: "https://river.com/learn/cold-storage/",
+            tag: "Guide",
+            tagClass: "tag-guide"
+          },
+          {
+            name: "Bitcoin Layers",
+            desc: "Understanding Lightning and L2 scaling",
+            img: "https://picsum.photos/seed/bitcoin-layers/88/88.jpg",
+            url: "https://bitcoinlayers.net/",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             tag: "Website",
             tagClass: "tag-website"
           }
@@ -1046,7 +1202,11 @@
           {
             name: "River Learning Center",
             desc: "In-depth Bitcoin education articles",
+<<<<<<< HEAD
             img: "img/riverlearn.jpg",
+=======
+            img: "/creators/img/riverlearn.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://river.com/learn/",
             tag: "Education",
             tagClass: "tag-education"
@@ -1054,7 +1214,11 @@
           {
             name: "Swan Bitcoin",
             desc: "Bitcoin savings plan — stack automatically",
+<<<<<<< HEAD
             img: "img/swanbitcoin.png",
+=======
+            img: "https://picsum.photos/seed/swan-btc/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://www.swanbitcoin.com/",
             tag: "Platform",
             tagClass: "tag-platform"
@@ -1062,19 +1226,40 @@
           {
             name: "Mempool.space",
             desc: "Real-time Bitcoin blockchain explorer",
+<<<<<<< HEAD
             img: "img/mempool.png",
+=======
+            img: "https://picsum.photos/seed/mempool-space/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://mempool.space/",
             tag: "Explorer",
             tagClass: "tag-explorer"
           },
           {
+<<<<<<< HEAD
             name: "Bitcoin Magazine Pro",
             desc: "get clarity about Bitcoin using data analytics you can't get anywhere else.",
             img: "img/btcmagazine.png",
+=======
+            name: "LookIntoBitcoin",
+            desc: "On-chain metrics and live charts",
+            img: "https://picsum.photos/seed/lookinto-btc/88/88.jpg",
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
             url: "https://lookintobitcoin.com/",
             tag: "Charts",
             tagClass: "tag-charts"
           },
+<<<<<<< HEAD
+=======
+          {
+            name: "Fiat Ruins Everything",
+            desc: "Michael Malice & Natalie — Bitcoin podcast",
+            img: "https://picsum.photos/seed/fiat-ruins/88/88.jpg",
+            url: "https://www.youtube.com/@FiatRuinsEverything",
+            tag: "Show",
+            tagClass: "tag-show"
+          }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
         ]
       }
     ];
@@ -1205,6 +1390,7 @@
     }
 
     generateUI();
+<<<<<<< HEAD
 
     /* ============================================================
        CUSTOM VIDEO PLAYER — iframe injected on click only
@@ -1242,3 +1428,8 @@
   </script>
 </body>
 </html>
+=======
+  </script>
+</body>
+</html>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c

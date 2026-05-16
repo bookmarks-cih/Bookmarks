@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+<<<<<<< HEAD
+=======
+<script src="/zoom.js"></script>
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 <meta charset="UTF-8">
 <title>Jobs - Bookmarks</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Curated job board featuring remote opportunities, tech positions, and career resources.">
+<<<<<<< HEAD
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -193,10 +198,176 @@ a { color: inherit; text-decoration: none; }
 /* =============================================================================
    HEADER
 ============================================================================= */
+=======
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --brand: #0c84f3;
+  --brand-dark: #0066d9;
+  --brand-light: #53b5ff;
+  --brand-soft: rgba(12,132,243,0.12);
+  --brand-glow: rgba(12,132,243,0.2);
+  
+  --bg: #07111f;
+  --bg-2: #0b1628;
+  --surface: rgba(255,255,255,0.06);
+  --surface-2: rgba(255,255,255,0.08);
+  --surface-3: rgba(255,255,255,0.12);
+  --surface-hover: rgba(255,255,255,0.1);
+  
+  --text: #f7fbff;
+  --text-soft: rgba(247,251,255,0.78);
+  --text-dim: rgba(247,251,255,0.56);
+  
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --shadow: 0 20px 60px rgba(0,0,0,0.35);
+  
+  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  --glass-border: rgba(255,255,255,0.1);
+  --noise-opacity: 0.06;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-2: #ffffff;
+  --surface: rgba(0,0,0,0.03);
+  --surface-2: rgba(0,0,0,0.05);
+  --surface-3: rgba(0,0,0,0.08);
+  --surface-hover: rgba(0,0,0,0.05);
+  
+  --text: #0f172a;
+  --text-soft: #475569;
+  --text-dim: #94a3b8;
+  
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.12);
+  --shadow: 0 10px 40px rgba(0,0,0,0.05);
+  
+  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  --glass-border: rgba(0,0,0,0.08);
+  --noise-opacity: 0.03;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+.noise {
+  position: fixed; inset: 0; pointer-events: none; opacity: var(--noise-opacity); z-index: 1;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0.6px, transparent 0.8px),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0.6px, transparent 0.8px);
+  background-size: 24px 24px, 36px 36px;
+}
+
+[data-theme="light"] .noise {
+   background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.08) 0.6px, transparent 0.8px);
+}
+
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+
+[data-theme="light"] .ambient-orb {
+  opacity: 0.2;
+  filter: blur(100px);
+}
+
+.orb-1 {
+  width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
+  background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+  top: -20%; left: -10%; animation-delay: 0s;
+}
+.orb-2 {
+  width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  bottom: -10%; right: -10%; animation-delay: -7s; animation-duration: 25s;
+}
+.orb-3 {
+  width: 40vw; height: 40vw; max-width: 500px; max-height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+  top: 40%; left: 40%; animation-delay: -14s; animation-duration: 30s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(5%, 10%) scale(1.05); }
+  50% { transform: translate(-5%, 5%) scale(0.95); }
+  75% { transform: translate(10%, -5%) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.tracer {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  height: 1px; width: 200%; left: -50%;
+  animation: driftTracer 15s linear infinite;
+  transform-origin: center;
+}
+
+[data-theme="light"] .tracer {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+}
+
+.tracer-1 { top: 20%; transform: rotate(-15deg); animation-delay: 0s; opacity: 0.6; }
+.tracer-2 { top: 50%; transform: rotate(10deg); animation-delay: -5s; animation-duration: 20s; opacity: 0.4; }
+.tracer-3 { top: 80%; transform: rotate(-5deg); animation-delay: -10s; animation-duration: 25s; opacity: 0.5; }
+.tracer-4 { top: 35%; transform: rotate(25deg); animation-delay: -3s; animation-duration: 18s; opacity: 0.3; }
+
+@keyframes driftTracer {
+  0% { transform: translateX(-25%) rotate(inherit); }
+  100% { transform: translateX(25%) rotate(inherit); }
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  min-height: 100vh;
+}
+
+/* Header */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
+<<<<<<< HEAD
   width: 100%;
   left: 0;
   padding: 0;
@@ -208,11 +379,25 @@ a { color: inherit; text-decoration: none; }
 }
 
 [data-theme="light"] .header { background: rgba(248,250,252,0.88); }
+=======
+  padding: 18px 0;
+  margin-bottom: 32px;
+  backdrop-filter: blur(14px); 
+  -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(to bottom, rgba(5,11,20,0.85), rgba(5,11,20,0.4), transparent);
+  border-bottom: 1px solid transparent;
+}
+
+[data-theme="light"] .header {
+   background: linear-gradient(to bottom, rgba(248,250,252,0.9), rgba(248,250,252,0.4), transparent);
+}
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+<<<<<<< HEAD
   gap: 12px;
   width: 100%;
   max-width: var(--max);
@@ -220,6 +405,9 @@ a { color: inherit; text-decoration: none; }
   padding: 0 28px;
   height: 72px;
   flex-wrap: nowrap;
+=======
+  gap: 16px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 }
 
 .logo-section {
@@ -228,6 +416,7 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
   text-decoration: none;
   color: inherit;
+<<<<<<< HEAD
   flex-shrink: 0;
 }
 
@@ -272,10 +461,91 @@ a { color: inherit; text-decoration: none; }
   width: 52px; height: 28px;
   background: var(--c-surface);
   border: 1px solid var(--c-border);
+=======
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: transform 0.3s ease;
+  box-shadow: 0 12px 30px rgba(12,132,243,0.24);
+}
+
+.logo-icon:hover { transform: rotate(-5deg) scale(1.05); }
+
+.logo-icon svg { width: 20px; height: 20px; }
+
+.logo-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.logo-text span { color: var(--brand-light); }
+
+.nav { display: none; align-items: center; gap: 22px; }
+.nav-link {
+  color: var(--text-soft); text-decoration: none; font-weight: 500; font-size: 0.85rem;
+  transition: all 0.2s ease; position: relative; padding: 4px 0;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--brand-light); transition: width 0.3s ease;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--brand-light); }
+.nav-link.active::after { width: 100%; }
+
+@media (min-width: 768px) {
+  .nav { display: flex; }
+}
+
+.header-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+/* Clock */
+.clock {
+  text-align: right;
+  font-family: "Space Grotesk", sans-serif;
+  margin-right: 16px;
+}
+
+.clock-time {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-light);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.clock-date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
+<<<<<<< HEAD
   flex-shrink: 0;
 }
 
@@ -292,10 +562,30 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(79,158,255,0.3);
+=======
+}
+
+.theme-toggle:hover { border-color: var(--brand); }
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   z-index: 2;
 }
 
 .theme-toggle-knob svg { width: 11px; height: 11px; color: white; }
+<<<<<<< HEAD
 [data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
 
 .header-actions {
@@ -305,10 +595,19 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 
+=======
+
+[data-theme="light"] .theme-toggle-knob { transform: translateX(24px); }
+
+.header-actions { display: flex; align-items: center; gap: 10px; }
+
+/* Social Link */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .header-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   width: 36px; height: 36px;
   border-radius: 8px;
   border: 1px solid var(--c-border);
@@ -347,11 +646,51 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--c-border2);
   border-radius: var(--r-lg);
+=======
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--text-soft);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.header-social-link:hover { background: var(--surface); color: var(--text); }
+.header-social-link svg { width: 18px; height: 18px; }
+
+/* Hamburger Button */
+.hamburger-btn {
+  display: flex;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-soft);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.hamburger-btn:hover { color: var(--brand-light); background: var(--surface); }
+
+.hamburger-btn svg { width: 20px; height: 20px; }
+
+/* Hamburger Menu */
+.hamburger-menu {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   padding: 20px;
   box-shadow: var(--shadow);
   z-index: 100;
   opacity: 0;
   visibility: hidden;
+<<<<<<< HEAD
   transform: translateY(-10px);
   transition: all 0.3s var(--ease-out);
   max-width: 320px;
@@ -361,12 +700,23 @@ a { color: inherit; text-decoration: none; }
 }
 
 [data-theme="light"] .hamburger-menu { background: rgba(248,250,252,0.95); }
+=======
+  transition: all 0.3s ease;
+  max-width: 320px;
+  width: 100%;
+}
+
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .hamburger-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
 .hamburger-menu-overlay {
   position: fixed;
   inset: 0;
+<<<<<<< HEAD
   background: rgba(0,0,0,0.5);
+=======
+  background: rgba(0, 0, 0, 0.3);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   z-index: 99;
   opacity: 0;
   visibility: hidden;
@@ -381,6 +731,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 16px;
+<<<<<<< HEAD
   border-bottom: 1px solid var(--c-border);
 }
 
@@ -395,11 +746,29 @@ a { color: inherit; text-decoration: none; }
   width: 32px; height: 32px;
   background: var(--c-surface);
   border: 1px solid var(--c-border);
+=======
+  border-bottom: 1px solid var(--border);
+}
+
+.hamburger-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hamburger-close {
+  width: 32px;
+  height: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+<<<<<<< HEAD
   transition: all 0.25s ease;
   color: var(--c-muted);
 }
@@ -408,11 +777,22 @@ a { color: inherit; text-decoration: none; }
 .hamburger-close svg { width: 16px; height: 16px; }
 
 .hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+=======
+  transition: all 0.3s ease;
+  color: var(--text-soft);
+}
+
+.hamburger-close:hover { background: var(--brand); border-color: var(--brand); color: white; }
+.hamburger-close svg { width: 16px; height: 16px; }
+
+.hamburger-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .hamburger-item {
   display: flex;
   align-items: center;
   gap: 14px;
+<<<<<<< HEAD
   padding: 12px 14px;
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
@@ -420,10 +800,20 @@ a { color: inherit; text-decoration: none; }
   text-decoration: none;
   color: var(--c-text);
   transition: all 0.25s var(--ease-out);
+=======
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   position: relative;
   overflow: hidden;
 }
 
+<<<<<<< HEAD
 .hamburger-item:hover { border-color: rgba(79,158,255,0.35); transform: translateY(-2px); background: var(--c-surface2); }
 
 .hamburger-icon {
@@ -431,10 +821,30 @@ a { color: inherit; text-decoration: none; }
   background: rgba(79,158,255,0.1);
   border: 1px solid rgba(79,158,255,0.2);
   border-radius: var(--r-sm);
+=======
+.hamburger-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(12, 132, 243, 0.08), rgba(12, 132, 243, 0.02));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hamburger-item:hover { border-color: var(--brand); transform: translateY(-2px); }
+.hamburger-item:hover::before { opacity: 1; }
+
+.hamburger-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-radius: 10px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+<<<<<<< HEAD
   color: var(--c-accent);
   transition: all 0.3s var(--ease-spring);
 }
@@ -488,6 +898,39 @@ a { color: inherit; text-decoration: none; }
    SEARCH
 ============================================================================= */
 .search-section { margin-bottom: 24px; }
+=======
+  color: white;
+  box-shadow: 0 4px 12px var(--brand-glow);
+}
+
+.hamburger-icon svg { width: 20px; height: 20px; }
+
+.hamburger-content { flex: 1; position: relative; z-index: 1; }
+
+.hamburger-item-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.hamburger-item-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+/* Hero */
+.hero { text-align: center; margin-bottom: 40px; padding-top: 20px; }
+.hero-label {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--brand-light); margin-bottom: 20px; padding: 8px 16px;
+  background: var(--brand-soft); border: 1px solid rgba(83,181,255,0.15); border-radius: 50px;
+}
+.hero h1 { font-family: "Space Grotesk", sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; color: var(--text); }
+.hero-subtitle { font-size: 1.05rem; color: var(--text-soft); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+/* Search Section */
+.search-section { margin-bottom: 28px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .search-wrapper {
   position: relative;
@@ -495,6 +938,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
   border-radius: var(--r-md);
@@ -502,16 +946,41 @@ a { color: inherit; text-decoration: none; }
   transition: all 0.3s ease;
   box-shadow: var(--shadow);
   backdrop-filter: blur(20px);
+=======
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px); 
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   -webkit-backdrop-filter: blur(20px);
 }
 
 .search-wrapper:focus-within {
+<<<<<<< HEAD
   border-color: rgba(79,158,255,0.4);
   box-shadow: 0 0 0 3px rgba(79,158,255,0.08), var(--shadow);
 }
 
 .search-icon { width: 16px; height: 16px; color: var(--c-dim); flex-shrink: 0; transition: color 0.3s ease; }
 .search-wrapper:focus-within .search-icon { color: var(--c-accent); }
+=======
+  border-color: rgba(83,181,255,0.4);
+  box-shadow: 0 0 0 3px var(--brand-soft), var(--shadow);
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.search-wrapper:focus-within .search-icon { color: var(--brand-light); }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .search-input {
   flex: 1;
@@ -519,6 +988,7 @@ a { color: inherit; text-decoration: none; }
   border: none;
   padding: 14px 14px;
   font-size: 0.9rem;
+<<<<<<< HEAD
   color: var(--c-text);
   outline: none;
   min-width: 0;
@@ -531,12 +1001,28 @@ a { color: inherit; text-decoration: none; }
 /* =============================================================================
    CATEGORIES
 ============================================================================= */
+=======
+  color: var(--text);
+  outline: none;
+  min-width: 0;
+  font-family: inherit;
+  width: 100%;
+}
+
+.search-input::placeholder { color: var(--text-dim); }
+
+/* Category Pills */
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 .categories {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   justify-content: center;
+<<<<<<< HEAD
   margin-bottom: 20px;
+=======
+  margin-bottom: 24px;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 }
 
 .category-pill {
@@ -544,6 +1030,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
+<<<<<<< HEAD
   background: var(--c-surface);
   border: 1px solid var(--c-border2);
   border-radius: 99px;
@@ -602,6 +1089,58 @@ a { color: inherit; text-decoration: none; }
   padding: 20px;
   cursor: pointer;
   transition: all 0.3s var(--ease-out);
+=======
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  backdrop-filter: blur(10px);
+}
+
+.category-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.category-pill.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-color: transparent;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px var(--brand-glow);
+}
+
+/* Resource Count */
+.resource-count { text-align: center; color: var(--text-dim); margin-bottom: 24px; font-size: 0.85rem; }
+.resource-count span { color: var(--brand-light); font-weight: 600; }
+
+/* Bookmarks Grid */
+.bookmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+/* Bookmark Card */
+.bookmark-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -610,12 +1149,16 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow);
+<<<<<<< HEAD
   will-change: transform;
+=======
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 }
 
 .bookmark-card::before {
   content: '';
   position: absolute;
+<<<<<<< HEAD
   top: 0; left: 0; right: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
@@ -634,6 +1177,38 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--c-text);
+=======
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-light), var(--brand-dark));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.bookmark-card:hover {
+  border-color: rgba(83,181,255,0.4);
+  transform: translateY(-3px);
+}
+
+.bookmark-card:hover::before { transform: scaleX(1); }
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -643,16 +1218,27 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.2s ease;
 }
 
+<<<<<<< HEAD
 .bookmark-card:hover .card-title { color: var(--c-accent); }
 
 .card-arrow {
   width: 16px; height: 16px;
   color: var(--c-dim);
   transition: transform 0.3s var(--ease-spring), opacity 0.3s ease;
+=======
+.bookmark-card:hover .card-title { color: var(--brand-light); }
+
+.card-arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  transition: all 0.3s ease;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   flex-shrink: 0;
   margin-top: 2px;
   opacity: 0;
   transform: translate(-4px, 4px);
+<<<<<<< HEAD
   will-change: transform, opacity;
 }
 
@@ -662,6 +1248,20 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.82rem;
   color: var(--c-muted);
   line-height: 1.65;
+=======
+}
+
+.bookmark-card:hover .card-arrow {
+  transform: translate(2px, -2px);
+  color: var(--brand-light);
+  opacity: 1;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   margin-bottom: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -675,7 +1275,11 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   padding-top: 12px;
+<<<<<<< HEAD
   border-top: 1px solid var(--c-border);
+=======
+  border-top: 1px solid var(--border);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   margin-top: auto;
   gap: 10px;
 }
@@ -684,6 +1288,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
+<<<<<<< HEAD
   font-size: 0.62rem;
   font-weight: 600;
   color: var(--c-dim);
@@ -700,6 +1305,30 @@ a { color: inherit; text-decoration: none; }
 .card-domain {
   font-size: 0.7rem;
   color: var(--c-dim);
+=======
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-category::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--brand-light);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-domain {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -707,6 +1336,7 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 1;
   max-width: 50%;
   transition: color 0.2s ease;
+<<<<<<< HEAD
 }
 
 .bookmark-card:hover .card-domain { color: var(--c-muted); }
@@ -735,6 +1365,103 @@ a { color: inherit; text-decoration: none; }
    ANIMATIONS
 ============================================================================= */
 @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+=======
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.bookmark-card:hover .card-domain { color: var(--text-soft); }
+
+/* Footer */
+        .footer { padding: clamp(22px, 3vw, 30px) 0 clamp(24px, 3.8vw, 34px); border-top: 1px solid var(--border); margin-top: clamp(36px, 5vw, 56px); }
+    .footer .container {
+      min-height: auto;
+      width: min(100% - clamp(36px, 6vw, 88px), calc(var(--max-width) - clamp(28px, 4vw, 72px)));
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .footer-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) auto auto; align-items: center; gap: 16px 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
+    .footer-brand span { display: block; }
+    
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-link { padding: 10px 14px; border-radius: 999px; color: var(--text-dim); transition: 0.25s ease; font-size: 0.88rem; text-decoration: none; }
+    .footer-link:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); display: inline-block; margin-right: 8px; }
+    .footer-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; justify-self: end; }
+    .footer-status-meta { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+
+.footer-version {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  padding: 4px 10px;
+  background: var(--surface);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+}
+
+/* Desktop - show hamburger elements */
+@media (min-width: 769px) {
+  .hamburger-btn { display: flex; }
+  .hamburger-menu { display: block; }
+  .hamburger-menu-overlay { display: block; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  .header { padding: 14px 0; margin-bottom: 24px; }
+  .logo-text { font-size: 1.2rem; }
+  .clock { display: none; }
+  
+  .hamburger-menu {
+    top: 70px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    width: auto;
+    padding: 16px;
+  }
+  
+  .hamburger-grid { grid-template-columns: 1fr; gap: 8px; }
+  .hamburger-item { padding: 12px 14px; }
+  .hamburger-icon { width: 38px; height: 38px; }
+  .hamburger-icon svg { width: 18px; height: 18px; }
+  .hamburger-item-title { font-size: 0.9rem; }
+  .hamburger-item-desc { font-size: 0.7rem; }
+  
+  .bookmarks-grid { grid-template-columns: 1fr; gap: 10px; }
+  
+    .footer .container { width: min(100% - 24px, var(--max-width)); }
+    .footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; }
+  .footer-right { align-items: center; }
+  .footer-brand { justify-content: center; }
+  .footer-status { align-items: center; justify-self: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+  .card-arrow { opacity: 1; }
+  
+  .categories {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+  }
+  
+  .categories::-webkit-scrollbar { display: none; }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 
 .bookmark-card { animation: fadeSlideIn 0.4s ease backwards; }
 .bookmark-card:nth-child(1) { animation-delay: 0s; }
@@ -747,6 +1474,7 @@ a { color: inherit; text-decoration: none; }
 .bookmark-card:nth-child(8) { animation-delay: 0.21s; }
 
 @media (prefers-reduced-motion: reduce) {
+<<<<<<< HEAD
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -770,10 +1498,21 @@ a { color: inherit; text-decoration: none; }
   .categories::-webkit-scrollbar { display: none; }
   .container { padding: 16px; }
 }
+=======
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
 </style>
 </head>
 <body>
 
+<<<<<<< HEAD
 <!-- Loader -->
 <div class="loader" id="loader">
   <div class="loader-ring"></div>
@@ -920,6 +1659,174 @@ a { color: inherit; text-decoration: none; }
 
 <div class="container">
 
+=======
+<div class="noise"></div>
+
+<div class="bg-ambient">
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+  
+  <div class="tracer tracer-1"></div>
+  <div class="tracer tracer-2"></div>
+  <div class="tracer tracer-3"></div>
+  <div class="tracer tracer-4"></div>
+</div>
+
+<div class="container">
+  
+  <header class="header">
+    <div class="header-inner">
+<a href="hub.html" class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">Book<span>marks</span></div>
+      </a>
+      
+      <div class="header-actions">
+        <a href="https://x.com/bookmarksfr" class="header-social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <div class="clock">
+          <div class="clock-time" id="clock-time">--:--</div>
+          <div class="clock-date" id="clock-date">...</div>
+        </div>
+        <div class="theme-toggle" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle theme">
+          <div class="theme-toggle-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </div>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hamburger-menu-overlay" id="hamburger-overlay"></div>
+  <div class="hamburger-menu" id="hamburger-menu">
+    <div class="hamburger-header">
+      <div class="hamburger-title">Quick Access</div>
+      <button class="hamburger-close" id="hamburger-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hamburger-grid">
+      <a href="docs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Docs</div>
+          <div class="hamburger-item-desc">Documentation & Resources</div>
+        </div>
+      </a>
+      <a href="files.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Files</div>
+          <div class="hamburger-item-desc">Downloads & Software</div>
+        </div>
+      </a>
+      <a href="jobs.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Jobs</div>
+          <div class="hamburger-item-desc">Career Opportunities</div>
+        </div>
+      </a>
+      <a href="creators.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Creators</div>
+            <div class="hamburger-item-desc">Curated profiles</div>
+        </div>
+      </a>
+      <a href="news.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/>
+            <path d="M18 14h-8"/>
+            <path d="M15 18h-5"/>
+            <path d="M10 6h8v4h-8V6Z"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">News</div>
+          <div class="hamburger-item-desc">Latest Updates</div>
+        </div>
+      </a>
+      
+      
+      <a href="privacy.html" class="hamburger-item">
+  <div class="hamburger-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  </div>
+  <div class="hamburger-content">
+    <div class="hamburger-item-title">Privacy</div>
+    <div class="hamburger-item-desc">Privacy Policy</div>
+  </div>
+</a>
+      
+      <a href="terms.html" class="hamburger-item">
+        <div class="hamburger-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="hamburger-content">
+          <div class="hamburger-item-title">Terms</div>
+          <div class="hamburger-item-desc">Terms of Service</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   <section class="hero">
     <span class="hero-label">Career Opportunities</span>
     <h1>Curated Job Board</h1>
@@ -928,6 +1835,10 @@ a { color: inherit; text-decoration: none; }
     </p>
   </section>
 
+<<<<<<< HEAD
+=======
+  <!-- Search Section -->
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   <section class="search-section">
     <div class="search-wrapper">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -938,12 +1849,20 @@ a { color: inherit; text-decoration: none; }
     </div>
   </section>
 
+<<<<<<< HEAD
   <section class="categories" id="filter-container"></section>
 
+=======
+  <!-- Filter Section -->
+  <section class="categories" id="filter-container"></section>
+
+  <!-- Resource Count -->
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
   <div class="resource-count">
     <span id="resource-count">Loading...</span> opportunities found
   </div>
 
+<<<<<<< HEAD
   <main class="bookmarks-grid" id="docs-grid"></main>
 
   <footer class="footer">
@@ -1083,3 +2002,367 @@ window.addEventListener('load', () => {
 <script src="scripts/jobs-app.js" defer></script>
 </body>
 </html>
+=======
+  <!-- Job Grid -->
+  <main class="bookmarks-grid" id="docs-grid"></main>
+
+  <!-- Footer -->
+      <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-mark" style="width:34px;height:34px;border-radius:10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span>Bookmarks — Curated internet, structured with intent.</span>
+        </div>
+
+        <div class="footer-links">
+          <a class="footer-link" href="news.html">News</a>
+          <a class="footer-link" href="terms.html">Terms</a>
+          <a class="footer-link" href="privacy.html">Privacy</a>
+          <a class="footer-link" href="index.html#contact">Contact</a>
+          <a class="footer-link" href="https://github.com/bookmarks-cih" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        
+        <div class="footer-status">
+           <div class="footer-status-meta">
+             <span class="status-dot"></span> All systems operational
+           </div>
+           <span style="font-size: 0.7rem; color: var(--text-dim); font-family: 'Space Grotesk';">v3.2</span>
+        </div>
+      </div>
+    </footer>
+
+</div>
+
+<script>
+  // Hamburger menu elements
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const hamburgerMenu = document.getElementById('hamburger-menu');
+  const hamburgerOverlay = document.getElementById('hamburger-overlay');
+  const hamburgerClose = document.getElementById('hamburger-close');
+
+  function showHamburgerMenu() {
+    hamburgerMenu.classList.add('show');
+    hamburgerOverlay.classList.add('show');
+  }
+
+  function hideHamburgerMenu() {
+    hamburgerMenu.classList.remove('show');
+    hamburgerOverlay.classList.remove('show');
+  }
+
+  hamburgerBtn.addEventListener('click', showHamburgerMenu);
+  hamburgerClose.addEventListener('click', hideHamburgerMenu);
+  hamburgerOverlay.addEventListener('click', hideHamburgerMenu);
+
+  const docsData = [
+    { name: "Google Careers", link: "https://careers.google.com", desc: "Build awesome products and improve billions of lives.", cat: "Tech Giants" },
+    { name: "Microsoft Careers", link: "https://careers.microsoft.com", desc: "Come as you are, do what you love. Explore global opportunities.", cat: "Tech Giants" },
+    { name: "Apple Jobs", link: "https://jobs.apple.com", desc: "Join Apple and work on products that change the world.", cat: "Tech Giants" },
+    { name: "Amazon Jobs", link: "https://www.amazon.jobs", desc: "Find your next big career opportunity at Amazon.", cat: "Tech Giants" },
+    { name: "Meta Careers", link: "https://www.metacareers.com", desc: "Build technologies that help people connect and find community.", cat: "Tech Giants" },
+    { name: "Adobe Careers", link: "https://www.adobe.com/careers.html", desc: "Change the world through digital experiences.", cat: "Tech Giants" },
+    { name: "Netflix Jobs", link: "https://jobs.netflix.com", desc: "A great workplace combines exceptional colleagues and hard problems.", cat: "Tech Giants" },
+    { name: "Spotify Jobs", link: "https://www.lifeatspotify.com", desc: "Join the band and help shape the future of audio.", cat: "Tech Giants" },
+    { name: "NVIDIA Careers", link: "https://www.nvidia.com/en-us/about-nvidia/careers/", desc: "Work on the forefront of AI, computing, and graphics.", cat: "Tech Giants" },
+    { name: "Salesforce Careers", link: "https://www.salesforce.com/company/careers/", desc: "Success from anywhere. Join the Salesforce Ohana.", cat: "Tech Giants" },
+    { name: "IBM Careers", link: "https://www.ibm.com/careers", desc: "Start your journey with a technology leader.", cat: "Tech Giants" },
+    { name: "Intel Careers", link: "https://jobs.intel.com", desc: "Create the future of technology.", cat: "Tech Giants" },
+    { name: "Tesla Careers", link: "https://www.tesla.com/careers", desc: "Help accelerate the world's transition to sustainable energy.", cat: "Tech Giants" },
+    { name: "SpaceX Careers", link: "https://www.spacex.com/careers", desc: "Build the future of space exploration and multiplanetary life.", cat: "Tech Giants" },
+    { name: "OpenAI Careers", link: "https://openai.com/careers", desc: "Advance safe AGI and shape the future of intelligence.", cat: "Tech Giants" },
+    { name: "Stripe Careers", link: "https://stripe.com/jobs", desc: "Build economic infrastructure for the internet.", cat: "Tech Giants" },
+    { name: "Airbnb Careers", link: "https://careers.airbnb.com", desc: "Create a world where anyone can belong anywhere.", cat: "Tech Giants" },
+    { name: "Uber Careers", link: "https://www.uber.com/us/en/careers", desc: "Reimagine the way the world moves.", cat: "Tech Giants" },
+    { name: "Lyft Careers", link: "https://www.lyft.com/careers", desc: "Build the future of transportation and shared mobility.", cat: "Tech Giants" },
+    { name: "Snap Inc. Careers", link: "https://careers.snap.com", desc: "Empower people to express themselves and live in the moment.", cat: "Tech Giants" },
+    { name: "TikTok Careers", link: "https://careers.tiktok.com", desc: "Inspire creativity and bring joy to billions.", cat: "Tech Giants" },
+    { name: "ByteDance Careers", link: "https://jobs.bytedance.com", desc: "Build platforms that inform, educate, and entertain the world.", cat: "Tech Giants" },
+    { name: "Zoom Careers", link: "https://careers.zoom.us", desc: "Deliver happiness through seamless communication.", cat: "Tech Giants" },
+    { name: "Slack Careers", link: "https://slack.com/careers", desc: "Make work simpler, more pleasant, and more productive.", cat: "Tech Giants" },
+    { name: "Atlassian Careers", link: "https://www.atlassian.com/company/careers", desc: "Build tools that power the world's best teams.", cat: "Tech Giants" },
+    { name: "Shopify Careers", link: "https://www.shopify.com/careers", desc: "Make commerce better for everyone.", cat: "Tech Giants" },
+    { name: "GitHub Careers", link: "https://github.com/about/careers", desc: "Build the home for all developers.", cat: "Tech Giants" },
+    { name: "GitLab Careers", link: "https://about.gitlab.com/jobs", desc: "Help shape the future of open-source collaboration.", cat: "Tech Giants" },
+    { name: "Oracle Careers", link: "https://www.oracle.com/corporate/careers", desc: "Transform how the world uses data and cloud technology.", cat: "Tech Giants" },
+    { name: "SAP Careers", link: "https://jobs.sap.com", desc: "Help the world run better and improve people's lives.", cat: "Tech Giants" },
+    { name: "Siemens Careers", link: "https://jobs.siemens.com", desc: "Engineer the future of industry, energy, and automation.", cat: "Tech Giants" },
+    { name: "Sony Careers", link: "https://www.sonyjobs.com", desc: "Create technologies and entertainment that inspire the world.", cat: "Tech Giants" },
+    { name: "Samsung Careers", link: "https://careers.samsung.com", desc: "Shape the future with cutting-edge innovation.", cat: "Tech Giants" },
+    { name: "LG Careers", link: "https://careers.lg.com", desc: "Innovate for a better life worldwide.", cat: "Tech Giants" },
+    { name: "ASML Careers", link: "https://www.asml.com/en/careers", desc: "Push the limits of semiconductor technology.", cat: "Tech Giants" },
+    { name: "Philips Careers", link: "https://www.careers.philips.com", desc: "Improve billions of lives through health technology.", cat: "Tech Giants" },
+    { name: "Dell Careers", link: "https://jobs.dell.com", desc: "Drive human progress through technology.", cat: "Tech Giants" },
+    { name: "HP Careers", link: "https://jobs.hp.com", desc: "Reinvent the way the world creates and works.", cat: "Tech Giants" },
+    { name: "Lenovo Careers", link: "https://jobs.lenovo.com", desc: "Build smarter technology for all.", cat: "Tech Giants" },
+    { name: "Cisco Careers", link: "https://jobs.cisco.com", desc: "Power the internet and connect the world.", cat: "Tech Giants" },
+    { name: "Dropbox Careers", link: "https://www.dropbox.com/jobs", desc: "Design a more enlightened way of working.", cat: "Tech Giants" },
+    { name: "Twilio Careers", link: "https://www.twilio.com/company/jobs", desc: "Build the future of customer engagement.", cat: "Tech Giants" },
+    { name: "CIA Careers", link: "https://www.cia.gov/careers", desc: "Serve the nation. Protect the country. Utilize your unique skills.", cat: "Government" },
+    { name: "FBI Jobs", link: "https://www.fbijobs.gov", desc: "Become part of the Bureau. Special agents and professional staff.", cat: "Government" },
+    { name: "NSA Careers", link: "https://www.intelligencecareers.gov/nsa", desc: "National Security Agency career opportunities.", cat: "Government" },
+    { name: "USAJobs", link: "https://www.usajobs.gov", desc: "The official portal for U.S. Federal Government jobs.", cat: "Government" },
+    { name: "NASA Careers", link: "https://www.nasa.gov/careers", desc: "Explore the universe with the National Aeronautics and Space Administration.", cat: "Government" },
+    { name: "Department of Defense", link: "https://dod.usajobs.gov", desc: "Civilian careers in the Department of Defense.", cat: "Government" },
+    { name: "MI5 Careers (UK)", link: "https://www.mi5.gov.uk/careers", desc: "Protecting national security in the UK.", cat: "Government" },
+    { name: "GCHQ Careers", link: "https://www.gchq.careers", desc: "Intelligence and cyber security careers in the UK.", cat: "Government" },
+    { name: "United Nations Careers", link: "https://careers.un.org", desc: "Work for peace and security around the globe.", cat: "Government" },
+    { name: "ClearanceJobs", link: "https://www.clearancejobs.com", desc: "The leading job board for positions requiring security clearance.", cat: "Intel" },
+    { name: "Lockheed Martin Careers", link: "https://www.lockheedmartin.com/en-us/careers.html", desc: "Aerospace and defense career opportunities.", cat: "Intel" },
+    { name: "LinkedIn Jobs", link: "https://www.linkedin.com/jobs", desc: "The world's largest professional network for job seekers.", cat: "Aggregator" },
+    { name: "Indeed", link: "https://www.indeed.com", desc: "The world's #1 job site. Search millions of jobs online.", cat: "Aggregator" },
+    { name: "Glassdoor", link: "https://www.glassdoor.com", desc: "Search jobs, salaries, and company reviews.", cat: "Aggregator" },
+    { name: "Monster", link: "https://www.monster.com", desc: "Find the job that fits your life.", cat: "Aggregator" },
+    { name: "ZipRecruiter", link: "https://www.ziprecruiter.com", desc: "Hiring simplified. Job search made easy.", cat: "Aggregator" },
+    { name: "CareerBuilder", link: "https://www.careerbuilder.com", desc: "One of the largest online employment websites.", cat: "Aggregator" },
+    { name: "SimplyHired", link: "https://www.simplyhired.com", desc: "Job search engine and aggregator.", cat: "Aggregator" },
+    { name: "Wellfound (AngelList)", link: "https://wellfound.com", desc: "The best place to find startup jobs.", cat: "Aggregator" },
+    { name: "Dice", link: "https://www.dice.com", desc: "The career hub for tech professionals.", cat: "Aggregator" },
+    { name: "Hired", link: "https://hired.com", desc: "Tech marketplace where companies apply to you.", cat: "Aggregator" },
+    { name: "Snagajob", link: "https://www.snagajob.com", desc: "Find hourly jobs and employment opportunities.", cat: "Aggregator" },
+    { name: "Otta", link: "https://otta.com", desc: "Curated job search for the world's best tech companies.", cat: "Aggregator" },
+    { name: "McDonald's Careers", link: "https://corporate.mcdonalds.com/corpmcd/careers.html", desc: "Join the team and start a fulfilling career.", cat: "Corporate" },
+    { name: "Starbucks Careers", link: "https://careers.starbucks.com", desc: "To be a partner is to be yourself.", cat: "Corporate" },
+    { name: "Walmart Careers", link: "https://careers.walmart.com", desc: "Find hourly and management jobs at Walmart.", cat: "Corporate" },
+    { name: "Target Careers", link: "https://jobs.target.com", desc: "Belong. Grow. Thrive. Join the Target team.", cat: "Corporate" },
+    { name: "The Walt Disney Company", link: "https://jobs.disneycareers.com", desc: "Create the magic. Be part of the legacy.", cat: "Corporate" },
+    { name: "Nike Careers", link: "https://jobs.nike.com", desc: "If you have a body, you are an athlete.", cat: "Corporate" },
+    { name: "Coca-Cola Careers", link: "https://careers.ko.com", desc: "Refresh the world. Make a difference.", cat: "Corporate" },
+    { name: "Ford Careers", link: "https://fordcareers.co", desc: "Building a better world through mobility.", cat: "Corporate" },
+    { name: "Goldman Sachs Careers", link: "https://www.goldmansachs.com/careers/", desc: "Explore opportunities in financial services.", cat: "Corporate" },
+    { name: "JPMorgan Chase Careers", link: "https://careers.jpmorgan.com", desc: "Make a difference with a global financial leader.", cat: "Corporate" },
+    { name: "Procter & Gamble", link: "https://www.pgcareers.com", desc: "Be a part of a company that improves everyday life.", cat: "Corporate" },
+    { name: "RemoteOK", link: "https://remoteok.com", desc: "The largest remote work community in the world.", cat: "Remote" },
+    { name: "We Work Remotely", link: "https://weworkremotely.com", desc: "The largest remote work community.", cat: "Remote" },
+    { name: "FlexJobs", link: "https://www.flexjobs.com", desc: "The best jobs for remote, work from home, and flexible jobs.", cat: "Remote" },
+    { name: "Upwork", link: "https://www.upwork.com", desc: "Freelance jobs and gigs for professionals.", cat: "Remote" },
+    { name: "Fiverr", link: "https://www.fiverr.com", desc: "Freelance services marketplace for the lean entrepreneur.", cat: "Remote" },
+    { name: "Toptal", link: "https://www.toptal.com/careers", desc: "Exclusive network of top freelance talent.", cat: "Remote" },
+    { name: "Working Nomads", link: "https://www.workingnomads.com", desc: "Remote jobs for digital working nomads.", cat: "Remote" },
+    { name: "Jobspresso", link: "https://jobspresso.co", desc: "High-quality remote jobs from top companies.", cat: "Remote" },
+    { name: "Gun.io", link: "https://gun.io", desc: "Elite freelance software developer jobs.", cat: "Remote" },
+    { name: "Turing", link: "https://www.turing.com", desc: "Remote software developer jobs with US companies.", cat: "Remote" },
+    { name: "80,000 Hours", link: "https://80000hours.org", desc: "Career advice on how to make a difference with your career (Effective Altruism).", cat: "Niche" },
+    { name: "Climatebase", link: "https://climatebase.org", desc: "The leading platform for climate tech jobs and talent.", cat: "Niche" },
+    { name: "CryptoJobs", link: "https://crypto.jobs", desc: "The #1 source for blockchain and cryptocurrency jobs.", cat: "Web3" },
+    { name: "Web3.career", link: "https://web3.career", desc: "Remote Web3, Solidity, and Blockchain developer jobs.", cat: "Web3" },
+    { name: "Stack Overflow Jobs", link: "https://stackoverflow.com/jobs", desc: "Technical jobs for developers by the largest programming community.", cat: "Tech" },
+    { name: "Dribbble Jobs", link: "https://dribbble.com/jobs", desc: "Design jobs for freelance and full-time designers.", cat: "Design" },
+    { name: "Behance Jobs", link: "https://www.behance.net/joblist", desc: "Creative jobs for visual artists and designers.", cat: "Design" },
+    { name: "Kaggle Jobs", link: "https://www.kaggle.com/jobs", desc: "Data science and machine learning job board.", cat: "Data" },
+    { name: "Y Combinator Jobs", link: "https://www.ycombinator.com/jobs", desc: "Jobs at startups funded by Y Combinator.", cat: "Startup" },
+    { name: "Triplebyte", link: "https://triplebyte.com", desc: "Technical interviews for software engineers without resumes.", cat: "Tech" },
+    { name: "Levels.fyi", link: "https://www.levels.fyi/jobs", desc: "Job board with verified salary data and levels.", cat: "Intel" },
+    { name: "MyVisaJobs", link: "https://www.myvisajobs.com", desc: "Search for H1B visa sponsors and green card sponsors.", cat: "Intel" },
+    { name: "CoolWorks", link: "https://www.coolworks.com", desc: "Seasonal jobs in great places like national parks and ski resorts.", cat: "Niche" },
+    { name: "PowerToFly", link: "https://powertofly.com/jobs", desc: "Connecting diverse talent with inclusive employers.", cat: "Niche" },
+    { name: "Authentic Jobs", link: "https://authenticjobs.com", desc: "Job board for designers, developers, and creative pros.", cat: "Design" },
+    { name: "Himalayas", link: "https://himalayas.app", desc: "The largest database of remote tech jobs.", cat: "Remote" },
+    { name: "Key Values", link: "https://www.keyvalues.com", desc: "Find engineering teams that share your values.", cat: "Niche" },
+    { name: "Crossover", link: "https://www.crossover.com", desc: "High-paying remote jobs for top talent.", cat: "Remote" },
+    { name: "X-Team", link: "https://x-team.com/join", desc: "Community of developers working on long-term projects.", cat: "Remote" },
+    { name: "Arc.dev", link: "https://arc.dev/remote-jobs", desc: "Remote developer jobs at high-growth startups.", cat: "Remote" },
+    { name: "Relocation Jobs", link: "https://relocationjobs.io", desc: "Jobs that offer visa sponsorship and relocation packages.", cat: "Niche" },
+    { name: "Remotive", link: "https://remotive.io", desc: "Remote jobs in sales, marketing, tech, and customer support.", cat: "Remote" },
+    { name: "Startup Jobs", link: "https://startup.jobs", desc: "Find your next role at a high-growth startup.", cat: "Startup" },
+    { name: "HackerNews Jobs", link: "https://news.ycombinator.com/jobs", desc: "Jobs posted directly on Hacker News by tech companies.", cat: "Tech" },
+    { name: "Remote People", link: "https://remotepeople.io", desc: "Remote jobs aggregator for digital nomads.", cat: "Remote" }
+  ];
+  
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock-time').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    document.getElementById('clock-date').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  const themeToggle = document.getElementById('theme-toggle');
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    themeToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        themeToggle.click();
+      }
+    });
+  }
+
+  const App = {
+    config: {
+      gridSelector: '#docs-grid',
+      filterSelector: '#filter-container',
+      countSelector: '#resource-count',
+      searchSelector: '#search-input'
+    },
+    state: {
+      rawData: [],
+      currentFilter: 'all',
+      searchQuery: ''
+    },
+
+    escapeHtml: function(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    },
+
+    getDomain: function(url) {
+      try {
+        return new URL(url).hostname.replace('www.', '');
+      } catch (e) {
+        return 'link';
+      }
+    },
+
+    createCard: function(item, index) {
+      const safeName = this.escapeHtml(item.name);
+      const safeDesc = this.escapeHtml(item.desc);
+      const safeCat = this.escapeHtml(item.cat);
+      const safeLink = this.escapeHtml(item.link);
+      const domain = this.getDomain(item.link);
+      const delay = Math.min(index * 0.03, 0.6);
+
+      return `
+        <a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="bookmark-card" style="animation-delay: ${delay}s">
+          <div class="card-top">
+            <h3 class="card-title">${safeName}</h3>
+            <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"/>
+              <polyline points="7 7 17 7 17 17"/>
+            </svg>
+          </div>
+          <div class="card-desc">${safeDesc}</div>
+          <div class="card-meta">
+            <span class="card-category">${safeCat}</span>
+            <span class="card-domain">${domain}</span>
+          </div>
+        </a>
+      `;
+    },
+
+    renderFilters: function(categories) {
+      const container = document.querySelector(this.config.filterSelector);
+      if (!container) return;
+      container.innerHTML = categories.map(cat => {
+        const isActive = cat === this.state.currentFilter;
+        const label = cat === 'all' ? 'All' : cat;
+        return `<button class="category-pill ${isActive ? 'active' : ''}" data-cat="${cat}">${label}</button>`;
+      }).join('');
+    },
+
+    renderGrid: function() {
+      const grid = document.querySelector(this.config.gridSelector);
+      const counter = document.querySelector(this.config.countSelector);
+      if (!grid) return;
+
+      const sorted = this.sortData([...this.state.rawData]);
+      const filtered = this.filterData(sorted, this.state.currentFilter, this.state.searchQuery);
+
+      if (counter) counter.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-dim);">No opportunities found matching your criteria.</p>';
+        return;
+      }
+      grid.innerHTML = filtered.map((item, i) => this.createCard(item, i)).join('');
+    },
+
+    handleFilterClick: function(e) {
+      const btn = e.target.closest('.category-pill');
+      if (!btn) return;
+      const category = btn.dataset.cat;
+      this.state.currentFilter = category;
+      document.querySelectorAll('.category-pill').forEach(b => {
+        b.classList.toggle('active', b.dataset.cat === category);
+      });
+      this.renderGrid();
+    },
+
+    handleSearch: function(e) {
+      this.state.searchQuery = e.target.value;
+      this.renderGrid();
+    },
+
+    sortData: function(data) {
+      return data.sort((a, b) => (a.name || '').toLowerCase().localeCompare((b.name || '').toLowerCase()));
+    },
+
+    filterData: function(data, filter, query) {
+      let filtered = data;
+      
+      if (filter !== 'all') {
+        filtered = filtered.filter(item => (item.cat || '').toLowerCase() === filter.toLowerCase());
+      }
+      
+      if (query) {
+        const searchStr = query.toLowerCase();
+        filtered = filtered.filter(item => 
+          (item.name || '').toLowerCase().includes(searchStr) ||
+          (item.desc || '').toLowerCase().includes(searchStr) ||
+          (item.cat || '').toLowerCase().includes(searchStr)
+        );
+      }
+      
+      return filtered;
+    },
+
+    getCategories: function(data) {
+      const cats = new Set();
+      data.forEach(item => { if (item.cat) cats.add(item.cat); });
+      const preferredOrder = ['Tech Giants', 'Government', 'Intel', 'Aggregator', 'Corporate', 'Remote', 'Web3', 'Design', 'Data', 'Startup', 'Tech', 'Niche'];
+      const sortedCats = Array.from(cats).sort((a, b) => {
+         const ia = preferredOrder.indexOf(a);
+         const ib = preferredOrder.indexOf(b);
+         if (ia === -1 && ib === -1) return a.localeCompare(b);
+         if (ia === -1) return 1;
+         if (ib === -1) return -1;
+         return ia - ib;
+      });
+      return ['all', ...sortedCats];
+    },
+
+    init: function() {
+      initTheme();
+      this.state.rawData = docsData;
+      const categories = this.getCategories(this.state.rawData);
+      this.renderFilters(categories);
+      this.renderGrid();
+
+      const filterContainer = document.querySelector(this.config.filterSelector);
+      if (filterContainer) {
+        filterContainer.addEventListener('click', this.handleFilterClick.bind(this));
+      }
+
+      const searchInput = document.querySelector(this.config.searchSelector);
+      if (searchInput) {
+        searchInput.addEventListener('input', this.handleSearch.bind(this));
+      }
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', App.init.bind(App));
+  } else {
+    App.init.bind(App)();
+  }
+</script>
+
+</body>
+</html>
+
+
+>>>>>>> 7dcc20c6c1be38dcab6ca893a33656ba1faaa21c
