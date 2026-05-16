@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/preview.png" alt="bookmarks.love preview" width="10%" />
+  <img src="assets/preview.png" alt="bookmarks.love preview" width="20%" />
 </p>
 <p>
 <img src="https://i.pinimg.com/1200x/dc/c9/a8/dcc9a8b88a1673b05136a74a6cdc2f0c.jpg"/>
