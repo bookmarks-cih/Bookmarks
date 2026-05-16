@@ -106,3 +106,5 @@ If you like the project:
 Créé avec ❤️ par @Marvyn  
 Projet Open Source - Tous droits réservés à l'auteur
 
+Copyright (C) 2026 TON_NOM
+All Rights Reserved.
